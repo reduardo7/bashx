@@ -34,6 +34,9 @@ fi
     # Null path
     DEV_NULL="/dev/null"
 
+    # Screen width
+    SCR_WIDTH=$(tput cols)
+
 ### TOOLS ###
 
     # Check if run as Root.
@@ -43,7 +46,7 @@ fi
         # Is ROOT user?
         if [ "$(id -u)" -ne 0 ]; then
             # No Root
-            echo 0
+	        echo 0
 	        return 0
         else
             # Root
@@ -82,21 +85,6 @@ fi
             # No empty
             echo 0
         fi
-    }
-
-### UI ###
-
-    # Pause.
-    # 1: {String} Message.
-    function pause() {
-        if [ $# -le 1 ] ; then
-            m="Pause..."
-        else
-            m=$1
-        fi
-        echo
-        read -n 1 -p $m
-        echo
     }
 
 ### STRING ###
@@ -146,6 +134,68 @@ fi
             chr=$2
         fi
         echo "$1" | tr -d "$chr"
+    }
+    
+    # String length.
+    # 1: {String} Text.
+    # Out: {Integer} String length.
+    function str_len() {
+        echo `expr "$1" : '.*'`
+    }
+    
+    # Sub string.
+    # 1: {String} String to cut.
+    # 2: {Integer} Start.
+    # 3: {Integer} (Optional) Count.
+    # Out: {String} Result string
+    function sub_str() {
+        if [ $# -eq 2 ] ; then
+            echo ${1:$2}
+        else
+            echo ${1:$2:$3}
+        fi
+    }
+
+### UI ###
+
+    # Pause.
+    # 1: {String} Message.
+    function pause() {
+        if [ $# -le 1 ] ; then
+            m="Pause..."
+        else
+            m=$1
+        fi
+        echo
+        read -n 1 -p $m
+        echo
+    }
+    
+    # Print a line with full width.
+    # 1: {Char} Character for line.
+    # 2: {String} (Optional) Text to print at start.
+    # Out: {String} Line.
+    function print_line() {
+        if [ $# -eq 0 ] ; then
+            # No params
+            len=0
+            fill=""
+            c="-"
+        else
+            # Character
+            c=$(sub_str $1 0 1)
+            if [ $# -eq 2 ] ; then
+                # Text
+                let len=$(str_len $2)+1
+                fill="$2 "
+            fi
+        fi
+        let fillsize=${SCR_WIDTH}-${len}
+        while [ $fillsize -gt 0 ] ; do
+            fill="${fill}${c}"
+            let fillsize=${fillsize}-1
+        done
+        echo ${fill}
     }
 
 ### DATE / TIME ###
