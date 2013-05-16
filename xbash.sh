@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# XBash
+#
 # Bash Extension.
 #
 # Version: 1.0
@@ -9,8 +11,10 @@
 
 ##############################################################################
 
-# Call:
-# > source xbash.sh
+# Init.
+
+# #!/bin/bash
+# . ./xbash.sh
 
 ##############################################################################
 
@@ -31,11 +35,14 @@ fi
 
 ### VARS ###
 
-    # Null path
+    # Null path.
     DEV_NULL="/dev/null"
-
-    # Screen width
-    SCR_WIDTH=$(tput cols)
+    
+    # Boolean true.
+    TRUE=1
+    
+    # Boolean false.
+    FALSE=0
 
 ### TOOLS ###
 
@@ -46,30 +53,30 @@ fi
         # Is ROOT user?
         if [ "$(id -u)" -ne 0 ]; then
             # No Root
-	        echo 0
-	        return 0
+	        echo $FALSE
+	        return $FALSE
         else
             # Root
-            echo 1
-            return 1
+            echo $TRUE
+            return $TRUE
         fi
     }
     
     # Last execution returns > 0?
     # 1: {String} Command on error.
     # 2: {String} Command on success.
-    # Return: {Boolean} Returns 1 on error.
+    # Return: Returns 1 on error.
     function check_error() {
         if [ $? -ne 0 ] ; then
             # Error
             $1
-            return 1
+            return $TRUE
         else
             # Success
             if [ $# -gt 1 ] ; then
                 $2
             fi
-            return 0
+            return $FALSE
         fi
     }
 
@@ -80,10 +87,10 @@ fi
     function is_empty() {
         if [ -z "$1" ] ; then
             # Empty
-            echo 1
+            echo $TRUE
         else
             # No empty
-            echo 0
+            echo $FALSE
         fi
     }
 
@@ -118,7 +125,7 @@ fi
     # Out: {String} Result string.
     function str_replace() {
         options="g"
-        if [ $# -lt 4 ] || [ "$4" -ne "0" ] ; then
+        if [ $# -lt 4 ] || [ "$4" -ne $TRUE ] ; then
             options="${options}i"
         fi
         echo "$1" | sed "s/$2/$3/$options"
@@ -140,7 +147,7 @@ fi
     # 1: {String} Text.
     # Out: {Integer} String length.
     function str_len() {
-        echo `expr "$1" : '.*'`
+        echo ${#1}
     }
     
     # Sub string.
@@ -155,8 +162,57 @@ fi
             echo ${1:$3:$2}
         fi
     }
+    
+    # String position.
+    # 1: {String} String where search.
+    # 2: {String} String to search.
+    # 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
+    # Out: {Integer|NULL} String position or NULL if not found.
+    # Return: TRUE on fonud, FALSE on not found.
+    function str_pos() {
+        if [ $# -lt 3 ] || [ $3 = $TRUE ] ; then
+            # Case sensitive
+            p="-bo"
+        else
+            # Case insensitive
+            p="-boi"
+        fi
+        r=$(echo "$1" | grep $p "$2" | sed 's/:.*$//')
+        echo $r
+        if [ $(is_empty "$r") = $FALSE ] ; then
+            # Found
+            return $TRUE
+        else
+            # No found
+            return $FALSE
+        fi
+    }
+    
+    # String contains substring?
+    # 1: {String} String where search.
+    # 2: {String} Substring to search.
+    # 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
+    # Out: {Boolean} TRUE if contains substring.
+    # Return: TRUE if contains substring.
+    function in_str() {
+        if [ $# -lt 3 ] ; then
+            str_pos "$1" "$2" > $DEV_NULL
+            r=$?
+        else
+            str_pos "$1" "$2" "$3" > $DEV_NULL
+            r=$?
+        fi
+        echo $r
+        return $r
+    }
 
 ### UI ###
+
+    # Screen width.
+    # Out: {Integer} Screen width.
+    function screen_width() {
+        tput cols
+    }
 
     # Pause.
     # 1: {String} Message.
@@ -181,21 +237,37 @@ fi
             len=0
             fill=""
             c="-"
+            lenC=1
         else
             # Character
-            c=$(sub_str $1 0 1)
+            c=$1
+            lenC=$(str_len $c)
+            len=0
             if [ $# -eq 2 ] ; then
                 # Text
                 let len=$(str_len $2)+1
-                fill="$2 "
+                fill="$(str_escape $2) "
             fi
         fi
-        let fillsize=${SCR_WIDTH}-${len}
+        let fillsize=$(screen_width)-${len}
         while [ $fillsize -gt 0 ] ; do
             fill="${fill}${c}"
-            let fillsize=${fillsize}-1
+            let fillsize=${fillsize}-$lenC
         done
         echo ${fill}
+    }
+    
+    # Print command and their result.
+    # 1: {String} Command to print and execute.
+    # Out: {String} Command executed and result.
+    # Return: Executed command exit code.
+    function cmd_log() {
+        echo
+        print_line "-" "$1"
+        $1
+        r=$?
+        print_line
+        return $r
     }
 
 ### DATE / TIME ###
@@ -247,12 +319,12 @@ fi
     function file_exists() {
         if [ -f $(str_escape "$1") ]; then
             # Exists
-            echo 1
-            return 1
+            echo $TRUE
+            return $TRUE
         else
             # Not exists
-            echo 0
-            return 0
+            echo $FALSE
+            return $FALSE
         fi
     }
 
@@ -282,12 +354,12 @@ fi
         # if [ $(x_path_exists "/path/foo") = 1 ] ; then
         if [ -d $(str_escape "$1") ]; then
             # Exists
-            echo 1
-            return 1
+            echo $TRUE
+            return $TRUE
         else
             # Not exists
-            echo 0
-            return 0
+            echo $FALSE
+            return $FALSE
         fi
     }
 
@@ -300,12 +372,12 @@ fi
         grep -rils $(str_escape "$1") $(str_escape "$2") > /dev/null
         if [ $? -eq 1 ]; then
             # Not contains
-            echo 0
-            return 0
+            echo $FALSE
+            return $FALSE
         else
             # Contains
-            echo 1
-            return 1
+            echo $TRUE
+            return $TRUE
         fi
     }
 
