@@ -1,39 +1,45 @@
 #!/bin/bash
 
-# XBash
-#
-# Bash Extension.
-#
-# Version: 1.0
-# URL: https://github.com/reduardo7/xbash
-#
-# Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
+## XBash
+##
+## Bash Extension.
+##
+## Version: 1.0
+## URL: https://github.com/reduardo7/xbash
+##
+## Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
 
-##############################################################################
+# #############################################################################
 
 # Init.
 
-# #!/bin/bash
-# . ./xbash.sh
+## #!/bin/bash
+## . ./xbash.sh
 
-##############################################################################
+# #############################################################################
 
 # Test if running with "bash" interpreter.
 if [ "$BASH" = "" ] ; then
-    _BASH_RECALL=""
-    for a in "$@" ; do
-        _BASH_RECALL="$_BASH_RECALL $a"
-    done
-    # Run with "bash"
-    _BASH_RECALL="bash $0 $_BASH_RECALL"
-    $_BASH_RECALL
+    bash $0 $@
     # Exit
     exit $?
 fi
 
-##############################################################################
+# #############################################################################
 
-### VARS ###
+### CONFIG
+# Rewrite with your configuration.
+
+    # APP Title
+    APP_TITLE="XBash"
+    
+    # APP Version
+    APP_VERSION="1.0"
+    
+    # Start character for formated print screen (see "e" function).
+    ECHO_CHAR="#"
+
+### VARS
 
     # Null path.
     DEV_NULL="/dev/null"
@@ -44,9 +50,10 @@ fi
     # Boolean false.
     FALSE=0
 
-### TOOLS ###
+### UTILS
 
     # Check if run as Root.
+    #
     # Out: {Boolean} 1 if is root.
     # Return: The same as "Out".
     function is_root() {
@@ -63,6 +70,7 @@ fi
     }
     
     # Last execution returns > 0?
+    #
     # 1: {String} Command on error.
     # 2: {String} Command on success.
     # Return: Returns 1 on error.
@@ -81,6 +89,7 @@ fi
     }
 
     # Check if is empty.
+    #
     # 1: {*} Variable to check if emtpy.
     # Out: {Boolean} 1 if variable is emtpy.
     # Return: The same as "Out".
@@ -94,9 +103,10 @@ fi
         fi
     }
 
-### STRING ###
+### STRING
 
     # Escape string for Bash.
+    #
     # 1: {String} String to escape for Bash.
     # Out: {String} Escaped string.
     function str_escape() {
@@ -104,13 +114,14 @@ fi
     }
 
     # Repeat string.
+    #
     # 1: {Integer} Number of repetitions.
     # 2: {String} String to repeat.
     # Out: {String} Repeated string.
     function str_repeat() {
 	    let fillsize=$1
 	    fill=$2
-	    while [ "$fillsize" -gt "0" ] ; do
+	    while [ ${fillsize} -gt 1 ] ; do
 		    fill="${fill}$2"
 		    let fillsize=${fillsize}-1
 	    done
@@ -118,6 +129,7 @@ fi
     }
 
     # Replace string.
+    #
     # 1: {String} String where replace.
     # 2: {String} Search string (REG EXP).
     # 3: {String} Replace.
@@ -132,18 +144,20 @@ fi
     }
     
     # Trim text.
+    #
     # 1: {String} String where trim.
     # 2: {String} (Default: " ") String to trim.
     # Out: {String} Trimed text.
     function trim() {
         chr=" "
         if [ $# -gt 1 ] ; then
-            chr=$2
+            chr="$2"
         fi
-        echo "$1" | tr -d "$chr"
+        echo "$1" | sed "s/^${chr}//g" | sed "s/${chr}$//g"
     }
     
     # String length.
+    #
     # 1: {String} Text.
     # Out: {Integer} String length.
     function str_len() {
@@ -164,6 +178,7 @@ fi
     }
     
     # String position.
+    #
     # 1: {String} String where search.
     # 2: {String} String to search.
     # 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
@@ -189,6 +204,7 @@ fi
     }
     
     # String contains substring?
+    #
     # 1: {String} String where search.
     # 2: {String} Substring to search.
     # 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
@@ -206,28 +222,39 @@ fi
         return $r
     }
 
-### UI ###
+### UI
 
     # Screen width.
+    #
     # Out: {Integer} Screen width.
     function screen_width() {
         tput cols
     }
+    
+    # Print at screen.
+    #
+    # *: {String} Text to print.
+    # Out: {String} Text.
+    function e() {
+        echo "${ECHO_CHAR} $@"
+    }
 
     # Pause.
+    #
     # 1: {String} Message.
     function pause() {
         if [ $# -le 1 ] ; then
             m="Pause..."
         else
-            m=$1
+            m="$1"
         fi
-        echo
-        read -n 1 -p $m
-        echo
+        e
+        read -n 1 -p "$(e "$m")"
+        e
     }
     
     # Print a line with full width.
+    #
     # 1: {Char} Character for line.
     # 2: {String} (Optional) Text to print at start.
     # Out: {String} Line.
@@ -258,6 +285,7 @@ fi
     }
     
     # Print command and their result.
+    #
     # 1: {String} Command to print and execute.
     # Out: {String} Command executed and result.
     # Return: Executed command exit code.
@@ -270,29 +298,40 @@ fi
         return $r
     }
 
-### DATE / TIME ###
+    # Print APP title and version.
+    #
+    # Out: APP title and version.
+    function print_app_info() {
+        echo "${APP_TITLE} v${APP_VERSION}"
+    }
+
+### DATE / TIME
 
     # Current time.
+    #
     # Out: {String} Time.
     function now_time() {
         date '%H:%M:%S'
     }
 
     # Current date.
+    #
     # Out: {String} Date.
     function now_date() {
         date '+%Y-%m-%d'
     }
 
     # Current date and time.
+    #
     # Out: {String} Date and time.
     function now_date_time() {
         date '+%Y-%m-%d %H:%M:%S'
     }
 
-### TAR ###
+### TAR
 
     # Compress file as .tar.gz.
+    #
     # 1: {String} Input file.
     # 2: {String} Output file (.tar.gz).
     # Out: {String} Log output.
@@ -302,6 +341,7 @@ fi
     }
 
     # Extract .tar.gz file.
+    #
     # 1: {String} Input file (.tar.gz).
     # 2: {String} Output path.
     # Out: {String} Log output.
@@ -310,9 +350,10 @@ fi
         return $?
     }
 
-### FILE / PATH ###
+### FILE / PATH
 
     # Check if file exists.
+    #
     # 1: {String} File path.
     # Out: {Boolean} 1 if file exists, 0 if not exists.
     # Return: The same as "Out".
@@ -329,29 +370,39 @@ fi
     }
 
     # Current directory.
+    #
     # Out: {String} Current directory.
     function current_directory() {
         printf '%q' "$(pwd)"
     }
 
     # Current directory name.
+    #
     # Out: {String} Current directory name.
     function current_directory_name() {
         dirname "$(printf '%q' "$(readlink -f "$(printf '%q' "$0")")")"
     }
     
     # Current script file name.
+    #
     # Out: {String} Current script file name.
     function script_file_name() {
         basename "$(printf '%q' "$0")"
     }
+    
+    # Script full path.
+    #
+    # Out: {String} Current script full path.
+    function script_full_path() {
+        echo "$(current_directory_name)/$(script_file_name)"
+    }
 
     # Check if directory exists.
+    #
     # 1: {String} Directory path.
     # Out: {Boolean} 1 if directory exists, 0 if not exists.
     # Return: The same as "Out".
     function path_exists() {
-        # if [ $(x_path_exists "/path/foo") = 1 ] ; then
         if [ -d $(str_escape "$1") ]; then
             # Exists
             echo $TRUE
@@ -364,6 +415,7 @@ fi
     }
 
     # Check if file contains text.
+    #
     # 1: {String} Text to search.
     # 2: {String} File where check.
     # Out: {Boolean} 1 if file contains the text, 0 if not contains the text.
@@ -381,6 +433,56 @@ fi
         fi
     }
 
-##############################################################################
+### EXEC
+    
+    # Print basic usage.
+    # Using "#ARG" at end of line to set as argument method
+    # and next write extre help next. Special chars:
+    #   %n% -> \n
+    #   %t% -> \t (4 spaces)
+    #
+    # 1: {String} File to render usage.
+    # Out: {String} Usage text.
+    function usage() { #ARG
+        src="$0"
+        if [ $# -gt 0 ] ; then
+            src=$1
+        fi
+        grep "^[ \t]*function .\+()[ \t]*{.*#ARG.*$" $src | while read line ; do
+            e "  $0 $line" | sed "s/()[ \t]*{.*#ARG//g" | sed "s/[ \t]*function//g" | sed "s/%n%/\n/g" | sed "s/%t%/    /g"
+        done
+        e
+    }
 
-# End
+    # Run APP.
+    # Run arguments as commands if any, or show "usage".
+    #
+    # See "usage" to see how to use.
+    #
+    # Use: At end of file, put next:
+    #   run $@
+    function run() {
+        APPINFO=" $(print_app_info) "
+        APPINFOB="+-$(str_repeat $(str_len "${APPINFO}") "-")-+"
+        echo
+        e ${APPINFOB}
+        e "| ${APPINFO} |"
+        e ${APPINFOB}
+        e
+        # Exec
+        "$@"
+        r=$?
+        if [ ${#1} == 0 ] ; then
+            e "$CMDS"
+            e "Usage:"
+            usage
+            usage "xbash.sh"
+            exit 1
+        fi
+        e
+        echo
+        # Return result code
+        exit $r
+    }
+
+# #############################################################################
