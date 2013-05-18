@@ -20,8 +20,7 @@
 
 # Test if running with "bash" interpreter.
 if [ "$BASH" = "" ] ; then
-    bash $0 $@
-    # Exit
+    bash $0 "$@"
     exit $?
 fi
 
@@ -125,6 +124,18 @@ fi
             echo $FALSE
             return $FALSE
         fi
+    }
+    
+    # Print vars.
+    #
+    # *: Vars to print.
+    function xdie() {
+        echo
+        echo "## XDIE ##"
+        echo
+        echo $@
+        echo
+        exit 1
     }
 
 ### STRING
@@ -326,6 +337,21 @@ fi
         c="$(ecolor ${DEFAULT_COLOR})"
         echo -e "${c}${ECHO_CHAR} $@${c}"
     }
+    
+    # Re-print last line.
+    #
+    # 1: {String} Text to print.
+    # 2: {Integer} (Default: 1) Lines to meve back.
+    # Out: {String} Text.
+    function eb() {
+        n=1
+        if [ $# -gt 1 ] ; then
+            n=$2
+        fi
+        bl="\033[${n}A"
+        c="$(ecolor ${DEFAULT_COLOR})"
+        print_line " " "${bl}${c}${ECHO_CHAR} $@${c}" # Clear line
+    }
 
     # Pause.
     #
@@ -342,6 +368,60 @@ fi
         e
     }
     
+    # Show error message and exit.
+    #
+    # 1: {String} Error message.
+    # 2: {Integer} (Default: 1) Error code.
+    function exit_error() {
+        e
+        e "$(ecolor red)Error!"
+        e "$(ecolor red)$1"
+        e
+        if [ $# -gt 1 ] ; then
+            exit $2
+        else
+            exit 1
+        fi
+    }
+    
+    # Time out.
+    #
+    # 1: {Integer} Time out for count down.
+    # 2: {String} Command to execute on count down finish.
+    # Return: {Integer} Return command exit code or "255" on user cancel.
+    function timeout() {
+        if [ $# -ne 2 ]; then
+            exit_error "Invalid call 'timeout'" 70
+        fi
+        e
+        COUNT=$1
+        rta=0
+        while [ ${COUNT} -gt 0 ] && [ ${rta} -eq 0 ] ; do
+            eb "Count down... ${COUNT}    Press [C] to cancel..." 
+            read -n 1 -t 1 -p "" i
+            r=$?
+            if [ "${i}" == "c" ] || [ "${i}" == "C" ] ; then
+                rta=1
+            else
+                # 142 == No user input
+                if [ "${r}" == "142" ] ; then
+                    let COUNT=COUNT-1
+                fi
+            fi
+        done
+        if [ ${COUNT} -eq 0 ] ; then
+            e
+            $2
+            return $?
+        else
+            # Canceled
+            e
+            e "   Cancel by user!"
+            e
+            return 255
+        fi
+    }
+    
     # Print a line with full width.
     #
     # 1: {Char} Character for line.
@@ -356,21 +436,21 @@ fi
             lenC=1
         else
             # Character
-            c=$1
-            lenC=$(str_len $c)
+            c="$1"
+            lenC=$(str_len "$c")
             len=0
             if [ $# -eq 2 ] ; then
                 # Text
-                let len=$(str_len $2)+1
-                fill="$(str_escape $2) "
+                let len=$(str_len "$2")+1
+                fill="$2 "
             fi
         fi
         let fillsize=$(screen_width)-${len}
-        while [ $fillsize -gt 0 ] ; do
+        while [ ${fillsize} -gt 0 ] ; do
             fill="${fill}${c}"
-            let fillsize=${fillsize}-$lenC
+            let fillsize=${fillsize}-${lenC}
         done
-        echo ${fill}
+        echo -e "${fill}"
     }
     
     # Print command and their result.
@@ -568,7 +648,7 @@ fi
     # See "usage" to see how to use.
     #
     # Use: At end of file, put next:
-    #   run $@
+    #   run "$@"
     function run() {
         APPINFO=" $(print_app_info) "
         APPINFOB="+-$(str_repeat $(str_len "${APPINFO}") "-")-+"
@@ -583,7 +663,7 @@ fi
         if [ $# -gt 0 ] ; then
             if [ $(function_exists "__$1") == $TRUE ] ; then
                 # Exec
-                __$@
+                __"$@"
                 r=$?
             else
                 e "Error! Parameter '$1' not found."
