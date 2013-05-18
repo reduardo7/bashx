@@ -30,14 +30,22 @@ fi
 ### CONFIG
 # Rewrite with your configuration.
 
-    # APP Title
+    # APP Title.
     APP_TITLE="XBash"
     
-    # APP Version
+    # APP Version.
     APP_VERSION="1.0"
+    
+    # Default APP color. See "ecolor" for more information.
+    DEFAULT_COLOR="default"
     
     # Start character for formated print screen (see "e" function).
     ECHO_CHAR="#"
+    
+    # Application requeirements.
+    # To extend requeirements, use:
+    #   APP_REQUEIREMENTS="${APP_REQUEIREMENTS} other app command extra foo"
+    APP_REQUEIREMENTS="echo printf sed grep tput read date dirname readlink basename tar"
 
 ### VARS
 
@@ -100,6 +108,22 @@ fi
         else
             # No empty
             echo $FALSE
+        fi
+    }
+    
+    # Check if function exists.
+    #
+    # 1: {String} Function name.
+    # Out: {Boolean} TRUE if function exists.
+    # Return: {Boolean} TRUE if function exists.
+    function function_exists() {
+        declare -f "$1" > /dev/null
+        if [ $? -eq 0 ] ; then
+            echo $TRUE
+            return $TRUE
+        else
+            echo $FALSE
+            return $FALSE
         fi
     }
 
@@ -230,13 +254,77 @@ fi
     function screen_width() {
         tput cols
     }
-    
+     
+    # Print at screen with color.
+    #
+    # 1: {COLOR} Color. See "case" into this function for details.
+    # 2: {String} (Default: Default Color) Text to print.
+    # Out: {String} Text.
+    # Use: e "normal color $(ecolor red)text in red $(ecolor black)black color"
+    function ecolor() {
+        c="0"
+        case "$1" in
+            default)
+                c="0"
+                ;;
+            black)
+                c="0;30"
+                ;;
+            white)
+                c="1;37"
+                ;;
+            gray)
+                c="0;37";;
+            gray2)
+                c="1;30"
+                ;;
+            blue)
+                c="0;34"
+                ;;
+            blue2)
+                c="1;34"
+                ;;
+            green)
+                c="0;32"
+                ;;
+            green2)
+                c="1;32"
+                ;;
+            cyan)
+                c="0;36"
+                ;;
+            cyan2)
+                c="1;36"
+                ;;
+            red)
+                c="0;31"
+                ;;
+            red2)
+                c="1;31"
+                ;;
+            purple)
+                c="0;35"
+                ;;
+            purple2)
+                c="1;35"
+                ;;
+            coffe)
+                c="0;33"
+                ;;
+            yellow)
+                c="1;33"
+                ;;
+        esac
+        echo "\e[${c}m"
+    }
+     
     # Print at screen.
     #
     # *: {String} Text to print.
     # Out: {String} Text.
     function e() {
-        echo "${ECHO_CHAR} $@"
+        c="$(ecolor ${DEFAULT_COLOR})"
+        echo -e "${c}${ECHO_CHAR} $@${c}"
     }
 
     # Pause.
@@ -244,12 +332,13 @@ fi
     # 1: {String} Message.
     function pause() {
         if [ $# -le 1 ] ; then
-            m="Pause..."
+            m="Press any key to continue..."
         else
-            m="$1"
+            m="$@"
         fi
+        e "$(ecolor ${DEFAULT_COLOR})"
+        read -n 1 -p "${ECHO_CHAR} ${m}"
         e
-        read -n 1 -p "$(e "$m")"
         e
     }
     
@@ -346,7 +435,7 @@ fi
     # 2: {String} Output path.
     # Out: {String} Log output.
     function tar_extract() {
-        zxvf $(str_escape "$1") -C $(str_escape "$2")
+        tar zxvf $(str_escape "$1") -C $(str_escape "$2")
         return $?
     }
 
@@ -434,24 +523,43 @@ fi
     }
 
 ### EXEC
+
+    # Check if all parameters are installed.
+    #
+    # 1: {String} Commands separated by spaces.
+    function check_requirements() {
+        for req in $@ ; do
+            hash "$req" 2>&-
+            if [ $? == 1 ] ; then
+                e "Error! Please install '${req}' to continue."
+                exit 1
+            fi
+        done
+    }
     
     # Print basic usage.
-    # Using "#ARG" at end of line to set as argument method
-    # and next write extre help next. Special chars:
-    #   %n% -> \n
-    #   %t% -> \t (4 spaces)
+    # Using "__" at begin of function name to set as argument method.
+    # Put "#" before function to write extra help text.
+    # Special chars:
+    #   %n -> \n
+    #   %t -> \t (4 spaces)
     #
     # 1: {String} File to render usage.
     # Out: {String} Usage text.
-    function usage() { #ARG
-        src="$0"
+    function __usage() { #%nPrint basic usage (this).
+        src="$(script_full_path)"
         if [ $# -gt 0 ] ; then
-            src=$1
+            src="$1"
         fi
-        grep "^[ \t]*function .\+()[ \t]*{.*#ARG.*$" $src | while read line ; do
-            e "  $0 $line" | sed "s/()[ \t]*{.*#ARG//g" | sed "s/[ \t]*function//g" | sed "s/%n%/\n/g" | sed "s/%t%/    /g"
+        grep "^[ \t]*function __.\+()[ \t]*{.*$" "$src" | while read line ; do
+            e "  $0 ${line}" | sed "s/()[ \t]*{.*#[ \t]*/ /g" | sed "s/()[ \t]*{[ \t]*//g" | sed "s/[ \t]*function __/ /g" | sed "s/[ \t]*%n/\n${ECHO_CHAR}     /g" | sed "s/%t/    /g"
+            e
         done
-        e
+    }
+    
+    # Alias of "usage".
+    function __help() { #%nAlias of "usage".
+        __usage $@
     }
 
     # Run APP.
@@ -464,20 +572,32 @@ fi
     function run() {
         APPINFO=" $(print_app_info) "
         APPINFOB="+-$(str_repeat $(str_len "${APPINFO}") "-")-+"
+        r=1
         echo
         e ${APPINFOB}
         e "| ${APPINFO} |"
         e ${APPINFOB}
         e
-        # Exec
-        "$@"
-        r=$?
+        # Check requeirements
+        check_requirements "${APP_REQUEIREMENTS}"
+        if [ $# -gt 0 ] ; then
+            if [ $(function_exists "__$1") == $TRUE ] ; then
+                # Exec
+                __$@
+                r=$?
+            else
+                e "Error! Parameter '$1' not found."
+            fi
+        fi
         if [ ${#1} == 0 ] ; then
             e "$CMDS"
             e "Usage:"
-            usage
-            usage "xbash.sh"
-            exit 1
+            e
+            __usage
+            if [ "$(script_file_name)" != "xbash.sh" ] ; then
+                __usage "xbash.sh"
+            fi
+            r=1
         fi
         e
         echo
