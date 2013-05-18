@@ -7,7 +7,7 @@
 ## Version: 1.0
 ## URL: https://github.com/reduardo7/xbash
 ##
-## Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
+## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
 
 # #############################################################################
 
