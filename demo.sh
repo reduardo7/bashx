@@ -26,5 +26,11 @@ function __params() { # param1 %nparam1: Text to print.
     e "Text passed: $(ecolor red) '$1'"
 }
 
+function __to() { # time command%n%ttime: Time in seconds.%n%tcommand: Command to execute.
+    timeout "$1" "$2"
+    r=$?
+    e "Exit code: $r"
+}
+
 # Run
-run $@
+run "$@"
