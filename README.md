@@ -20,21 +20,26 @@ Simple bash extension. Bash Framework. Helps to bash programming. Add common fun
 ### APP_TITLE
 
 APP title.
+
 Default: *"XBash"*
 
 ### APP_VERSION
 
 APP Version.
+
 Default: *"1.0"*
 
 ### COLOR_DEFAULT
 
+
 Default APP color. See "ecolor" for more information.
+
 Default: *"cyan"*
     
 ### ECHO_CHAR
 
 Start character for formated print screen (see "e" function).
+
 Default: *"#"*
 
 ### APP_REQUEIREMENTS
