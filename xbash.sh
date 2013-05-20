@@ -36,7 +36,8 @@ fi
     APP_VERSION="1.0"
     
     # Default APP color. See "ecolor" for more information.
-    DEFAULT_COLOR="default"
+    #COLOR_DEFAULT="system" # Default system color
+    COLOR_DEFAULT="cyan"
     
     # Start character for formated print screen (see "e" function).
     ECHO_CHAR="#"
@@ -61,7 +62,7 @@ fi
 
     # Check if run as Root.
     #
-    # Out: {Boolean} 1 if is root.
+    # Out: {Boolean} TRUE if is root.
     # Return: The same as "Out".
     function is_root() {
         # Is ROOT user?
@@ -98,7 +99,7 @@ fi
     # Check if is empty.
     #
     # 1: {*} Variable to check if emtpy.
-    # Out: {Boolean} 1 if variable is emtpy.
+    # Out: {Boolean} TRUE if variable is emtpy.
     # Return: The same as "Out".
     function is_empty() {
         if [ -z "$1" ] ; then
@@ -107,6 +108,21 @@ fi
         else
             # No empty
             echo $FALSE
+        fi
+    }
+    
+    # Check if is a number.
+    #
+    # 1: {*} Variable to check if is a number.
+    # Out: {Boolean} TRUE if variable is a number.
+    # Return: The same as "Out".
+    function is_number() {
+        if [[ "$1" =~ ^[0-9]+$ ]] ; then
+            echo $TRUE
+            return $TRUE
+        else
+            echo $FALSE
+            return $FALSE
         fi
     }
     
@@ -191,6 +207,32 @@ fi
         echo "$1" | sed "s/^${chr}//g" | sed "s/${chr}$//g"
     }
     
+    # Left trim text.
+    #
+    # 1: {String} String where trim.
+    # 2: {String} (Default: " ") String to trim.
+    # Out: {String} Trimed text.
+    function ltrim() {
+        chr=" "
+        if [ $# -gt 1 ] ; then
+            chr="$2"
+        fi
+        echo "$1" | sed "s/^${chr}//g"
+    }
+    
+    # Right trim text.
+    #
+    # 1: {String} String where trim.
+    # 2: {String} (Default: " ") String to trim.
+    # Out: {String} Trimed text.
+    function rtrim() {
+        chr=" "
+        if [ $# -gt 1 ] ; then
+            chr="$2"
+        fi
+        echo "$1" | sed "s/${chr}$//g"
+    }
+    
     # String length.
     #
     # 1: {String} Text.
@@ -266,16 +308,19 @@ fi
         tput cols
     }
      
-    # Print at screen with color.
+    # Change screen print color.
     #
     # 1: {COLOR} Color. See "case" into this function for details.
     # 2: {String} (Default: Default Color) Text to print.
     # Out: {String} Text.
     # Use: e "normal color $(ecolor red)text in red $(ecolor black)black color"
     function ecolor() {
-        c="0"
+        c=""
         case "$1" in
-            default)
+            default) # Default APP color
+                c=""
+                ;;
+            system) # System color
                 c="0"
                 ;;
             black)
@@ -285,7 +330,8 @@ fi
                 c="1;37"
                 ;;
             gray)
-                c="0;37";;
+                c="0;37"
+                ;;
             gray2)
                 c="1;30"
                 ;;
@@ -326,7 +372,11 @@ fi
                 c="1;33"
                 ;;
         esac
-        echo "\e[${c}m"
+        if [ -z "${c}" ] ; then
+            ecolor "${COLOR_DEFAULT}"
+        else
+            echo "\e[${c}m"
+        fi
     }
      
     # Print at screen.
@@ -334,7 +384,7 @@ fi
     # *: {String} Text to print.
     # Out: {String} Text.
     function e() {
-        c="$(ecolor ${DEFAULT_COLOR})"
+        c="$(ecolor default)"
         echo -e "${c}${ECHO_CHAR} $@${c}"
     }
     
@@ -349,7 +399,7 @@ fi
             n=$2
         fi
         bl="\033[${n}A"
-        c="$(ecolor ${DEFAULT_COLOR})"
+        c="$(ecolor default)"
         print_line " " "${bl}${c}${ECHO_CHAR} $@${c}" # Clear line
     }
 
@@ -362,7 +412,7 @@ fi
         else
             m="$@"
         fi
-        e "$(ecolor ${DEFAULT_COLOR})"
+        e "$(ecolor default)"
         read -n 1 -p "${ECHO_CHAR} ${m}"
         e
         e
@@ -390,7 +440,7 @@ fi
     # 2: {String} Command to execute on count down finish.
     # Return: {Integer} Return command exit code or "255" on user cancel.
     function timeout() {
-        if [ $# -ne 2 ]; then
+        if [ $# -ne 2 ] || [ $(is_number "$1") -eq $FALSE ] || [ -z "$2" ]; then
             exit_error "Invalid call 'timeout'" 70
         fi
         e
@@ -505,7 +555,7 @@ fi
     # 2: {String} Output file (.tar.gz).
     # Out: {String} Log output.
     function tar_compress() {
-        tar zcvf $(str_escape "$2") $(str_escape "$1")
+        tar zcvf "$2" "$1"
         return $?
     }
 
@@ -515,7 +565,7 @@ fi
     # 2: {String} Output path.
     # Out: {String} Log output.
     function tar_extract() {
-        tar zxvf $(str_escape "$1") -C $(str_escape "$2")
+        tar zxvf "$1" -C "$2"
         return $?
     }
 
@@ -524,10 +574,10 @@ fi
     # Check if file exists.
     #
     # 1: {String} File path.
-    # Out: {Boolean} 1 if file exists, 0 if not exists.
+    # Out: {Boolean} TRUE if file exists, 0 if not exists.
     # Return: The same as "Out".
     function file_exists() {
-        if [ -f $(str_escape "$1") ]; then
+        if [ -f "$1" ]; then
             # Exists
             echo $TRUE
             return $TRUE
@@ -542,34 +592,27 @@ fi
     #
     # Out: {String} Current directory.
     function current_directory() {
-        printf '%q' "$(pwd)"
-    }
-
-    # Current directory name.
-    #
-    # Out: {String} Current directory name.
-    function current_directory_name() {
-        dirname "$(printf '%q' "$(readlink -f "$(printf '%q' "$0")")")"
+        dirname "$(readlink -f "$0")"
     }
     
     # Current script file name.
     #
     # Out: {String} Current script file name.
     function script_file_name() {
-        basename "$(printf '%q' "$0")"
+        basename "$0"
     }
     
     # Script full path.
     #
     # Out: {String} Current script full path.
     function script_full_path() {
-        echo "$(current_directory_name)/$(script_file_name)"
+        echo "$(current_directory)/$(script_file_name)"
     }
-
+    
     # Check if directory exists.
     #
     # 1: {String} Directory path.
-    # Out: {Boolean} 1 if directory exists, 0 if not exists.
+    # Out: {Boolean} TRUE if directory exists, 0 if not exists.
     # Return: The same as "Out".
     function path_exists() {
         if [ -d $(str_escape "$1") ]; then
@@ -587,7 +630,7 @@ fi
     #
     # 1: {String} Text to search.
     # 2: {String} File where check.
-    # Out: {Boolean} 1 if file contains the text, 0 if not contains the text.
+    # Out: {Boolean} TRUE if file contains the text, 0 if not contains the text.
     # Return: The same as "Out".
     function file_contains() {
         grep -rils $(str_escape "$1") $(str_escape "$2") > /dev/null
@@ -611,8 +654,7 @@ fi
         for req in $@ ; do
             hash "$req" 2>&-
             if [ $? == 1 ] ; then
-                e "Error! Please install '${req}' to continue."
-                exit 1
+                exit_error "Error! Please install '${req}' to continue."
             fi
         done
     }
@@ -624,22 +666,26 @@ fi
     #   %n -> \n
     #   %t -> \t (4 spaces)
     #
-    # 1: {String} File to render usage.
+    # 1: {String} (Default: Current executed file) File to render usage.
     # Out: {String} Usage text.
     function __usage() { #%nPrint basic usage (this).
-        src="$(script_full_path)"
         if [ $# -gt 0 ] ; then
             src="$1"
+            if [ $(file_exists "${src}") == $FALSE ] ; then
+                src="$(script_full_path)"
+            fi
+        else
+            src="$(script_full_path)"
         fi
-        grep "^[ \t]*function __.\+()[ \t]*{.*$" "$src" | while read line ; do
-            e "  $0 ${line}" | sed "s/()[ \t]*{.*#[ \t]*/ /g" | sed "s/()[ \t]*{[ \t]*//g" | sed "s/[ \t]*function __/ /g" | sed "s/[ \t]*%n/\n${ECHO_CHAR}     /g" | sed "s/%t/    /g"
+        grep "^[ \t]*function __.\+()[ \t]*{.*$" "${src}" | while read line ; do
+            e "  \$$(ecolor red)$0$(ecolor blue) $(echo "${line}" | sed "s/()[ \t]*{.*#[ \t]*/ $(str_escape "$(ecolor default)")/g")" | sed "s/()[ \t]*{[ \t]*//g" | sed "s/[ \t]*function __/ /g" | sed "s/[ \t]*%n/\n${ECHO_CHAR}     > /g" | sed "s/%t/    /g"
             e
         done
     }
     
     # Alias of "usage".
     function __help() { #%nAlias of "usage".
-        __usage $@
+        __usage "$@"
     }
 
     # Run APP.
@@ -666,7 +712,7 @@ fi
                 __"$@"
                 r=$?
             else
-                e "Error! Parameter '$1' not found."
+                exit_error "Parameter '$(ecolor blue)${1}$(ecolor red)' not found. Call 'usage' to see help."
             fi
         fi
         if [ ${#1} == 0 ] ; then
