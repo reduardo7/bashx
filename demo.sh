@@ -3,12 +3,12 @@
 
 APP_TITLE="Demo XBash"
 APP_VERSION="0.1"
-DEFAULT_COLOR="cyan2"
+COLOR_DEFAULT="cyan"
 
-function __info() { #%nSee info
+function __info() { #%nSee system info.
     # Info
     e "$(ecolor green)Script name: $(script_file_name)"
-    e "$(ecolor red)Path: $(current_directory_name)"
+    e "$(ecolor red)Path: $(current_directory)"
     e "Date and time: $(now_date_time)"
         
     # Pause script
