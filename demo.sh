@@ -32,6 +32,14 @@ function __to() { # time command%n%ttime: Time in seconds.%n%tcommand: Command t
     e "Exit code: $r"
 }
 
+function __testError() {
+	e "Generating an error..."
+    e $error_var_x
+	error_not_exists_test
+	check_error "ec red Exit for error!"
+	e "NO EXECUTE"
+}
+
 function __color() {
     ec $@
 }

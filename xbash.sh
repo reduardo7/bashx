@@ -19,8 +19,8 @@
 # #############################################################################
 
 # Test if running with "bash" interpreter.
-if [ "$BASH" = "" ] ; then
-    bash $0 "$@"
+if [ -z "$BASH" ] ; then
+    /bin/bash $0 "$@"
     exit $?
 fi
 
@@ -85,25 +85,6 @@ fi
             # Root
             echo $TRUE
             return $TRUE
-        fi
-    }
-    
-    # Last execution returns > 0?
-    #
-    # 1: {String} Command on error.
-    # 2: {String} Command on success.
-    # Return: Returns 1 on error.
-    function check_error() {
-        if [ $? -ne 0 ] ; then
-            # Error
-            $1
-            return $TRUE
-        else
-            # Success
-            if [ $# -gt 1 ] ; then
-                $2
-            fi
-            return $FALSE
         fi
     }
 
@@ -309,6 +290,37 @@ fi
         echo $r
         return $r
     }
+    
+### ERROR
+    
+    # Last execution returns > 0 (error)?
+    #
+    # *: {String} Command to execute on error.
+    function check_error() {
+        c=$?
+        if [ $c -ne 0 ] ; then
+            # Error
+            $@
+            error "" $c
+        fi
+    }
+    
+    # Show error message and exit.
+    #
+    # 1: {String} Error message.
+    # 2: {Integer} (Default: 1) Exit code.
+    function error() {
+        if ! [ -z "$1" ] ; then
+            e
+            ec red "Error! $1"
+        fi
+        e
+        if [ $# -gt 1 ] ; then
+            end $2
+        else
+            end 1
+        fi
+    }
 
 ### UI
 
@@ -466,23 +478,7 @@ fi
         fi
     }
     # CTRL + C
-    trap end $?
-    
-    # Show error message and exit.
-    #
-    # 1: {String} Error message.
-    # 2: {Integer} (Default: 1) Exit code.
-    function exit_error() {
-        e
-        e "$(ecolor red)Error!"
-        e "$(ecolor red)$1"
-        e
-        if [ $# -gt 1 ] ; then
-            end $2
-        else
-            end 1
-        fi
-    }
+    trap end EXIT
     
     # Time out.
     #
@@ -491,14 +487,14 @@ fi
     # Return: {Integer} Return command exit code or "255" on user cancel.
     function timeout() {
         if [ $# -ne 2 ] || [ $(is_number "$1") -eq $FALSE ] || [ -z "$2" ]; then
-            exit_error "Invalid call 'timeout'" 70
+            error "Invalid call 'timeout'" 70
         fi
         e
         COUNT=$1
         rta=0
         while [ ${COUNT} -gt 0 ] && [ ${rta} -eq 0 ] ; do
             echo_back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..." 
-            read -n 1 -t 1 -p "" i >&2
+            read -n 1 -t 1 -p "" i
             r=$?
             if [ "${i}" == "c" ] || [ "${i}" == "C" ] || [ "${i}" == "$KEY_ESC" ] ; then
                 rta=1
@@ -548,7 +544,11 @@ fi
         let fillsize=$(screen_width)-${len}
         while [ ${fillsize} -gt 0 ] ; do
             fill="${fill}${c}"
-            let fillsize=${fillsize}-${lenC}
+            if [ ${fillsize} -eq 1 ] ; then
+                fillsize=0
+            else
+                let fillsize=${fillsize}-${lenC}
+            fi
         done
         echo -e "${fill}"
     }
@@ -704,7 +704,7 @@ fi
         for req in $@ ; do
             hash "$req" 2>&-
             if [ $? == 1 ] ; then
-                exit_error "Error! Please install '${req}' to continue."
+                error "Error! Please install '${req}' to continue."
             fi
         done
     }
@@ -762,7 +762,7 @@ fi
                 __"$@"
                 r=$?
             else
-                exit_error "Parameter '$(ecolor blue)${1}$(ecolor red)' not found. Call 'usage' to see help."
+                error "Parameter '$(ecolor blue)${1}$(ecolor red)' not found. Call 'usage' to see help."
             fi
         fi
         if [ ${#1} == 0 ] ; then
