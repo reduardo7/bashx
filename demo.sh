@@ -2,7 +2,7 @@
 . ./xbash.sh
 
 APP_TITLE="Demo XBash"
-APP_VERSION="0.1"
+APP_VERSION="1"
 COLOR_DEFAULT="cyan"
 
 function __info() { #%nSee system info.
@@ -31,6 +31,12 @@ function __to() { # time command%n%ttime: Time in seconds.%n%tcommand: Command t
     r=$?
     e "Exit code: $r"
 }
+
+function __color() {
+    ec $@
+}
+
+on_exit "echo ON EXIT CALLBACK"
 
 # Run
 run "$@"

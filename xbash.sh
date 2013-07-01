@@ -57,6 +57,17 @@ fi
     
     # Boolean false.
     FALSE=0
+    
+    # Key: ESC
+    KEY_ESC=$'\e'
+
+### PRIVATE VARS
+
+    # On exit command
+    _ON_EXIT=''
+
+   # TRUE if APP is terminated
+   _APP_EXIT=$FALSE
 
 ### UTILS
 
@@ -151,7 +162,7 @@ fi
         echo
         echo $@
         echo
-        exit 1
+        end 1
     }
 
 ### STRING
@@ -332,37 +343,37 @@ fi
             gray)
                 c="0;37"
                 ;;
-            gray2)
+            gray_light)
                 c="1;30"
                 ;;
             blue)
                 c="0;34"
                 ;;
-            blue2)
+            blue_light)
                 c="1;34"
                 ;;
             green)
                 c="0;32"
                 ;;
-            green2)
+            green_light)
                 c="1;32"
                 ;;
             cyan)
                 c="0;36"
                 ;;
-            cyan2)
+            cyan_light)
                 c="1;36"
                 ;;
             red)
                 c="0;31"
                 ;;
-            red2)
+            red_light)
                 c="1;31"
                 ;;
             purple)
                 c="0;35"
                 ;;
-            purple2)
+            purple_light)
                 c="1;35"
                 ;;
             coffe)
@@ -384,22 +395,35 @@ fi
     # *: {String} Text to print.
     # Out: {String} Text.
     function e() {
-        echo -e "$(ecolor default)${ECHO_CHAR} $@$(ecolor system)"
+        c="$(ecolor default)"
+        echo -e "${c}${ECHO_CHAR} $@${c}"
+    }
+
+    # Print a text using color.
+    #
+    # 1: {COLOR} Color. See "case" into "ecolor" function for details.
+    # *: {String} Text to print.
+    # Out: {String} Text.
+    function ec() {
+        echo -e "$(ecolor $1)${@:2}$(ecolor system)"
     }
     
     # Re-print last line.
     #
-    # 1: {String} Text to print.
-    # 2: {Integer} (Default: 1) Lines to meve back.
+    # 1: {Integer} (Default: 1) Lines to meve back. If is not a number, used as text.
+    # *: {String} Text to print.
     # Out: {String} Text.
-    function eb() {
+    function echo_back() {
         n=1
+        text="$@"
         if [ $# -gt 1 ] ; then
-            n=$2
+            if [ $(is_number "$1") = $TRUE ] ; then
+                n=$1
+                text="${@:2}"
+            fi
         fi
         bl="\033[${n}A"
-        c="$(ecolor default)"
-        print_line " " "${bl}${c}${ECHO_CHAR} $@${c}" # Clear line
+        print_line " " "${bl}$(ecolor default)${ECHO_CHAR} ${text}$(ecolor system)" # Clear line
     }
 
     # Pause.
@@ -416,20 +440,47 @@ fi
         e
         e
     }
+
+    # Set on-exit callback.
+    #
+    # *: Command to execute on APP exit.
+    function on_exit() {
+         _ON_EXIT="$@"
+    }
+
+    # Exit from APP.
+    #
+    # 1: {Integer} (Default: 0) Exit code.
+    function end() {
+        if [ "$_APP_EXIT" = "$FALSE" ] ; then
+            if ! [ -z "$_ON_EXIT" ] ; then
+                $_ON_EXIT
+            fi
+            _APP_EXIT=$TRUE
+            e $(ecolor system)
+            if [ $# -gt 1 ] ; then
+                exit $1
+            else
+                exit 0
+            fi
+        fi
+    }
+    # CTRL + C
+    trap end $?
     
     # Show error message and exit.
     #
     # 1: {String} Error message.
-    # 2: {Integer} (Default: 1) Error code.
+    # 2: {Integer} (Default: 1) Exit code.
     function exit_error() {
         e
         e "$(ecolor red)Error!"
         e "$(ecolor red)$1"
         e
         if [ $# -gt 1 ] ; then
-            exit $2
+            end $2
         else
-            exit 1
+            end 1
         fi
     }
     
@@ -446,10 +497,10 @@ fi
         COUNT=$1
         rta=0
         while [ ${COUNT} -gt 0 ] && [ ${rta} -eq 0 ] ; do
-            eb "Count down... ${COUNT}    Press [C] to cancel..." 
-            read -n 1 -t 1 -p "" i
+            echo_back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..." 
+            read -n 1 -t 1 -p "" i >&2
             r=$?
-            if [ "${i}" == "c" ] || [ "${i}" == "C" ] ; then
+            if [ "${i}" == "c" ] || [ "${i}" == "C" ] || [ "${i}" == "$KEY_ESC" ] ; then
                 rta=1
             else
                 # 142 == No user input
@@ -458,14 +509,14 @@ fi
                 fi
             fi
         done
+        echo_back # Remove last line
         if [ ${COUNT} -eq 0 ] ; then
-            e
+            echo_back
             $2
             return $?
         else
             # Canceled
-            e
-            e "   Cancel by user!"
+            echo_back "   Cancel by user!"
             e
             return 255
         fi
@@ -727,7 +778,7 @@ fi
         e
         echo
         # Return result code
-        exit $r
+        end $r
     }
 
 # #############################################################################
