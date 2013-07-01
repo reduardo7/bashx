@@ -384,8 +384,7 @@ fi
     # *: {String} Text to print.
     # Out: {String} Text.
     function e() {
-        c="$(ecolor default)"
-        echo -e "${c}${ECHO_CHAR} $@${c}"
+        echo -e "$(ecolor default)${ECHO_CHAR} $@$(ecolor system)"
     }
     
     # Re-print last line.
