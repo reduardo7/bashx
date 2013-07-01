@@ -4,7 +4,7 @@
 ##
 ## Bash Extension.
 ##
-## Version: 1.0
+## Version: 1.1
 ## URL: https://github.com/reduardo7/xbash
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
@@ -428,7 +428,7 @@ fi
 
     # Pause.
     #
-    # 1: {String} Message.
+    # *: {String} (Optional) Message.
     function pause() {
         if [ $# -le 1 ] ; then
             m="Press any key to continue..."
