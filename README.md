@@ -1,5 +1,5 @@
-xbash | Bash Extended
-=====================
+xbash | Extended Bash Framework
+===============================
 
 # Description
 
