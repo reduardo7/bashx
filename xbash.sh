@@ -20,7 +20,7 @@
 
 # Test if running with "bash" interpreter.
 if [ -z "$BASH" ] ; then
-    /bin/bash $0 "$@"
+    bash $0 "$@"
     exit $?
 fi
 
