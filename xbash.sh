@@ -2,7 +2,7 @@
 
 ## XBash
 ##
-## Bash Extension.
+## Extended Bash Framework.
 ##
 ## Version: 1.1
 ## URL: https://github.com/reduardo7/xbash
@@ -20,7 +20,7 @@
 
 # Test if running with "bash" interpreter.
 if [ -z "$BASH" ] ; then
-    /bin/bash $0 "$@"
+    bash $0 "$@"
     exit $?
 fi
 
