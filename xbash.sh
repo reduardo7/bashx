@@ -31,17 +31,17 @@ fi
 
     # APP Title.
     APP_TITLE="XBash"
-    
+
     # APP Version.
     APP_VERSION="1.0"
-    
+
     # Default APP color. See "ecolor" for more information.
     #COLOR_DEFAULT="system" # Default system color
     COLOR_DEFAULT="cyan"
-    
+
     # Start character for formated print screen (see "e" function).
     ECHO_CHAR="#"
-    
+
     # Application requeirements.
     # To extend requeirements, use:
     #   APP_REQUEIREMENTS="${APP_REQUEIREMENTS} other app command extra foo"
@@ -51,15 +51,38 @@ fi
 
     # Null path.
     DEV_NULL="/dev/null"
-    
+
     # Boolean true.
     TRUE=1
-    
+
     # Boolean false.
     FALSE=0
-    
+
     # Key: ESC
     KEY_ESC=$'\e'
+
+### STYLE
+
+    FONT_BOLD=`tput bold`
+    FONT_UNDERLINE_ON=`tput smul`
+    FONT_UNDERLINE_OFF=`tput rmul`
+    FONT_TEXT_BLACK=`tput setaf 0`
+    FONT_TEXT_RED=`tput setaf 1`
+    FONT_TEXT_GREEN=`tput setaf 2`
+    FONT_TEXT_YELLOW=`tput setaf 3`
+    FONT_TEXT_BLUE=`tput setaf 4`
+    FONT_TEXT_MAGENTA=`tput setaf 5`
+    FONT_TEXT_CYAN=`tput setaf 6`
+    FONT_TEXT_WHITE=`tput setaf 7`
+    FONT_BACKGROUND_BLACK=`tput setab 0`
+    FONT_BACKGROUND_RED=`tput setab 1`
+    FONT_BACKGROUND_GREEN=`tput setab 2`
+    FONT_BACKGROUND_YELLOW=`tput setab 3`
+    FONT_BACKGROUND_BLUE=`tput setab 4`
+    FONT_BACKGROUND_MAGENTA=`tput setab 5`
+    FONT_BACKGROUND_CYAN=`tput setab 6`
+    FONT_BACKGROUND_WHITE=`tput setab 7`
+    FONT_RESET_FORMATTING=`tput sgr0`
 
 ### PRIVATE VARS
 
@@ -102,7 +125,7 @@ fi
             echo $FALSE
         fi
     }
-    
+
     # Check if is a number.
     #
     # 1: {*} Variable to check if is a number.
@@ -117,7 +140,7 @@ fi
             return $FALSE
         fi
     }
-    
+
     # Check if function exists.
     #
     # 1: {String} Function name.
@@ -133,7 +156,7 @@ fi
             return $FALSE
         fi
     }
-    
+
     # Print vars.
     #
     # *: Vars to print.
@@ -185,7 +208,7 @@ fi
         fi
         echo "$1" | sed "s/$2/$3/$options"
     }
-    
+
     # Trim text.
     #
     # 1: {String} String where trim.
@@ -198,7 +221,7 @@ fi
         fi
         echo "$1" | sed "s/^${chr}//g" | sed "s/${chr}$//g"
     }
-    
+
     # Left trim text.
     #
     # 1: {String} String where trim.
@@ -211,7 +234,7 @@ fi
         fi
         echo "$1" | sed "s/^${chr}//g"
     }
-    
+
     # Right trim text.
     #
     # 1: {String} String where trim.
@@ -224,7 +247,7 @@ fi
         fi
         echo "$1" | sed "s/${chr}$//g"
     }
-    
+
     # String length.
     #
     # 1: {String} Text.
@@ -232,7 +255,7 @@ fi
     function str_len() {
         echo ${#1}
     }
-    
+
     # Sub string.
     # 1: {String} String to cut.
     # 2: {Integer} Limit.
@@ -245,7 +268,7 @@ fi
             echo ${1:$3:$2}
         fi
     }
-    
+
     # String position.
     #
     # 1: {String} String where search.
@@ -271,7 +294,7 @@ fi
             return $FALSE
         fi
     }
-    
+
     # String contains substring?
     #
     # 1: {String} String where search.
@@ -290,9 +313,9 @@ fi
         echo $r
         return $r
     }
-    
+
 ### ERROR
-    
+
     # Last execution returns > 0 (error)?
     #
     # *: {String} Command to execute on error.
@@ -304,7 +327,7 @@ fi
             error "" $c
         fi
     }
-    
+
     # Show error message and exit.
     #
     # 1: {String} Error message.
@@ -330,7 +353,7 @@ fi
     function screen_width() {
         tput cols
     }
-     
+
     # Change screen print color.
     #
     # 1: {COLOR} Color. See "case" into this function for details.
@@ -401,7 +424,7 @@ fi
             echo "\e[${c}m"
         fi
     }
-     
+
     # Print at screen.
     #
     # *: {String} Text to print.
@@ -419,7 +442,7 @@ fi
     function ec() {
         echo -e "$(ecolor $1)${@:2}$(ecolor system)"
     }
-    
+
     # Re-print last line.
     #
     # 1: {Integer} (Default: 1) Lines to meve back. If is not a number, used as text.
@@ -479,7 +502,7 @@ fi
     }
     # CTRL + C
     trap end EXIT
-    
+
     # Time out.
     #
     # 1: {Integer} Time out for count down.
@@ -493,7 +516,7 @@ fi
         COUNT=$1
         rta=0
         while [ ${COUNT} -gt 0 ] && [ ${rta} -eq 0 ] ; do
-            echo_back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..." 
+            echo_back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..."
             read -n 1 -t 1 -p "" i
             r=$?
             if [ "${i}" == "c" ] || [ "${i}" == "C" ] || [ "${i}" == "$KEY_ESC" ] ; then
@@ -517,7 +540,7 @@ fi
             return 255
         fi
     }
-    
+
     # Print a line with full width.
     #
     # 1: {Char} Character for line.
@@ -552,7 +575,7 @@ fi
         done
         echo -e "${fill}"
     }
-    
+
     # Print command and their result.
     #
     # 1: {String} Command to print and execute.
@@ -644,21 +667,21 @@ fi
     function current_directory() {
         dirname "$(readlink -f "$0")"
     }
-    
+
     # Current script file name.
     #
     # Out: {String} Current script file name.
     function script_file_name() {
         basename "$0"
     }
-    
+
     # Script full path.
     #
     # Out: {String} Current script full path.
     function script_full_path() {
         echo "$(current_directory)/$(script_file_name)"
     }
-    
+
     # Check if directory exists.
     #
     # 1: {String} Directory path.
@@ -708,7 +731,7 @@ fi
             fi
         done
     }
-    
+
     # Print basic usage.
     # Using "__" at begin of function name to set as argument method.
     # Put "#" before function to write extra help text.
@@ -732,7 +755,7 @@ fi
             e
         done
     }
-    
+
     # Alias of "usage".
     function __help() { #%nAlias of "usage".
         __usage "$@"
