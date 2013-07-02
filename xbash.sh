@@ -2,7 +2,7 @@
 
 ## XBash
 ##
-## Bash Extension.
+## Extended Bash Framework.
 ##
 ## Version: 1.1
 ## URL: https://github.com/reduardo7/xbash
