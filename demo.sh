@@ -10,10 +10,10 @@ function __info() { #%nSee system info.
     e "$(ecolor green)Script name: $(script_file_name)"
     e "$(ecolor red)Path: $(current_directory)"
     e "Date and time: $(now_date_time)"
-        
+
     # Pause script
     pause
-    
+
     # Check root
     if [ $(is_root) = $TRUE ] ; then
         e "$(ecolor red)ROOT$(ecolor green) user"
@@ -33,15 +33,16 @@ function __to() { # time command%n%ttime: Time in seconds.%n%tcommand: Command t
 }
 
 function __testError() {
-	e "Generating an error..."
+    e "Generating an error..."
     e $error_var_x
-	error_not_exists_test
-	check_error "ec red Exit for error!"
-	e "NO EXECUTE"
+    error_not_exists_test
+    check_error "ec red Exit for error!"
+    e "NO EXECUTE"
 }
 
-function __color() {
-    ec $@
+function __split() {
+    read ADDR1 ADDR2 <<< $(str_explode ";" "bla@some.com;john@home.com")
+    echo $ADDR1 ... $ADDR2
 }
 
 on_exit "echo ON EXIT CALLBACK"
