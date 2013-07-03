@@ -61,29 +61,6 @@ fi
     # Key: ESC
     KEY_ESC=$'\e'
 
-### STYLE
-
-    FONT_BOLD=`tput bold`
-    FONT_UNDERLINE_ON=`tput smul`
-    FONT_UNDERLINE_OFF=`tput rmul`
-    FONT_TEXT_BLACK=`tput setaf 0`
-    FONT_TEXT_RED=`tput setaf 1`
-    FONT_TEXT_GREEN=`tput setaf 2`
-    FONT_TEXT_YELLOW=`tput setaf 3`
-    FONT_TEXT_BLUE=`tput setaf 4`
-    FONT_TEXT_MAGENTA=`tput setaf 5`
-    FONT_TEXT_CYAN=`tput setaf 6`
-    FONT_TEXT_WHITE=`tput setaf 7`
-    FONT_BACKGROUND_BLACK=`tput setab 0`
-    FONT_BACKGROUND_RED=`tput setab 1`
-    FONT_BACKGROUND_GREEN=`tput setab 2`
-    FONT_BACKGROUND_YELLOW=`tput setab 3`
-    FONT_BACKGROUND_BLUE=`tput setab 4`
-    FONT_BACKGROUND_MAGENTA=`tput setab 5`
-    FONT_BACKGROUND_CYAN=`tput setab 6`
-    FONT_BACKGROUND_WHITE=`tput setab 7`
-    FONT_RESET_FORMATTING=`tput sgr0`
-
 ### PRIVATE VARS
 
     # On exit command
@@ -102,8 +79,8 @@ fi
         # Is ROOT user?
         if [ "$(id -u)" -ne 0 ]; then
             # No Root
-	        echo $FALSE
-	        return $FALSE
+            echo $FALSE
+            return $FALSE
         else
             # Root
             echo $TRUE
@@ -173,10 +150,10 @@ fi
 
     # Escape string for Bash.
     #
-    # 1: {String} String to escape for Bash.
+    # *: {String} String to escape for Bash.
     # Out: {String} Escaped string.
     function str_escape() {
-	    printf '%q' "$1"
+        printf '%q' "$@"
     }
 
     # Repeat string.
@@ -185,13 +162,13 @@ fi
     # 2: {String} String to repeat.
     # Out: {String} Repeated string.
     function str_repeat() {
-	    let fillsize=$1
-	    fill=$2
-	    while [ ${fillsize} -gt 1 ] ; do
-		    fill="${fill}$2"
-		    let fillsize=${fillsize}-1
-	    done
-	    echo $fill
+        let fillsize=$1
+        fill=$2
+        while [ ${fillsize} -gt 1 ] ; do
+            fill="${fill}$2"
+            let fillsize=${fillsize}-1
+        done
+        echo $fill
     }
 
     # Replace string.
@@ -207,6 +184,17 @@ fi
             options="${options}i"
         fi
         echo "$1" | sed "s/$2/$3/$options"
+    }
+
+    # Explode string and set values.
+    #
+    # 1: {String} Separator.
+    # 2: {String} String to explode.
+    # Use:
+    #   read ADDR1 ADDR2 <<< $(str_explode ";" "bla@some.com;john@home.com")
+    #   e $ADDR1 --- $ADDR2
+    str_explode() {
+        IFS="$1"; echo $2
     }
 
     # Trim text.
@@ -423,6 +411,65 @@ fi
         else
             echo "\e[${c}m"
         fi
+    }
+
+    function style() {
+        FONT_BOLD=`tput bold`
+        FONT_UNDERLINE_ON=`tput smul`
+        FONT_UNDERLINE_OFF=`tput rmul`
+        # FONT_TEXT_BLACK=`tput setaf 0`
+        # FONT_TEXT_RED=`tput setaf 1`
+        # FONT_TEXT_GREEN=`tput setaf 2`
+        # FONT_TEXT_YELLOW=`tput setaf 3`
+        # FONT_TEXT_BLUE=`tput setaf 4`
+        # FONT_TEXT_MAGENTA=`tput setaf 5`
+        # FONT_TEXT_CYAN=`tput setaf 6`
+        # FONT_TEXT_WHITE=`tput setaf 7`
+        FONT_BACKGROUND_BLACK=`tput setab 0`
+        FONT_BACKGROUND_RED=`tput setab 1`
+        FONT_BACKGROUND_GREEN=`tput setab 2`
+        FONT_BACKGROUND_YELLOW=`tput setab 3`
+        FONT_BACKGROUND_BLUE=`tput setab 4`
+        FONT_BACKGROUND_MAGENTA=`tput setab 5`
+        FONT_BACKGROUND_CYAN=`tput setab 6`
+        FONT_BACKGROUND_WHITE=`tput setab 7`
+        FONT_RESET_FORMATTING=`tput sgr0`
+
+        for p in $@ ; do
+            # Color
+            if [[ "$p" =~ ^color\s*\=\s*.+$ ]] ; then
+
+                case "$s" in
+                    default)
+                        tput sgr0
+                        ;;
+                    black)
+                        tput setab 0
+                        ;;
+                    white)
+                        tput setaf 7
+                        ;;
+                    blue)
+                        tput setaf 4
+                        ;;
+                    green)
+                        tput setaf 2
+                        ;;
+                    cyan)
+                        tput setaf 6
+                        ;;
+                    red)
+                        tput setaf 1
+                        ;;
+                    yellow)
+                        tput setaf 3
+                        ;;
+                    magenta)
+                        tput setaf 5
+                        ;;
+                esac
+            fi
+        done
     }
 
     # Print at screen.
