@@ -41,11 +41,24 @@ function __testError() {
 }
 
 function __split() {
-    read ADDR1 ADDR2 <<< $(str_explode ";" "bla@some.com;john@home.com")
-    echo $ADDR1 ... $ADDR2
+    str="bla@some.com bbb;john@home.com jjj"
+    sep=";"
+    str_explode "$sep" "$str"
+    array_count=$?
+    e "String to explode: '$str'"
+    e "Separator: '$sep'"
+    e "Array length: $array_count"
+    e "Array values:"
+    for i in ${RESULT[@]} ; do
+        e "\t'$i'"
+    done
 }
 
-on_exit "echo ON EXIT CALLBACK"
+function exit_callback() {
+    e "Function called on exit!"
+}
+
+set_on_exit exit_callback
 
 # Run
 run "$@"

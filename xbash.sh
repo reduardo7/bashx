@@ -61,6 +61,9 @@ fi
     # Key: ESC
     KEY_ESC=$'\e'
 
+    # Result value for some functions
+    RESULT=""
+
 ### PRIVATE VARS
 
     # On exit command
@@ -186,15 +189,21 @@ fi
         echo "$1" | sed "s/$2/$3/$options"
     }
 
-    # Explode string and set values.
+    # Explode string into $RESULT as Array.
     #
     # 1: {String} Separator.
     # 2: {String} String to explode.
+    # Result in $RESULT.
+    # Return: Array length.
     # Use:
-    #   read ADDR1 ADDR2 <<< $(str_explode ";" "bla@some.com;john@home.com")
-    #   e $ADDR1 --- $ADDR2
-    str_explode() {
-        IFS="$1"; echo $2
+    #    str_explode ";" "bla@some.com bbb;john@home.com jjj"
+    #    for i in ${RESULT[@]} ; do
+    #        echo $i
+    #    done
+    function str_explode() {
+        IFS="$1"
+        RESULT=( $(echo "$2") )
+        return ${#RESULT[@]}
     }
 
     # Trim text.
@@ -505,7 +514,8 @@ fi
             fi
         fi
         bl="\033[${n}A"
-        print_line " " "${bl}$(ecolor default)${ECHO_CHAR} ${text}$(ecolor system)" # Clear line
+        "${bl}$(ecolor default)${ECHO_CHAR} ${text}$(ecolor system)" # Clear line
+        str_repeat 80 ' '
     }
 
     # Pause.
@@ -526,15 +536,15 @@ fi
     # Set on-exit callback.
     #
     # *: Command to execute on APP exit.
-    function on_exit() {
+    function set_on_exit() {
          _ON_EXIT="$@"
     }
 
-    # Exit from APP.
+    # Exit from APP and execute the function setted in "set_on_exit".
     #
     # 1: {Integer} (Default: 0) Exit code.
     function end() {
-        if [ "$_APP_EXIT" = "$FALSE" ] ; then
+        if [ "$_APP_EXIT" == "$FALSE" ] ; then
             if ! [ -z "$_ON_EXIT" ] ; then
                 $_ON_EXIT
             fi
@@ -588,41 +598,6 @@ fi
         fi
     }
 
-    # Print a line with full width.
-    #
-    # 1: {Char} Character for line.
-    # 2: {String} (Optional) Text to print at start.
-    # Out: {String} Line.
-    function print_line() {
-        if [ $# -eq 0 ] ; then
-            # No params
-            len=0
-            fill=""
-            c="-"
-            lenC=1
-        else
-            # Character
-            c="$1"
-            lenC=$(str_len "$c")
-            len=0
-            if [ $# -eq 2 ] ; then
-                # Text
-                let len=$(str_len "$2")+1
-                fill="$2 "
-            fi
-        fi
-        let fillsize=$(screen_width)-${len}
-        while [ ${fillsize} -gt 0 ] ; do
-            fill="${fill}${c}"
-            if [ ${fillsize} -eq 1 ] ; then
-                fillsize=0
-            else
-                let fillsize=${fillsize}-${lenC}
-            fi
-        done
-        echo -e "${fill}"
-    }
-
     # Print command and their result.
     #
     # 1: {String} Command to print and execute.
@@ -630,10 +605,10 @@ fi
     # Return: Executed command exit code.
     function cmd_log() {
         echo
-        print_line "-" "$1"
+        str_repeat 80 '-'
         $1
         r=$?
-        print_line
+        str_repeat 80 '-'
         return $r
     }
 
