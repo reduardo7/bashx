@@ -58,9 +58,7 @@ function exit_callback() {
     e "Function called on exit!"
 }
 
-set_on_exit (
-    e "Function called on exit!"
-)
+set_on_exit e "Function called on exit!"
 
 # Run
 run "$@"
