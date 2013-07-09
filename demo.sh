@@ -1,9 +1,8 @@
 #!/bin/bash
-. ./xbash.sh
+. ./src/xbash.sh
 
-APP_TITLE="Demo XBash"
-APP_VERSION="1"
-COLOR_DEFAULT="cyan"
+# On exit callback
+set_on_exit exit_callback
 
 function __info() { #%nSee system info.
     # Info
@@ -57,8 +56,6 @@ function __split() {
 function exit_callback() {
     e "Function called on exit!"
 }
-
-set_on_exit exit_callback
 
 # Run
 run "$@"

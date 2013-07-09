@@ -4,7 +4,7 @@
 ##
 ## Extended Bash Framework.
 ##
-## Version: 1.1
+## Version: 1.2
 ## URL: https://github.com/reduardo7/xbash
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
@@ -14,7 +14,7 @@
 # Init.
 
 ## #!/bin/bash
-## . ./xbash.sh
+## . ./src/xbash.sh
 
 # #############################################################################
 
@@ -23,6 +23,10 @@ if [ -z "$BASH" ] ; then
     bash $0 "$@"
     exit $?
 fi
+
+# Reset color for command output
+# (this one is invoked every time before a command is executed):
+trap 'echo -ne "\e[0m"' DEBUG
 
 # #############################################################################
 
@@ -47,7 +51,26 @@ fi
     #   APP_REQUEIREMENTS="${APP_REQUEIREMENTS} other app command extra foo"
     APP_REQUEIREMENTS="echo printf sed grep tput read date dirname readlink basename tar"
 
+    # Default action to call
+    # Action to use if script called without arguments.
+    DEFAULT_ACTION=""
+
+### Load files
+
+    # Config
+    if [ -z "${CONFIG_FILE}" ] ; then
+        # Default file
+        CONFIG_FILE="config.ini"
+    fi
+    if [ -f "${CONFIG_FILE}" ] ; then
+        # Load file
+        . ./${CONFIG_FILE}
+    fi
+
 ### VARS
+
+    # XBash File Name
+    XBASH_FILE_NAME="src/xbash.sh"
 
     # Null path.
     DEV_NULL="/dev/null"
@@ -550,6 +573,7 @@ fi
             fi
             _APP_EXIT=$TRUE
             e $(ecolor system)
+            echo
             if [ $# -gt 1 ] ; then
                 exit $1
             else
@@ -773,7 +797,7 @@ fi
             src="$(script_full_path)"
         fi
         grep "^[ \t]*function __.\+()[ \t]*{.*$" "${src}" | while read line ; do
-            e "  \$$(ecolor red)$0$(ecolor blue) $(echo "${line}" | sed "s/()[ \t]*{.*#[ \t]*/ $(str_escape "$(ecolor default)")/g")" | sed "s/()[ \t]*{[ \t]*//g" | sed "s/[ \t]*function __/ /g" | sed "s/[ \t]*%n/\n${ECHO_CHAR}     > /g" | sed "s/%t/    /g"
+            e "  bash $(ecolor red)$0$(ecolor blue) $(echo "${line}" | sed "s/()[ \t]*{.*#[ \t]*/ $(str_escape "$(ecolor default)")/g")" | sed "s/()[ \t]*{[ \t]*//g" | sed "s/[ \t]*function __/ /g" | sed "s/[ \t]*%n/\n${ECHO_CHAR}     > /g" | sed "s/%t/    /g"
             e
         done
     }
@@ -811,17 +835,22 @@ fi
             fi
         fi
         if [ ${#1} == 0 ] ; then
-            e "$CMDS"
-            e "Usage:"
-            e
-            __usage
-            if [ "$(script_file_name)" != "xbash.sh" ] ; then
-                __usage "xbash.sh"
+            if [ -z "${DEFAULT_ACTION}" ] ; then
+                # Show usage
+                e
+                e "Usage:"
+                e
+                __usage
+                if [ "$(script_file_name)" != "${XBASH_FILE_NAME}" ] ; then
+                    __usage "${XBASH_FILE_NAME}"
+                fi
+                r=1
+            else
+                # Call default action
+                __${DEFAULT_ACTION}
             fi
-            r=1
         fi
         e
-        echo
         # Return result code
         end $r
     }
