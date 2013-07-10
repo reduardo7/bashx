@@ -53,6 +53,15 @@ function __split() {
     done
 }
 
+function __exists() {
+    wait_for_file_exists "/tmp/test.txt" 10
+    if [ $? -eq $TRUE ] ; then
+        e "File exists!"
+    else
+        e "File not exists!"
+    fi
+}
+
 function exit_callback() {
     e "Function called on exit!"
 }

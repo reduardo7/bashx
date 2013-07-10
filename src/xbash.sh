@@ -19,7 +19,7 @@
 # #############################################################################
 
 # Test if running with "bash" interpreter.
-if [ -z "$BASH" ] ; then
+if [ -z "$BASH" ]; then
     bash $0 "$@"
     exit $?
 fi
@@ -49,7 +49,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Application requeirements.
     # To extend requeirements, use:
     #   APP_REQUEIREMENTS="${APP_REQUEIREMENTS} other app command extra foo"
-    APP_REQUEIREMENTS="echo printf sed grep tput read date dirname readlink basename tar"
+    APP_REQUEIREMENTS="echo printf sed grep tput read date dirname readlink basename tar let"
 
     # Default action to call
     # Action to use if script called without arguments.
@@ -58,11 +58,11 @@ trap 'echo -ne "\e[0m"' DEBUG
 ### Load files
 
     # Config
-    if [ -z "${CONFIG_FILE}" ] ; then
+    if [ -z "${CONFIG_FILE}" ]; then
         # Default file
         CONFIG_FILE="config.ini"
     fi
-    if [ -f "${CONFIG_FILE}" ] ; then
+    if [ -f "${CONFIG_FILE}" ]; then
         # Load file
         . ./${CONFIG_FILE}
     fi
@@ -100,17 +100,17 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Check if run as Root.
     #
     # Out: {Boolean} TRUE if is root.
-    # Return: The same as "Out".
+    # Return: 0 if is root, 1 is not root.
     function is_root() {
         # Is ROOT user?
         if [ "$(id -u)" -ne 0 ]; then
             # No Root
             echo $FALSE
-            return $FALSE
+            return 1
         else
             # Root
             echo $TRUE
-            return $TRUE
+            return 0
         fi
     }
 
@@ -120,7 +120,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Out: {Boolean} TRUE if variable is emtpy.
     # Return: The same as "Out".
     function is_empty() {
-        if [ -z "$1" ] ; then
+        if [ -z "$1" ]; then
             # Empty
             echo $TRUE
         else
@@ -133,14 +133,14 @@ trap 'echo -ne "\e[0m"' DEBUG
     #
     # 1: {*} Variable to check if is a number.
     # Out: {Boolean} TRUE if variable is a number.
-    # Return: The same as "Out".
+    # Return: 0 if variable is a number, 1 if variable is not a number.
     function is_number() {
-        if [[ "$1" =~ ^[0-9]+$ ]] ; then
+        if [[ "$1" =~ ^[0-9]+$ ]]; then
             echo $TRUE
-            return $TRUE
+            return 0
         else
             echo $FALSE
-            return $FALSE
+            return 1
         fi
     }
 
@@ -148,15 +148,15 @@ trap 'echo -ne "\e[0m"' DEBUG
     #
     # 1: {String} Function name.
     # Out: {Boolean} TRUE if function exists.
-    # Return: {Boolean} TRUE if function exists.
+    # Return: 0 if function exists, 0 if file not exists.
     function function_exists() {
         declare -f "$1" > /dev/null
-        if [ $? -eq 0 ] ; then
+        if [ $? -eq 0 ]; then
             echo $TRUE
-            return $TRUE
+            return 0
         else
             echo $FALSE
-            return $FALSE
+            return 1
         fi
     }
 
@@ -206,7 +206,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Out: {String} Result string.
     function str_replace() {
         options="g"
-        if [ $# -lt 4 ] || [ "$4" -ne $TRUE ] ; then
+        if [ $# -lt 4 ] || [ "$4" -ne $TRUE ]; then
             options="${options}i"
         fi
         echo "$1" | sed "s/$2/$3/$options"
@@ -236,7 +236,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Out: {String} Trimed text.
     function trim() {
         chr=" "
-        if [ $# -gt 1 ] ; then
+        if [ $# -gt 1 ]; then
             chr="$2"
         fi
         echo "$1" | sed "s/^${chr}//g" | sed "s/${chr}$//g"
@@ -249,7 +249,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Out: {String} Trimed text.
     function ltrim() {
         chr=" "
-        if [ $# -gt 1 ] ; then
+        if [ $# -gt 1 ]; then
             chr="$2"
         fi
         echo "$1" | sed "s/^${chr}//g"
@@ -262,7 +262,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Out: {String} Trimed text.
     function rtrim() {
         chr=" "
-        if [ $# -gt 1 ] ; then
+        if [ $# -gt 1 ]; then
             chr="$2"
         fi
         echo "$1" | sed "s/${chr}$//g"
@@ -282,7 +282,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 3: {Integer} (Optional) Offset.
     # Out: {String} Result string
     function sub_str() {
-        if [ $# -eq 2 ] ; then
+        if [ $# -eq 2 ]; then
             echo ${1:0:$2}
         else
             echo ${1:$3:$2}
@@ -295,9 +295,9 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 2: {String} String to search.
     # 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
     # Out: {Integer|NULL} String position or NULL if not found.
-    # Return: TRUE on fonud, FALSE on not found.
+    # Return: 0 on fonud, 1 on not found.
     function str_pos() {
-        if [ $# -lt 3 ] || [ $3 = $TRUE ] ; then
+        if [ $# -lt 3 ] || [ $3 = $TRUE ]; then
             # Case sensitive
             p="-bo"
         else
@@ -306,12 +306,12 @@ trap 'echo -ne "\e[0m"' DEBUG
         fi
         r=$(echo "$1" | grep $p "$2" | sed 's/:.*$//')
         echo $r
-        if [ $(is_empty "$r") = $FALSE ] ; then
+        if [ $(is_empty "$r") = $FALSE ]; then
             # Found
-            return $TRUE
+            return 0
         else
             # No found
-            return $FALSE
+            return 1
         fi
     }
 
@@ -323,7 +323,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Out: {Boolean} TRUE if contains substring.
     # Return: TRUE if contains substring.
     function in_str() {
-        if [ $# -lt 3 ] ; then
+        if [ $# -lt 3 ]; then
             str_pos "$1" "$2" > $DEV_NULL
             r=$?
         else
@@ -341,7 +341,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # *: {String} Command to execute on error.
     function check_error() {
         c=$?
-        if [ $c -ne 0 ] ; then
+        if [ $c -ne 0 ]; then
             # Error
             $@
             error "" $c
@@ -353,12 +353,12 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 1: {String} Error message.
     # 2: {Integer} (Default: 1) Exit code.
     function error() {
-        if ! [ -z "$1" ] ; then
+        if ! [ -z "$1" ]; then
             e
-            ec red "Error! $1"
+            e "$(ecolor red)Error! $1"
         fi
         e
-        if [ $# -gt 1 ] ; then
+        if [ $# -gt 1 ]; then
             end $2
         else
             end 1
@@ -438,7 +438,7 @@ trap 'echo -ne "\e[0m"' DEBUG
                 c="1;33"
                 ;;
         esac
-        if [ -z "${c}" ] ; then
+        if [ -z "${c}" ]; then
             ecolor "${COLOR_DEFAULT}"
         else
             echo "\e[${c}m"
@@ -469,7 +469,7 @@ trap 'echo -ne "\e[0m"' DEBUG
 
         for p in $@ ; do
             # Color
-            if [[ "$p" =~ ^color\s*\=\s*.+$ ]] ; then
+            if [[ "$p" =~ ^color\s*\=\s*.+$ ]]; then
 
                 case "$s" in
                     default)
@@ -530,14 +530,14 @@ trap 'echo -ne "\e[0m"' DEBUG
     function echo_back() {
         n=1
         text="$@"
-        if [ $# -gt 1 ] ; then
-            if [ $(is_number "$1") = $TRUE ] ; then
+        if [ $# -gt 1 ]; then
+            if [ $(is_number "$1") = $TRUE ]; then
                 n=$1
                 text="${@:2}"
             fi
         fi
         bl="\033[${n}A"
-        "${bl}$(ecolor default)${ECHO_CHAR} ${text}$(ecolor system)" # Clear line
+        echo -e "${bl}$(ecolor default)${ECHO_CHAR} ${text}$(ecolor system)" # Clear line
         str_repeat 80 ' '
     }
 
@@ -545,7 +545,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     #
     # *: {String} (Optional) Message.
     function pause() {
-        if [ $# -le 1 ] ; then
+        if [ $# -le 1 ]; then
             m="Press any key to continue..."
         else
             m="$@"
@@ -567,14 +567,14 @@ trap 'echo -ne "\e[0m"' DEBUG
     #
     # 1: {Integer} (Default: 0) Exit code.
     function end() {
-        if [ "$_APP_EXIT" == "$FALSE" ] ; then
-            if ! [ -z "$_ON_EXIT" ] ; then
+        if [ "$_APP_EXIT" == "$FALSE" ]; then
+            if ! [ -z "$_ON_EXIT" ]; then
                 $_ON_EXIT
             fi
             _APP_EXIT=$TRUE
             e $(ecolor system)
             echo
-            if [ $# -gt 1 ] ; then
+            if [ $# -gt 1 ]; then
                 exit $1
             else
                 exit 0
@@ -600,17 +600,17 @@ trap 'echo -ne "\e[0m"' DEBUG
             echo_back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..."
             read -n 1 -t 1 -p "" i
             r=$?
-            if [ "${i}" == "c" ] || [ "${i}" == "C" ] || [ "${i}" == "$KEY_ESC" ] ; then
+            if [ "${i}" == "c" ] || [ "${i}" == "C" ] || [ "${i}" == "$KEY_ESC" ]; then
                 rta=1
             else
                 # 142 == No user input
-                if [ "${r}" == "142" ] ; then
+                if [ "${r}" == "142" ]; then
                     let COUNT=COUNT-1
                 fi
             fi
         done
         echo_back # Remove last line
-        if [ ${COUNT} -eq 0 ] ; then
+        if [ ${COUNT} -eq 0 ]; then
             echo_back
             $2
             return $?
@@ -694,16 +694,16 @@ trap 'echo -ne "\e[0m"' DEBUG
     #
     # 1: {String} File path.
     # Out: {Boolean} TRUE if file exists, 0 if not exists.
-    # Return: The same as "Out".
+    # Return: 0 if file exists, 1 if not exists.
     function file_exists() {
         if [ -f "$1" ]; then
             # Exists
             echo $TRUE
-            return $TRUE
+            return 0
         else
             # Not exists
             echo $FALSE
-            return $FALSE
+            return 1
         fi
     }
 
@@ -731,36 +731,94 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Check if directory exists.
     #
     # 1: {String} Directory path.
-    # Out: {Boolean} TRUE if directory exists, 0 if not exists.
-    # Return: The same as "Out".
-    function path_exists() {
+    # Out: {Boolean} TRUE if directory exists, FALSE if not exists.
+    # Return: 0 if directory exists, 1 if not exists.
+    function directory_exists() {
         if [ -d $(str_escape "$1") ]; then
             # Exists
             echo $TRUE
-            return $TRUE
+            return 0
         else
             # Not exists
             echo $FALSE
-            return $FALSE
+            return 1
         fi
+    }
+
+    # Wait for file exists.
+    #
+    # 1: {String} File path.
+    # 2: {Integer} Optional. Time out.
+    # Return: 0 if file exists, 1 if file not exists (time-out).
+    function wait_for_file_exists() {
+        p="..."
+        COUNT=0
+        while [ ! -f "$1" ] ; do
+            if [ $# -gt 1 ]; then
+                if [ $2 -lt $COUNT ]; then
+                    # Time out!
+                    return 1
+                else
+                    let COUNT=COUNT+1
+                fi
+            fi
+            echo_back "Waiting for '${1}'${p}"
+            sleep 1
+            if [ "${p}" == "..." ]; then
+                p="."
+            else
+                p="${p}."
+            fi
+        done
+        # Exists
+        return 0
+    }
+
+    # Wait for directory exists.
+    #
+    # 1: {String} Directory path.
+    # 2: {Integer} Optional. Time out.
+    # Return: 0 if file exists, 1 if file not exists (time-out).
+    function wait_for_directory_exists() {
+        p="..."
+        COUNT=0
+        while [ ! -d "$1" ] ; do
+            if [ $# -gt 1 ]; then
+                if [ $2 -gt $COUNT ]; then
+                    # Time out!
+                    return 1
+                else
+                    let COUNT=COUNT+1
+                fi
+            fi
+            echo_back "Waiting for '${1}'${p}"
+            sleep 1
+            if [ "${p}" == "..." ]; then
+                p="."
+            else
+                p="${p}."
+            fi
+        done
+        # Exists
+        return 0
     }
 
     # Check if file contains text.
     #
     # 1: {String} Text to search.
     # 2: {String} File where check.
-    # Out: {Boolean} TRUE if file contains the text, 0 if not contains the text.
-    # Return: The same as "Out".
+    # Out: {Boolean} TRUE if file contains the text, FALSE if not contains the text.
+    # Return: 0 if file contains the text, 1 if not contains the text.
     function file_contains() {
         grep -rils $(str_escape "$1") $(str_escape "$2") > /dev/null
         if [ $? -eq 1 ]; then
             # Not contains
             echo $FALSE
-            return $FALSE
+            return 1
         else
             # Contains
             echo $TRUE
-            return $TRUE
+            return 0
         fi
     }
 
@@ -772,7 +830,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     function check_requirements() {
         for req in $@ ; do
             hash "$req" 2>&-
-            if [ $? == 1 ] ; then
+            if [ $? == 1 ]; then
                 error "Error! Please install '${req}' to continue."
             fi
         done
@@ -788,9 +846,9 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 1: {String} (Default: Current executed file) File to render usage.
     # Out: {String} Usage text.
     function __usage() { #%nPrint basic usage (this).
-        if [ $# -gt 0 ] ; then
+        if [ $# -gt 0 ]; then
             src="$1"
-            if [ $(file_exists "${src}") == $FALSE ] ; then
+            if [ $(file_exists "${src}") == $FALSE ]; then
                 src="$(script_full_path)"
             fi
         else
@@ -825,8 +883,8 @@ trap 'echo -ne "\e[0m"' DEBUG
         e
         # Check requeirements
         check_requirements "${APP_REQUEIREMENTS}"
-        if [ $# -gt 0 ] ; then
-            if [ $(function_exists "__$1") == $TRUE ] ; then
+        if [ $# -gt 0 ]; then
+            if [ $(function_exists "__$1") == $TRUE ]; then
                 # Exec
                 __"$@"
                 r=$?
@@ -834,14 +892,14 @@ trap 'echo -ne "\e[0m"' DEBUG
                 error "Parameter '$(ecolor blue)${1}$(ecolor red)' not found. Call 'usage' to see help."
             fi
         fi
-        if [ ${#1} == 0 ] ; then
-            if [ -z "${DEFAULT_ACTION}" ] ; then
+        if [ ${#1} == 0 ]; then
+            if [ -z "${DEFAULT_ACTION}" ]; then
                 # Show usage
                 e
                 e "Usage:"
                 e
                 __usage
-                if [ "$(script_file_name)" != "${XBASH_FILE_NAME}" ] ; then
+                if [ "$(script_file_name)" != "${XBASH_FILE_NAME}" ]; then
                     __usage "${XBASH_FILE_NAME}"
                 fi
                 r=1
