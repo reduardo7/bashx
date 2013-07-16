@@ -55,12 +55,15 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Action to use if script called without arguments.
     DEFAULT_ACTION=""
 
+    # XBash SRC path.
+    XBASH_SRC_PATH="src"
+
 ### Load files
 
     # Config
     if [ -z "${CONFIG_FILE}" ]; then
         # Default file
-        CONFIG_FILE="./src/config.ini"
+        CONFIG_FILE="${XBASH_SRC_PATH}/config.ini"
     fi
     if [ -f "${CONFIG_FILE}" ]; then
         # Load file
@@ -69,8 +72,11 @@ trap 'echo -ne "\e[0m"' DEBUG
 
 ### VARS
 
+    # Current path
+    CURRENT_DIR="$(pwd)"
+
     # XBash File Name
-    XBASH_FILE_NAME="src/xbash.sh"
+    XBASH_FILE_NAME="./${XBASH_SRC_PATH}/xbash.sh"
 
     # Null path.
     DEV_NULL="/dev/null"
