@@ -4,7 +4,7 @@
 ##
 ## Extended Bash Framework.
 ##
-## Version: 1.2
+## Version: 1.3
 ## URL: https://github.com/reduardo7/xbash
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
@@ -37,7 +37,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     APP_TITLE="XBash"
 
     # APP Version.
-    APP_VERSION="1.0"
+    APP_VERSION="1.3"
 
     # Default APP color. See "ecolor" for more information.
     #COLOR_DEFAULT="system" # Default system color
@@ -111,6 +111,22 @@ trap 'echo -ne "\e[0m"' DEBUG
             # Root
             echo $TRUE
             return 0
+        fi
+    }
+
+    # Check if running as ROOT, or exit from script.
+    #
+    # *: Optional. Message.
+    function root_validator() {
+        if [ "$(is_root)" == $FALSE ]; then
+            if [ $# -eq 0 ] ; then
+                m="This script must be run as root!"
+            else
+                m="$@"
+            fi
+            e "$m"
+            e
+            end 1
         fi
     }
 
