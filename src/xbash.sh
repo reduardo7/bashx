@@ -60,7 +60,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Config
     if [ -z "${CONFIG_FILE}" ]; then
         # Default file
-        CONFIG_FILE="config.ini"
+        CONFIG_FILE="./src/config.ini"
     fi
     if [ -f "${CONFIG_FILE}" ]; then
         # Load file
