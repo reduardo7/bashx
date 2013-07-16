@@ -883,9 +883,9 @@ trap 'echo -ne "\e[0m"' DEBUG
         # done
 
         # USAGE before function
-        grep "^\s*function\s\+__.\+()\s*{.*$" "${src}" | while read line ; do
-            local cmd=$(echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*function\s\+__//g")
-            local info=$(grep -C0 -A0 -B1 "$cmd\s*()\s\+{" "$0" | sed "N;s/\n.*//g" | sed "s/^\s*#\s/\n${ECHO_CHAR}     # /g" | sed "s/\s*\\\n/\n${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g" )
+        grep "^\s*\(function\s\+\)\?__.\+()\s*{.*$" "${src}" | while read line ; do
+            local cmd=$(echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*\(function\s\+\)\?__//g")
+            local info=$(grep -C0 -A0 -B1 "$cmd\s*()\s*{" "$0" | sed "N;s/\n.*//g" | sed "s/^\s*#\s/\n${ECHO_CHAR}     # /g" | sed "s/\s*\\\n/\n${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g" )
             e "  bash $(ecolor red)${0}$(ecolor blue) ${cmd}$(ecolor default) ${info}"
             e
         done

@@ -23,7 +23,7 @@ function __info() {
 }
 
 # param1\nparam1: Text to print.
-function __params() {
+__params(){
     e "Text passed: $(ecolor red) '$1'"
 }
 
