@@ -4,7 +4,8 @@
 # On exit callback
 set_on_exit exit_callback
 
-function __info() { #%nSee system info.
+# See system info.
+function __info() {
     # Info
     e "$(ecolor green)Script name: $(script_file_name)"
     e "$(ecolor red)Path: $(current_directory)"
@@ -21,11 +22,13 @@ function __info() { #%nSee system info.
     fi
 }
 
-function __params() { # param1 %nparam1: Text to print.
+# param1\nparam1: Text to print.
+function __params() {
     e "Text passed: $(ecolor red) '$1'"
 }
 
-function __to() { # time command%n%ttime: Time in seconds.%n%tcommand: Command to execute.
+# time command\ntime: Time in seconds.\ncommand: Command to execute.
+function __to() {
     timeout "$1" "$2"
     r=$?
     e "Exit code: $r"

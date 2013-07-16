@@ -855,13 +855,13 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Print basic usage.
     # Using "__" at begin of function name to set as argument method.
     # Put "#" before function to write extra help text.
-    # Special chars:
-    #   %n -> \n
-    #   %t -> \t (4 spaces)
+    # Special chars: \n, \t (4 spaces)
     #
     # 1: {String} (Default: Current executed file) File to render usage.
     # Out: {String} Usage text.
-    function __usage() { #%nPrint basic usage (this).
+    #
+    #Print basic usage (this).
+    function __usage() {
         if [ $# -gt 0 ]; then
             src="$1"
             if [ $(file_exists "${src}") == $FALSE ]; then
@@ -870,14 +870,23 @@ trap 'echo -ne "\e[0m"' DEBUG
         else
             src="$(script_full_path)"
         fi
-        grep "^[ \t]*function __.\+()[ \t]*{.*$" "${src}" | while read line ; do
-            e "  bash $(ecolor red)$0$(ecolor blue) $(echo "${line}" | sed "s/()[ \t]*{.*#[ \t]*/ $(str_escape "$(ecolor default)")/g")" | sed "s/()[ \t]*{[ \t]*//g" | sed "s/[ \t]*function __/ /g" | sed "s/[ \t]*%n/\n${ECHO_CHAR}     > /g" | sed "s/%t/    /g"
+        # USAGE in function line
+        # grep "^[ \t]*function __.\+()[ \t]*{.*$" "${src}" | while read line ; do
+        #     e "  bash $(ecolor red)$0$(ecolor blue) $(echo "${line}" | sed "s/()[ \t]*{.*#[ \t]*/ $(str_escape "$(ecolor default)")/g")" | sed "s/()[ \t]*{[ \t]*//g" | sed "s/[ \t]*function __/ /g" | sed "s/[ \t]*%n/\n${ECHO_CHAR}     > /g" | sed "s/%t/    /g"
+        #     e
+        # done
+
+        # USAGE before function
+        grep "^\s*function\s\+__.\+()\s*{.*$" "${src}" | while read line ; do
+            local cmd=$(echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*function\s\+__//g")
+            local info=$(grep -C0 -A0 -B1 "$cmd\s*()\s\+{" "$0" | sed "N;s/\n.*//g" | sed "s/^\s*#\s/\n${ECHO_CHAR}     # /g" | sed "s/\s*\\\n/\n${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g" )
+            e "  bash $(ecolor red)${0}$(ecolor blue) ${cmd}$(ecolor default) ${info}"
             e
         done
     }
 
     # Alias of "usage".
-    function __help() { #%nAlias of "usage".
+    function __help() {
         __usage "$@"
     }
 
