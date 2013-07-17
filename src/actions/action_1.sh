@@ -3,5 +3,5 @@
 ## Use first line for parameters list.
 ##      Multi-line support!
 ##
-## Use "##" to generate this description.
+## Use "##" as line start to generate this description.
 e "IN ACTION 1!"

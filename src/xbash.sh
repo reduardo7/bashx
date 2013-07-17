@@ -4,7 +4,7 @@
 ##
 ## Extended Bash Framework.
 ##
-## Version: 1.3
+## Version: 1.4
 ## URL: https://github.com/reduardo7/xbash
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
@@ -37,7 +37,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     APP_TITLE="XBash"
 
     # APP Version.
-    APP_VERSION="1.3"
+    APP_VERSION="1.4"
 
     # Default APP color. See "ecolor" for more information.
     #COLOR_DEFAULT="system" # Default system color
@@ -933,8 +933,9 @@ trap 'echo -ne "\e[0m"' DEBUG
         fi
     }
 
-    # Print usage
-    #time command\nPrint basic usage (this).\nAdd action name to display the action usage.
+    # Print basic usage.
+    #
+    #action\nPrint basic usage (this).\naction: Optional. Action name to display.
     function __usage() {
         e
         e "Usage:"
@@ -955,7 +956,7 @@ trap 'echo -ne "\e[0m"' DEBUG
         fi
     }
 
-    # Alias of "usage", with less.
+    #\n"usage" with "less" command.
     function __help() {
         check_requirements less
         __usage "$@" | less
