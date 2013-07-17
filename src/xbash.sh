@@ -20,7 +20,7 @@
 
 # Test if running with "bash" interpreter.
 if [ -z "$BASH" ]; then
-    bash $0 "$@"
+    bash "$0" "$@"
     exit $?
 fi
 
@@ -93,6 +93,15 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Result value for some functions
     RESULT=""
 
+    # Called action
+    ACTION=""
+
+    # Actions directory name
+    ACTIONS_DIR="actions"
+
+    # Actions path
+    ACTIONS_PATH="./${XBASH_SRC_PATH}/${ACTIONS_DIR}"
+
 ### PRIVATE VARS
 
     # On exit command
@@ -122,7 +131,7 @@ trap 'echo -ne "\e[0m"' DEBUG
 
     # Check if running as ROOT, or exit from script.
     #
-    # *: Optional. Message.
+    # *: (Optional) Message.
     function root_validator() {
         if [ "$(is_root)" == $FALSE ]; then
             if [ $# -eq 0 ] ; then
@@ -347,10 +356,10 @@ trap 'echo -ne "\e[0m"' DEBUG
     function in_str() {
         if [ $# -lt 3 ]; then
             str_pos "$1" "$2" > $DEV_NULL
-            r=$?
+            local r=$?
         else
             str_pos "$1" "$2" "$3" > $DEV_NULL
-            r=$?
+            local r=$?
         fi
         echo $r
         return $r
@@ -360,12 +369,16 @@ trap 'echo -ne "\e[0m"' DEBUG
 
     # Last execution returns > 0 (error)?
     #
-    # *: {String} Command to execute on error.
+    # 1: {String} Command to execute on error.
+    # 2: {Integer} Change exit code.
     function check_error() {
         c=$?
         if [ $c -ne 0 ]; then
             # Error
-            $@
+            $1
+            if [ $# -gt 1 ]; then
+                c=$2
+            fi
             error "" $c
         fi
     }
@@ -590,7 +603,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 1: {Integer} (Default: 0) Exit code.
     function end() {
         if [ "$_APP_EXIT" == "$FALSE" ]; then
-            if ! [ -z "$_ON_EXIT" ]; then
+            if [ ! -z "$_ON_EXIT" ]; then
                 $_ON_EXIT
             fi
             _APP_EXIT=$TRUE
@@ -729,6 +742,20 @@ trap 'echo -ne "\e[0m"' DEBUG
         fi
     }
 
+    # Get file name.
+    #
+    # 1: {Boolean} (Default: FALSE) Remove file extension from file name?
+    # Out: {String} File name.
+    function file_name() {
+        # Remove path
+        local _fname="$(str_replace "${f}" "^.*\/" "")"
+        if [ "$2" == "$TRUE" ]; then
+            # Remove extension
+            local _fname="$(str_replace "${_fname}" "\..*$" "")"
+        fi
+        echo ${_fname}
+    }
+
     # Current directory.
     #
     # Out: {String} Current directory.
@@ -770,7 +797,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Wait for file exists.
     #
     # 1: {String} File path.
-    # 2: {Integer} Optional. Time out.
+    # 2: {Integer} (Optional) Time out.
     # Return: 0 if file exists, 1 if file not exists (time-out).
     function wait_for_file_exists() {
         p="..."
@@ -799,7 +826,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Wait for directory exists.
     #
     # 1: {String} Directory path.
-    # 2: {Integer} Optional. Time out.
+    # 2: {Integer} (Optional) Time out.
     # Return: 0 if file exists, 1 if file not exists (time-out).
     function wait_for_directory_exists() {
         p="..."
@@ -846,9 +873,15 @@ trap 'echo -ne "\e[0m"' DEBUG
 
 ### EXEC
 
+    # VOID function.
+    # Used in empty functions.
+    function void() {
+        echo 0 > $DEV_NULL
+    }
+
     # Check if all parameters are installed.
     #
-    # 1: {String} Commands separated by spaces.
+    # *: {String} Command to check.
     function check_requirements() {
         for req in $@ ; do
             hash "$req" 2>&-
@@ -864,36 +897,66 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Special chars: \n, \t (4 spaces)
     #
     # 1: {String} (Default: Current executed file) File to render usage.
+    # 2: {String} (Optional) Action to show.
     # Out: {String} Usage text.
-    #
-    #Print basic usage (this).
-    function __usage() {
-        if [ $# -gt 0 ]; then
-            src="$1"
+    # Use: usage "$0" actionName # For action in current file
+    #      usage file.sh actionName # For action in other file
+    function usage() {
+        local src="$(script_full_path)"
+        if [ $# -gt 0 ] && [ ! -z "$1" ]; then
+            local src="$1"
             if [ $(file_exists "${src}") == $FALSE ]; then
-                src="$(script_full_path)"
+                local src="$(script_full_path)"
+            fi
+        fi
+
+
+        if [[ "${src}" =~ \/${XBASH_SRC_PATH}\/${ACTIONS_DIR}\/.+ ]]; then
+            # Action file
+            local cmd="$(file_name "${src}" $TRUE)"
+            if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
+                local info="$(grep "^##" "${src}" | sed "s/^##\s\?/$(str_escape "$(ecolor default)")/g" | sed "s/^/$(str_escape "$(ecolor default)")${ECHO_CHAR}     > /g" | sed "s/\t/    /g" | sed "s/^------------------/  -----  /g")"
+                e "  bash $(ecolor red)${0}$(ecolor blue) ${cmd}$(ecolor default)|||${info}" | sed "s/|||.\+${ECHO_CHAR}\s\+>\s/ /g"
+                e
             fi
         else
-            src="$(script_full_path)"
+            # USAGE before function
+            grep "^\s*\(function\s\+\)\?__.\+()\s*{.*$" "${src}" | while read line ; do
+                local cmd=$(echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*\(function\s\+\)\?__//g")
+                if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
+                    local info="$(grep -C0 -A0 -B1 "^\s*\(function\s\+\)\?__$cmd\s*()\s*{" "$src" | sed "N;s/\n.*//g" | sed "s/^\s*#\s*/$(str_escape "$(ecolor default)")/g" | sed "s/\s*\\\n/\n$(str_escape "$(ecolor default)")${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g")"
+                    e "  bash $(ecolor red)${0}$(ecolor blue) ${cmd}$(ecolor default) ${info}"
+                    e
+                fi
+            done
         fi
-        # USAGE in function line
-        # grep "^[ \t]*function __.\+()[ \t]*{.*$" "${src}" | while read line ; do
-        #     e "  bash $(ecolor red)$0$(ecolor blue) $(echo "${line}" | sed "s/()[ \t]*{.*#[ \t]*/ $(str_escape "$(ecolor default)")/g")" | sed "s/()[ \t]*{[ \t]*//g" | sed "s/[ \t]*function __/ /g" | sed "s/[ \t]*%n/\n${ECHO_CHAR}     > /g" | sed "s/%t/    /g"
-        #     e
-        # done
-
-        # USAGE before function
-        grep "^\s*\(function\s\+\)\?__.\+()\s*{.*$" "${src}" | while read line ; do
-            local cmd=$(echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*\(function\s\+\)\?__//g")
-            local info=$(grep -C0 -A0 -B1 "$cmd\s*()\s*{" "$0" | sed "N;s/\n.*//g" | sed "s/^\s*#\s/\n${ECHO_CHAR}     # /g" | sed "s/\s*\\\n/\n${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g" )
-            e "  bash $(ecolor red)${0}$(ecolor blue) ${cmd}$(ecolor default) ${info}"
-            e
-        done
     }
 
-    # Alias of "usage".
+    #time command\nPrint basic usage (this).\nAdd action name to display the action usage.
+    function __usage() {
+        e
+        e "Usage:"
+        e
+        # Base file
+        usage "$(script_file_name)" "$1"
+        # Actions
+        if [ -d "${ACTIONS_PATH}" ]; then
+            for f in ${ACTIONS_PATH}/* ; do
+                if [ -f "${f}" ]; then
+                    usage "${f}" "$1"
+                fi
+            done
+        fi
+        # XBash
+        if [ "$(script_file_name)" != "${XBASH_FILE_NAME}" ]; then
+            usage "${XBASH_FILE_NAME}" "$1"
+        fi
+    }
+
+    # Alias of "usage", with less.
     function __help() {
-        __usage "$@"
+        check_requirements less
+        __usage "$@" | less
     }
 
     # Run APP.
@@ -905,8 +968,8 @@ trap 'echo -ne "\e[0m"' DEBUG
     #   run "$@"
     function run() {
         APPINFO=" $(print_app_info) "
-        APPINFOB="+-$(str_repeat $(str_len "${APPINFO}") "-")-+"
-        r=1
+        local APPINFOB="+-$(str_repeat $(str_len "${APPINFO}") "-")-+"
+        local r=1
         echo
         e ${APPINFOB}
         e "| ${APPINFO} |"
@@ -917,8 +980,13 @@ trap 'echo -ne "\e[0m"' DEBUG
         if [ $# -gt 0 ]; then
             if [ $(function_exists "__$1") == $TRUE ]; then
                 # Exec
+                if [ "$1" == "help" ]; then
+                    ACTION="usage"
+                else
+                    ACTION="$1"
+                fi
                 __"$@"
-                r=$?
+                local r=$?
             else
                 error "Parameter '$(ecolor blue)${1}$(ecolor red)' not found. Call 'usage' to see help."
             fi
@@ -926,20 +994,15 @@ trap 'echo -ne "\e[0m"' DEBUG
         if [ ${#1} == 0 ]; then
             if [ -z "${DEFAULT_ACTION}" ]; then
                 # Show usage
-                e
-                e "Usage:"
-                e
+                ACTION="usage"
                 __usage
-                if [ "$(script_file_name)" != "${XBASH_FILE_NAME}" ]; then
-                    __usage "${XBASH_FILE_NAME}"
-                fi
-                r=1
+                local r=1
             else
                 # Call default action
+                ACTION="$DEFAULT_ACTION"
                 __${DEFAULT_ACTION}
             fi
         fi
-        e
         # Return result code
         end $r
     }

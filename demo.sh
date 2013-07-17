@@ -1,10 +1,19 @@
 #!/bin/bash
 . ./src/xbash.sh
 
+# ################################################
+#
+# Demo Script.
+#
+# This file contains an implementation as example.
+#
+# ################################################
+
+
 # On exit callback
 set_on_exit exit_callback
 
-# See system info.
+#\nSee system info.
 function __info() {
     # Info
     e "$(ecolor green)Script name: $(script_file_name)"
@@ -24,7 +33,8 @@ function __info() {
 
 # param1\nparam1: Text to print.
 __params(){
-    e "Text passed: $(ecolor red) '$1'"
+    e "Action called: $(ecolor red) '$ACTION'"
+    e "Text passed: $(ecolor red) '$@'"
 }
 
 # time command\ntime: Time in seconds.\ncommand: Command to execute.
@@ -66,7 +76,9 @@ function __exists() {
 }
 
 function exit_callback() {
-    e "Function called on exit!"
+    if [ "$ACTION" != 'usage' ]; then
+        e "Function called on exit!"
+    fi
 }
 
 # Run
