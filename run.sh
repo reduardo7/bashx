@@ -1,11 +1,11 @@
 #!/bin/bash
 . ./src/xbash.sh
 
-# ####################
-#
-# Application Manager.
-#
-# ####################
+# ################### #
+#                     #
+# Application Manager #
+#                     #
+# ################### #
 
 # Load actions
 if [ -d "${ACTIONS_PATH}" ]; then

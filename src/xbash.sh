@@ -4,7 +4,7 @@
 ##
 ## Extended Bash Framework.
 ##
-## Version: 1.4
+## Version: 1.3
 ## URL: https://github.com/reduardo7/xbash
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
@@ -37,7 +37,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     APP_TITLE="XBash"
 
     # APP Version.
-    APP_VERSION="1.4"
+    APP_VERSION="1.3"
 
     # Default APP color. See "ecolor" for more information.
     #COLOR_DEFAULT="system" # Default system color
@@ -915,9 +915,11 @@ trap 'echo -ne "\e[0m"' DEBUG
             # Action file
             local cmd="$(file_name "${src}" $TRUE)"
             if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
-                local info="$(grep "^##" "${src}" | sed "s/^##\s\?/$(str_escape "$(ecolor default)")/g" | sed "s/^/$(str_escape "$(ecolor default)")${ECHO_CHAR}     > /g" | sed "s/\t/    /g" | sed "s/^------------------/  -----  /g")"
-                local divisor="|!|"
-                e "  bash $(ecolor red)${0}$(ecolor blue) ${cmd}$(ecolor default)${divisor}${info}" | sed "s/${divisor}.\+${ECHO_CHAR}\s\+>\s/ /g"
+                local info="$(grep "^#\{2\}[^#]" "${src}" | sed "s/^#\{2\}[^#]\s\?/$(str_escape "$(ecolor default)")/g" | sed "s/^/$(str_escape "$(ecolor default)")${ECHO_CHAR}     > /g" | sed "s/\t/    /g" | sed "s/^------------------/  -----  /g")"
+                if [ ! -z "$info" ]; then
+                    local info="|||${info}"
+                fi
+                e "  bash $(ecolor red)${0}$(ecolor blue) ${cmd}$(ecolor default)${info}" | sed "s/|||.\+${ECHO_CHAR}\s\+>\s/ /g"
                 e
             fi
         else
@@ -933,9 +935,7 @@ trap 'echo -ne "\e[0m"' DEBUG
         fi
     }
 
-    # Print basic usage.
-    #
-    #action\nPrint basic usage (this).\naction: Optional. Action name to display.
+    #time command\nPrint basic usage (this).\nAdd action name to display the action usage.
     function __usage() {
         e
         e "Usage:"
@@ -956,7 +956,7 @@ trap 'echo -ne "\e[0m"' DEBUG
         fi
     }
 
-    #\n"usage" with "less" command.
+    # Alias of "usage", with less.
     function __help() {
         check_requirements less
         __usage "$@" | less
