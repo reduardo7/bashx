@@ -32,10 +32,10 @@ Default: *"1.0"*
 ### COLOR_DEFAULT
 
 
-Default APP color. See "ecolor" for more information.
+Default APP color. See "style" for more information.
 
 Default: *"cyan"*
-    
+
 ### ECHO_CHAR
 
 Start character for formated print screen (see "e" function).
@@ -57,12 +57,12 @@ Default: *"echo printf sed grep tput read date dirname readlink basename tar"*
 
 Null path.
 Value: *"/dev/null"*
-    
+
 ### TRUE
 
 Boolean true.
 Value: *1*
-    
+
 ### FALSE
 
 Boolean false.
@@ -110,7 +110,7 @@ Value: *0*
 
 ### screen_width
 
-### ecolor
+### style
 
 ### e
 
