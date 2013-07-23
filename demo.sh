@@ -12,6 +12,11 @@
 # On exit callback
 set_on_exit exit_callback
 
+#styles\nTest style.
+function __style() {
+    e "Style ($@): $(style $@)[ # STYLE # ]"
+}
+
 #\nSee system info.
 function __info() {
     # Info

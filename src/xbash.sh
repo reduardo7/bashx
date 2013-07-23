@@ -422,68 +422,32 @@ trap 'echo -ne "\e[0m"' DEBUG
         else
             local c=""
             for p in $@ ; do
-                if [[ "$p" =~ ^\s*[a-zA-Z0-9]+\s*\[\=:\]\s*.+$ ]]; then
+                if [[ "$p" =~ ^\s*[a-z0-9]+\s*[=:]\s*.+$ ]]; then
                     str_explode "[=:]" "$p"
                     local s="$(trim "${RESULT[0]}")"
                     local v="$(trim "${RESULT[1]}")"
                     case "$s" in
                         "color")
                             case "$v" in
-                                "black")
-                                    echo "\e[30m"
-                                    ;;
-                                "blue")
-                                    echo "\e[34m"
-                                    ;;
-                                "blue-light")
-                                    echo "\e[94m"
-                                    ;;
-                                "cyan")
-                                    echo "\e[36m"
-                                    ;;
-                                "cyan-light")
-                                    echo "\e[96m"
-                                    ;;
-                                "red")
-                                    echo "\e[31m"
-                                    ;;
-                                "red-light")
-                                    echo "\e[91m"
-                                    ;;
-                                "gray")
-                                    echo "\e[90m"
-                                    ;;
-                                "gray-light")
-                                    echo "\e[37m"
-                                    ;;
-                                "green")
-                                    echo "\e[32m"
-                                    ;;
-                                "green-light")
-                                    echo "\e[92m"
-                                    ;;
-                                "magenta" | "purple")
-                                    echo "\e[35m"
-                                    ;;
-                                "magenta-light")
-                                    echo "\e[95m"
-                                    ;;
-                                "purple-light")
-                                    echo "\e[1;35m"
-                                    ;;
-                                "yellow" | "coffe")
-                                    echo "\e[33m"
-                                    ;;
-                                "yellow-light")
-                                    echo "\e[93m"
-                                    ;;
-                                "white")
-                                    echo "\e[97m"
-                                    ;;
-                                [0-9]) # 0 - 255
-                                    # Color
-                                    echo "\e[38;5;${v}m"
-                                    ;;
+                                "black")              if [ -z "$c" ]; then c="30"; else c="$c;30"; fi ;;
+                                "blue")               if [ -z "$c" ]; then c="34"; else c="$c;34"; fi ;;
+                                "blue-light")         if [ -z "$c" ]; then c="94"; else c="$c;94"; fi ;;
+                                "cyan")               if [ -z "$c" ]; then c="36"; else c="$c;36"; fi ;;
+                                "cyan-light")         if [ -z "$c" ]; then c="96"; else c="$c;96"; fi ;;
+                                "red")                if [ -z "$c" ]; then c="31"; else c="$c;31"; fi ;;
+                                "red-light")          if [ -z "$c" ]; then c="91"; else c="$c;91"; fi ;;
+                                "gray")               if [ -z "$c" ]; then c="90"; else c="$c;90"; fi ;;
+                                "gray-light")         if [ -z "$c" ]; then c="37"; else c="$c;37"; fi ;;
+                                "green")              if [ -z "$c" ]; then c="32"; else c="$c;32"; fi ;;
+                                "green-light")        if [ -z "$c" ]; then c="92"; else c="$c;92"; fi ;;
+                                "magenta" | "purple") if [ -z "$c" ]; then c="35"; else c="$c;35"; fi ;;
+                                "magenta-light")      if [ -z "$c" ]; then c="95"; else c="$c;95"; fi ;;
+                                "yellow" | "coffe")   if [ -z "$c" ]; then c="33"; else c="$c;33"; fi ;;
+                                "yellow-light")       if [ -z "$c" ]; then c="93"; else c="$c;93"; fi ;;
+                                "white")              if [ -z "$c" ]; then c="97"; else c="$c;97"; fi ;;
+                                # Color (0 - 255)
+                                [0-9])                if [ -z "$c" ]; then c="38;5;${v}"; else c="$c;38;5;${v}"; fi ;;
+                                # Default
                                 "default" | "normal")
                                     if [ "${COLOR_DEFAULT}" == "default" ] || [ "${COLOR_DEFAULT}" == "normal" ]; then
                                         style color:system
@@ -491,167 +455,87 @@ trap 'echo -ne "\e[0m"' DEBUG
                                         style color:${COLOR_DEFAULT}
                                     fi
                                     ;;
-                                "system")
-                                    echo "\e[0m"
-                                    ;;
                             esac
                             ;;
                         "background")
                             case "$v" in
-                                "black")
-                                    echo "\e[40m"
-                                    ;;
-                                "blue")
-                                    echo "\e[44m"
-                                    ;;
-                                "blue-light")
-                                    echo "\e[104m"
-                                    ;;
-                                "cyan")
-                                    echo "\e[46m"
-                                    ;;
-                                "cyan-light")
-                                    echo "\e[106m"
-                                    ;;
-                                "gray")
-                                    echo "\e[100m"
-                                    ;;
-                                "gray-light")
-                                    echo "\e[47m"
-                                    ;;
-                                "green")
-                                    echo "\e[42m"
-                                    ;;
-                                "green-light")
-                                    echo "\e[102m"
-                                    ;;
-                                "magenta" | "purple")
-                                    echo "\e[45m"
-                                    ;;
-                                "magenta-light")
-                                    echo "\e[105m"
-                                    ;;
-                                "red")
-                                    echo "\e[41m"
-                                    ;;
-                                "red-light")
-                                    echo "\e[101m"
-                                    ;;
-                                "yellow" | "coffe")
-                                    echo "\e[43m"
-                                    ;;
-                                "yellow-light")
-                                    echo "\e[103m"
-                                    ;;
-                                "white")
-                                    echo "\e[107m"
-                                    ;;
-                                [0-9]) # 0 - 255
-                                    # Color
-                                    echo "\e[48;5;${v}m"
-                                    ;;
-                                "system")
-                                    echo "\e[49m"
-                                    ;;
+                                "black")              if [ -z "$c" ]; then c="40"; else c="$c;40"; fi ;;
+                                "blue")               if [ -z "$c" ]; then c="44"; else c="$c;44"; fi ;;
+                                "blue-light")         if [ -z "$c" ]; then c="104"; else c="$c;104"; fi ;;
+                                "cyan")               if [ -z "$c" ]; then c="46"; else c="$c;46"; fi ;;
+                                "cyan-light")         if [ -z "$c" ]; then c="106"; else c="$c;106"; fi ;;
+                                "gray")               if [ -z "$c" ]; then c="100"; else c="$c;100"; fi ;;
+                                "gray-light")         if [ -z "$c" ]; then c="47"; else c="$c;47"; fi ;;
+                                "green")              if [ -z "$c" ]; then c="42"; else c="$c;42"; fi ;;
+                                "green-light")        if [ -z "$c" ]; then c="102"; else c="$c;102"; fi ;;
+                                "magenta" | "purple") if [ -z "$c" ]; then c="45"; else c="$c;45"; fi ;;
+                                "magenta-light")      if [ -z "$c" ]; then c="105"; else c="$c;105"; fi ;;
+                                "red")                if [ -z "$c" ]; then c="41"; else c="$c;41"; fi ;;
+                                "red-light")          if [ -z "$c" ]; then c="101"; else c="$c;101"; fi ;;
+                                "yellow" | "coffe")   if [ -z "$c" ]; then c="43"; else c="$c;43"; fi ;;
+                                "yellow-light")       if [ -z "$c" ]; then c="103"; else c="$c;103"; fi ;;
+                                "white")              if [ -z "$c" ]; then c="107"; else c="$c;107"; fi ;;
+                                "system")             if [ -z "$c" ]; then c="49"; else c="$c;49"; fi ;;
+                                # Color (0-255)
+                                [0-9])                if [ -z "$c" ]; then c="48;5;${v}"; else c="$c;48;5;${v}"; fi ;;
                             esac
                             ;;
                         "underline")
                             case "$v" in
-                                "on" | "true" | "1" | "${TRUE}")
-                                    echo "\e[4m"
-                                    ;;
-                                * | "off" | "false" | "0" | "${FALSE}")
-                                    echo "\e[24m"
-                                    ;;
+                                "on" | "true" | "1" | "${TRUE}")    if [ -z "$c" ]; then c="4"; else c="$c;4"; fi ;;
+                                "off" | "false" | "0" | "${FALSE}") if [ -z "$c" ]; then c="24"; else c="$c;24"; fi ;;
                             esac
                             ;;
                         "bold")
                             case "$v" in
-                                "on" | "true" | "1" | "${TRUE}")
-                                    echo "\e[1m"
-                                    ;;
-                                "off" | "false" | "0" | "${FALSE}")
-                                    echo "\e[21m"
-                                    ;;
+                                "on" | "true" | "1" | "${TRUE}")    if [ -z "$c" ]; then c="1"; else c="$c;1"; fi ;;
+                                "off" | "false" | "0" | "${FALSE}") if [ -z "$c" ]; then c="21"; else c="$c;21"; fi ;;
                             esac
                             ;;
                         "dim")
                             case "$v" in
-                                "on" | "true" | "1" | "${TRUE}")
-                                    echo "\e[2m"
-                                    ;;
-                                "off" | "false" | "0" | "${FALSE}")
-                                    echo "\e[22m"
-                                    ;;
+                                "on" | "true" | "1" | "${TRUE}")    if [ -z "$c" ]; then c="2"; else c="$c;2"; fi ;;
+                                "off" | "false" | "0" | "${FALSE}") if [ -z "$c" ]; then c="22"; else c="$c;22"; fi ;;
                             esac
                             ;;
                         "blink")
                             # Parpadeo
                             case "$v" in
-                                "on" | "true" | "1" | "${TRUE}")
-                                    echo "\e[5m"
-                                    ;;
-                                "off" | "false" | "0" | "${FALSE}")
-                                    echo "\e[25m"
-                                    ;;
+                                "on" | "true" | "1" | "${TRUE}")    if [ -z "$c" ]; then c="5"; else c="$c;5"; fi ;;
+                                "off" | "false" | "0" | "${FALSE}") if [ -z "$c" ]; then c="25"; else c="$c;25"; fi ;;
                             esac
                             ;;
                         "reverse" | "negative")
                             case "$v" in
-                                "on" | "true" | "1" | "${TRUE}")
-                                    echo "\e[7m"
-                                    ;;
-                                "off" | "false" | "0" | "${FALSE}")
-                                    echo "\e[27m"
-                                    ;;
+                                "on" | "true" | "1" | "${TRUE}")    if [ -z "$c" ]; then c="7"; else c="$c;7"; fi ;;
+                                "off" | "false" | "0" | "${FALSE}") if [ -z "$c" ]; then c="27"; else c="$c;27"; fi ;;
                             esac
                             ;;
                         "display")
                             case "$v" in
-                                "visible" | "show")
-                                    echo "\e[28m"
-                                    ;;
-                                "hidden" | "none")
-                                    echo "\e[8m"
-                                    ;;
+                                "visible" | "show") if [ -z "$c" ]; then c="28"; else c="$c;28"; fi ;;
+                                "hidden" | "none")  if [ -z "$c" ]; then c="8"; else c="$c;8"; fi ;;
                             esac
                             ;;
                     esac
                 else
                     case "$p" in
-                        "reset")
-                            # Reset all attributes
-                            echo "\e[0m"
-                            ;;
-                        "bold")
-                            echo "\e[1m"
-                            ;;
-                        "normal") # No bold
-                            echo "\e[21m"
-                            ;;
-                        "dim")
-                            echo "\e[2m"
-                            ;;
-                        "underline")
-                            echo "\e[4m"
-                            ;;
-                        "blink")
-                            # Parpadeo
-                            echo "\e[5m"
-                            ;;
-                        "reverse" | "negative")
-                            echo "\e[7m"
-                            ;;
-                        "hide" | "none")
-                            echo "\e[8m"
-                            ;;
-                        "show" | "visible")
-                            echo "\e[28m"
-                            ;;
+                        # Reset all attributes
+                        "reset")                if [ -z "$c" ]; then c="0"; else c="$c;0"; fi ;;
+                        "bold")                 if [ -z "$c" ]; then c="1"; else c="$c;1"; fi ;;
+                        # No bold
+                        "normal")               if [ -z "$c" ]; then c="21"; else c="$c;21"; fi ;;
+                        "dim")                  if [ -z "$c" ]; then c="2"; else c="$c;2"; fi ;;
+                        "underline")            if [ -z "$c" ]; then c="4"; else c="$c;4"; fi ;;
+                        # Parpadeo
+                        "blink")                if [ -z "$c" ]; then c="5"; else c="$c;5"; fi ;;
+                        "reverse" | "negative") if [ -z "$c" ]; then c="7"; else c="$c;7"; fi ;;
+                        "hide" | "none")        if [ -z "$c" ]; then c="8"; else c="$c;8"; fi ;;
+                        "show" | "visible")     if [ -z "$c" ]; then c="28"; else c="$c;28"; fi ;;
                     esac
                 fi
             done
-            echo "${c}"
+            echo "\e[${c}m"
         fi
     }
 
@@ -1068,7 +952,7 @@ trap 'echo -ne "\e[0m"' DEBUG
                 if [ ! -z "$info" ]; then
                     info="|||${info}"
                 fi
-                e "  bash $(style red)${0}$(style blue) ${cmd}$(style default)${info}" | sed "s/|||.\+${ECHO_CHAR}\s\+>\s/ /g"
+                e "  bash $(style color:red)${0}$(style color:blue) ${cmd}$(style default)${info}" | sed "s/|||.\+${ECHO_CHAR}\s\+>\s/ /g"
                 e
             fi
         else
@@ -1077,7 +961,7 @@ trap 'echo -ne "\e[0m"' DEBUG
                 local cmd=$(echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*\(function\s\+\)\?__//g")
                 if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
                     local info="$(grep -C0 -A0 -B1 "^\s*\(function\s\+\)\?__$cmd\s*()\s*{" "$src" | sed "N;s/\n.*//g" | sed "s/^\s*#\s*/$(str_escape "$(style default)")/g" | sed "s/\s*\\\n/\n$(str_escape "$(style default)")${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g")"
-                    e "  bash $(style red)${0}$(style blue) ${cmd}$(style default) ${info}"
+                    e "  bash $(style color:red)${0}$(style color:blue) ${cmd}$(style default) ${info}"
                     e
                 fi
             done
