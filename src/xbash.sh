@@ -434,126 +434,141 @@ trap 'echo -ne "\e[0m"' DEBUG
     #
     # *:
     # Out: {String} Style console string.
-    # Example: e "normal color $(style color:red)text in red $(style color:black background:yellow)black color$(style) normal color"
+    # Example: e "normal color $(style color:red)text in red $(style color:black background:yellow)black color$(style default) normal color"
     function style() {
         if [ $# -eq 0 ]; then
             # Default color
             style reset color:${COLOR_DEFAULT}
         else
+            # Styles
             local c=""
-            for pp in $@ ; do
-                local p="$(str_to_lower "$pp")"
-                if [[ "$p" =~ ^\s*[a-z0-9]+\s*[=:]\s*.+$ ]]; then
-                    str_explode "[=:]" "$p"
-                    local s="$(trim "${RESULT[0]}")"
-                    local v="$(trim "${RESULT[1]}")"
+            for q in "$@" ; do
+                # Style code
+                local y=""
+                # To lower
+                local p="$(str_to_lower "$q")"
+                # Split
+                str_explode "[=:]" "$p"
+                # Parts
+                local s="$(trim "${RESULT[0]}")"
+                local v="$(trim "${RESULT[1]}")"
+
+                if [ ! -z "$v" ]; then
                     case "$s" in
                         "color")
                             case "$v" in
-                                "black")              if [ -z "$c" ]; then c="30"; else c="$c;30"; fi ;;
-                                "blue")               if [ -z "$c" ]; then c="34"; else c="$c;34"; fi ;;
-                                "blue-light")         if [ -z "$c" ]; then c="94"; else c="$c;94"; fi ;;
-                                "cyan")               if [ -z "$c" ]; then c="36"; else c="$c;36"; fi ;;
-                                "cyan-light")         if [ -z "$c" ]; then c="96"; else c="$c;96"; fi ;;
-                                "red")                if [ -z "$c" ]; then c="31"; else c="$c;31"; fi ;;
-                                "red-light")          if [ -z "$c" ]; then c="91"; else c="$c;91"; fi ;;
-                                "gray")               if [ -z "$c" ]; then c="90"; else c="$c;90"; fi ;;
-                                "gray-light")         if [ -z "$c" ]; then c="37"; else c="$c;37"; fi ;;
-                                "green")              if [ -z "$c" ]; then c="32"; else c="$c;32"; fi ;;
-                                "green-light")        if [ -z "$c" ]; then c="92"; else c="$c;92"; fi ;;
-                                "magenta" | "purple") if [ -z "$c" ]; then c="35"; else c="$c;35"; fi ;;
-                                "magenta-light")      if [ -z "$c" ]; then c="95"; else c="$c;95"; fi ;;
-                                "yellow" | "coffe")   if [ -z "$c" ]; then c="33"; else c="$c;33"; fi ;;
-                                "yellow-light")       if [ -z "$c" ]; then c="93"; else c="$c;93"; fi ;;
-                                "white")              if [ -z "$c" ]; then c="97"; else c="$c;97"; fi ;;
+                                "black")                       y="30" ;;
+                                "blue")                        y="34" ;;
+                                "blue-light")                  y="94" ;;
+                                "cyan")                        y="36" ;;
+                                "cyan-light")                  y="96" ;;
+                                "red")                         y="31" ;;
+                                "red-light")                   y="91" ;;
+                                "gray")                        y="90" ;;
+                                "gray-light")                  y="37" ;;
+                                "green")                       y="32" ;;
+                                "green-light")                 y="92" ;;
+                                "magenta" | "purple")          y="35" ;;
+                                "magenta-light")               y="95" ;;
+                                "yellow" | "coffe")            y="33" ;;
+                                "yellow-light")                y="93" ;;
+                                "white")                       y="97" ;;
                                 # Color (0 - 255)
-                                [0-9])                if [ -z "$c" ]; then c="38;5;${v}"; else c="$c;38;5;${v}"; fi ;;
+                                [0-9])                         y="38;5;${v}" ;;
                                 # Default
-                                "default")            style color:${COLOR_DEFAULT} ;;
+                                "default" | "normal" | "auto") style color:${COLOR_DEFAULT} ;;
                             esac
                             ;;
-                        "background")
+                        "background" | "bg")
                             case "$v" in
-                                "black")              if [ -z "$c" ]; then c="40";  else c="$c;40";  fi ;;
-                                "blue")               if [ -z "$c" ]; then c="44";  else c="$c;44";  fi ;;
-                                "blue-light")         if [ -z "$c" ]; then c="104"; else c="$c;104"; fi ;;
-                                "cyan")               if [ -z "$c" ]; then c="46";  else c="$c;46";  fi ;;
-                                "cyan-light")         if [ -z "$c" ]; then c="106"; else c="$c;106"; fi ;;
-                                "gray")               if [ -z "$c" ]; then c="100"; else c="$c;100"; fi ;;
-                                "gray-light")         if [ -z "$c" ]; then c="47";  else c="$c;47";  fi ;;
-                                "green")              if [ -z "$c" ]; then c="42";  else c="$c;42";  fi ;;
-                                "green-light")        if [ -z "$c" ]; then c="102"; else c="$c;102"; fi ;;
-                                "magenta" | "purple") if [ -z "$c" ]; then c="45";  else c="$c;45";  fi ;;
-                                "magenta-light")      if [ -z "$c" ]; then c="105"; else c="$c;105"; fi ;;
-                                "red")                if [ -z "$c" ]; then c="41";  else c="$c;41";  fi ;;
-                                "red-light")          if [ -z "$c" ]; then c="101"; else c="$c;101"; fi ;;
-                                "yellow" | "coffe")   if [ -z "$c" ]; then c="43";  else c="$c;43";  fi ;;
-                                "yellow-light")       if [ -z "$c" ]; then c="103"; else c="$c;103"; fi ;;
-                                "white")              if [ -z "$c" ]; then c="107"; else c="$c;107"; fi ;;
-                                "system")             if [ -z "$c" ]; then c="49";  else c="$c;49";  fi ;;
+                                "black")                      y="40" ;;
+                                "blue")                       y="44" ;;
+                                "blue-light")                 y="104" ;;
+                                "cyan")                       y="46" ;;
+                                "cyan-light")                 y="106" ;;
+                                "gray")                       y="100" ;;
+                                "gray-light")                 y="47" ;;
+                                "green")                      y="42" ;;
+                                "green-light")                y="102" ;;
+                                "magenta" | "purple")         y="45" ;;
+                                "magenta-light")              y="105" ;;
+                                "red")                        y="41" ;;
+                                "red-light")                  y="101" ;;
+                                "yellow" | "coffe")           y="43" ;;
+                                "yellow-light")               y="103" ;;
+                                "white")                      y="107" ;;
+                                "system" | "normal" | "auto") y="49" ;;
                                 # Color (0-255)
-                                [0-9])                if [ -z "$c" ]; then c="48;5;${v}"; else c="$c;48;5;${v}"; fi ;;
+                                [0-9])                        y="48;5;${v}" ;;
                             esac
                             ;;
                         "underline")
                             case "$v" in
-                                "on" | "true" | "1" | "${TRUE}")    if [ -z "$c" ]; then c="4";  else c="$c;4";  fi ;;
-                                "off" | "false" | "0" | "${FALSE}") if [ -z "$c" ]; then c="24"; else c="$c;24"; fi ;;
+                                "on" | "true" | "1" | "${TRUE}")    y="4" ;;
+                                "off" | "false" | "0" | "${FALSE}") y="24" ;;
                             esac
                             ;;
                         "bold")
                             case "$v" in
-                                "on" | "true" | "1" | "${TRUE}")    if [ -z "$c" ]; then c="1";  else c="$c;1";  fi ;;
-                                "off" | "false" | "0" | "${FALSE}") if [ -z "$c" ]; then c="21"; else c="$c;21"; fi ;;
+                                "on" | "true" | "1" | "${TRUE}")    y="1" ;;
+                                "off" | "false" | "0" | "${FALSE}") y="21" ;;
                             esac
                             ;;
                         "dim")
                             case "$v" in
-                                "on" | "true" | "1" | "${TRUE}")    if [ -z "$c" ]; then c="2";  else c="$c;2";  fi ;;
-                                "off" | "false" | "0" | "${FALSE}") if [ -z "$c" ]; then c="22"; else c="$c;22"; fi ;;
+                                "on" | "true" | "1" | "${TRUE}")    y="2" ;;
+                                "off" | "false" | "0" | "${FALSE}") y="22" ;;
                             esac
                             ;;
                         "blink")
                             # Parpadeo
                             case "$v" in
-                                "on" | "true" | "1" | "${TRUE}")    if [ -z "$c" ]; then c="5";  else c="$c;5";  fi ;;
-                                "off" | "false" | "0" | "${FALSE}") if [ -z "$c" ]; then c="25"; else c="$c;25"; fi ;;
+                                "on" | "true" | "1" | "${TRUE}")    y="5" ;;
+                                "off" | "false" | "0" | "${FALSE}") y="25" ;;
                             esac
                             ;;
                         "reverse" | "negative")
                             case "$v" in
-                                "on" | "true" | "1" | "${TRUE}")    if [ -z "$c" ]; then c="7";  else c="$c;7";  fi ;;
-                                "off" | "false" | "0" | "${FALSE}") if [ -z "$c" ]; then c="27"; else c="$c;27"; fi ;;
+                                "on" | "true" | "1" | "${TRUE}")    y="7" ;;
+                                "off" | "false" | "0" | "${FALSE}") y="27" ;;
                             esac
                             ;;
                         "display")
                             case "$v" in
-                                "visible" | "show" | "true" | "1" | "${TRUE}")            if [ -z "$c" ]; then c="28"; else c="$c;28"; fi ;;
-                                "hidden" | "none" | "hide" | "false" | "0" | "${FALSE}")  if [ -z "$c" ]; then c="8";  else c="$c;8";  fi ;;
+                                "visible" | "show" | "true" | "1" | "${TRUE}")            y="28" ;;
+                                "hidden" | "none" | "hide" | "false" | "0" | "${FALSE}")  y="8" ;;
                             esac
                             ;;
                     esac
                 else
                     case "$p" in
-                        "bold")                 if [ -z "$c" ]; then c="1";  else c="$c;1";  fi ;;
-                        "dim")                  if [ -z "$c" ]; then c="2";  else c="$c;2";  fi ;;
-                        "underline")            if [ -z "$c" ]; then c="4";  else c="$c;4";  fi ;;
-                        "reverse" | "negative") if [ -z "$c" ]; then c="7";  else c="$c;7";  fi ;;
-                        "hidden" | "hide")      if [ -z "$c" ]; then c="8";  else c="$c;8";  fi ;;
-                        "show" | "visible")     if [ -z "$c" ]; then c="28"; else c="$c;28"; fi ;;
+                        "bold")                 y="1" ;;
+                        "dim")                  y="2" ;;
+                        "underline")            y="4" ;;
+                        "reverse" | "negative") y="7" ;;
+                        "hidden" | "hide")      y="8" ;;
+                        "show" | "visible")     y="28" ;;
                         # Parpadeo
-                        "blink")                if [ -z "$c" ]; then c="5";  else c="$c;5";  fi ;;
+                        "blink")                y="5" ;;
                         # No bold
-                        "normal")               if [ -z "$c" ]; then c="21"; else c="$c;21"; fi ;;
+                        "normal")               y="21" ;;
                         # Reset all styles
-                        "reset")                if [ -z "$c" ]; then c="0";  else c="$c;0";  fi ;;
+                        "reset")                y="0" ;;
                         # Default color
                         "default")              style reset color:${COLOR_DEFAULT} ;;
                     esac
                 fi
+                if [ ! -z "$y" ]; then
+                    if [ -z "$c" ]; then
+                        c="$y"
+                    else
+                        c="$c;$y"
+                    fi
+                fi
             done
             if [ ! -z "$c" ]; then
                 echo -en "\e[${c}m"
+                # echo -en "[${c}]"
             fi
         fi
     }
