@@ -4,7 +4,7 @@
 ##
 ## Extended Bash Framework.
 ##
-## Version: 1.3
+## Version: 1.4
 ## URL: https://github.com/reduardo7/xbash
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
@@ -37,7 +37,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     APP_TITLE="XBash"
 
     # APP Version.
-    APP_VERSION="1.3"
+    APP_VERSION="1.0"
 
     # Default APP color. See "style" for more information.
     #COLOR_DEFAULT="system" # Default system color
@@ -55,8 +55,11 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Action to use if script called without arguments.
     DEFAULT_ACTION=""
 
-    # XBash SRC path.
+    # XBash Version.
     XBASH_SRC_PATH="src"
+
+    # XBash SRC path.
+    XBASH_VERSION="1.4"
 
 ### Load files
 
