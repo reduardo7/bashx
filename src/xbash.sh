@@ -114,6 +114,9 @@ trap 'echo -ne "\e[0m"' DEBUG
    # TRUE if APP is terminated
    _APP_EXIT=$FALSE
 
+   # Last color is Default
+   _APP_LAST_COLOR_PATH="/tmp/.${0}_last_color"
+
 ### UTILS
 
     # Check if run as Root.
@@ -214,7 +217,9 @@ trap 'echo -ne "\e[0m"' DEBUG
     # *: {String} String to escape for Bash.
     # Out: {String} Escaped string.
     function str_escape() {
-        printf '%q' "$@"
+        if [ "$@" != '' ]; then
+            printf '%q' "$@"
+        fi
     }
 
     # Repeat string.
@@ -438,13 +443,14 @@ trap 'echo -ne "\e[0m"' DEBUG
     function style() {
         if [ $# -eq 0 ]; then
             # Default color
-            style reset color:${COLOR_DEFAULT}
+            style default
         else
             # Styles
             local c=""
             for q in "$@" ; do
                 # Style code
                 local y=""
+                local force=0
                 # To lower
                 local p="$(str_to_lower "$q")"
                 # Split
@@ -476,7 +482,14 @@ trap 'echo -ne "\e[0m"' DEBUG
                                 # Color (0 - 255)
                                 [0-9])                         y="38;5;${v}" ;;
                                 # Default
-                                "default" | "normal" | "auto") style color:${COLOR_DEFAULT} ;;
+                                "default" | "normal" | "auto")
+                                    if [ -z "${COLOR_DEFAULT}"] || [ "${COLOR_DEFAULT}" == 'default' ] || [ "${COLOR_DEFAULT}" == 'normal' ] [ "${COLOR_DEFAULT}" == 'auto' ]; then
+                                        # Invalid default or default not defined
+                                        y="0"
+                                    else
+                                        style color:${COLOR_DEFAULT}
+                                    fi
+                                ;;
                             esac
                             ;;
                         "background" | "bg")
@@ -556,6 +569,8 @@ trap 'echo -ne "\e[0m"' DEBUG
                         "reset")                y="0" ;;
                         # Default color
                         "default")              style reset color:${COLOR_DEFAULT} ;;
+                        # Print style wuthout check if the last
+                        "force")                force=1 ;;
                     esac
                 fi
                 if [ ! -z "$y" ]; then
@@ -566,9 +581,11 @@ trap 'echo -ne "\e[0m"' DEBUG
                     fi
                 fi
             done
-            if [ ! -z "$c" ]; then
+            local lc="$(cat "${_APP_LAST_COLOR_PATH}" 2>&1)"
+            if [ ! -z "${c}" ] && ( [ $force -eq 1 ] || [ "${lc}" != "${c}" ] ); then
                 echo -en "\e[${c}m"
-                # echo -en "[${c}]"
+                # echo -en "[${c}|${lc}]"
+                echo "$c" > "${_APP_LAST_COLOR_PATH}"
             fi
         fi
     }
@@ -671,11 +688,18 @@ trap 'echo -ne "\e[0m"' DEBUG
     function end() {
         if [ "$_APP_EXIT" == "$FALSE" ]; then
             if [ ! -z "$_ON_EXIT" ]; then
+                # Execute exit actions
                 $_ON_EXIT
             fi
+            # Mark as exit
             _APP_EXIT=$TRUE
-            e $(style system)
+            # Remove temp files
+            rm -f "${_APP_LAST_COLOR_PATH}"
+            # System color
+            style system
+            # Space
             echo
+            # Exit
             if [ $# -gt 1 ]; then
                 exit $1
             else
@@ -683,7 +707,7 @@ trap 'echo -ne "\e[0m"' DEBUG
             fi
         fi
     }
-    # CTRL + C
+    # CTRL + C, end script
     trap end EXIT
 
     # Time out.
@@ -1041,7 +1065,7 @@ trap 'echo -ne "\e[0m"' DEBUG
         local APPINFOB="+-$(str_repeat $(str_len "${APPINFO}") "-")-+"
         local r=1
         echo
-        e ${APPINFOB}
+        e "${APPINFOB}"
         e "| ${APPINFO} |"
         e ${APPINFOB}
         e
