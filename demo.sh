@@ -9,15 +9,14 @@
 #
 # ################################################
 
-
 # On exit callback
 set_on_exit exit_callback
 
 #\nSee system info.
 function __info() {
     # Info
-    e "$(ecolor green)Script name: $(script_file_name)"
-    e "$(ecolor red)Path: $(current_directory)"
+    e "$(style color:green)Script name: $(script_file_name)"
+    e "$(style color:red)Path: $(current_directory)"
     e "Date and time: $(now_date_time)"
 
     # Pause script
@@ -25,16 +24,16 @@ function __info() {
 
     # Check root
     if [ $(is_root) = $TRUE ] ; then
-        e "$(ecolor red)ROOT$(ecolor green) user"
+        e "$(style color:red)ROOT$(style color:green) user"
     else
-        e "$(ecolor green)No $(ecolor red)ROOT$(ecolor green) user"
+        e "$(style color:green)No $(style color:red)ROOT$(style color:green) user"
     fi
 }
 
 # param1\nparam1: Text to print.
 __params(){
-    e "Action called: $(ecolor red) '$ACTION'"
-    e "Text passed: $(ecolor red) '$@'"
+    e "Action called: $(style color:red) '$ACTION'"
+    e "Text passed: $(style color:red) '$@'"
 }
 
 # time command\ntime: Time in seconds.\ncommand: Command to execute.

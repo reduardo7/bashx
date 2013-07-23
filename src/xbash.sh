@@ -39,7 +39,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # APP Version.
     APP_VERSION="1.3"
 
-    # Default APP color. See "ecolor" for more information.
+    # Default APP color. See "style" for more information.
     #COLOR_DEFAULT="system" # Default system color
     COLOR_DEFAULT="cyan"
 
@@ -135,9 +135,9 @@ trap 'echo -ne "\e[0m"' DEBUG
     function root_validator() {
         if [ "$(is_root)" == $FALSE ]; then
             if [ $# -eq 0 ] ; then
-                m="This script must be run as root!"
+                local m="This script must be run as root!"
             else
-                m="$@"
+                local m="$@"
             fi
             e "$m"
             e
@@ -220,7 +220,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Out: {String} Repeated string.
     function str_repeat() {
         let fillsize=$1
-        fill=$2
+        local fill=$2
         while [ ${fillsize} -gt 1 ] ; do
             fill="${fill}$2"
             let fillsize=${fillsize}-1
@@ -236,7 +236,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 4: {Boolean} (Default: 1) 1 to ignore case.
     # Out: {String} Result string.
     function str_replace() {
-        options="g"
+        local options="g"
         if [ $# -lt 4 ] || [ "$4" -ne $TRUE ]; then
             options="${options}i"
         fi
@@ -266,9 +266,9 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 2: {String} (Default: " ") String to trim.
     # Out: {String} Trimed text.
     function trim() {
-        chr=" "
+        local chr=" "
         if [ $# -gt 1 ]; then
-            chr="$2"
+            local chr="$2"
         fi
         echo "$1" | sed "s/^${chr}//g" | sed "s/${chr}$//g"
     }
@@ -279,7 +279,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 2: {String} (Default: " ") String to trim.
     # Out: {String} Trimed text.
     function ltrim() {
-        chr=" "
+        local chr=" "
         if [ $# -gt 1 ]; then
             chr="$2"
         fi
@@ -292,7 +292,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 2: {String} (Default: " ") String to trim.
     # Out: {String} Trimed text.
     function rtrim() {
-        chr=" "
+        local chr=" "
         if [ $# -gt 1 ]; then
             chr="$2"
         fi
@@ -330,12 +330,12 @@ trap 'echo -ne "\e[0m"' DEBUG
     function str_pos() {
         if [ $# -lt 3 ] || [ $3 = $TRUE ]; then
             # Case sensitive
-            p="-bo"
+            local p="-bo"
         else
             # Case insensitive
-            p="-boi"
+            local p="-boi"
         fi
-        r=$(echo "$1" | grep $p "$2" | sed 's/:.*$//')
+        local r=$(echo "$1" | grep $p "$2" | sed 's/:.*$//')
         echo $r
         if [ $(is_empty "$r") = $FALSE ]; then
             # Found
@@ -372,7 +372,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 1: {String} Command to execute on error.
     # 2: {Integer} Change exit code.
     function check_error() {
-        c=$?
+        local c=$?
         if [ $c -ne 0 ]; then
             # Error
             $1
@@ -390,7 +390,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     function error() {
         if ! [ -z "$1" ]; then
             e
-            e "$(ecolor red)Error! $1"
+            e "$(style color:red)Error! $1"
         fi
         e
         if [ $# -gt 1 ]; then
@@ -406,137 +406,295 @@ trap 'echo -ne "\e[0m"' DEBUG
     #
     # Out: {Integer} Screen width.
     function screen_width() {
+        check_requirements tput
         tput cols
     }
 
-    # Change screen print color.
+    # Change screen print style.
     #
-    # 1: {COLOR} Color. See "case" into this function for details.
-    # 2: {String} (Default: Default Color) Text to print.
-    # Out: {String} Text.
-    # Use: e "normal color $(ecolor red)text in red $(ecolor black)black color"
-    function ecolor() {
-        c=""
-        case "$1" in
-            default) # Default APP color
-                c=""
-                ;;
-            system) # System color
-                c="0"
-                ;;
-            black)
-                c="0;30"
-                ;;
-            white)
-                c="1;37"
-                ;;
-            gray)
-                c="0;37"
-                ;;
-            gray_light)
-                c="1;30"
-                ;;
-            blue)
-                c="0;34"
-                ;;
-            blue_light)
-                c="1;34"
-                ;;
-            green)
-                c="0;32"
-                ;;
-            green_light)
-                c="1;32"
-                ;;
-            cyan)
-                c="0;36"
-                ;;
-            cyan_light)
-                c="1;36"
-                ;;
-            red)
-                c="0;31"
-                ;;
-            red_light)
-                c="1;31"
-                ;;
-            purple)
-                c="0;35"
-                ;;
-            purple_light)
-                c="1;35"
-                ;;
-            coffe)
-                c="0;33"
-                ;;
-            yellow)
-                c="1;33"
-                ;;
-        esac
-        if [ -z "${c}" ]; then
-            ecolor "${COLOR_DEFAULT}"
+    # *:
+    # Out: {String} Style console string.
+    # Example: e "normal color $(style color:red)text in red $(style color:black background:yellow)black color$(style) normal color"
+    function style() {
+        if [ $# -eq 0 ] || [ "$@" == "default" ]; then
+            # Default color
+            style color:${COLOR_DEFAULT}
         else
-            echo "\e[${c}m"
+            local c=""
+            for p in $@ ; do
+                if [[ "$p" =~ ^\s*[a-zA-Z0-9]+\s*\[\=:\]\s*.+$ ]]; then
+                    str_explode "[=:]" "$p"
+                    local s="$(trim "${RESULT[0]}")"
+                    local v="$(trim "${RESULT[1]}")"
+                    case "$s" in
+                        "color")
+                            case "$v" in
+                                "black")
+                                    echo "\e[30m"
+                                    ;;
+                                "blue")
+                                    echo "\e[34m"
+                                    ;;
+                                "blue-light")
+                                    echo "\e[94m"
+                                    ;;
+                                "cyan")
+                                    echo "\e[36m"
+                                    ;;
+                                "cyan-light")
+                                    echo "\e[96m"
+                                    ;;
+                                "red")
+                                    echo "\e[31m"
+                                    ;;
+                                "red-light")
+                                    echo "\e[91m"
+                                    ;;
+                                "gray")
+                                    echo "\e[90m"
+                                    ;;
+                                "gray-light")
+                                    echo "\e[37m"
+                                    ;;
+                                "green")
+                                    echo "\e[32m"
+                                    ;;
+                                "green-light")
+                                    echo "\e[92m"
+                                    ;;
+                                "magenta" | "purple")
+                                    echo "\e[35m"
+                                    ;;
+                                "magenta-light")
+                                    echo "\e[95m"
+                                    ;;
+                                "purple-light")
+                                    echo "\e[1;35m"
+                                    ;;
+                                "yellow" | "coffe")
+                                    echo "\e[33m"
+                                    ;;
+                                "yellow-light")
+                                    echo "\e[93m"
+                                    ;;
+                                "white")
+                                    echo "\e[97m"
+                                    ;;
+                                [0-9]) # 0 - 255
+                                    # Color
+                                    echo "\e[38;5;${v}m"
+                                    ;;
+                                "default" | "normal")
+                                    if [ "${COLOR_DEFAULT}" == "default" ] || [ "${COLOR_DEFAULT}" == "normal" ]; then
+                                        style color:system
+                                    else
+                                        style color:${COLOR_DEFAULT}
+                                    fi
+                                    ;;
+                                "system")
+                                    echo "\e[0m"
+                                    ;;
+                            esac
+                            ;;
+                        "background")
+                            case "$v" in
+                                "black")
+                                    echo "\e[40m"
+                                    ;;
+                                "blue")
+                                    echo "\e[44m"
+                                    ;;
+                                "blue-light")
+                                    echo "\e[104m"
+                                    ;;
+                                "cyan")
+                                    echo "\e[46m"
+                                    ;;
+                                "cyan-light")
+                                    echo "\e[106m"
+                                    ;;
+                                "gray")
+                                    echo "\e[100m"
+                                    ;;
+                                "gray-light")
+                                    echo "\e[47m"
+                                    ;;
+                                "green")
+                                    echo "\e[42m"
+                                    ;;
+                                "green-light")
+                                    echo "\e[102m"
+                                    ;;
+                                "magenta" | "purple")
+                                    echo "\e[45m"
+                                    ;;
+                                "magenta-light")
+                                    echo "\e[105m"
+                                    ;;
+                                "red")
+                                    echo "\e[41m"
+                                    ;;
+                                "red-light")
+                                    echo "\e[101m"
+                                    ;;
+                                "yellow" | "coffe")
+                                    echo "\e[43m"
+                                    ;;
+                                "yellow-light")
+                                    echo "\e[103m"
+                                    ;;
+                                "white")
+                                    echo "\e[107m"
+                                    ;;
+                                [0-9]) # 0 - 255
+                                    # Color
+                                    echo "\e[48;5;${v}m"
+                                    ;;
+                                "system")
+                                    echo "\e[49m"
+                                    ;;
+                            esac
+                            ;;
+                        "underline")
+                            case "$v" in
+                                "on" | "true" | "1" | "${TRUE}")
+                                    echo "\e[4m"
+                                    ;;
+                                * | "off" | "false" | "0" | "${FALSE}")
+                                    echo "\e[24m"
+                                    ;;
+                            esac
+                            ;;
+                        "bold")
+                            case "$v" in
+                                "on" | "true" | "1" | "${TRUE}")
+                                    echo "\e[1m"
+                                    ;;
+                                "off" | "false" | "0" | "${FALSE}")
+                                    echo "\e[21m"
+                                    ;;
+                            esac
+                            ;;
+                        "dim")
+                            case "$v" in
+                                "on" | "true" | "1" | "${TRUE}")
+                                    echo "\e[2m"
+                                    ;;
+                                "off" | "false" | "0" | "${FALSE}")
+                                    echo "\e[22m"
+                                    ;;
+                            esac
+                            ;;
+                        "blink")
+                            # Parpadeo
+                            case "$v" in
+                                "on" | "true" | "1" | "${TRUE}")
+                                    echo "\e[5m"
+                                    ;;
+                                "off" | "false" | "0" | "${FALSE}")
+                                    echo "\e[25m"
+                                    ;;
+                            esac
+                            ;;
+                        "reverse" | "negative")
+                            case "$v" in
+                                "on" | "true" | "1" | "${TRUE}")
+                                    echo "\e[7m"
+                                    ;;
+                                "off" | "false" | "0" | "${FALSE}")
+                                    echo "\e[27m"
+                                    ;;
+                            esac
+                            ;;
+                        "display")
+                            case "$v" in
+                                "visible" | "show")
+                                    echo "\e[28m"
+                                    ;;
+                                "hidden" | "none")
+                                    echo "\e[8m"
+                                    ;;
+                            esac
+                            ;;
+                    esac
+                else
+                    case "$p" in
+                        "reset")
+                            # Reset all attributes
+                            echo "\e[0m"
+                            ;;
+                        "bold")
+                            echo "\e[1m"
+                            ;;
+                        "normal") # No bold
+                            echo "\e[21m"
+                            ;;
+                        "dim")
+                            echo "\e[2m"
+                            ;;
+                        "underline")
+                            echo "\e[4m"
+                            ;;
+                        "blink")
+                            # Parpadeo
+                            echo "\e[5m"
+                            ;;
+                        "reverse" | "negative")
+                            echo "\e[7m"
+                            ;;
+                        "hide" | "none")
+                            echo "\e[8m"
+                            ;;
+                        "show" | "visible")
+                            echo "\e[28m"
+                            ;;
+                    esac
+                fi
+            done
+            echo "${c}"
         fi
     }
 
-    function style() {
-        FONT_BOLD=`tput bold`
-        FONT_UNDERLINE_ON=`tput smul`
-        FONT_UNDERLINE_OFF=`tput rmul`
-        # FONT_TEXT_BLACK=`tput setaf 0`
-        # FONT_TEXT_RED=`tput setaf 1`
-        # FONT_TEXT_GREEN=`tput setaf 2`
-        # FONT_TEXT_YELLOW=`tput setaf 3`
-        # FONT_TEXT_BLUE=`tput setaf 4`
-        # FONT_TEXT_MAGENTA=`tput setaf 5`
-        # FONT_TEXT_CYAN=`tput setaf 6`
-        # FONT_TEXT_WHITE=`tput setaf 7`
-        FONT_BACKGROUND_BLACK=`tput setab 0`
-        FONT_BACKGROUND_RED=`tput setab 1`
-        FONT_BACKGROUND_GREEN=`tput setab 2`
-        FONT_BACKGROUND_YELLOW=`tput setab 3`
-        FONT_BACKGROUND_BLUE=`tput setab 4`
-        FONT_BACKGROUND_MAGENTA=`tput setab 5`
-        FONT_BACKGROUND_CYAN=`tput setab 6`
-        FONT_BACKGROUND_WHITE=`tput setab 7`
-        FONT_RESET_FORMATTING=`tput sgr0`
-
-        for p in $@ ; do
-            # Color
-            if [[ "$p" =~ ^color\s*\=\s*.+$ ]]; then
-
-                case "$s" in
-                    default)
-                        tput sgr0
-                        ;;
-                    black)
-                        tput setab 0
-                        ;;
-                    white)
-                        tput setaf 7
-                        ;;
-                    blue)
-                        tput setaf 4
-                        ;;
-                    green)
-                        tput setaf 2
-                        ;;
-                    cyan)
-                        tput setaf 6
-                        ;;
-                    red)
-                        tput setaf 1
-                        ;;
-                    yellow)
-                        tput setaf 3
-                        ;;
-                    magenta)
-                        tput setaf 5
-                        ;;
-                esac
-            fi
+    # Print gradiant line.
+    #
+    # 1: {Integer} [0-255] From color.
+    # 2: {Integer} [0-255] To color.
+    # 3: {Char} (Default: #) Character to print.
+    # Out: {String} Colorized line.
+    function print_colorized_line_char() {
+        # Char
+        if [ $# -gt 2 ]; then
+            local c="$3"
+        else
+            local c="#"
+        fi
+        # Print
+        for i in {${1}..${2}} {${2}..${1}} ; do
+            echo -en "$(style color:${i})${c}"
         done
+        # Default
+        style default
+    }
+
+    # Print gradiant line.
+    #
+    # 1: {Integer} [0-255] From color.
+    # 2: {Integer} [0-255] To color.
+    # 3: {Char} (Default: #) Character to print.
+    # Out: {String} Colorized line.
+    function print_colorized_line_background() {
+        # Char
+        if [ $# -gt 2 ]; then
+            local c="$3"
+        else
+            local c="#"
+        fi
+        # Print
+        for i in {${1}..${2}} {${2}..${1}} ; do
+            echo -en "$(style background:${i})${c}"
+        done
+        # Default
+        style default
     }
 
     # Print at screen.
@@ -544,17 +702,8 @@ trap 'echo -ne "\e[0m"' DEBUG
     # *: {String} Text to print.
     # Out: {String} Text.
     function e() {
-        c="$(ecolor default)"
+        local c="$(style default)"
         echo -e "${c}${ECHO_CHAR} $@${c}"
-    }
-
-    # Print a text using color.
-    #
-    # 1: {COLOR} Color. See "case" into "ecolor" function for details.
-    # *: {String} Text to print.
-    # Out: {String} Text.
-    function ec() {
-        echo -e "$(ecolor $1)${@:2}$(ecolor system)"
     }
 
     # Re-print last line.
@@ -563,16 +712,16 @@ trap 'echo -ne "\e[0m"' DEBUG
     # *: {String} Text to print.
     # Out: {String} Text.
     function echo_back() {
-        n=1
-        text="$@"
+        local n=1
+        local text="$@"
         if [ $# -gt 1 ]; then
             if [ $(is_number "$1") = $TRUE ]; then
                 n=$1
                 text="${@:2}"
             fi
         fi
-        bl="\033[${n}A"
-        echo -e "${bl}$(ecolor default)${ECHO_CHAR} ${text}$(ecolor system)" # Clear line
+        local bl="\033[${n}A"
+        echo -e "${bl}$(style default)${ECHO_CHAR} ${text}$(style system)" # Clear line
         str_repeat 80 ' '
     }
 
@@ -581,11 +730,11 @@ trap 'echo -ne "\e[0m"' DEBUG
     # *: {String} (Optional) Message.
     function pause() {
         if [ $# -le 1 ]; then
-            m="Press any key to continue..."
+            local m="Press any key to continue..."
         else
-            m="$@"
+            local m="$@"
         fi
-        e "$(ecolor default)"
+        e "$(style default)"
         read -n 1 -p "${ECHO_CHAR} ${m}"
         e
         e
@@ -607,7 +756,7 @@ trap 'echo -ne "\e[0m"' DEBUG
                 $_ON_EXIT
             fi
             _APP_EXIT=$TRUE
-            e $(ecolor system)
+            e $(style system)
             echo
             if [ $# -gt 1 ]; then
                 exit $1
@@ -629,12 +778,12 @@ trap 'echo -ne "\e[0m"' DEBUG
             error "Invalid call 'timeout'" 70
         fi
         e
-        COUNT=$1
-        rta=0
+        local COUNT=$1
+        local rta=0
         while [ ${COUNT} -gt 0 ] && [ ${rta} -eq 0 ] ; do
             echo_back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..."
             read -n 1 -t 1 -p "" i
-            r=$?
+            local r=$?
             if [ "${i}" == "c" ] || [ "${i}" == "C" ] || [ "${i}" == "$KEY_ESC" ]; then
                 rta=1
             else
@@ -666,7 +815,7 @@ trap 'echo -ne "\e[0m"' DEBUG
         echo
         str_repeat 80 '-'
         $1
-        r=$?
+        local r=$?
         str_repeat 80 '-'
         return $r
     }
@@ -751,7 +900,7 @@ trap 'echo -ne "\e[0m"' DEBUG
         local _fname="$(str_replace "${f}" "^.*\/" "")"
         if [ "$2" == "$TRUE" ]; then
             # Remove extension
-            local _fname="$(str_replace "${_fname}" "\..*$" "")"
+            _fname="$(str_replace "${_fname}" "\..*$" "")"
         fi
         echo ${_fname}
     }
@@ -800,8 +949,8 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 2: {Integer} (Optional) Time out.
     # Return: 0 if file exists, 1 if file not exists (time-out).
     function wait_for_file_exists() {
-        p="..."
-        COUNT=0
+        local p="..."
+        local COUNT=0
         while [ ! -f "$1" ] ; do
             if [ $# -gt 1 ]; then
                 if [ $2 -lt $COUNT ]; then
@@ -829,8 +978,8 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 2: {Integer} (Optional) Time out.
     # Return: 0 if file exists, 1 if file not exists (time-out).
     function wait_for_directory_exists() {
-        p="..."
-        COUNT=0
+        local p="..."
+        local COUNT=0
         while [ ! -d "$1" ] ; do
             if [ $# -gt 1 ]; then
                 if [ $2 -gt $COUNT ]; then
@@ -904,9 +1053,9 @@ trap 'echo -ne "\e[0m"' DEBUG
     function usage() {
         local src="$(script_full_path)"
         if [ $# -gt 0 ] && [ ! -z "$1" ]; then
-            local src="$1"
+            src="$1"
             if [ $(file_exists "${src}") == $FALSE ]; then
-                local src="$(script_full_path)"
+                src="$(script_full_path)"
             fi
         fi
 
@@ -915,11 +1064,11 @@ trap 'echo -ne "\e[0m"' DEBUG
             # Action file
             local cmd="$(file_name "${src}" $TRUE)"
             if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
-                local info="$(grep "^#\{2\}[^#]" "${src}" | sed "s/^#\{2\}[^#]\s\?/$(str_escape "$(ecolor default)")/g" | sed "s/^/$(str_escape "$(ecolor default)")${ECHO_CHAR}     > /g" | sed "s/\t/    /g" | sed "s/^------------------/  -----  /g")"
+                local info="$(grep "^#\{2\}[^#]" "${src}" | sed "s/^#\{2\}[^#]\s\?/$(str_escape "$(style default)")/g" | sed "s/^/$(str_escape "$(style default)")${ECHO_CHAR}     > /g" | sed "s/\t/    /g" | sed "s/^------------------/  -----  /g")"
                 if [ ! -z "$info" ]; then
-                    local info="|||${info}"
+                    info="|||${info}"
                 fi
-                e "  bash $(ecolor red)${0}$(ecolor blue) ${cmd}$(ecolor default)${info}" | sed "s/|||.\+${ECHO_CHAR}\s\+>\s/ /g"
+                e "  bash $(style red)${0}$(style blue) ${cmd}$(style default)${info}" | sed "s/|||.\+${ECHO_CHAR}\s\+>\s/ /g"
                 e
             fi
         else
@@ -927,8 +1076,8 @@ trap 'echo -ne "\e[0m"' DEBUG
             grep "^\s*\(function\s\+\)\?__.\+()\s*{.*$" "${src}" | while read line ; do
                 local cmd=$(echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*\(function\s\+\)\?__//g")
                 if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
-                    local info="$(grep -C0 -A0 -B1 "^\s*\(function\s\+\)\?__$cmd\s*()\s*{" "$src" | sed "N;s/\n.*//g" | sed "s/^\s*#\s*/$(str_escape "$(ecolor default)")/g" | sed "s/\s*\\\n/\n$(str_escape "$(ecolor default)")${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g")"
-                    e "  bash $(ecolor red)${0}$(ecolor blue) ${cmd}$(ecolor default) ${info}"
+                    local info="$(grep -C0 -A0 -B1 "^\s*\(function\s\+\)\?__$cmd\s*()\s*{" "$src" | sed "N;s/\n.*//g" | sed "s/^\s*#\s*/$(str_escape "$(style default)")/g" | sed "s/\s*\\\n/\n$(str_escape "$(style default)")${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g")"
+                    e "  bash $(style red)${0}$(style blue) ${cmd}$(style default) ${info}"
                     e
                 fi
             done
@@ -989,9 +1138,9 @@ trap 'echo -ne "\e[0m"' DEBUG
                     ACTION="$1"
                 fi
                 __"$@"
-                local r=$?
+                r=$?
             else
-                error "Parameter '$(ecolor blue)${1}$(ecolor red)' not found. Call 'usage' to see help."
+                error "Parameter '$(style color:blue)${1}$(style color:red)' not found. Call 'usage' to see help."
             fi
         fi
         if [ ${#1} == 0 ]; then
@@ -999,7 +1148,7 @@ trap 'echo -ne "\e[0m"' DEBUG
                 # Show usage
                 ACTION="usage"
                 __usage
-                local r=1
+                r=1
             else
                 # Call default action
                 ACTION="$DEFAULT_ACTION"
