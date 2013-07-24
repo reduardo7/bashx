@@ -1001,16 +1001,17 @@ trap 'echo -ne "\e[0m"' DEBUG
             fi
         fi
 
+        style force default
 
         if [[ "${src}" =~ \/${XBASH_SRC_PATH}\/${ACTIONS_DIR}\/.+ ]]; then
             # Action file
             local cmd="$(file_name "${src}" $TRUE)"
             if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
-                local info="$(grep "^#\{2\}[^#]" "${src}" | sed "s/^#\{2\}[^#]\s\?/$(str_escape "$(style default)")/g" | sed "s/^/$(str_escape "$(style default)")${ECHO_CHAR}     > /g" | sed "s/\t/    /g" | sed "s/^------------------/  -----  /g")"
+                local info="$(grep "^#\{2\}[^#]" "${src}" | sed "s/^#\{2\}[^#]\s\?/$(str_escape "$(style default)")/g" | sed "s/^/$(str_escape "$(style default)")${ECHO_CHAR}     > /g" | sed "s/\t/    /g")"
                 if [ ! -z "$info" ]; then
                     info="|||${info}"
                 fi
-                e "  bash $(style color:red)${0}$(style color:blue) ${cmd}$(style default)${info}" | sed "s/|||.\+${ECHO_CHAR}\s\+>\s/ /g"
+                e "  bash $(style color:red)${0}$(style color:blue) ${cmd}$(style default)${info}" | sed "s/|||.*${ECHO_CHAR}\s\+>\s/ /g"
                 e
             fi
         else
