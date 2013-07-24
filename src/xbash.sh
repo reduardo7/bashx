@@ -437,9 +437,85 @@ trap 'echo -ne "\e[0m"' DEBUG
 
     # Change screen print style.
     #
-    # *:
+    # 1-*: Style strings.
+    #   The style separator can be:
+    #       - : (two points)
+    #       - = (equal)
+    #   Simple:
+    #       - bold: Bold text.
+    #       - underline: Underline.
+    #       - reverse | negative: Invert color.
+    #       - hidden | hide: Hide text.
+    #       - show | visible: Show hidden text.
+    #       - dim: Gray style.
+    #       - blink: Flashing text.
+    #       - normal: Text without bold format.
+    #       - reset: Reset all styles to system default.
+    #       - default: Reset all styles to APP style.
+    #       - force: Force apply style.
+    #   Colors: Use "color[:=]*", where "*" can be:
+    #       - black
+    #       - blue
+    #       - blue-light
+    #       - cyan
+    #       - cyan-light
+    #       - gray
+    #       - gray-light
+    #       - green
+    #       - green-light
+    #       - magenta | purple
+    #       - magenta-light
+    #       - red
+    #       - red-light
+    #       - yellow | coffe
+    #       - yellow-light
+    #       - white
+    #       - default | normal | auto: Default APP color.
+    #       - [A Number between 0 and 255]: Print custom color.
+    #   Background: Use "background[:=]*" or "bg[:=]*", where "*" can be:
+    #       - black
+    #       - blue
+    #       - blue-light
+    #       - cyan
+    #       - cyan-light
+    #       - gray
+    #       - gray-light
+    #       - green
+    #       - green-light
+    #       - magenta | purple
+    #       - magenta-light
+    #       - red
+    #       - red-light
+    #       - yellow | coffe
+    #       - yellow-light
+    #       - white
+    #       - system | normal | auto: Default system background color.
+    #       - [A Number between 0 and 255]: Print custom color.
+    #   Styles: Use as "style[:=]status":
+    #       - underline: Underline.
+    #           - on | true | 1 | $TRUE: Enable underline.
+    #           - off | false | 0 | $FALSE: Disable underline.
+    #       - bold: Bold.
+    #           - on | true | 1 | $TRUE: Enable bold.
+    #           - off | false | 0 | $FALSE: Disable bold.
+    #       - dim: Gray style.
+    #           - on | true | 1 | $TRUE: Enable dim.
+    #           - off | false | 0 | $FALSE: Disable dim.
+    #       - blink: Flashing text.
+    #           - on | true | 1 | $TRUE: Enable blink.
+    #           - off | false | 0 | $FALSE: Disable blink.
+    #       - reverse | negative: Invert color.
+    #           - on | true | 1 | $TRUE: Enable negative.
+    #           - off | false | 0 | $FALSE: Disable negative.
+    #       - display: Show or hide text.
+    #           - visible | show | true | 1 | $TRUE: Show text.
+    #           - hidden | none | hide | false | 0 | $FALSE: Hide text.
     # Out: {String} Style console string.
-    # Example: e "normal color $(style color:red)text in red $(style color:black background:yellow)black color$(style default) normal color"
+    # Examples:
+    #   e "normal color $(style color:red)text in red $(style color:black background:yellow)black color$(style default) normal color"
+    #   style force default # Restore default APP colors
+    #   style background gray # Set gray color as background color for next output
+    #   e "$(style color:red bold underline:on)Title$(style underline:off):$(style normal dim) Description..."
     function style() {
         if [ $# -eq 0 ]; then
             # Default color
@@ -468,14 +544,14 @@ trap 'echo -ne "\e[0m"' DEBUG
                                 "blue-light")                  y="94" ;;
                                 "cyan")                        y="36" ;;
                                 "cyan-light")                  y="96" ;;
-                                "red")                         y="31" ;;
-                                "red-light")                   y="91" ;;
                                 "gray")                        y="90" ;;
                                 "gray-light")                  y="37" ;;
                                 "green")                       y="32" ;;
                                 "green-light")                 y="92" ;;
                                 "magenta" | "purple")          y="35" ;;
                                 "magenta-light")               y="95" ;;
+                                "red")                         y="31" ;;
+                                "red-light")                   y="91" ;;
                                 "yellow" | "coffe")            y="33" ;;
                                 "yellow-light")                y="93" ;;
                                 "white")                       y="97" ;;
@@ -528,13 +604,14 @@ trap 'echo -ne "\e[0m"' DEBUG
                             esac
                             ;;
                         "dim")
+                            # Gray stile
                             case "$v" in
                                 "on" | "true" | "1" | "${TRUE}")    y="2" ;;
                                 "off" | "false" | "0" | "${FALSE}") y="22" ;;
                             esac
                             ;;
                         "blink")
-                            # Parpadeo
+                            # Flashing text
                             case "$v" in
                                 "on" | "true" | "1" | "${TRUE}")    y="5" ;;
                                 "off" | "false" | "0" | "${FALSE}") y="25" ;;
@@ -556,12 +633,13 @@ trap 'echo -ne "\e[0m"' DEBUG
                 else
                     case "$p" in
                         "bold")                 y="1" ;;
-                        "dim")                  y="2" ;;
                         "underline")            y="4" ;;
                         "reverse" | "negative") y="7" ;;
                         "hidden" | "hide")      y="8" ;;
                         "show" | "visible")     y="28" ;;
-                        # Parpadeo
+                        # Gray stile
+                        "dim")                  y="2" ;;
+                        # Flashing text
                         "blink")                y="5" ;;
                         # No bold
                         "normal")               y="21" ;;
