@@ -1039,7 +1039,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     function check_requirements() {
         for req in $@ ; do
             if ! hash "$req" 2>&- ; then
-                error "Error! Please install '${req}' to continue."
+                error "Please install '${req}' to continue."
             fi
         done
     }
