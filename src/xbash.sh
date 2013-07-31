@@ -783,6 +783,11 @@ trap 'echo -ne "\e[0m"' DEBUG
     # CTRL + C, end script
     trap end EXIT
 
+    # Alias of "end".
+    function die() {
+        end $@
+    }
+
     # Time out.
     #
     # 1: {Integer} Time out for count down.
