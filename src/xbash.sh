@@ -1070,7 +1070,7 @@ trap 'echo -ne "\e[0m"' DEBUG
             # Action file
             local cmd="$(file_name "${src}" $TRUE)"
             if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
-                local info="$(grep "^#\{2\}[^#]" "${src}" | sed "s/^#\{2\}[^#]\s\?/$(style default)/g" | sed "s/^/$(style default)${ECHO_CHAR}     > /g" | sed "s/\t/    /g")"
+                local info="$(grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/$(style default)/g" | sed "s/^/$(style default)${ECHO_CHAR}     > /g" | sed "s/\t/    /g")"
                 if [ ! -z "$info" ]; then
                     info="|||${info}"
                 fi
@@ -1090,7 +1090,7 @@ trap 'echo -ne "\e[0m"' DEBUG
         fi
     }
 
-    #time command\nPrint basic usage (this).\nAdd action name to display the action usage.
+    #[action]\nPrint basic usage (this).\nParams:\n action: Action Name. Display action usage.
     function __usage() {
         e
         e "Usage:"
@@ -1111,7 +1111,7 @@ trap 'echo -ne "\e[0m"' DEBUG
         fi
     }
 
-    # Alias of "usage", with less.
+    #[action]\nAlias of "usage", with less.\nParams:\n action: Action Name. Display action usage.
     function __help() {
         check_requirements less
         __usage "$@" | less
