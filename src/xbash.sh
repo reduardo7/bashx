@@ -24,6 +24,9 @@ if [ -z "$BASH" ]; then
     exit $?
 fi
 
+# Go to script path
+cd "$(dirname "$0")"
+
 # Reset color for command output
 # (this one is invoked every time before a command is executed):
 trap 'echo -ne "\e[0m"' DEBUG
