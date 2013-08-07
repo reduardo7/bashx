@@ -24,6 +24,9 @@ if [ -z "$BASH" ]; then
     exit $?
 fi
 
+# Go to script path
+cd "$(dirname "$0")"
+
 # Reset color for command output
 # (this one is invoked every time before a command is executed):
 trap 'echo -ne "\e[0m"' DEBUG
@@ -919,6 +922,11 @@ trap 'echo -ne "\e[0m"' DEBUG
     # CTRL + C, end script
     trap end EXIT
 
+    # Alias of "end".
+    function die() {
+        end $@
+    }
+
     # Time out.
     #
     # 1: {Integer} Time out for count down.
@@ -1175,7 +1183,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     function check_requirements() {
         for req in $@ ; do
             if ! hash "$req" 2>&- ; then
-                error "Error! Please install '${req}' to continue."
+                error "Please install '${req}' to continue."
             fi
         done
     }
