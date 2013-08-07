@@ -4,7 +4,7 @@
 ##
 ## Extended Bash Framework.
 ##
-## Version: 1.4
+## Version: 1.5
 ## URL: https://github.com/reduardo7/xbash
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
@@ -34,39 +34,39 @@ trap 'echo -ne "\e[0m"' DEBUG
 # Rewrite with your configuration.
 
     # APP Title.
-    APP_TITLE="XBash"
+    export APP_TITLE="XBash"
 
     # APP Version.
-    APP_VERSION="1.0"
+    export APP_VERSION="1.0"
 
     # Default APP color. See "style" for more information.
     #COLOR_DEFAULT="system" # Default system color
-    COLOR_DEFAULT="cyan"
+    export COLOR_DEFAULT="cyan"
 
     # Start character for formated print screen (see "e" function).
-    ECHO_CHAR="#"
+    export ECHO_CHAR="#"
 
     # Application requeirements.
     # To extend requeirements, use:
     #   APP_REQUEIREMENTS="${APP_REQUEIREMENTS} other app command extra foo"
-    APP_REQUEIREMENTS="echo printf sed grep tput read date dirname readlink basename tar let"
+    export APP_REQUEIREMENTS="echo printf sed grep tput read date dirname readlink basename tar let"
 
     # Default action to call
     # Action to use if script called without arguments.
-    DEFAULT_ACTION="usage"
+    export DEFAULT_ACTION="usage"
 
     # XBash Version.
-    XBASH_SRC_PATH="src"
+    export XBASH_SRC_PATH="src"
 
     # XBash SRC path.
-    XBASH_VERSION="1.4"
+    export XBASH_VERSION="1.4"
 
 ### Load files
 
     # Config
     if [ -z "${CONFIG_FILE}" ]; then
         # Default file
-        CONFIG_FILE="${XBASH_SRC_PATH}/config.ini"
+        export CONFIG_FILE="${XBASH_SRC_PATH}/config.ini"
     fi
     if [ -f "${CONFIG_FILE}" ]; then
         # Load file
@@ -76,43 +76,43 @@ trap 'echo -ne "\e[0m"' DEBUG
 ### VARS
 
     # Current path
-    CURRENT_DIR="$(pwd)"
+    export CURRENT_DIR="$(pwd)"
 
     # XBash File Name
-    XBASH_FILE_NAME="./${XBASH_SRC_PATH}/xbash.sh"
+    export XBASH_FILE_NAME="./${XBASH_SRC_PATH}/xbash.sh"
 
     # Null path.
-    DEV_NULL="/dev/null"
+    export DEV_NULL="/dev/null"
 
     # Boolean true.
-    TRUE=1
+    export TRUE=1
 
     # Boolean false.
-    FALSE=0
+    export FALSE=0
 
     # Key: ESC
     # \e | \033 | \x1B
-    KEY_ESC=$'\e'
+    export KEY_ESC=$'\e'
 
     # Result value for some functions
-    RESULT=""
+    export RESULT=""
 
     # Called action
-    ACTION=""
+    export ACTION=""
 
     # Actions directory name
-    ACTIONS_DIR="actions"
+    export ACTIONS_DIR="actions"
 
     # Actions path
-    ACTIONS_PATH="./${XBASH_SRC_PATH}/${ACTIONS_DIR}"
+    export ACTIONS_PATH="./${XBASH_SRC_PATH}/${ACTIONS_DIR}"
 
 ### PRIVATE VARS
 
     # On exit command
-    _ON_EXIT=''
+    export _ON_EXIT=''
 
    # TRUE if APP is terminated
-   _APP_EXIT=$FALSE
+   export _APP_EXIT=$FALSE
 
 ### UTILS
 
@@ -748,6 +748,142 @@ trap 'echo -ne "\e[0m"' DEBUG
         read -n 1 -p "${ECHO_CHAR} ${m}"
         e
         e
+    }
+
+    # Request user info.
+    #
+    # 1: {String} (Optional) Message.
+    # 2: {String} (Default: "") Default value.
+    # 3: {Integer} (Default: "") Max length for input.
+    # 4: {Integer} (Default: "") Timeout.
+    # 5: {Boolean} (Default: $FALSE) Silent user output?
+    # Result in $RESULT.
+    # Return: 0 if valid user input, 1 if cancel, 2 if empty user input and returns default value.
+    function user_input() {
+        # 1: Message
+        local m="Enter text"
+        if [ $# -gt 0 ]; then
+            m="${1}"
+        fi
+        # 2: Default Value
+        local d=""
+        if [ $# -gt 1 ]; then
+            d="${2}"
+        fi
+        # 3: Max length
+        local n=""
+        if [ $# -gt 2 ] && is_number "${3}"; then
+            n=" -n ${3}"
+        fi
+        # 4: Timeout
+        local t=""
+        if [ $# -gt 3 ] && is_number "${4}"; then
+            t=" -t ${4}"
+        fi
+        # 5: Silent outut
+        local s=""
+        if [ $# -gt 4 ] && [ ${5} == $TRUE ]; then
+            s=" -s"
+        fi
+        # Execute
+        local cmd="read${n}${s}${t}"
+        ${cmd} -p "$(style default)${ECHO_CHAR} ${m}: " i
+        echo
+        local r=$?
+        local rta=0
+        if [ "${i}" == "$KEY_ESC" ]; then
+            rta=1
+            i="${d}"
+        else
+            # 142 == No user input
+            if [ "${r}" == "142" ] || [ -z "${i}" ]; then
+                # Default value
+                rta=2
+                i="${d}"
+            fi
+        fi
+        # Result
+        RESULT="${i}"
+        return ${rta}
+    }
+
+    # User confirm.
+    #
+    # 1: {String} (Optional) Message.
+    # 2: {Array} (Default: (y Y)) Options.
+    # 3: {Integer} (Default: 0) Default result on non user input. $TRUE to confirm, $FALSE to no confirm.
+    # Return: 0 if user confirm, 1 if user not confirm.
+    function user_confirm() {
+        # Message
+        local m="Confirm? [Y = Yes | N = No]"
+        if [ $# -gt 0 ]; then
+            m="$1"
+        fi
+        # Options
+        local o=(y Y)
+        if [ $# -gt 1 ]; then
+            o=($2)
+        fi
+        # Default
+        local d=1
+        if [ $# -gt 2 ]; then
+            if [ ${3} == $TRUE ]; then
+                d=0
+            else
+                d=1
+            fi
+        fi
+        # Read
+        read -n 1 -p "$(style default)${ECHO_CHAR} ${m}: " i
+        echo
+        local rta=1
+        i=$(trim "$i")
+        if [ -z $i ]; then
+            # Default
+            rta=$d
+        else
+            # Validate input
+            rta=1
+            for x in $o; do
+                if [ "${x}" == "${i}" ]; then
+                    # User accept
+                    rta=0
+                fi
+            done
+        fi
+        return ${rta}
+    }
+
+    # User confirm.
+    #
+    # 1: {String} Message.
+    # 2: {Array} Options.
+    # 3: {Char} (Default: "") Default value on non user input or invalid choice.
+    # Result (User input) in $RESULT.
+    function user_choice() {
+        # Message
+        local m="$1"
+        # Options
+        local o=($2)
+        # Default
+        local d=""
+        if [ $# -gt 2 ]; then
+            d="$3"
+        fi
+        # Read
+        read -n 1 -p "$(style default)${ECHO_CHAR} ${m} [${o}]: " i
+        echo
+        local RESULT="${d}"
+        i=$(trim "$i")
+        if [ ! -z $i ]; then
+            # Validate input
+            for x in $o; do
+                if [ "${x}" == "${i}" ]; then
+                    # Valid input
+                    RESULT="${x}"
+                fi
+            done
+        fi
     }
 
     # Set on-exit callback.

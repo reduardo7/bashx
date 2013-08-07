@@ -17,18 +17,30 @@ function __style() {
     e "Style ($@): $(style $@)[ # STYLE # ]"
 }
 
-#\nSee system info.
-function __info() {
+#\nUser Interface.
+function __ui() {
     # Info
     e "$(style color:green)Script name: $(script_file_name)"
     e "$(style color:red)Path: $(current_directory)"
     e "Date and time: $(now_date_time)"
 
+    # User Input
+    user_input "Enter some text" "[NO INPUT | DEFAULT VALUE]"
+    e "Exit code: $?. User input: $(style bold)${RESULT}"
+
     # Pause script
     pause
 
+    # Confirm
+    options=(a A)
+    if user_confirm "Confirm? [A/B]" $options $FALSE ; then
+        e "User confirm operation!"
+    else
+        e "User not confirm operation!"
+    fi
+
     # Check root
-    if [ $(is_root) = $TRUE ] ; then
+    if is_root ; then
         e "$(style color:red)ROOT$(style color:green) user"
     else
         e "$(style color:green)No $(style color:red)ROOT$(style color:green) user"
