@@ -1258,7 +1258,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     #[action]\nAlias of "usage", with less.\nParams:\n action: Action Name. Display action usage.
     function __help() {
         check_requirements less
-        __usage "$@" | less
+        __usage "$@" | less -r
         # Clear output
         clear
     }
