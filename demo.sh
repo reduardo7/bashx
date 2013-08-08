@@ -32,7 +32,7 @@ function __ui() {
     pause
 
     # Confirm
-    options=(a A)
+    local options=( "a" )
     if user_confirm "Confirm? [A/B]" $options $FALSE ; then
         e "User confirm operation!"
     else

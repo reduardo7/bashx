@@ -114,8 +114,8 @@ trap 'echo -ne "\e[0m"' DEBUG
     # On exit command
     export _ON_EXIT=''
 
-   # TRUE if APP is terminated
-   export _APP_EXIT=$FALSE
+    # TRUE if APP is terminated
+    export _APP_EXIT=$FALSE
 
 ### UTILS
 
@@ -446,38 +446,38 @@ trap 'echo -ne "\e[0m"' DEBUG
     #   Colors: Use "color[:=]*", where "*" can be:
     #       - black
     #       - blue
-    #       - blue-light
+    #       - blue_light
     #       - cyan
-    #       - cyan-light
+    #       - cyan_light
     #       - gray
-    #       - gray-light
+    #       - gray_light
     #       - green
-    #       - green-light
+    #       - green_light
     #       - magenta | purple
-    #       - magenta-light
+    #       - magenta_light
     #       - red
-    #       - red-light
+    #       - red_light
     #       - yellow | coffe
-    #       - yellow-light
+    #       - yellow_light
     #       - white
     #       - default | normal | auto: Default APP color.
     #       - [A Number between 0 and 255]: Print custom color.
     #   Background: Use "background[:=]*" or "bg[:=]*", where "*" can be:
     #       - black
     #       - blue
-    #       - blue-light
+    #       - blue_light
     #       - cyan
-    #       - cyan-light
+    #       - cyan_light
     #       - gray
-    #       - gray-light
+    #       - gray_light
     #       - green
-    #       - green-light
+    #       - green_light
     #       - magenta | purple
-    #       - magenta-light
+    #       - magenta_light
     #       - red
-    #       - red-light
+    #       - red_light
     #       - yellow | coffe
-    #       - yellow-light
+    #       - yellow_light
     #       - white
     #       - system | normal | auto: Default system background color.
     #       - [A Number between 0 and 255]: Print custom color.
@@ -557,19 +557,19 @@ trap 'echo -ne "\e[0m"' DEBUG
                         case "$v" in
                             "black")              y="30" ;;
                             "blue")               y="34" ;;
-                            "blue-light")         y="94" ;;
+                            "blue_light")         y="94" ;;
                             "cyan")               y="36" ;;
-                            "cyan-light")         y="96" ;;
+                            "cyan_light")         y="96" ;;
                             "gray")               y="90" ;;
-                            "gray-light")         y="37" ;;
+                            "gray_light")         y="37" ;;
                             "green")              y="32" ;;
-                            "green-light")        y="92" ;;
+                            "green_light")        y="92" ;;
                             "magenta" | "purple") y="35" ;;
-                            "magenta-light")      y="95" ;;
+                            "magenta_light")      y="95" ;;
                             "red")                y="31" ;;
-                            "red-light")          y="91" ;;
+                            "red_light")          y="91" ;;
                             "yellow" | "coffe")   y="33" ;;
-                            "yellow-light")       y="93" ;;
+                            "yellow_light")       y="93" ;;
                             "white")              y="97" ;;
                             # Color (0 - 255)
                             [0-9])                y="38;5;${v}" ;;
@@ -579,19 +579,19 @@ trap 'echo -ne "\e[0m"' DEBUG
                         case "$v" in
                             "black")                      y="40" ;;
                             "blue")                       y="44" ;;
-                            "blue-light")                 y="104" ;;
+                            "blue_light")                 y="104" ;;
                             "cyan")                       y="46" ;;
-                            "cyan-light")                 y="106" ;;
+                            "cyan_light")                 y="106" ;;
                             "gray")                       y="100" ;;
-                            "gray-light")                 y="47" ;;
+                            "gray_light")                 y="47" ;;
                             "green")                      y="42" ;;
-                            "green-light")                y="102" ;;
+                            "green_light")                y="102" ;;
                             "magenta" | "purple")         y="45" ;;
-                            "magenta-light")              y="105" ;;
+                            "magenta_light")              y="105" ;;
                             "red")                        y="41" ;;
-                            "red-light")                  y="101" ;;
+                            "red_light")                  y="101" ;;
                             "yellow" | "coffe")           y="43" ;;
-                            "yellow-light")               y="103" ;;
+                            "yellow_light")               y="103" ;;
                             "white")                      y="107" ;;
                             "system" | "normal" | "auto") y="49" ;;
                             # Color (0-255)
@@ -813,7 +813,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # User confirm.
     #
     # 1: {String} (Optional) Message.
-    # 2: {Array} (Default: (y Y)) Options.
+    # 2: {Array} (Default: ( "y" )) Valid options. Case insensitive.
     # 3: {Integer} (Default: 0) Default result on non user input. $TRUE to confirm, $FALSE to no confirm.
     # Return: 0 if user confirm, 1 if user not confirm.
     function user_confirm() {
@@ -823,7 +823,7 @@ trap 'echo -ne "\e[0m"' DEBUG
             m="$1"
         fi
         # Options
-        local o=(y Y)
+        local o=( "y" )
         if [ $# -gt 1 ]; then
             o=($2)
         fi
@@ -837,24 +837,23 @@ trap 'echo -ne "\e[0m"' DEBUG
             fi
         fi
         # Read
+        local i=""
         read -n 1 -p "$(style default)${ECHO_CHAR} ${m}: " i
         echo
-        local rta=1
         i=$(trim "$i")
-        if [ -z $i ]; then
+        if [ -z "$i" ]; then
             # Default
-            rta=$d
+            return $d
         else
             # Validate input
-            rta=1
             for x in $o; do
-                if [ "${x}" == "${i}" ]; then
+                if [ "$(str_to_lower "${x}")" == "$(str_to_lower "${i}")" ]; then
                     # User accept
-                    rta=0
+                    return 0
                 fi
             done
         fi
-        return ${rta}
+        return 1
     }
 
     # User confirm.
@@ -1218,7 +1217,7 @@ trap 'echo -ne "\e[0m"' DEBUG
                 if [ ! -z "$info" ]; then
                     info="|||${info}"
                 fi
-                e "  bash $(style color:red)${0}$(style color:blue) ${cmd}$(style default)${info}" | sed "s/|||.*${ECHO_CHAR}\s\+>\s/ /g"
+                e "  bash $(style color:red)${0}$(style color:green) ${cmd}$(style default)${info}" | sed "s/|||.*${ECHO_CHAR}\s\+>\s/ /g"
                 e
             fi
         else
@@ -1227,7 +1226,7 @@ trap 'echo -ne "\e[0m"' DEBUG
                 local cmd=$(echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*\(function\s\+\)\?__//g")
                 if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
                     local info="$(grep -C0 -A0 -B1 "^\s*\(function\s\+\)\?__$cmd\s*()\s*{" "$src" | sed "N;s/\n.*//g" | sed "s/^\s*#\s*/$(style default)/g" | sed "s/\s*\\\n/\n$(style default)${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g")"
-                    e "  bash $(style color:red)${0}$(style color:blue) ${cmd}$(style default) ${info}"
+                    e "  bash $(style color:red)${0}$(style color:green) ${cmd}$(style default) ${info}"
                     e
                 fi
             done
@@ -1271,7 +1270,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Use: At end of file, put next:
     #   run "$@"
     function run() {
-        APPINFO=" $(print_app_info) "
+        local APPINFO=" $(print_app_info) "
         local APPINFOB="+-$(str_repeat $(str_len "${APPINFO}") "-")-+"
         local r=1
         echo
@@ -1292,7 +1291,7 @@ trap 'echo -ne "\e[0m"' DEBUG
                 __"$@"
                 r=$?
             else
-                error "Parameter '$(style color:blue)${1}$(style color:red)' not found. Call 'usage' to see help."
+                error "Parameter '$(style color:green)${1}$(style color:red)' not found. Call 'usage' to see help."
             fi
         fi
         if [ ${#1} == 0 ]; then
