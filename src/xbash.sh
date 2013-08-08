@@ -114,8 +114,8 @@ trap 'echo -ne "\e[0m"' DEBUG
     # On exit command
     export _ON_EXIT=''
 
-   # TRUE if APP is terminated
-   export _APP_EXIT=$FALSE
+    # TRUE if APP is terminated
+    export _APP_EXIT=$FALSE
 
 ### UTILS
 
@@ -813,7 +813,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # User confirm.
     #
     # 1: {String} (Optional) Message.
-    # 2: {Array} (Default: (y Y)) Options.
+    # 2: {Array} (Default: ( "y" )) Valid options. Case insensitive.
     # 3: {Integer} (Default: 0) Default result on non user input. $TRUE to confirm, $FALSE to no confirm.
     # Return: 0 if user confirm, 1 if user not confirm.
     function user_confirm() {
@@ -823,7 +823,7 @@ trap 'echo -ne "\e[0m"' DEBUG
             m="$1"
         fi
         # Options
-        local o=(y Y)
+        local o=( "y" )
         if [ $# -gt 1 ]; then
             o=($2)
         fi
@@ -837,24 +837,23 @@ trap 'echo -ne "\e[0m"' DEBUG
             fi
         fi
         # Read
+        local i=""
         read -n 1 -p "$(style default)${ECHO_CHAR} ${m}: " i
         echo
-        local rta=1
         i=$(trim "$i")
-        if [ -z $i ]; then
+        if [ -z "$i" ]; then
             # Default
-            rta=$d
+            return $d
         else
             # Validate input
-            rta=1
             for x in $o; do
-                if [ "${x}" == "${i}" ]; then
+                if [ "$(str_to_lower "${x}")" == "$(str_to_lower "${i}")" ]; then
                     # User accept
-                    rta=0
+                    return 0
                 fi
             done
         fi
-        return ${rta}
+        return 1
     }
 
     # User confirm.
@@ -1271,7 +1270,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Use: At end of file, put next:
     #   run "$@"
     function run() {
-        APPINFO=" $(print_app_info) "
+        local APPINFO=" $(print_app_info) "
         local APPINFOB="+-$(str_repeat $(str_len "${APPINFO}") "-")-+"
         local r=1
         echo
