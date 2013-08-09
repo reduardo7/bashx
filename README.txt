@@ -1,4 +1,4 @@
-XBash - Extended Bash Framework
+hsaBX - Extended Bash Framework
 Copyright (C) 2013  Eduardo Daniel Cuomo
 
 This program is free software: you can redistribute it and/or modify

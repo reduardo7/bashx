@@ -1,4 +1,4 @@
-xbash | Extended Bash Framework
+hsaBX | Extended Bash Framework
 ===============================
 
 # Description
@@ -21,7 +21,7 @@ Simple bash extension. Bash Framework. Helps to bash programming. Add common fun
 
 APP title.
 
-Default: *"XBash"*
+Default: *"hsaBX"*
 
 ### APP_VERSION
 

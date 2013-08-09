@@ -1,11 +1,11 @@
 #!/bin/bash
 
-## XBash
+## hsaBX
 ##
 ## Extended Bash Framework.
 ##
 ## Version: 1.5
-## URL: https://github.com/reduardo7/xbash
+## URL: https://github.com/reduardo7/hsabx
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
 
@@ -14,7 +14,7 @@
 # Init.
 
 ## #!/bin/bash
-## . ./src/xbash.sh
+## . ./src/hsabx.sh
 
 # #############################################################################
 
@@ -37,7 +37,7 @@ trap 'echo -ne "\e[0m"' DEBUG
 # Rewrite with your configuration.
 
     # APP Title.
-    export APP_TITLE="XBash"
+    export APP_TITLE="hsaBX"
 
     # APP Version.
     export APP_VERSION="1.0"
@@ -58,18 +58,18 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Action to use if script called without arguments.
     export DEFAULT_ACTION="usage"
 
-    # XBash Version.
-    export XBASH_SRC_PATH="src"
+    # hsaBX Version.
+    export HSABX_SRC_PATH="src"
 
-    # XBash SRC path.
-    export XBASH_VERSION="1.4"
+    # hsaBX SRC path.
+    export HSABX_VERSION="1.4"
 
 ### Load files
 
     # Config
     if [ -z "${CONFIG_FILE}" ]; then
         # Default file
-        export CONFIG_FILE="${XBASH_SRC_PATH}/config.ini"
+        export CONFIG_FILE="${HSABX_SRC_PATH}/config.ini"
     fi
     if [ -f "${CONFIG_FILE}" ]; then
         # Load file
@@ -81,8 +81,8 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Current path
     export CURRENT_DIR="$(pwd)"
 
-    # XBash File Name
-    export XBASH_FILE_NAME="./${XBASH_SRC_PATH}/xbash.sh"
+    # hsaBX File Name
+    export HSABX_FILE_NAME="./${HSABX_SRC_PATH}/hsabx.sh"
 
     # Null path.
     export DEV_NULL="/dev/null"
@@ -107,7 +107,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     export ACTIONS_DIR="actions"
 
     # Actions path
-    export ACTIONS_PATH="./${XBASH_SRC_PATH}/${ACTIONS_DIR}"
+    export ACTIONS_PATH="./${HSABX_SRC_PATH}/${ACTIONS_DIR}"
 
 ### PRIVATE VARS
 
@@ -1209,7 +1209,7 @@ trap 'echo -ne "\e[0m"' DEBUG
         # Default style
         style default
 
-        if [[ "${src}" =~ \/${XBASH_SRC_PATH}\/${ACTIONS_DIR}\/.+ ]]; then
+        if [[ "${src}" =~ \/${HSABX_SRC_PATH}\/${ACTIONS_DIR}\/.+ ]]; then
             # Action file
             local cmd="$(file_name "${src}" $TRUE)"
             if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
@@ -1248,9 +1248,9 @@ trap 'echo -ne "\e[0m"' DEBUG
                 fi
             done
         fi
-        # XBash
-        if [ "$(script_file_name)" != "${XBASH_FILE_NAME}" ]; then
-            usage "${XBASH_FILE_NAME}" "$1"
+        # hsaBX
+        if [ "$(script_file_name)" != "${HSABX_FILE_NAME}" ]; then
+            usage "${HSABX_FILE_NAME}" "$1"
         fi
     }
 
