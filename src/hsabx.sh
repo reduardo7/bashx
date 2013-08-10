@@ -755,7 +755,7 @@ trap 'echo -ne "\e[0m"' DEBUG
 
     # Request user info.
     #
-    # 1: {String} (Optional) Message.
+    # 1: {String} (Default: "") Message.
     # 2: {String} (Default: "") Default value.
     # 3: {Integer} (Default: "") Max length for input.
     # 4: {Integer} (Default: "") Timeout.
@@ -764,9 +764,9 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Return: 0 if valid user input, 1 if cancel, 2 if empty user input and returns default value.
     function user_input() {
         # 1: Message
-        local m="Enter text"
+        local m=""
         if [ $# -gt 0 ]; then
-            m="${1}"
+            m="${1}: "
         fi
         # 2: Default Value
         local d=""
@@ -790,7 +790,7 @@ trap 'echo -ne "\e[0m"' DEBUG
         fi
         # Execute
         local cmd="read${n}${s}${t}"
-        ${cmd} -p "$(style default)${ECHO_CHAR} ${m}: " i
+        ${cmd} -p "$(style default)${ECHO_CHAR} ${m} " i
         echo
         local r=$?
         local rta=0
