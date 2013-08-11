@@ -25,7 +25,7 @@ function __ui() {
     e "Date and time: $(now_date_time)"
 
     # User Input
-    user_input "Enter some text" "[NO INPUT | DEFAULT VALUE]"
+    user_input "Enter some text" "[NO INPUT | DEFAULT VALUE]: "
     e "Exit code: $?. User input: $(style bold)${RESULT}"
 
     # Pause script
