@@ -64,7 +64,7 @@ function __testError() {
     e "Generating an error..."
     e $error_var_x
     error_not_exists_test
-    check_error "ec red Exit for error!"
+    check_error $? "error 'Exit for error!'"
     e "NO EXECUTE"
 }
 

@@ -383,19 +383,31 @@ trap 'echo -ne "\e[0m"' DEBUG
 
 ### ERROR
 
-    # Last execution returns > 0 (error)?
+    # Check error.
     #
-    # 1: {String} Command to execute on error.
-    # 2: {Integer} Change exit code.
+    # 1: {Integer} Exit code. Example: $?
+    # 2: {String} Command to execute on error.
+    # Example: check_error $? "error 'Invalid operation'".
     function check_error() {
-        local c=$?
-        if [ $c -ne 0 ]; then
-            # Error
-            $1
-            if [ $# -gt 1 ]; then
-                c=$2
+        if is_number "$1"; then
+            if (return $1); then
+                # Error
+                $2
             fi
-            error "" $c
+        fi
+    }
+
+    # Check error.
+    #
+    # 1: {Integer} Exit code. Example: $?
+    # 2: {String} Command to execute on error.
+    # Example: check_error $? "Invalid operation".
+    function check_error_end() {
+        if is_number "$1"; then
+            if (return $1); then
+                # Error
+                error "$2" $1
+            fi
         fi
     }
 
@@ -405,10 +417,10 @@ trap 'echo -ne "\e[0m"' DEBUG
     # 2: {Integer} (Default: 1) Exit code.
     function error() {
         if ! [ -z "$1" ]; then
+            alert "Error! $1"
+        else
             e
-            e "$(style color:red)Error! $1"
         fi
-        e
         if [ $# -gt 1 ]; then
             end $2
         else
@@ -717,6 +729,15 @@ trap 'echo -ne "\e[0m"' DEBUG
     function e() {
         local c="$(style default)"
         echo -e "${c}${ECHO_CHAR} ${@}${c}"
+    }
+
+    # Show red alert message.
+    #
+    # *: {String} Message.
+    function alert() {
+        e
+        e "$(style color:red) $@"
+        e
     }
 
     # Re-print last line.
