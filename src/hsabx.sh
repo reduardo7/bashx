@@ -4,7 +4,7 @@
 ##
 ## Extended Bash Framework.
 ##
-## Version: 1.5
+## Version: 1.6
 ## URL: https://github.com/reduardo7/hsabx
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
@@ -62,7 +62,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     export HSABX_SRC_PATH="src"
 
     # hsaBX SRC path.
-    export HSABX_VERSION="1.4"
+    export HSABX_VERSION="1.6"
 
 ### Load files
 
@@ -88,10 +88,10 @@ trap 'echo -ne "\e[0m"' DEBUG
     export DEV_NULL="/dev/null"
 
     # Boolean true.
-    export TRUE=1
+    export TRUE=0
 
     # Boolean false.
-    export FALSE=0
+    export FALSE=1
 
     # Key: ESC
     # \e | \033 | \x1B
