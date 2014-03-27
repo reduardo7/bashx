@@ -14,7 +14,6 @@ if [ -d "${ACTIONS_PATH}" ]; then
             # Create action function
             _fn="__$(file_name "${f}" $TRUE)"
             eval "${_fn}() { . ${f}; }"
-
         fi
     done
 fi

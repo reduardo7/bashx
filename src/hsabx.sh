@@ -51,8 +51,8 @@ trap 'echo -ne "\e[0m"' DEBUG
 
     # Application requeirements.
     # To extend requeirements, use:
-    #   APP_REQUEIREMENTS="${APP_REQUEIREMENTS} other app command extra foo"
-    export APP_REQUEIREMENTS="echo printf sed grep tput read date dirname readlink basename tar let"
+    #   export APP_REQUEIREMENTS="${APP_REQUEIREMENTS} other app command extra foo"
+    export APP_REQUEIREMENTS="printf sed grep read date dirname readlink basename let"
 
     # Default action to call
     # Action to use if script called without arguments.
