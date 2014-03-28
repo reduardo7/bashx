@@ -5,3 +5,5 @@
 ##
 ## Use "##" as line start to generate this description.
 e "IN ACTION 1!"
+e "Param 1: $1"
+e "Param 2: $2"

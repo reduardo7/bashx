@@ -62,9 +62,8 @@ function __to() {
 
 function __testError() {
     e "Generating an error..."
-    e $error_var_x
     error_not_exists_test
-    check_error $? "error 'Exit for error!'"
+    check_error $? onError_callback
     e "NO EXECUTE"
 }
 
@@ -94,6 +93,10 @@ function exit_callback() {
     if [ "$ACTION" != 'usage' ]; then
         e "Function called on exit!"
     fi
+}
+
+function onError_callback() {
+    error "Exit with error!"
 }
 
 # Run

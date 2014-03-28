@@ -27,6 +27,8 @@ fi
 # Go to script path
 cd "$(dirname "$0")"
 
+# set -e
+
 # Reset color for command output
 # (this one is invoked every time before a command is executed):
 trap 'echo -ne "\e[0m"' DEBUG
@@ -390,7 +392,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Example: check_error $? "error 'Invalid operation'".
     function check_error() {
         if is_number "$1"; then
-            if (return $1); then
+            if [ $1 -gt 0 ]; then
                 # Error
                 $2
             fi
@@ -404,7 +406,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Example: check_error $? "Invalid operation".
     function check_error_end() {
         if is_number "$1"; then
-            if (return $1); then
+            if [ $1 -gt 0 ]; then
                 # Error
                 error "$2" $1
             fi
@@ -927,8 +929,8 @@ trap 'echo -ne "\e[0m"' DEBUG
             fi
             # Mark as exit
             _APP_EXIT=$TRUE
-            # System color
-            style system
+            # Reset System color
+            style reset
             # Space
             echo
             # Exit
@@ -1073,7 +1075,7 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Out: {String} File name.
     function file_name() {
         # Remove path
-        local _fname="$(str_replace "${f}" "^.*\/" "")"
+        local _fname="$(basename "${1}")"
         if [ "$2" == "$TRUE" ]; then
             # Remove extension
             _fname="$(str_replace "${_fname}" "\..*$" "")"
@@ -1299,9 +1301,23 @@ trap 'echo -ne "\e[0m"' DEBUG
         e "| ${APPINFO} |"
         e ${APPINFOB}
         e
+
         # Check requeirements
         check_requirements "${APP_REQUEIREMENTS}"
+
         if [ $# -gt 0 ]; then
+
+            # Load actions
+            if [ -d "${ACTIONS_PATH}" ]; then
+                for __fn__path__ in ${ACTIONS_PATH}/* ; do
+                    if [ -f "${__fn__path__}" ]; then
+                        # Create action function
+                        eval "__$(file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
+                    fi
+                done
+            fi
+
+            # If function exists
             if function_exists "__$1" ; then
                 # Exec
                 if [ "$1" == "help" ]; then
@@ -1312,7 +1328,7 @@ trap 'echo -ne "\e[0m"' DEBUG
                 __"$@"
                 r=$?
             else
-                error "Parameter '$(style color:green)${1}$(style color:red)' not found. Call 'usage' to see help."
+               error "Parameter '$(style color:green)${1}$(style color:red)' not found. Call 'usage' to see help."
             fi
         fi
         if [ ${#1} == 0 ]; then
