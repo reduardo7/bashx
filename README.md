@@ -5,6 +5,8 @@ hsaBX | Extended Bash Framework
 
 Simple bash extension. Bash Framework. Helps to bash programming. Add common functions to help the developer.
 
+Compatible with Android Bash!
+
 ## Why use it?
 
 1. Very easy to implement.

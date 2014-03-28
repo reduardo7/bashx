@@ -27,12 +27,6 @@ fi
 # Go to script path
 cd "$(dirname "$0")"
 
-# set -e
-
-# Reset color for command output
-# (this one is invoked every time before a command is executed):
-trap 'echo -ne "\e[0m"' DEBUG
-
 # #############################################################################
 
 ### CONFIG
@@ -731,6 +725,8 @@ trap 'echo -ne "\e[0m"' DEBUG
     function e() {
         local c="$(style default)"
         echo -e "${c}${ECHO_CHAR} ${@}${c}"
+        # Style reset for next command
+        echo -ne "\e[0m"
     }
 
     # Show red alert message.
