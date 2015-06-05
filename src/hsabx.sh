@@ -516,14 +516,15 @@ cd "$(dirname "$0")"
     #   e "$(style color:red bold underline:on)Title$(style underline:off):$(style normal dim) Description..."
     function style() {
         # No parameters
+	local prms="$@"
         if [ $# -eq 0 ]; then
             # Default color
-            @="default"
+            prms="default"
         fi
 
         # Styles
         local c=""
-        for q in "$@" ; do
+        for q in "$prms" ; do
             # Style code
             local y=""
             # To lower
