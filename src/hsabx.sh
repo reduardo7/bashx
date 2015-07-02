@@ -75,7 +75,15 @@ cd "$(dirname "$0")"
 ### VARS
 
     # Current path
-    export CURRENT_DIR="$(pwd)"
+    #export CURRENT_DIR="$(pwd)"
+    CURRENT_SOURCE="${BASH_SOURCE[0]}"
+    while [ -h "$CURRENT_SOURCE" ]; do # resolve $CURRENT_SOURCE until the file is no longer a symlink
+        CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
+        CURRENT_SOURCE="$(readlink "$CURRENT_SOURCE")"
+        [[ $CURRENT_SOURCE != /* ]] && CURRENT_SOURCE="$CURRENT_DIR/$CURRENT_SOURCE" # if $CURRENT_SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+    done
+    export CURRENT_SOURCE="$CURRENT_SOURCE"
+    export CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
 
     # hsaBX File Name
     export HSABX_FILE_NAME="./${HSABX_SRC_PATH}/hsabx.sh"
