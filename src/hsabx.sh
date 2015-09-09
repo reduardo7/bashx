@@ -946,8 +946,10 @@ cd "$(dirname "$0")"
             fi
         fi
     }
-    # CTRL + C, end script
+    # On end Script
     trap end EXIT
+    # On CTRL + C
+    trap end INT
 
     # Alias of "end".
     function die() {
