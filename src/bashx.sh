@@ -4,33 +4,32 @@
 ##
 ## Extended Bash Framework.
 ##
-## Version: 1.7
 ## URL: https://github.com/reduardo7/bashx
 ##
-## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
+## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com | reduardo7@gmail.com
 
 # #############################################################################
 
 # Init.
-
-## #!/bin/bash
-## . ./src/bashx.sh
+# Add the following lines at beginning of your file script:
+#   #!/bin/bash
+#   . "$(dirname "$0")/src/bashx.sh"
 
 # #############################################################################
 
-# Test if running with "bash" interpreter.
+# Test and force run with "bash" interpreter.
 if [ -z "$BASH" ]; then
     bash "$0" "$@"
     exit $?
 fi
 
-# Go to script path
+# Go to script path (working directory)
 cd "$(dirname "$0")"
 
 # #############################################################################
 
 ### CONFIG
-# Rewrite with your configuration.
+# Update with your configuration or use the "config.ini" file.
 
     # APP Title.
     export APP_TITLE="BashX"
@@ -54,14 +53,17 @@ cd "$(dirname "$0")"
     # Action to use if script called without arguments.
     export DEFAULT_ACTION="usage"
 
-    # BashX Version.
+    # BashX SRC path.
     export BASHX_SRC_PATH="src"
 
-    # BashX SRC path.
+    # BashX Version.
     export BASHX_VERSION="1.7"
 
-    # Log File (& Path)
+    # Log file (& path).
     export LOG_FILE="$0.log"
+
+    # Config file.
+    export CONFIG_FILE=""
 
 ### Load files
 
@@ -75,10 +77,9 @@ cd "$(dirname "$0")"
         . ./${CONFIG_FILE}
     fi
 
-### VARS
+### CONSTANTS
 
-    # Current path
-    #export CURRENT_DIR="$(pwd)"
+    # Current source.
     CURRENT_SOURCE="${BASH_SOURCE[0]}"
     while [ -h "$CURRENT_SOURCE" ]; do # resolve $CURRENT_SOURCE until the file is no longer a symlink
         CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
@@ -86,35 +87,48 @@ cd "$(dirname "$0")"
         [[ $CURRENT_SOURCE != /* ]] && CURRENT_SOURCE="$CURRENT_DIR/$CURRENT_SOURCE" # if $CURRENT_SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
     done
     export CURRENT_SOURCE="$CURRENT_SOURCE"
-    export CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
+    readonly CURRENT_SOURCE="$CURRENT_SOURCE"
 
-    # BashX File Name
+    # Current path
+    export CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
+    readonly CURRENT_DIR="$CURRENT_DIR"
+
+    # BashX file name.
     export BASHX_FILE_NAME="./${BASHX_SRC_PATH}/bashx.sh"
+    readonly BASHX_FILE_NAME="$BASHX_FILE_NAME"
 
     # Null path.
     export DEV_NULL="/dev/null"
+    readonly DEV_NULL="$DEV_NULL"
 
     # Boolean true.
     export TRUE=0
+    readonly TRUE="$TRUE"
 
     # Boolean false.
     export FALSE=1
+    readonly FALSE="$FALSE"
 
     # Key: ESC
     # \e | \033 | \x1B
     export KEY_ESC=$'\e'
+    readonly KEY_ESC="$KEY_ESC"
+
+    # Actions directory name
+    export ACTIONS_DIR="actions"
+    readonly ACTIONS_DIR="$ACTIONS_DIR"
+
+    # Actions path
+    export ACTIONS_PATH="./${BASHX_SRC_PATH}/${ACTIONS_DIR}"
+    readonly ACTIONS_PATH="$ACTIONS_PATH"
+
+### VARS
 
     # Result value for some functions
     export RESULT=""
 
     # Called action
     export ACTION=""
-
-    # Actions directory name
-    export ACTIONS_DIR="actions"
-
-    # Actions path
-    export ACTIONS_PATH="./${BASHX_SRC_PATH}/${ACTIONS_DIR}"
 
 ### PRIVATE VARS
 
@@ -140,15 +154,15 @@ cd "$(dirname "$0")"
 
     # Check if run as Root.
     #
-    # Return: 0 if is root, 1 is not root.
+    # Return: $TRUE if is root, $FALSE is not root.
     is_root() {
         # Is ROOT user?
         if [ "$(id -u)" -ne 0 ]; then
             # No Root
-            return 1
+            return $FALSE
         else
             # Root
-            return 0
+            return $TRUE
         fi
     }
 
@@ -171,52 +185,40 @@ cd "$(dirname "$0")"
     # Check if is empty.
     #
     # 1: {*} Variable to check if emtpy.
-    # Return: 0 if empty, 1 if not empty.
+    # Return: $TRUE if empty, $FALSE if not empty.
     is_empty() {
         if [ -z "$1" ]; then
             # Empty
-            return 0
+            return $TRUE
         else
             # Not empty
-            return 1
+            return $FALSE
         fi
     }
 
     # Check if is a number.
     #
     # 1: {*} Variable to check if is a number.
-    # Return: 0 if variable is a number, 1 if variable is not a number.
+    # Return: $TRUE if variable is a number, $FALSE if variable is not a number.
     is_number() {
         if [[ "$1" =~ ^[0-9]+$ ]]; then
-            return 0
+            return $TRUE
         else
-            return 1
+            return $FALSE
         fi
     }
 
     # Check if function exists.
     #
     # 1: {String} Function name.
-    # Return: 0 if function exists, 0 if file not exists.
+    # Return: $TRUE if function exists, $FALSE if file not exists.
     function_exists() {
         declare -f "$1" > /dev/null
         if [ $? -eq 0 ]; then
-            return 0
+            return $TRUE
         else
-            return 1
+            return $FALSE
         fi
-    }
-
-    # Print vars.
-    #
-    # *: Vars to print.
-    xdie() {
-        echo
-        echo "## XDIE ##"
-        echo
-        echo $@
-        echo
-        end 1
     }
 
 ### STRING
@@ -363,7 +365,7 @@ cd "$(dirname "$0")"
     # 2: {String} String to search.
     # 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
     # Out: {Integer|NULL} String position or NULL if not found.
-    # Return: 0 on fonud, 1 on not found.
+    # Return: $TRUE on fonud, $FALSE on not found.
     str_pos() {
         if [ $# -lt 3 ] || [ $3 = $TRUE ]; then
             # Case sensitive
@@ -376,10 +378,10 @@ cd "$(dirname "$0")"
         echo $r
         if is_empty "$r" ; then
             # No found
-            return 1
+            return $FALSE
         else
             # Found
-            return 0
+            return $TRUE
         fi
     }
 
@@ -388,7 +390,7 @@ cd "$(dirname "$0")"
     # 1: {String} String where search.
     # 2: {String} Substring to search.
     # 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
-    # Return: 0 if contains substring, 1 if not contains substring.
+    # Return: $TRUE if contains substring, $FALSE if not contains substring.
     in_str() {
         if [ $# -lt 3 ]; then
             str_pos "$1" "$2" &> $DEV_NULL
@@ -539,7 +541,7 @@ cd "$(dirname "$0")"
     #   e "$(style color:red bold underline:on)Title$(style underline:off):$(style normal dim) Description..."
     style() {
         # No parameters
-	local prms="$@"
+	    local prms="$@"
         if [ $# -eq 0 ]; then
             # Default color
             prms="default"
@@ -857,8 +859,8 @@ cd "$(dirname "$0")"
     #
     # 1: {String} (Optional) Message.
     # 2: {Array} (Default: ( "y" )) Valid options. Case insensitive.
-    # 3: {Integer} (Default: 0) Default result on non user input. $TRUE to confirm, $FALSE to no confirm.
-    # Return: 0 if user confirm, 1 if user not confirm.
+    # 3: {Integer} (Default: $TRUE) Default result on non user input. $TRUE to confirm, $FALSE to no confirm.
+    # Return: $TRUE if user confirm, $FALSE if user not confirm.
     user_confirm() {
         # Message
         local m="Confirm? [Y = Yes | N = No]"
@@ -871,12 +873,12 @@ cd "$(dirname "$0")"
             o=($2)
         fi
         # Default
-        local d=1
+        local d=$FALSE
         if [ $# -gt 2 ]; then
             if [ ${3} == $TRUE ]; then
-                d=0
+                d=$TRUE
             else
-                d=1
+                d=$FALSE
             fi
         fi
         # Read
@@ -892,7 +894,7 @@ cd "$(dirname "$0")"
             for x in $o; do
                 if [ "$(str_to_lower "${x}")" == "$(str_to_lower "${i}")" ]; then
                     # User accept
-                    return 0
+                    return $TRUE
                 fi
             done
         fi
@@ -1060,6 +1062,7 @@ cd "$(dirname "$0")"
     # 1: {String} Input file.
     # 2: {String} Output file (.tar.gz).
     # Out: {String} Log output.
+    # Return: command exit code.
     tar_compress() {
         tar zcvf "$2" "$1"
         return $?
@@ -1070,6 +1073,7 @@ cd "$(dirname "$0")"
     # 1: {String} Input file (.tar.gz).
     # 2: {String} Output path.
     # Out: {String} Log output.
+    # Return: command exit code.
     tar_extract() {
         tar zxvf "$1" -C "$2"
         return $?
@@ -1093,7 +1097,8 @@ cd "$(dirname "$0")"
 
     # Get file name.
     #
-    # 1: {Boolean} (Default: FALSE) Remove file extension from file name?
+    # 1: {String} File path.
+    # 2: {Boolean} (Default: $FALSE) Remove file extension from file name?
     # Out: {String} File name.
     file_name() {
         # Remove path

@@ -84,8 +84,6 @@ Value: *0*
 
 ### function_exists
 
-### xdie
-
 ## STRING
 
 ### str_escape
