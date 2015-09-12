@@ -1,11 +1,11 @@
 #!/bin/bash
 
-## hsaBX
+## BashX
 ##
 ## Extended Bash Framework.
 ##
 ## Version: 1.6
-## URL: https://github.com/reduardo7/hsabx
+## URL: https://github.com/reduardo7/bashx
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
 
@@ -14,7 +14,7 @@
 # Init.
 
 ## #!/bin/bash
-## . ./src/hsabx.sh
+## . ./src/bashx.sh
 
 # #############################################################################
 
@@ -33,7 +33,7 @@ cd "$(dirname "$0")"
 # Rewrite with your configuration.
 
     # APP Title.
-    export APP_TITLE="hsaBX"
+    export APP_TITLE="BashX"
 
     # APP Version.
     export APP_VERSION="1.0"
@@ -54,18 +54,18 @@ cd "$(dirname "$0")"
     # Action to use if script called without arguments.
     export DEFAULT_ACTION="usage"
 
-    # hsaBX Version.
-    export HSABX_SRC_PATH="src"
+    # BashX Version.
+    export BASHX_SRC_PATH="src"
 
-    # hsaBX SRC path.
-    export HSABX_VERSION="1.6"
+    # BashX SRC path.
+    export BASHX_VERSION="1.6"
 
 ### Load files
 
     # Config
     if [ -z "${CONFIG_FILE}" ]; then
         # Default file
-        export CONFIG_FILE="${HSABX_SRC_PATH}/config.ini"
+        export CONFIG_FILE="${BASHX_SRC_PATH}/config.ini"
     fi
     if [ -f "${CONFIG_FILE}" ]; then
         # Load file
@@ -85,8 +85,8 @@ cd "$(dirname "$0")"
     export CURRENT_SOURCE="$CURRENT_SOURCE"
     export CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
 
-    # hsaBX File Name
-    export HSABX_FILE_NAME="./${HSABX_SRC_PATH}/hsabx.sh"
+    # BashX File Name
+    export BASHX_FILE_NAME="./${BASHX_SRC_PATH}/bashx.sh"
 
     # Null path.
     export DEV_NULL="/dev/null"
@@ -111,7 +111,7 @@ cd "$(dirname "$0")"
     export ACTIONS_DIR="actions"
 
     # Actions path
-    export ACTIONS_PATH="./${HSABX_SRC_PATH}/${ACTIONS_DIR}"
+    export ACTIONS_PATH="./${BASHX_SRC_PATH}/${ACTIONS_DIR}"
 
 ### PRIVATE VARS
 
@@ -126,7 +126,7 @@ cd "$(dirname "$0")"
     # Check if run as Root.
     #
     # Return: 0 if is root, 1 is not root.
-    function is_root() {
+    is_root() {
         # Is ROOT user?
         if [ "$(id -u)" -ne 0 ]; then
             # No Root
@@ -140,7 +140,7 @@ cd "$(dirname "$0")"
     # Check if running as ROOT, or exit from script.
     #
     # *: (Optional) Message.
-    function root_validator() {
+    root_validator() {
         if ! is_root ; then
             if [ $# -eq 0 ] ; then
                 local m="This script must be run as root!"
@@ -157,7 +157,7 @@ cd "$(dirname "$0")"
     #
     # 1: {*} Variable to check if emtpy.
     # Return: 0 if empty, 1 if not empty.
-    function is_empty() {
+    is_empty() {
         if [ -z "$1" ]; then
             # Empty
             return 0
@@ -171,7 +171,7 @@ cd "$(dirname "$0")"
     #
     # 1: {*} Variable to check if is a number.
     # Return: 0 if variable is a number, 1 if variable is not a number.
-    function is_number() {
+    is_number() {
         if [[ "$1" =~ ^[0-9]+$ ]]; then
             return 0
         else
@@ -183,7 +183,7 @@ cd "$(dirname "$0")"
     #
     # 1: {String} Function name.
     # Return: 0 if function exists, 0 if file not exists.
-    function function_exists() {
+    function_exists() {
         declare -f "$1" > /dev/null
         if [ $? -eq 0 ]; then
             return 0
@@ -195,7 +195,7 @@ cd "$(dirname "$0")"
     # Print vars.
     #
     # *: Vars to print.
-    function xdie() {
+    xdie() {
         echo
         echo "## XDIE ##"
         echo
@@ -210,7 +210,7 @@ cd "$(dirname "$0")"
     #
     # *: {String} String to escape for Bash.
     # Out: {String} Escaped string.
-    function str_escape() {
+    str_escape() {
         if ! is_empty "$@" ; then
             printf '%q' "$@"
         fi
@@ -221,7 +221,7 @@ cd "$(dirname "$0")"
     # 1: {Integer} Number of repetitions.
     # 2: {String} String to repeat.
     # Out: {String} Repeated string.
-    function str_repeat() {
+    str_repeat() {
         let fillsize=$1
         local fill=$2
         while [ ${fillsize} -gt 1 ] ; do
@@ -238,7 +238,7 @@ cd "$(dirname "$0")"
     # 3: {String} Replace.
     # 4: {Boolean} (Default: 1) 1 to ignore case.
     # Out: {String} Result string.
-    function str_replace() {
+    str_replace() {
         local options="g"
         if [ $# -lt 4 ] || [ "$4" -ne $TRUE ]; then
             options="${options}i"
@@ -257,7 +257,7 @@ cd "$(dirname "$0")"
     #    for i in ${RESULT[@]} ; do
     #        echo $i
     #    done
-    function str_explode() {
+    str_explode() {
         IFS="$1"
         RESULT=( $(echo "$2") )
         return ${#RESULT[@]}
@@ -267,7 +267,7 @@ cd "$(dirname "$0")"
     #
     # *: {String} String to convert.
     # Out: {String} Result string.
-    function str_to_lower() {
+    str_to_lower() {
         echo "$@" | tr '[A-Z]' '[a-z]'
     }
 
@@ -275,7 +275,7 @@ cd "$(dirname "$0")"
     #
     # *: {String} String to convert.
     # Out: {String} Result string.
-    function str_to_upper() {
+    str_to_upper() {
         echo "$@" | tr '[a-z]' '[A-Z]'
     }
 
@@ -284,7 +284,7 @@ cd "$(dirname "$0")"
     # 1: {String} String where trim.
     # 2: {String} (Default: " ") String to trim.
     # Out: {String} Trimed text.
-    function trim() {
+    trim() {
         local chr=" "
         if [ $# -gt 1 ]; then
             local chr="$2"
@@ -297,7 +297,7 @@ cd "$(dirname "$0")"
     # 1: {String} String where trim.
     # 2: {String} (Default: " ") String to trim.
     # Out: {String} Trimed text.
-    function ltrim() {
+    ltrim() {
         local chr=" "
         if [ $# -gt 1 ]; then
             chr="$2"
@@ -310,7 +310,7 @@ cd "$(dirname "$0")"
     # 1: {String} String where trim.
     # 2: {String} (Default: " ") String to trim.
     # Out: {String} Trimed text.
-    function rtrim() {
+    rtrim() {
         local chr=" "
         if [ $# -gt 1 ]; then
             chr="$2"
@@ -323,7 +323,7 @@ cd "$(dirname "$0")"
     # 1: {String} Text.
     # Out: {Integer} String length.
     # Return: String length.
-    function str_len() {
+    str_len() {
         local l=${#1}
         echo $l
         return $l
@@ -334,7 +334,7 @@ cd "$(dirname "$0")"
     # 2: {Integer} Limit.
     # 3: {Integer} (Optional) Offset.
     # Out: {String} Result string
-    function sub_str() {
+    sub_str() {
         if [ $# -eq 2 ]; then
             echo ${1:0:$2}
         else
@@ -349,7 +349,7 @@ cd "$(dirname "$0")"
     # 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
     # Out: {Integer|NULL} String position or NULL if not found.
     # Return: 0 on fonud, 1 on not found.
-    function str_pos() {
+    str_pos() {
         if [ $# -lt 3 ] || [ $3 = $TRUE ]; then
             # Case sensitive
             local p="-bo"
@@ -374,7 +374,7 @@ cd "$(dirname "$0")"
     # 2: {String} Substring to search.
     # 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
     # Return: 0 if contains substring, 1 if not contains substring.
-    function in_str() {
+    in_str() {
         if [ $# -lt 3 ]; then
             str_pos "$1" "$2" &> $DEV_NULL
             local r=$?
@@ -392,7 +392,7 @@ cd "$(dirname "$0")"
     # 1: {Integer} Exit code. Example: $?
     # 2: {String} Command to execute on error.
     # Example: check_error $? "error 'Invalid operation'".
-    function check_error() {
+    check_error() {
         if is_number "$1"; then
             if [ $1 -gt 0 ]; then
                 # Error
@@ -406,7 +406,7 @@ cd "$(dirname "$0")"
     # 1: {Integer} Exit code. Example: $?
     # 2: {String} Command to execute on error.
     # Example: check_error $? "Invalid operation".
-    function check_error_end() {
+    check_error_end() {
         if is_number "$1"; then
             if [ $1 -gt 0 ]; then
                 # Error
@@ -419,7 +419,7 @@ cd "$(dirname "$0")"
     #
     # 1: {String} Error message.
     # 2: {Integer} (Default: 1) Exit code.
-    function error() {
+    error() {
         if ! [ -z "$1" ]; then
             alert "Error! $1"
         else
@@ -437,7 +437,7 @@ cd "$(dirname "$0")"
     # Screen width.
     #
     # Out: {Integer} Screen width.
-    function screen_width() {
+    screen_width() {
         check_requirements tput
         tput cols
     }
@@ -522,7 +522,7 @@ cd "$(dirname "$0")"
     #   style default # Restore default APP colors
     #   style background gray # Set gray color as background color for next output
     #   e "$(style color:red bold underline:on)Title$(style underline:off):$(style normal dim) Description..."
-    function style() {
+    style() {
         # No parameters
 	local prms="$@"
         if [ $# -eq 0 ]; then
@@ -691,7 +691,7 @@ cd "$(dirname "$0")"
     # 2: {Integer} [0-255] To color.
     # 3: {Char} (Default: #) Character to print.
     # Out: {String} Colorized line.
-    function print_colorized_line_char() {
+    print_colorized_line_char() {
         # Char
         if [ $# -gt 2 ]; then
             local c="$3"
@@ -712,7 +712,7 @@ cd "$(dirname "$0")"
     # 2: {Integer} [0-255] To color.
     # 3: {Char} (Default: #) Character to print.
     # Out: {String} Colorized line.
-    function print_colorized_line_background() {
+    print_colorized_line_background() {
         # Char
         if [ $# -gt 2 ]; then
             local c="$3"
@@ -731,7 +731,7 @@ cd "$(dirname "$0")"
     #
     # *: {String} Text to print.
     # Out: {String} Text.
-    function e() {
+    e() {
         local c="$(style default)"
         echo -e "${c}${ECHO_CHAR} ${@}${c}"
         # Style reset for next command
@@ -741,7 +741,7 @@ cd "$(dirname "$0")"
     # Show red alert message.
     #
     # *: {String} Message.
-    function alert() {
+    alert() {
         e
         e "$(style color:red) $@"
         e
@@ -752,7 +752,7 @@ cd "$(dirname "$0")"
     # 1: {Integer} (Default: 1) Lines to meve back. If is not a number, used as text.
     # *: {String} Text to print.
     # Out: {String} Text.
-    function echo_back() {
+    echo_back() {
         local n=1
         local text="$@"
         if [ $# -gt 1 ]; then
@@ -769,7 +769,7 @@ cd "$(dirname "$0")"
     # Pause.
     #
     # *: {String} (Optional) Message.
-    function pause() {
+    pause() {
         if [ $# -le 1 ]; then
             local m="Press any key to continue..."
         else
@@ -790,7 +790,7 @@ cd "$(dirname "$0")"
     # 5: {Boolean} (Default: $FALSE) Silent user output?
     # Result in $RESULT.
     # Return: 0 if valid user input, 1 if cancel, 2 if empty user input and returns default value.
-    function user_input() {
+    user_input() {
         # 1: Message
         local m=""
         if [ $# -gt 0 ]; then
@@ -844,7 +844,7 @@ cd "$(dirname "$0")"
     # 2: {Array} (Default: ( "y" )) Valid options. Case insensitive.
     # 3: {Integer} (Default: 0) Default result on non user input. $TRUE to confirm, $FALSE to no confirm.
     # Return: 0 if user confirm, 1 if user not confirm.
-    function user_confirm() {
+    user_confirm() {
         # Message
         local m="Confirm? [Y = Yes | N = No]"
         if [ $# -gt 0 ]; then
@@ -890,7 +890,7 @@ cd "$(dirname "$0")"
     # 2: {Array} Options.
     # 3: {Char} (Default: "") Default value on non user input or invalid choice.
     # Result (User input) in $RESULT.
-    function user_choice() {
+    user_choice() {
         # Message
         local m="$1"
         # Options
@@ -919,14 +919,14 @@ cd "$(dirname "$0")"
     # Set on-exit callback.
     #
     # *: Command to execute on APP exit.
-    function set_on_exit() {
+    set_on_exit() {
         _ON_EXIT="$@"
     }
 
     # Exit from APP and execute the function setted in "set_on_exit".
     #
     # 1: {Integer} (Default: 0) Exit code.
-    function end() {
+    end() {
         if [ "$_APP_EXIT" == "$FALSE" ]; then
             if [ ! -z "$_ON_EXIT" ]; then
                 # Execute exit actions
@@ -952,7 +952,7 @@ cd "$(dirname "$0")"
     trap end INT
 
     # Alias of "end".
-    function die() {
+    die() {
         end $@
     }
 
@@ -961,7 +961,7 @@ cd "$(dirname "$0")"
     # 1: {Integer} Time out for count down.
     # 2: {String} Command to execute on count down finish.
     # Return: {Integer} Return command exit code or "255" on user cancel.
-    function timeout() {
+    timeout() {
         if [ $# -ne 2 ] || ! is_number "$1" || [ -z "$2" ]; then
             error "Invalid call 'timeout'" 70
         fi
@@ -999,7 +999,7 @@ cd "$(dirname "$0")"
     # 1: {String} Command to print and execute.
     # Out: {String} Command executed and result.
     # Return: Executed command exit code.
-    function cmd_log() {
+    cmd_log() {
         echo
         str_repeat 80 '-'
         $1
@@ -1011,7 +1011,7 @@ cd "$(dirname "$0")"
     # Print APP title and version.
     #
     # Out: APP title and version.
-    function print_app_info() {
+    print_app_info() {
         echo "${APP_TITLE} v${APP_VERSION}"
     }
 
@@ -1020,21 +1020,21 @@ cd "$(dirname "$0")"
     # Current time.
     #
     # Out: {String} Time.
-    function now_time() {
+    now_time() {
         date '%H:%M:%S'
     }
 
     # Current date.
     #
     # Out: {String} Date.
-    function now_date() {
+    now_date() {
         date '+%Y-%m-%d'
     }
 
     # Current date and time.
     #
     # Out: {String} Date and time.
-    function now_date_time() {
+    now_date_time() {
         date '+%Y-%m-%d %H:%M:%S'
     }
 
@@ -1045,7 +1045,7 @@ cd "$(dirname "$0")"
     # 1: {String} Input file.
     # 2: {String} Output file (.tar.gz).
     # Out: {String} Log output.
-    function tar_compress() {
+    tar_compress() {
         tar zcvf "$2" "$1"
         return $?
     }
@@ -1055,7 +1055,7 @@ cd "$(dirname "$0")"
     # 1: {String} Input file (.tar.gz).
     # 2: {String} Output path.
     # Out: {String} Log output.
-    function tar_extract() {
+    tar_extract() {
         tar zxvf "$1" -C "$2"
         return $?
     }
@@ -1066,7 +1066,7 @@ cd "$(dirname "$0")"
     #
     # 1: {String} File path.
     # Return: 0 if file exists, 1 if not exists.
-    function file_exists() {
+    file_exists() {
         if [ -f "$1" ]; then
             # Exists
             return 0
@@ -1080,7 +1080,7 @@ cd "$(dirname "$0")"
     #
     # 1: {Boolean} (Default: FALSE) Remove file extension from file name?
     # Out: {String} File name.
-    function file_name() {
+    file_name() {
         # Remove path
         local _fname="$(basename "${1}")"
         if [ "$2" == "$TRUE" ]; then
@@ -1093,21 +1093,21 @@ cd "$(dirname "$0")"
     # Current directory.
     #
     # Out: {String} Current directory.
-    function current_directory() {
+    current_directory() {
         dirname "$( readlink -f "$0" )"
     }
 
     # Current script file name.
     #
     # Out: {String} Current script file name.
-    function script_file_name() {
+    script_file_name() {
         basename "$0"
     }
 
     # Script full path.
     #
     # Out: {String} Current script full path.
-    function script_full_path() {
+    script_full_path() {
         echo "$(current_directory)/$(script_file_name)"
     }
 
@@ -1115,7 +1115,7 @@ cd "$(dirname "$0")"
     #
     # 1: {String} Directory path.
     # Return: 0 if directory exists, 1 if directory not exists.
-    function directory_exists() {
+    directory_exists() {
         if [ -d $(str_escape "$1") ]; then
             # Exists
             return 0
@@ -1130,7 +1130,7 @@ cd "$(dirname "$0")"
     # 1: {String} File path.
     # 2: {Integer} (Optional) Time out.
     # Return: 0 if file exists, 1 if file not exists (time-out).
-    function wait_for_file_exists() {
+    wait_for_file_exists() {
         local p="..."
         local COUNT=0
         while [ ! -f "$1" ] ; do
@@ -1159,7 +1159,7 @@ cd "$(dirname "$0")"
     # 1: {String} Directory path.
     # 2: {Integer} (Optional) Time out.
     # Return: 0 if file exists, 1 if file not exists (time-out).
-    function wait_for_directory_exists() {
+    wait_for_directory_exists() {
         local p="..."
         local COUNT=0
         while [ ! -d "$1" ] ; do
@@ -1188,7 +1188,7 @@ cd "$(dirname "$0")"
     # 1: {String} Text to search.
     # 2: {String} File where check.
     # Return: 0 if file contains the text, 1 if not contains the text.
-    function file_contains() {
+    file_contains() {
         if grep -rils $(str_escape "$1") $(str_escape "$2") &> $DEV_NULL ; then
             # Contains
             return 0
@@ -1202,14 +1202,14 @@ cd "$(dirname "$0")"
 
     # VOID function.
     # Used in empty functions.
-    function void() {
+    void() {
         echo 0 &> $DEV_NULL
     }
 
     # Check if all parameters are installed.
     #
     # *: {String} Command to check.
-    function check_requirements() {
+    check_requirements() {
         for req in $@ ; do
             if ! hash "$req" 2>&- ; then
                 error "Please install '${req}' to continue."
@@ -1227,7 +1227,7 @@ cd "$(dirname "$0")"
     # Out: {String} Usage text.
     # Use: usage "$0" actionName # For action in current file
     #      usage file.sh actionName # For action in other file
-    function usage() {
+    usage() {
         local src="$(script_full_path)"
         if [ $# -gt 0 ] && [ ! -z "$1" ]; then
             src="$1"
@@ -1239,7 +1239,7 @@ cd "$(dirname "$0")"
         # Default style
         style default
 
-        if [[ "${src}" =~ \/${HSABX_SRC_PATH}\/${ACTIONS_DIR}\/.+ ]]; then
+        if [[ "${src}" =~ \/${BASHX_SRC_PATH}\/${ACTIONS_DIR}\/.+ ]]; then
             # Action file
             local cmd="$(file_name "${src}" $TRUE)"
             if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
@@ -1264,7 +1264,7 @@ cd "$(dirname "$0")"
     }
 
     #[action]\nPrint basic usage (this).\nParams:\n action: Action Name. Display action usage.
-    function __usage() {
+    __usage() {
         e
         e "Usage:"
         e
@@ -1278,14 +1278,14 @@ cd "$(dirname "$0")"
                 fi
             done
         fi
-        # hsaBX
-        if [ "$(script_file_name)" != "${HSABX_FILE_NAME}" ]; then
-            usage "${HSABX_FILE_NAME}" "$1"
+        # BashX
+        if [ "$(script_file_name)" != "${BASHX_FILE_NAME}" ]; then
+            usage "${BASHX_FILE_NAME}" "$1"
         fi
     }
 
     #[action]\nAlias of "usage", with less.\nParams:\n action: Action Name. Display action usage.
-    function __help() {
+    __help() {
         check_requirements less
         __usage "$@" | less -r
         # Clear output
@@ -1299,7 +1299,7 @@ cd "$(dirname "$0")"
     #
     # Use: At end of file, put next:
     #   run "$@"
-    function run() {
+    run() {
         local APPINFO=" $(print_app_info) "
         local APPINFOB="+-$(str_repeat $(str_len "${APPINFO}") "-")-+"
         local r=1

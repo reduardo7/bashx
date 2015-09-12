@@ -1,4 +1,4 @@
-hsaBX | Extended Bash Framework
+BashX | Extended Bash Framework
 ===============================
 
 # Description
@@ -23,7 +23,7 @@ Compatible with Android Bash!
 
 APP title.
 
-Default: *"hsaBX"*
+Default: *"BashX"*
 
 ### APP_VERSION
 
