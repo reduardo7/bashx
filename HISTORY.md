@@ -1,3 +1,8 @@
+1.7.0 / 2015-09-12
+==================
+  * LOG methods implemented.
+  * Removed "function" prefix.
+
 1.3.0 / 2014-03-27
 ===================
 
