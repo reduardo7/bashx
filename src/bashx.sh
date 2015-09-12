@@ -4,7 +4,7 @@
 ##
 ## Extended Bash Framework.
 ##
-## Version: 1.6
+## Version: 1.7
 ## URL: https://github.com/reduardo7/bashx
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
@@ -58,7 +58,10 @@ cd "$(dirname "$0")"
     export BASHX_SRC_PATH="src"
 
     # BashX SRC path.
-    export BASHX_VERSION="1.6"
+    export BASHX_VERSION="1.7"
+
+    # Log File (& Path)
+    export LOG_FILE="$0.log"
 
 ### Load files
 
@@ -120,6 +123,18 @@ cd "$(dirname "$0")"
 
     # TRUE if APP is terminated
     export _APP_EXIT=$FALSE
+
+### DEBUG & LOG
+
+    # Write to LOG to Console
+    console_log() {
+        printf "LOG> %.23s | %s[%s]: %s\n" $(date +%F.%T.%N) ${BASH_SOURCE[1]##*/} ${BASH_LINENO[0]} "${@}"
+    }
+
+    # Write to LOG to File
+    write_log() {
+        console_log "$@" >> "$LOG_FILE"
+    }
 
 ### UTILS
 

@@ -7,3 +7,5 @@
 e "IN ACTION 1!"
 e "Param 1: $1"
 e "Param 2: $2"
+
+console_log "test log from action_1"

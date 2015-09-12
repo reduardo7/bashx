@@ -89,6 +89,12 @@ __exists() {
     fi
 }
 
+# Log & Debug Demo
+__log() {
+    console_log "test log to console"
+    write_log "test log to file"
+}
+
 exit_callback() {
     if [ "$ACTION" != 'usage' ]; then
         e "called on exit!"
@@ -98,6 +104,7 @@ exit_callback() {
 onError_callback() {
     error "Exit with error!"
 }
+
 
 # Run
 run "$@"
