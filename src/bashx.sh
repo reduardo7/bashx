@@ -1,11 +1,11 @@
 #!/bin/bash
 
-## hsaBX
+## BashX
 ##
 ## Extended Bash Framework.
 ##
 ## Version: 1.6
-## URL: https://github.com/reduardo7/hsabx
+## URL: https://github.com/reduardo7/bashx
 ##
 ## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com
 
@@ -14,7 +14,7 @@
 # Init.
 
 ## #!/bin/bash
-## . ./src/hsabx.sh
+## . ./src/bashx.sh
 
 # #############################################################################
 
@@ -33,7 +33,7 @@ cd "$(dirname "$0")"
 # Rewrite with your configuration.
 
     # APP Title.
-    export APP_TITLE="hsaBX"
+    export APP_TITLE="BashX"
 
     # APP Version.
     export APP_VERSION="1.0"
@@ -54,18 +54,18 @@ cd "$(dirname "$0")"
     # Action to use if script called without arguments.
     export DEFAULT_ACTION="usage"
 
-    # hsaBX Version.
-    export HSABX_SRC_PATH="src"
+    # BashX Version.
+    export BASHX_SRC_PATH="src"
 
-    # hsaBX SRC path.
-    export HSABX_VERSION="1.6"
+    # BashX SRC path.
+    export BASHX_VERSION="1.6"
 
 ### Load files
 
     # Config
     if [ -z "${CONFIG_FILE}" ]; then
         # Default file
-        export CONFIG_FILE="${HSABX_SRC_PATH}/config.ini"
+        export CONFIG_FILE="${BASHX_SRC_PATH}/config.ini"
     fi
     if [ -f "${CONFIG_FILE}" ]; then
         # Load file
@@ -85,8 +85,8 @@ cd "$(dirname "$0")"
     export CURRENT_SOURCE="$CURRENT_SOURCE"
     export CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
 
-    # hsaBX File Name
-    export HSABX_FILE_NAME="./${HSABX_SRC_PATH}/hsabx.sh"
+    # BashX File Name
+    export BASHX_FILE_NAME="./${BASHX_SRC_PATH}/bashx.sh"
 
     # Null path.
     export DEV_NULL="/dev/null"
@@ -111,7 +111,7 @@ cd "$(dirname "$0")"
     export ACTIONS_DIR="actions"
 
     # Actions path
-    export ACTIONS_PATH="./${HSABX_SRC_PATH}/${ACTIONS_DIR}"
+    export ACTIONS_PATH="./${BASHX_SRC_PATH}/${ACTIONS_DIR}"
 
 ### PRIVATE VARS
 
@@ -1239,7 +1239,7 @@ cd "$(dirname "$0")"
         # Default style
         style default
 
-        if [[ "${src}" =~ \/${HSABX_SRC_PATH}\/${ACTIONS_DIR}\/.+ ]]; then
+        if [[ "${src}" =~ \/${BASHX_SRC_PATH}\/${ACTIONS_DIR}\/.+ ]]; then
             # Action file
             local cmd="$(file_name "${src}" $TRUE)"
             if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
@@ -1278,9 +1278,9 @@ cd "$(dirname "$0")"
                 fi
             done
         fi
-        # hsaBX
-        if [ "$(script_file_name)" != "${HSABX_FILE_NAME}" ]; then
-            usage "${HSABX_FILE_NAME}" "$1"
+        # BashX
+        if [ "$(script_file_name)" != "${BASHX_FILE_NAME}" ]; then
+            usage "${BASHX_FILE_NAME}" "$1"
         fi
     }
 
