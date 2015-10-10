@@ -63,7 +63,7 @@ cd "$(dirname "$0")"
     export LOG_FILE="$0.log"
 
     # Config file.
-    export CONFIG_FILE=""
+    export CONFIG_FILE="$CONFIG_FILE"
 
     # Actions directory name
     export ACTIONS_DIR="actions"
