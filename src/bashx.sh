@@ -65,6 +65,18 @@ cd "$(dirname "$0")"
     # Config file.
     export CONFIG_FILE=""
 
+    # Actions directory name
+    export ACTIONS_DIR="actions"
+
+    # Actions path
+    export ACTIONS_PATH="./${BASHX_SRC_PATH}/${ACTIONS_DIR}"
+
+    # Sources directory name
+    export SOURCES_DIR="sources"
+
+    # Sources path
+    export SOURCES_PATH="./${BASHX_SRC_PATH}/${SOURCES_DIR}"
+
 ### Load files
 
     # Config
@@ -72,8 +84,8 @@ cd "$(dirname "$0")"
         # Default file
         export CONFIG_FILE="${BASHX_SRC_PATH}/config.ini"
     fi
+    # Load config
     if [ -f "${CONFIG_FILE}" ]; then
-        # Load file
         . ./${CONFIG_FILE}
     fi
 
