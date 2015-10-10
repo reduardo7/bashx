@@ -122,6 +122,14 @@ cd "$(dirname "$0")"
     export ACTIONS_PATH="./${BASHX_SRC_PATH}/${ACTIONS_DIR}"
     readonly ACTIONS_PATH="$ACTIONS_PATH"
 
+    # Sources directory name
+    export SOURCES_DIR="sources"
+    readonly SOURCES_DIR="$SOURCES_DIR"
+
+    # Sources path
+    export SOURCES_PATH="./${BASHX_SRC_PATH}/${SOURCES_DIR}"
+    readonly SOURCES_PATH="$SOURCES_PATH"
+
 ### VARS
 
     # Result value for some functions
