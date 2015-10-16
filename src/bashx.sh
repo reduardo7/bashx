@@ -92,17 +92,19 @@ cd "$(dirname "$0")"
 ### CONSTANTS
 
     # Current source.
-    CURRENT_SOURCE="${BASH_SOURCE[0]}"
-    while [ -h "$CURRENT_SOURCE" ]; do # resolve $CURRENT_SOURCE until the file is no longer a symlink
-        CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
-        CURRENT_SOURCE="$(readlink "$CURRENT_SOURCE")"
-        [[ $CURRENT_SOURCE != /* ]] && CURRENT_SOURCE="$CURRENT_DIR/$CURRENT_SOURCE" # if $CURRENT_SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-    done
+    #CURRENT_SOURCE="${BASH_SOURCE[0]}"
+    #while [ -h "$CURRENT_SOURCE" ]; do # resolve $CURRENT_SOURCE until the file is no longer a symlink
+    #    CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
+    #    CURRENT_SOURCE="$(readlink "$CURRENT_SOURCE")"
+    #    [[ $CURRENT_SOURCE != /* ]] && CURRENT_SOURCE="$CURRENT_DIR/$CURRENT_SOURCE" # if $CURRENT_SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+    #done
+    CURRENT_SOURCE="$( cd -P "$( dirname "$0" )" && pwd )"
     export CURRENT_SOURCE="$CURRENT_SOURCE"
     readonly CURRENT_SOURCE="$CURRENT_SOURCE"
 
     # Current path
-    export CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
+    #export CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
+    export CURRENT_DIR="$CURRENT_SOURCE"
     readonly CURRENT_DIR="$CURRENT_DIR"
 
     # BashX file name.
