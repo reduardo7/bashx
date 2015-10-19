@@ -77,34 +77,21 @@ cd "$(dirname "$0")"
     # Sources path
     export SOURCES_PATH="./${BASHX_SRC_PATH}/${SOURCES_DIR}"
 
-### Load files
-
-    # Config
-    if [ -z "${CONFIG_FILE}" ]; then
-        # Default file
-        export CONFIG_FILE="${BASHX_SRC_PATH}/config.ini"
-    fi
-    # Load config
-    if [ -f "${CONFIG_FILE}" ]; then
-        . ./${CONFIG_FILE}
-    fi
-
 ### CONSTANTS
 
     # Current source.
-    #CURRENT_SOURCE="${BASH_SOURCE[0]}"
-    #while [ -h "$CURRENT_SOURCE" ]; do # resolve $CURRENT_SOURCE until the file is no longer a symlink
-    #    CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
-    #    CURRENT_SOURCE="$(readlink "$CURRENT_SOURCE")"
-    #    [[ $CURRENT_SOURCE != /* ]] && CURRENT_SOURCE="$CURRENT_DIR/$CURRENT_SOURCE" # if $CURRENT_SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-    #done
-    CURRENT_SOURCE="$( cd -P "$( dirname "$0" )" && pwd )"
+    CURRENT_SOURCE="${BASH_SOURCE[0]}"
+    while [ -h "$CURRENT_SOURCE" ]; do # resolve $CURRENT_SOURCE until the file is no longer a symlink
+        CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
+        CURRENT_SOURCE="$(readlink "$CURRENT_SOURCE")"
+        [[ $CURRENT_SOURCE != /* ]] && CURRENT_SOURCE="$CURRENT_DIR/$CURRENT_SOURCE" # if $CURRENT_SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+    done
+    #CURRENT_SOURCE="$( cd -P "$( dirname "$0" )" && pwd )"
     export CURRENT_SOURCE="$CURRENT_SOURCE"
     readonly CURRENT_SOURCE="$CURRENT_SOURCE"
 
     # Current path
-    #export CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
-    export CURRENT_DIR="$CURRENT_SOURCE"
+    export CURRENT_DIR="$( cd -P "$( dirname "$0" )" && pwd )"
     readonly CURRENT_DIR="$CURRENT_DIR"
 
     # BashX file name.
@@ -128,21 +115,17 @@ cd "$(dirname "$0")"
     export KEY_ESC=$'\e'
     readonly KEY_ESC="$KEY_ESC"
 
-    # Actions directory name
-    export ACTIONS_DIR="actions"
-    readonly ACTIONS_DIR="$ACTIONS_DIR"
+### Load files
 
-    # Actions path
-    export ACTIONS_PATH="./${BASHX_SRC_PATH}/${ACTIONS_DIR}"
-    readonly ACTIONS_PATH="$ACTIONS_PATH"
-
-    # Sources directory name
-    export SOURCES_DIR="sources"
-    readonly SOURCES_DIR="$SOURCES_DIR"
-
-    # Sources path
-    export SOURCES_PATH="./${BASHX_SRC_PATH}/${SOURCES_DIR}"
-    readonly SOURCES_PATH="$SOURCES_PATH"
+    # Config
+    if [ -z "${CONFIG_FILE}" ]; then
+        # Default file
+        export CONFIG_FILE="${BASHX_SRC_PATH}/config.ini"
+    fi
+    # Load config
+    if [ -f "${CONFIG_FILE}" ]; then
+        . ./${CONFIG_FILE}
+    fi
 
 ### VARS
 
@@ -1132,13 +1115,6 @@ cd "$(dirname "$0")"
         echo ${_fname}
     }
 
-    # Current directory.
-    #
-    # Out: {String} Current directory.
-    current_directory() {
-        dirname "$( readlink -f "$0" )"
-    }
-
     # Current script file name.
     #
     # Out: {String} Current script file name.
@@ -1150,7 +1126,7 @@ cd "$(dirname "$0")"
     #
     # Out: {String} Current script full path.
     script_full_path() {
-        echo "$(current_directory)/$(script_file_name)"
+        echo "$CURRENT_DI/$(script_file_name)"
     }
 
     # Check if directory exists.

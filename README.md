@@ -147,8 +147,6 @@ Value: *0*
 
 ### file_exists
 
-### current_directory
-
 ### script_file_name
 
 ### script_full_path
