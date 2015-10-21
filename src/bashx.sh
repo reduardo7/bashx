@@ -1024,6 +1024,7 @@ cd "$(dirname "$0")"
     cmd_log() {
         echo
         str_repeat 80 '-'
+        echo "$ $1"
         $1
         local r=$?
         str_repeat 80 '-'
