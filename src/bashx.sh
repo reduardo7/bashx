@@ -54,7 +54,7 @@ cd "$(dirname "$0")"
     export DEFAULT_ACTION="usage"
 
     # BashX SRC path.
-    export BASHX_SRC_PATH="src"
+    export SRC_PATH="src"
 
     # BashX Version.
     export BASHX_VERSION="1.7"
@@ -69,34 +69,45 @@ cd "$(dirname "$0")"
     export ACTIONS_DIR="actions"
 
     # Actions path
-    export ACTIONS_PATH="./${BASHX_SRC_PATH}/${ACTIONS_DIR}"
+    export ACTIONS_PATH="./${SRC_PATH}/${ACTIONS_DIR}"
 
     # Sources directory name
     export SOURCES_DIR="sources"
 
     # Sources path
-    export SOURCES_PATH="./${BASHX_SRC_PATH}/${SOURCES_DIR}"
+    export SOURCES_PATH="./${SRC_PATH}/${SOURCES_DIR}"
 
 ### CONSTANTS
 
+    # BashX Current source.
+    BASHX_CURRENT_SOURCE="${BASH_SOURCE[0]}"
+    while [ -h "$BASHX_CURRENT_SOURCE" ]; do # resolve $BASHX_CURRENT_SOURCE until the file is no longer a symlink
+        BASHX_CURRENT_DIR="$(cd -P `dirname "$BASHX_CURRENT_SOURCE"` && pwd)"
+        BASHX_CURRENT_SOURCE=`readlink "$BASHX_CURRENT_SOURCE"`
+        [[ $BASHX_CURRENT_SOURCE != /* ]] && BASHX_CURRENT_SOURCE="$BASHX_CURRENT_DIR/$BASHX_CURRENT_SOURCE" # if $BASHX_CURRENT_SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+    done
+    [ -z "$BASHX_CURRENT_DIR"] && BASHX_CURRENT_DIR="$(cd -P `dirname "$BASHX_CURRENT_SOURCE"` && pwd)"
+    export BASHX_CURRENT_SOURCE="$BASHX_CURRENT_SOURCE"
+    readonly BASHX_CURRENT_SOURCE="$BASHX_CURRENT_SOURCE"
+
+    # BashX Current path
+    export BASHX_CURRENT_DIR="$BASHX_CURRENT_DIR"
+    readonly BASHX_CURRENT_DIR="$BASHX_CURRENT_DIR"
+
     # Current source.
-    CURRENT_SOURCE="${BASH_SOURCE[0]}"
+    CURRENT_SOURCE="$0"
     while [ -h "$CURRENT_SOURCE" ]; do # resolve $CURRENT_SOURCE until the file is no longer a symlink
-        CURRENT_DIR="$( cd -P "$( dirname "$CURRENT_SOURCE" )" && pwd )"
-        CURRENT_SOURCE="$(readlink "$CURRENT_SOURCE")"
+        CURRENT_DIR="$(cd -P `dirname "$CURRENT_SOURCE"` && pwd)"
+        CURRENT_SOURCE=`readlink "$CURRENT_SOURCE"`
         [[ $CURRENT_SOURCE != /* ]] && CURRENT_SOURCE="$CURRENT_DIR/$CURRENT_SOURCE" # if $CURRENT_SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
     done
-    #CURRENT_SOURCE="$( cd -P "$( dirname "$0" )" && pwd )"
+    [ -z "$CURRENT_DIR" ] && CURRENT_DIR="$(cd -P `dirname "$CURRENT_SOURCE"` && pwd)"
     export CURRENT_SOURCE="$CURRENT_SOURCE"
     readonly CURRENT_SOURCE="$CURRENT_SOURCE"
 
     # Current path
-    export CURRENT_DIR="$( cd -P "$( dirname "$0" )" && pwd )"
+    export CURRENT_DIR="$CURRENT_DIR"
     readonly CURRENT_DIR="$CURRENT_DIR"
-
-    # BashX file name.
-    export BASHX_FILE_NAME="./${BASHX_SRC_PATH}/bashx.sh"
-    readonly BASHX_FILE_NAME="$BASHX_FILE_NAME"
 
     # Null path.
     export DEV_NULL="/dev/null"
@@ -120,11 +131,11 @@ cd "$(dirname "$0")"
     # Config
     if [ -z "${CONFIG_FILE}" ]; then
         # Default file
-        export CONFIG_FILE="${BASHX_SRC_PATH}/config.ini"
+        export CONFIG_FILE="${SRC_PATH}/config.ini"
     fi
     # Load config
     if [ -f "${CONFIG_FILE}" ]; then
-        . ./${CONFIG_FILE}
+        . ${CONFIG_FILE}
     fi
 
 ### VARS
@@ -147,7 +158,7 @@ cd "$(dirname "$0")"
 
     # Write to LOG to Console
     console_log() {
-        printf "LOG> %.23s | %s[%s]: %s\n" $(date +%F.%T.%N) ${BASH_SOURCE[1]##*/} ${BASH_LINENO[0]} "${@}"
+        printf "LOG> %.23s | %s[%s]: %s\n" `date +%F.%T.%N` ${BASH_SOURCE[1]##*/} ${BASH_LINENO[0]} "${@}"
     }
 
     # Write to LOG to File
@@ -162,7 +173,7 @@ cd "$(dirname "$0")"
     # Return: $TRUE if is root, $FALSE is not root.
     is_root() {
         # Is ROOT user?
-        if [ "$(id -u)" -ne 0 ]; then
+        if [ "`id -u`" -ne 0 ]; then
             # No Root
             return $FALSE
         else
@@ -281,7 +292,7 @@ cd "$(dirname "$0")"
     #    done
     str_explode() {
         IFS="$1"
-        RESULT=( $(echo "$2") )
+        RESULT=( `echo "$2"` )
         return ${#RESULT[@]}
     }
 
@@ -379,7 +390,7 @@ cd "$(dirname "$0")"
             # Case insensitive
             local p="-boi"
         fi
-        local r=$(echo "$1" | grep $p "$2" | sed 's/:.*$//')
+        local r=`echo "$1" | grep $p "$2" | sed 's/:.*$//'`
         echo $r
         if is_empty "$r" ; then
             # No found
@@ -558,12 +569,12 @@ cd "$(dirname "$0")"
             # Style code
             local y=""
             # To lower
-            local p="$(str_to_lower "$q")"
+            local p="`str_to_lower "$q"`"
             # Split
             str_explode "[=:]" "$p"
             # Parts
-            local s="$(trim "${RESULT[0]}")"
-            local v="$(trim "${RESULT[1]}")"
+            local s=`trim "${RESULT[0]}"`
+            local v=`trim "${RESULT[1]}"`
 
             # Default
             if [ -z "$v" ] && [ "$p" == "default" ]; then
@@ -722,7 +733,7 @@ cd "$(dirname "$0")"
         fi
         # Print
         for i in {${1}..${2}} {${2}..${1}} ; do
-            echo -en "$(style color:${i})${c}"
+            echo -en "`style color:${i}`${c}"
         done
         # Default
         style default
@@ -743,7 +754,7 @@ cd "$(dirname "$0")"
         fi
         # Print
         for i in {${1}..${2}} {${2}..${1}} ; do
-            echo -en "$(style background:${i})${c}"
+            echo -en "`style background:${i}`${c}"
         done
         # Default
         style default
@@ -753,11 +764,19 @@ cd "$(dirname "$0")"
     #
     # *: {String} Text to print.
     # Out: {String} Text.
-    e() {
-        local c="$(style default)"
-        echo -e "${c}${ECHO_CHAR} ${@}${c}"
+    ee() {
+        local c="`style default`"
+        echo -e "${c}${@}${c}"
         # Style reset for next command
         echo -ne "\e[0m"
+    }
+
+    # Print at screen with ECHO_CHAR.
+    #
+    # *: {String} Text to print.
+    # Out: {String} Text.
+    e() {
+        ee "${ECHO_CHAR} ${@}"
     }
 
     # Show red alert message.
@@ -765,7 +784,7 @@ cd "$(dirname "$0")"
     # *: {String} Message.
     alert() {
         e
-        e "$(style color:red) $@"
+        e "`style color:red` $@"
         e
     }
 
@@ -784,7 +803,7 @@ cd "$(dirname "$0")"
             fi
         fi
         local bl="\033[${n}A"
-        echo -e "${bl}$(style default)${ECHO_CHAR} ${text}$(style system)" # Clear line
+        echo -e "${bl}`style default`${ECHO_CHAR} ${text}`style system`" # Clear line
         str_repeat 80 ' '
     }
 
@@ -797,7 +816,7 @@ cd "$(dirname "$0")"
         else
             local m="$@"
         fi
-        e "$(style default)"
+        e "`style default`"
         read -n 1 -p "${ECHO_CHAR} ${m}"
         e
         e
@@ -840,7 +859,7 @@ cd "$(dirname "$0")"
         fi
         # Execute
         local cmd="read${n}${s}${t}"
-        ${cmd} -p "$(style default)${ECHO_CHAR} ${m}" i
+        ${cmd} -p "`style default`${ECHO_CHAR} ${m}" i
         echo
         local r=$?
         local rta=0
@@ -888,7 +907,7 @@ cd "$(dirname "$0")"
         fi
         # Read
         local i=""
-        read -n 1 -p "$(style default)${ECHO_CHAR} ${m}: " i
+        read -n 1 -p "`style default`${ECHO_CHAR} ${m}: " i
         echo
         i=$(trim "$i")
         if [ -z "$i" ]; then
@@ -897,7 +916,7 @@ cd "$(dirname "$0")"
         else
             # Validate input
             for x in $o; do
-                if [ "$(str_to_lower "${x}")" == "$(str_to_lower "${i}")" ]; then
+                if [ "`str_to_lower "${x}"`" == "`str_to_lower "${i}"`" ]; then
                     # User accept
                     return $TRUE
                 fi
@@ -923,10 +942,10 @@ cd "$(dirname "$0")"
             d="$3"
         fi
         # Read
-        read -n 1 -p "$(style default)${ECHO_CHAR} ${m} [${o}]: " i
+        read -n 1 -p "`style default`${ECHO_CHAR} ${m} [${o}]: " i
         echo
         local RESULT="${d}"
-        i=$(trim "$i")
+        i=`trim "$i"`
         if [ ! -z $i ]; then
             # Validate input
             for x in $o; do
@@ -1108,10 +1127,10 @@ cd "$(dirname "$0")"
     # Out: {String} File name.
     file_name() {
         # Remove path
-        local _fname="$(basename "${1}")"
+        local _fname="`basename "${1}"`"
         if [ "$2" == "$TRUE" ]; then
             # Remove extension
-            _fname="$(str_replace "${_fname}" "\..*$" "")"
+            _fname="`str_replace "${_fname}" "\..*$" ""`"
         fi
         echo ${_fname}
     }
@@ -1127,7 +1146,7 @@ cd "$(dirname "$0")"
     #
     # Out: {String} Current script full path.
     script_full_path() {
-        echo "$CURRENT_DI/$(script_file_name)"
+        echo "$CURRENT_DI/`script_file_name`"
     }
 
     # Check if directory exists.
@@ -1135,7 +1154,7 @@ cd "$(dirname "$0")"
     # 1: {String} Directory path.
     # Return: 0 if directory exists, 1 if directory not exists.
     directory_exists() {
-        if [ -d $(str_escape "$1") ]; then
+        if [ -d `str_escape "$1"` ]; then
             # Exists
             return 0
         else
@@ -1208,7 +1227,7 @@ cd "$(dirname "$0")"
     # 2: {String} File where check.
     # Return: 0 if file contains the text, 1 if not contains the text.
     file_contains() {
-        if grep -rils $(str_escape "$1") $(str_escape "$2") &> $DEV_NULL ; then
+        if grep -rils `str_escape "$1"` `str_escape "$2"` &> $DEV_NULL ; then
             # Contains
             return 0
         else
@@ -1247,35 +1266,35 @@ cd "$(dirname "$0")"
     # Use: usage "$0" actionName # For action in current file
     #      usage file.sh actionName # For action in other file
     usage() {
-        local src="$(script_full_path)"
+        local src="`script_full_path`"
         if [ $# -gt 0 ] && [ ! -z "$1" ]; then
             src="$1"
             if ! file_exists "${src}" ; then
-                src="$(script_full_path)"
+                src="`script_full_path`"
             fi
         fi
 
         # Default style
         style default
 
-        if [[ "${src}" =~ \/${BASHX_SRC_PATH}\/${ACTIONS_DIR}\/.+ ]]; then
+        if [[ "${src}" =~ \/${SRC_PATH}\/${ACTIONS_DIR}\/.+ ]]; then
             # Action file
-            local cmd="$(file_name "${src}" $TRUE)"
+            local cmd="`file_name "${src}" $TRUE`"
             if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
-                local info="$(grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/$(style default)/g" | sed "s/^/$(style default)${ECHO_CHAR}     > /g" | sed "s/\t/    /g")"
+                local info="`grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/$(style default)/g" | sed "s/^/$(style default)${ECHO_CHAR}     > /g" | sed "s/\t/    /g"`"
                 if [ ! -z "$info" ]; then
                     info="|||${info}"
                 fi
-                e "  bash $(style color:red)${0}$(style color:green) ${cmd}$(style default)${info}" | sed "s/|||.*${ECHO_CHAR}\s\+>\s/ /g"
+                e "  bash `style color:red`${0}`style color:green` ${cmd}`style default`${info}" | sed "s/|||.*${ECHO_CHAR}\s\+>\s/ /g"
                 e
             fi
         else
             # USAGE before function
             grep "^\s*\(function\s\+\)\?__.\+()\s*{.*$" "${src}" | while read line ; do
-                local cmd=$(echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*\(function\s\+\)\?__//g")
+                local cmd=`echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*\(function\s\+\)\?__//g"`
                 if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
-                    local info="$(grep -C0 -A0 -B1 "^\s*\(function\s\+\)\?__$cmd\s*()\s*{" "$src" | sed "N;s/\n.*//g" | sed "s/^\s*#\s*/$(style default)/g" | sed "s/\s*\\\n/\n$(style default)${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g")"
-                    e "  bash $(style color:red)${0}$(style color:green) ${cmd}$(style default) ${info}"
+                    local info=`grep -C0 -A0 -B1 "^\s*\(function\s\+\)\?__$cmd\s*()\s*{" "$src" | sed "N;s/\n.*//g" | sed "s/^\s*#\s*/$(style default)/g" | sed "s/\s*\\\n/\n$(style default)${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g"`
+                    e "  bash `style color:red`${0}`style color:green` ${cmd}`style default` ${info}"
                     e
                 fi
             done
@@ -1288,7 +1307,7 @@ cd "$(dirname "$0")"
         e "Usage:"
         e
         # Base file
-        usage "$(script_file_name)" "$1"
+        usage "`script_file_name`" "$1"
         # Actions
         if [ -d "${ACTIONS_PATH}" ]; then
             for f in ${ACTIONS_PATH}/* ; do
@@ -1298,8 +1317,8 @@ cd "$(dirname "$0")"
             done
         fi
         # BashX
-        if [ "$(script_file_name)" != "${BASHX_FILE_NAME}" ]; then
-            usage "${BASHX_FILE_NAME}" "$1"
+        if [ "`script_file_name`" != "${BASHX_CURRENT_SOURCE}" ]; then
+            usage "${BASHX_CURRENT_SOURCE}" "$1"
         fi
     }
 
