@@ -764,19 +764,11 @@ cd "$(dirname "$0")"
     #
     # *: {String} Text to print.
     # Out: {String} Text.
-    ee() {
+    e() {
         local c="`style default`"
-        echo -e "${c}${@}${c}"
+        echo -e "${c}${ECHO_CHAR} ${@}${c}"
         # Style reset for next command
         echo -ne "\e[0m"
-    }
-
-    # Print at screen with ECHO_CHAR.
-    #
-    # *: {String} Text to print.
-    # Out: {String} Text.
-    e() {
-        ee "${ECHO_CHAR} ${@}"
     }
 
     # Show red alert message.
