@@ -57,7 +57,7 @@ cd "$(dirname "$0")"
     export SRC_PATH="src"
 
     # BashX Version.
-    export BASHX_VERSION="1.7"
+    export BASHX_VERSION="1.7.6"
 
     # Log file (& path).
     export LOG_FILE="$0.log"
@@ -765,8 +765,14 @@ cd "$(dirname "$0")"
     # *: {String} Text to print.
     # Out: {String} Text.
     e() {
-        local c="`style default`"
-        echo -e "${c}${ECHO_CHAR} ${@}${c}"
+        local r
+        local c=`style default`
+        # For each line
+        IFS=$'\n'
+        r=( "$@" )
+        for l in ${r[@]} ; do
+            echo -e "${c}${ECHO_CHAR} ${l}${c}"
+        done
         # Style reset for next command
         echo -ne "\e[0m"
     }
