@@ -1276,11 +1276,11 @@ cd "$(dirname "$0")"
             # Action file
             local cmd="`file_name "${src}" $TRUE`"
             if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
-                local info="`grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/$(style default)/g" | sed "s/^/$(style default)${ECHO_CHAR}${lp}/g"`"
+                local info="`grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/$(style default)/g" | sed "s/^/$(style default)${lp}/g"`"
                 if [ ! -z "$info" ]; then
                     info="|||${info}"
                 fi
-                e "  bash `style color:red`${0}`style color:green` ${cmd}`style default`${info}" | sed "s/|||.*${ECHO_CHAR}\s\+>\s/ /g"
+                e "  bash `style color:red`${0}`style color:green` ${cmd}`style default`${info}" | sed "s/|||.*\s\+>\s/ /g"
                 e
             fi
         else
