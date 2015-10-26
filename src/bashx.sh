@@ -765,14 +765,8 @@ cd "$(dirname "$0")"
     # *: {String} Text to print.
     # Out: {String} Text.
     e() {
-        local r
         local c=`style default`
-        # For each line
-        IFS=$'\n'
-        r=( "$@" )
-        for l in ${r[@]} ; do
-            echo -e "${c}${ECHO_CHAR} ${l}${c}"
-        done
+        echo -e "$@" | sed "s/^/${c}${ECHO_CHAR} /" | sed "s/\t/    /g"
         # Style reset for next command
         echo -ne "\e[0m"
     }
@@ -1265,6 +1259,9 @@ cd "$(dirname "$0")"
     #      usage file.sh actionName # For action in other file
     usage() {
         local src="`script_full_path`"
+        local lp="     > "
+        local lpl=${#lp}
+
         if [ $# -gt 0 ] && [ ! -z "$1" ]; then
             src="$1"
             if ! file_exists "${src}" ; then
@@ -1279,7 +1276,7 @@ cd "$(dirname "$0")"
             # Action file
             local cmd="`file_name "${src}" $TRUE`"
             if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
-                local info="`grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/$(style default)/g" | sed "s/^/$(style default)${ECHO_CHAR}     > /g" | sed "s/\t/    /g"`"
+                local info="`grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/$(style default)/g" | sed "s/^/$(style default)${ECHO_CHAR}${lp}/g"`"
                 if [ ! -z "$info" ]; then
                     info="|||${info}"
                 fi
@@ -1292,14 +1289,15 @@ cd "$(dirname "$0")"
                 local cmd=`echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*\(function\s\+\)\?__//g"`
                 if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
                     local info=`grep -C0 -A0 -B1 "^\s*\(function\s\+\)\?__$cmd\s*()\s*{" "$src" | sed "N;s/\n.*//g" | sed "s/^\s*#\s*/$(style default)/g" | sed "s/\s*\\\n/\n$(style default)${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g"`
-                    e "  bash `style color:red`${0}`style color:green` ${cmd}`style default` ${info}"
+                    info="`echo -e "$info" | sed "s/^/${lp}/"`"
+                    e "  bash `style color:red`${0}`style color:green` ${cmd}`style default` ${info:$lpl}"
                     e
                 fi
             done
         fi
     }
 
-    #[action]\nPrint basic usage (this).\nParams:\n action: Action Name. Display action usage.
+    #[action]\nPrint basic usage (this).\nParams:\n  action: Action Name. Display action usage.
     __usage() {
         e
         e "Usage:"
@@ -1320,7 +1318,7 @@ cd "$(dirname "$0")"
         fi
     }
 
-    #[action]\nAlias of "usage", with less.\nParams:\n action: Action Name. Display action usage.
+    #[action]\nAlias of "usage", with less.\nParams:\n  action: Action Name. Display action usage.
     __help() {
         check_requirements less
         __usage "$@" | less -r
