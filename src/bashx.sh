@@ -291,9 +291,10 @@ cd "$(dirname "$0")"
     #        echo $i
     #    done
     str_explode() {
+        local i="$IFS"
         IFS="$1"
         RESULT=( `echo "$2"` )
-        IFS=
+        IFS="$i"
         return ${#RESULT[@]}
     }
 
