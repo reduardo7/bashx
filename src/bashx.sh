@@ -293,6 +293,7 @@ cd "$(dirname "$0")"
     str_explode() {
         IFS="$1"
         RESULT=( `echo "$2"` )
+        IFS=
         return ${#RESULT[@]}
     }
 
