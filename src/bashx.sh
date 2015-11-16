@@ -106,7 +106,7 @@ cd "$(dirname "$0")"
     readonly CURRENT_SOURCE="$CURRENT_SOURCE"
 
     # Current path
-    export CURRENT_DIR="$CURRENT_DIR"
+    export CURRENT_DIR="$(cd -P `dirname "$CURRENT_DIR"` && pwd)"
     readonly CURRENT_DIR="$CURRENT_DIR"
 
     # Null path.
