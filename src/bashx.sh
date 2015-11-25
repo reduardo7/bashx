@@ -17,14 +17,14 @@
 
 # #############################################################################
 
+# Go to script path (working directory)
+cd "$BASE_DIR"
+
 # Test and force run with "bash" interpreter.
 if [ -z "$BASH" ]; then
-    bash "$0" "$@"
+    bash "$(basename "$BASE_SOURCE")" "$@"
     exit $?
 fi
-
-# Go to script path (working directory)
-cd "$(dirname "$0")"
 
 # #############################################################################
 
@@ -69,45 +69,38 @@ cd "$(dirname "$0")"
     export ACTIONS_DIR="actions"
 
     # Actions path
-    export ACTIONS_PATH="./${SRC_PATH}/${ACTIONS_DIR}"
+    export ACTIONS_PATH="${BASE_DIR}/${SRC_PATH}/${ACTIONS_DIR}"
 
     # Sources directory name
     export SOURCES_DIR="sources"
 
     # Sources path
-    export SOURCES_PATH="./${SRC_PATH}/${SOURCES_DIR}"
+    export SOURCES_PATH="${BASE_DIR}/${SRC_PATH}/${SOURCES_DIR}"
 
 ### CONSTANTS
 
-    # BashX Current source.
-    BASHX_CURRENT_SOURCE="${BASH_SOURCE[0]}"
-    while [ -h "$BASHX_CURRENT_SOURCE" ]; do # resolve $BASHX_CURRENT_SOURCE until the file is no longer a symlink
-        BASHX_CURRENT_DIR="$(cd -P `dirname "$BASHX_CURRENT_SOURCE"` && pwd)"
-        BASHX_CURRENT_SOURCE=`readlink "$BASHX_CURRENT_SOURCE"`
-        [[ $BASHX_CURRENT_SOURCE != /* ]] && BASHX_CURRENT_SOURCE="$BASHX_CURRENT_DIR/$BASHX_CURRENT_SOURCE" # if $BASHX_CURRENT_SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+    # BashX base source.
+    BASHX_BASE_SOURCE="${BASH_SOURCE[0]}"
+    while [ -h "$BASHX_BASE_SOURCE" ]; do
+        BASHX_BASE_DIR="$(cd -P `dirname "$BASHX_BASE_SOURCE"` && pwd)"
+        BASHX_BASE_SOURCE=`readlink "$BASHX_BASE_SOURCE"`
+        [[ $BASHX_BASE_SOURCE != /* ]] && BASHX_BASE_SOURCE="$BASHX_BASE_DIR/$BASHX_BASE_SOURCE"
     done
-    [ -z "$BASHX_CURRENT_DIR"] && BASHX_CURRENT_DIR="$(cd -P `dirname "$BASHX_CURRENT_SOURCE"` && pwd)"
-    export BASHX_CURRENT_SOURCE="$BASHX_CURRENT_SOURCE"
-    readonly BASHX_CURRENT_SOURCE="$BASHX_CURRENT_SOURCE"
+    [ -z "$BASHX_BASE_DIR"] && BASHX_BASE_DIR="$(cd -P `dirname "$BASHX_BASE_SOURCE"` && pwd)"
+    export BASHX_BASE_SOURCE="$BASHX_BASE_SOURCE"
+    readonly BASHX_BASE_SOURCE="$BASHX_BASE_SOURCE"
 
-    # BashX Current path
-    export BASHX_CURRENT_DIR="$BASHX_CURRENT_DIR"
-    readonly BASHX_CURRENT_DIR="$BASHX_CURRENT_DIR"
+    # BashX base path.
+    export BASHX_BASE_DIR="$BASHX_BASE_DIR"
+    readonly BASHX_BASE_DIR="$BASHX_BASE_DIR"
 
-    # Current source.
-    CURRENT_SOURCE="$0"
-    while [ -h "$CURRENT_SOURCE" ]; do # resolve $CURRENT_SOURCE until the file is no longer a symlink
-        CURRENT_DIR="$(cd -P `dirname "$CURRENT_SOURCE"` && pwd)"
-        CURRENT_SOURCE=`readlink "$CURRENT_SOURCE"`
-        [[ $CURRENT_SOURCE != /* ]] && CURRENT_SOURCE="$CURRENT_DIR/$CURRENT_SOURCE" # if $CURRENT_SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-    done
-    [ -z "$CURRENT_DIR" ] && CURRENT_DIR="$(cd -P `dirname "$CURRENT_SOURCE"` && pwd)"
-    export CURRENT_SOURCE="$CURRENT_SOURCE"
-    readonly CURRENT_SOURCE="$CURRENT_SOURCE"
+    # Base script source.
+    export BASE_SOURCE="$BASE_SOURCE"
+    readonly BASE_SOURCE="$BASE_SOURCE"
 
-    # Current path
-    export CURRENT_DIR="$CURRENT_DIR"
-    readonly CURRENT_DIR="$CURRENT_DIR"
+    # Base script path.
+    export BASE_DIR="$BASE_DIR"
+    readonly BASE_DIR="$BASE_DIR"
 
     # Null path.
     export DEV_NULL="/dev/null"
@@ -1138,7 +1131,7 @@ cd "$(dirname "$0")"
     #
     # Out: {String} Current script full path.
     script_full_path() {
-        echo "$CURRENT_DI/`script_file_name`"
+        echo "$BASE_DIR/`script_file_name`"
     }
 
     # Check if directory exists.
@@ -1313,8 +1306,8 @@ cd "$(dirname "$0")"
             done
         fi
         # BashX
-        if [ "`script_file_name`" != "${BASHX_CURRENT_SOURCE}" ]; then
-            usage "${BASHX_CURRENT_SOURCE}" "$1"
+        if [ "`script_file_name`" != "${BASHX_BASE_SOURCE}" ]; then
+            usage "${BASHX_BASE_SOURCE}" "$1"
         fi
     }
 
