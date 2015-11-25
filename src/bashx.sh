@@ -19,7 +19,7 @@
 
 # Test and force run with "bash" interpreter.
 if [ -z "$BASH" ]; then
-    bash "$0" "$@"
+    bash "$BASE_SOURCE" "$@"
     exit $?
 fi
 
