@@ -71,6 +71,12 @@ fi
     # Actions path
     export ACTIONS_PATH="${BASE_DIR}/${SRC_PATH}/${ACTIONS_DIR}"
 
+    # Utils directory name
+    export UTILS_DIR="utils"
+
+    # Utils path
+    export UTILS_PATH="${BASE_DIR}/${SRC_PATH}/${UTILS_DIR}"
+
     # Sources directory name
     export SOURCES_DIR="sources"
 
@@ -1342,6 +1348,16 @@ fi
         check_requirements "${APP_REQUEIREMENTS}"
 
         if [ $# -gt 0 ]; then
+
+            # Load utils
+            if [ -d "${UTILS_PATH}" ]; then
+                for __fn__path__ in ${UTILS_PATH}/* ; do
+                    if [ -f "${__fn__path__}" ]; then
+                        # Create util function
+                        eval "$(file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
+                    fi
+                done
+            fi
 
             # Load actions
             if [ -d "${ACTIONS_PATH}" ]; then
