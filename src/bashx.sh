@@ -974,7 +974,12 @@ fi
             echo
             # Exit
             if [ $# -gt 1 ]; then
-                exit $1
+                if [ is_number "$1" == $TRUE ]; then
+                    exit $1
+                else
+                    error "Invalid exit code '$1'"
+                    exit 1
+                fi
             else
                 exit 0
             fi
