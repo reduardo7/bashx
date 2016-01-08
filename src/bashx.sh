@@ -1264,7 +1264,7 @@ fi
     # Use: usage "$0" actionName # For action in current file
     #      usage file.sh actionName # For action in other file
     usage() {
-        local src="`script_full_path`"
+        local src
         local lp="     > "
         local lpl=${#lp}
 
@@ -1273,6 +1273,8 @@ fi
             if ! file_exists "${src}" ; then
                 src="`script_full_path`"
             fi
+        else
+            src="`script_full_path`"
         fi
 
         # Default style

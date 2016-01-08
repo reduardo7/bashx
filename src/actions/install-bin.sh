@@ -11,9 +11,11 @@
 local action="$1"
 local force="$2"
 
-local bcfile="$HOME/.bash_completion"
+local scrpt="`file_name "$BASE_SOURCE"`"
+local bcfile="$HOME/.${scrpt}_completion"
+local bcline="source $bcfile"
 local rcs=".bashrc .zshrc .shrc"
-local l="PATH=\"$BASE_DIR:\$PATH\" ; export PATH=\"\$PATH\""
+local l="PATH=\"$BASE_DIR:\$PATH\" ; export PATH=\"\$PATH\" ; $bcline"
 local p
 local r
 
@@ -28,7 +30,40 @@ case "$action" in
 		if $force || [ ! -f "$bcfile" ]; then
 			# Create file
 			e "Creating '$(style bold)$bcfile$(style default)' file..."
-			echo > "$bcfile"
+
+			echo "# bash completion for $scrpt (`script_full_path`)" > "$bcfile"
+			echo "_${scrpt}_methods() {" >> "$bcfile"
+			echo "	grep \"^\\s*\\(function\\s\\+\\)\\?__.\\+()\\s*{.*\$\" \"\${1}\" | while read line ; do" >> "$bcfile"
+			echo "		echo \"\$line\" | sed \"s/()\\s*{.*//g\" | sed \"s/\\s*\\(function\\s\\+\\)\\?__//g\"" >> "$bcfile"
+			echo "	done" >> "$bcfile"
+			echo "}" >> "$bcfile"
+			echo "_${scrpt}_lst() {" >> "$bcfile"
+			echo "	if [ -d \"${ACTIONS_PATH}\" ]; then" >> "$bcfile"
+			echo "		for f in ${ACTIONS_PATH}/* ; do" >> "$bcfile"
+			echo "			if [ -f \"\${f}\" ]; then" >> "$bcfile"
+			echo "				basename \"\${f}\" | sed 's/\..*\$//g'" >> "$bcfile"
+			echo "			fi" >> "$bcfile"
+			echo "		done" >> "$bcfile"
+			echo "	fi" >> "$bcfile"
+			echo "	_${scrpt}_methods \"`script_full_path`\"" >> "$bcfile"
+			echo "	_${scrpt}_methods \"${BASHX_BASE_SOURCE}\"" >> "$bcfile"
+			echo "}" >> "$bcfile"
+			echo "_${scrpt}() {" >> "$bcfile"
+			echo "	local cur" >> "$bcfile"
+			echo "	COMPREPLY=()" >> "$bcfile"
+			echo "	cur=\${COMP_WORDS[COMP_CWORD]}" >> "$bcfile"
+			echo "	COMPREPLY=( \$( compgen -W '\$( _${scrpt}_lst )' -- \$cur  ) )" >> "$bcfile"
+			echo "}" >> "$bcfile"
+			echo "_${scrpt}_zsh() {" >> "$bcfile"
+			echo "	compadd \`_${scrpt}_lst\`" >> "$bcfile"
+			echo "}" >> "$bcfile"
+			echo "if type complete >/dev/null 2>/dev/null; then" >> "$bcfile"
+			echo "	# bash" >> "$bcfile"
+			echo "	complete -F _${scrpt} ${scrpt}" >> "$bcfile"
+			echo "else if type compdef >/dev/null 2>/dev/null; then" >> "$bcfile"
+			echo "	# zsh" >> "$bcfile"
+			echo "	compdef _${scrpt}_zsh ${scrpt}" >> "$bcfile"
+			echo "fi; fi" >> "$bcfile"
 		fi
 
 		for r in $rcs ; do
@@ -81,6 +116,7 @@ case "$action" in
 		e "Done!"
 	;;
 	*)
+		# Invalid action
 		error "Invalid action '$(style bold)$action$(style default)'"
 	;;
 esac
