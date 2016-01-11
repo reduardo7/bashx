@@ -1277,6 +1277,8 @@ fi
             src="`script_full_path`"
         fi
 
+        local srcName="`script_file_name`"
+
         # Default style
         style default
 
@@ -1288,7 +1290,7 @@ fi
                 if [ ! -z "$info" ]; then
                     info="|||${info}"
                 fi
-                e "  bash `style color:red`${0}`style color:green` ${cmd}`style default`${info}" | sed "s/|||.*\s\+>\s/ /g"
+                e "  bash `style color:red`${srcName}`style color:green` ${cmd}`style default`${info}" | sed "s/|||.*\s\+>\s/ /g"
                 e
             fi
         else
@@ -1298,7 +1300,7 @@ fi
                 if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
                     local info=`grep -C0 -A0 -B1 "^\s*\(function\s\+\)\?__$cmd\s*()\s*{" "$src" | sed "N;s/\n.*//g" | sed "s/^\s*#\s*/$(style default)/g" | sed "s/\s*\\\n/\n$(style default)${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g"`
                     info="`echo -e "$info" | sed "s/^/${lp}/"`"
-                    e "  bash `style color:red`${0}`style color:green` ${cmd}`style default` ${info:$lpl}"
+                    e "  bash `style color:red`${srcName}`style color:green` ${cmd}`style default` ${info:$lpl}"
                     e
                 fi
             done
