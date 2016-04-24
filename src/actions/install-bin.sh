@@ -33,8 +33,8 @@ case "$action" in
 
 			echo "# bash completion for $scrpt (`script_full_path`)" > "$bcfile"
 			echo "_${scrpt}_methods() {" >> "$bcfile"
-			echo "	grep \"^\\s*\\(function\\s\\+\\)\\?__.\\+()\\s*{.*\$\" \"\${1}\" | while read line ; do" >> "$bcfile"
-			echo "		echo \"\$line\" | sed \"s/()\\s*{.*//g\" | sed \"s/\\s*\\(function\\s\\+\\)\\?__//g\"" >> "$bcfile"
+			echo "	grep \"^\\s*\\(function\\s\\+\\)\\?${_ACTION_PREFIX}.\\+()\\s*{.*\$\" \"\${1}\" | while read line ; do" >> "$bcfile"
+			echo "		echo \"\$line\" | sed \"s/()\\s*{.*//g\" | sed \"s/\\s*\\(function\\s\\+\\)\\?${_ACTION_PREFIX}//g\"" >> "$bcfile"
 			echo "	done" >> "$bcfile"
 			echo "}" >> "$bcfile"
 			echo "_${scrpt}_lst() {" >> "$bcfile"

@@ -153,6 +153,8 @@ fi
     # TRUE if APP is terminated
     export _APP_EXIT=$FALSE
 
+    export _ACTION_PREFIX='ACTIONS.'
+
 ### DEBUG & LOG
 
     # Write to LOG to Console
@@ -1254,7 +1256,7 @@ fi
     }
 
     # Print basic usage.
-    # Using "__" at begin of function name to set as argument method.
+    # Using "ACTIONS." at begin of function name to set as argument method.
     # Put "#" before function to write extra help text.
     # Special chars: \n, \t (4 spaces)
     #
@@ -1295,10 +1297,10 @@ fi
             fi
         else
             # USAGE before function
-            grep "^\s*\(function\s\+\)\?__.\+()\s*{.*$" "${src}" | while read line ; do
-                local cmd=`echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*\(function\s\+\)\?__//g"`
+            grep "^\s*\(function\s\+\)\?${_ACTION_PREFIX}.\+()\s*{.*$" "${src}" | while read line ; do
+                local cmd=`echo "$line" | sed "s/()\s*{.*//g" | sed "s/\s*\(function\s\+\)\?${_ACTION_PREFIX}//g"`
                 if [ $# -lt 2 ] || ([ $# -gt 1 ] && ([ -z "$2" ] || [ "$2" == "$cmd" ] || [ "$2" == "*" ])); then
-                    local info=`grep -C0 -A0 -B1 "^\s*\(function\s\+\)\?__$cmd\s*()\s*{" "$src" | sed "N;s/\n.*//g" | sed "s/^\s*#\s*/$(style default)/g" | sed "s/\s*\\\n/\n$(style default)${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g"`
+                    local info=`grep -C0 -A0 -B1 "^\s*\(function\s\+\)\?${_ACTION_PREFIX}$cmd\s*()\s*{" "$src" | sed "N;s/\n.*//g" | sed "s/^\s*#\s*/$(style default)/g" | sed "s/\s*\\\n/\n$(style default)${ECHO_CHAR}     > /g" | sed "s/\\\t/    /g"`
                     info="`echo -e "$info" | sed "s/^/${lp}/"`"
                     e "  `style color:red`${srcName}`style color:green` ${cmd}`style default` ${info:$lpl}"
                     e
@@ -1308,7 +1310,7 @@ fi
     }
 
     #[action]\nPrint basic usage (this).\nParams:\n  action: Action Name. Display action usage.
-    __usage() {
+    ACTIONS.usage() {
         e
         e "Usage:"
         e
@@ -1329,9 +1331,9 @@ fi
     }
 
     #[action]\nAlias of "usage", with less.\nParams:\n  action: Action Name. Display action usage.
-    __help() {
+    ACTIONS.help() {
         check_requirements less
-        __usage "$@" | less -r
+        ${_ACTION_PREFIX}usage "$@" | less -r
         # Clear output
         clear
     }
@@ -1373,20 +1375,20 @@ fi
                 for __fn__path__ in ${ACTIONS_PATH}/* ; do
                     if [ -f "${__fn__path__}" ]; then
                         # Create action function
-                        eval "__$(file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
+                        eval "${_ACTION_PREFIX}$(file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
                     fi
                 done
             fi
 
             # If function exists
-            if function_exists "__$1" ; then
+            if function_exists "${_ACTION_PREFIX}$1" ; then
                 # Exec
                 if [ "$1" == "help" ]; then
                     ACTION="usage"
                 else
                     ACTION="$1"
                 fi
-                __"$@"
+                ${_ACTION_PREFIX}"$@"
                 r=$?
             else
                error "Parameter '$(style color:green)${1}$(style color:red)' not found. Call 'usage' to see help."
@@ -1396,12 +1398,12 @@ fi
             if [ -z "${DEFAULT_ACTION}" ]; then
                 # Show usage
                 ACTION="usage"
-                __usage
+                ${_ACTION_PREFIX}usage
                 r=1
             else
                 # Call default action
                 ACTION="$DEFAULT_ACTION"
-                __${DEFAULT_ACTION}
+                ${_ACTION_PREFIX}${DEFAULT_ACTION}
             fi
         fi
         # Return result code
