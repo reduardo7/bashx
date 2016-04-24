@@ -49,15 +49,12 @@ fi
     #   export APP_REQUEIREMENTS="${APP_REQUEIREMENTS} other app command extra foo"
     export APP_REQUEIREMENTS="printf sed grep read date dirname readlink basename let"
 
-    # Default action to call
+    # Default action to call.
     # Action to use if script called without arguments.
     export DEFAULT_ACTION="usage"
 
     # BashX SRC path.
     export SRC_PATH="src"
-
-    # BashX Version.
-    export BASHX_VERSION="1.7.6"
 
     # Log file (& path).
     export LOG_FILE="$0.log"
@@ -65,25 +62,31 @@ fi
     # Config file.
     export CONFIG_FILE="$CONFIG_FILE"
 
-    # Actions directory name
+### CONSTANTS
+
+    # Actions directory name.
     export ACTIONS_DIR="actions"
+    readonly ACTIONS_DIR="$ACTIONS_DIR"
 
     # Actions path
     export ACTIONS_PATH="${BASE_DIR}/${SRC_PATH}/${ACTIONS_DIR}"
+    readonly ACTIONS_PATH="$ACTIONS_PATH"
 
-    # Utils directory name
+    # Utils directory name.
     export UTILS_DIR="utils"
+    readonly UTILS_DIR="$UTILS_DIR"
 
     # Utils path
     export UTILS_PATH="${BASE_DIR}/${SRC_PATH}/${UTILS_DIR}"
+    readonly UTILS_PATH="$UTILS_PATH"
 
-    # Sources directory name
+    # Sources directory name.
     export SOURCES_DIR="sources"
+    readonly SOURCES_DIR="$SOURCES_DIR"
 
-    # Sources path
+    # Sources path.
     export SOURCES_PATH="${BASE_DIR}/${SRC_PATH}/${SOURCES_DIR}"
-
-### CONSTANTS
+    readonly SOURCES_PATH="$SOURCES_PATH"
 
     # BashX base source.
     BASHX_BASE_SOURCE="${BASH_SOURCE[0]}"
@@ -139,10 +142,10 @@ fi
 
 ### VARS
 
-    # Result value for some functions
+    # Result value for some functions.
     export RESULT=""
 
-    # Called action
+    # Current called action.
     export ACTION=""
 
 ### PRIVATE VARS
@@ -158,13 +161,17 @@ fi
 ### DEBUG & LOG
 
     # Write to LOG to Console
-    console_log() {
+    #
+    # *: Text to log
+    console.log() {
         printf "LOG> %.23s | %s[%s]: %s\n" `date +%F.%T.%N` ${BASH_SOURCE[1]##*/} ${BASH_LINENO[0]} "${@}"
     }
 
     # Write to LOG to File
-    write_log() {
-        console_log "$@" >> "$LOG_FILE"
+    #
+    # *: Text to log
+    write.log() {
+        console.log "$@" >> "$LOG_FILE"
     }
 
 ### UTILS
@@ -199,9 +206,9 @@ fi
         fi
     }
 
-    # Check if is empty.
+    # Check if input is empty.
     #
-    # 1: {*} Variable to check if emtpy.
+    # 1: Required. Variable to check if emtpy.
     # Return: $TRUE if empty, $FALSE if not empty.
     is_empty() {
         if [ -z "$1" ]; then
@@ -215,7 +222,7 @@ fi
 
     # Check if is a number.
     #
-    # 1: {*} Variable to check if is a number.
+    # 1: Required. Variable to check if is a number.
     # Return: $TRUE if variable is a number, $FALSE if variable is not a number.
     is_number() {
         if [[ "$1" =~ ^[0-9]+$ ]]; then

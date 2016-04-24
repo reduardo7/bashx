@@ -15,152 +15,309 @@ Compatible with Android Bash!
 4. No need to learn a new syntax.
 5. Common functions and tools.
 
+
+
 # Constants
+
+
 
 ## Configuration
 
-### APP_TITLE
+
+#### APP_TITLE
 
 APP title.
 
-Default: *"BashX"*
+Default: `"BashX"`
 
-### APP_VERSION
+
+#### APP_VERSION
 
 APP Version.
 
-Default: *"1.0"*
-
-### COLOR_DEFAULT
+Default: `"1.0"`
 
 
-Default APP color. See "style" for more information.
+#### COLOR_DEFAULT
 
-Default: *"cyan"*
+Default APP color. See `style` for more information.
 
-### ECHO_CHAR
+Default: `"cyan"`
+
+
+#### ECHO_CHAR
 
 Start character for formated print screen (see "e" function).
 
-Default: *"#"*
+Default: `"#"`
 
-### APP_REQUEIREMENTS
+
+#### APP_REQUEIREMENTS
 
 Application requeirements.
 To extend requeirements, use:
 
     APP_REQUEIREMENTS="${APP_REQUEIREMENTS} other app command extra foo"
 
-Default: *"echo printf sed grep tput read date dirname readlink basename tar"*
+Default: `"echo printf sed grep tput read date dirname readlink basename tar"`
 
-## Constants
 
-### DEV_NULL
+#### DEFAULT_ACTION
+
+Default action to call
+Action to use if script called without arguments.
+
+Default: `"usage"`
+
+
+#### LOG_FILE
+
+Log file (& path).
+
+Default: `"$0.log"`
+
+
+#### CONFIG_FILE
+
+Config file.
+
+
+#### SOURCES_PATH
+
+Sources path.
+
+
+#### DEV_NULL
 
 Null path.
-Value: *"/dev/null"*
+Value: `"/dev/null"`
 
-### TRUE
+
+#### TRUE
 
 Boolean true.
-Value: *1*
+Value: `1`
 
-### FALSE
+
+#### FALSE
 
 Boolean false.
-Value: *0*
+Value: `0`
+
+
+#### BASE_SOURCE
+
+Base script source.
+
+
+#### BASE_DIR
+
+Base script directory.
+
+
+#### KEY_ESC
+
+Key: ESC
+Char: `"$'\e'"`
+
+
+
+# Global Common Variables
+
+
+#### RESULT
+
+Result value for some functions.
+
+
+#### ACTION
+
+Current called action.
 
 # Functions & Methods
 
+
+
+## Log
+
+
+#### console.log
+
+Write to LOG to Console.
+
+##### Params
+
+* `*`: Text to log.
+
+##### Example
+
+```
+console.log 'Test message'
+# Print the log text
+```
+
+
+#### write.log
+
+Write to LOG to File.
+
+##### Params
+
+* `*`: Text to log.
+
+##### See
+
+`LOG_FILE` constant.
+
+##### Example
+
+```
+write.log 'Test message'
+cat "$LOG_FILE"
+# Print the log file
+```
+
+
 ## UTILS
 
-### is_root
 
-### check_error
+#### is_root
 
-### is_empty
+Check if run as Root User.
 
-### is_number
+##### Return
 
-### function_exists
+`$TRUE` if *is* root user, `$FALSE` is *not* root user.
+
+##### Example
+
+```
+if is_root ; then
+  e "Running as root user"
+fi
+```
+
+
+#### root_validator
+
+Check if running as root user, or exit from script.
+
+##### Params
+
+* `*`: (Optional) Message.
+
+##### Example
+
+```
+root_validator "You are not root"
+```
+
+
+#### is_empty
+
+Check if input is empty.
+
+##### Params
+
+1. *Required*. Variable to check if emtpy.
+
+##### Return
+
+`$TRUE` if empty, `$FALSE` if not empty.
+
+##### Example
+
+```
+local x="$1"
+if is_empty "$x" ; then
+    error "The first parameter is required"
+fi
+```
+
+
+#### check_error
+
+#### is_number
+
+#### function_exists
 
 ## STRING
 
-### str_escape
+#### str_escape
 
-### str_repeat
+#### str_repeat
 
-### str_replace
+#### str_replace
 
-### trim
+#### trim
 
-### ltrim
+#### ltrim
 
-### rtrim
+#### rtrim
 
-### str_len
+#### str_len
 
-### sub_str
+#### sub_str
 
-### str_pos
+#### str_pos
 
-### in_str
+#### in_str
 
 ## UI
 
-### screen_width
+#### screen_width
 
-### style
+#### style
 
-### e
+#### e
 
-### eb
+#### eb
 
-### pause
+#### pause
 
-### exit_error
+#### exit_error
 
-### timeout
+#### timeout
 
-### print_line
+#### print_line
 
-### cmd_log
+#### cmd.log
 
 
-### print_app_info
+#### print_app_info
 
 ## DATE / TIME
 
-### now_time
+#### now_time
 
-### now_date
+#### now_date
 
-### now_date_time
+#### now_date_time
 
 ## TAR
 
-### tar_compress
+#### tar_compress
 
-### tar_extract
+#### tar_extract
 
 ## FILE / PATH
 
-### file_exists
+#### file_exists
 
-### script_file_name
+#### script_file_name
 
-### script_full_path
+#### script_full_path
 
-### path_exists
+#### path_exists
 
-### file_contains
+#### file_contains
 
 ## EXEC
 
-### check_requirements
+#### check_requirements
 
-### usage
+#### usage
 
-### help
+#### help
 
-### run
+#### run
