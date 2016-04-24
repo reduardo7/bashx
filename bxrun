@@ -41,7 +41,7 @@ if [ ! -d "${BASHX_DIR}" ]; then
       exit 1
     fi
 else
-  BASHX_CURRENT_VERSION=`cat "${BASHX_DIR}/src/bashx.version" 2>/dev/null || echo 0`
+  BASHX_CURRENT_VERSION=`cat "${BASHX_DIR}/src/bashx.version" 2>/dev/null || echo 1`
   if [[ $BASHX_CURRENT_VERSION -lt $BASHX_REQUIRED_VERSION ]]; then
     (
       echo "# BashX requred version is $BASHX_REQUIRED_VERSION, but version $BASHX_CURRENT_VERSION is installed"
