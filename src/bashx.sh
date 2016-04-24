@@ -62,31 +62,25 @@ fi
     # Config file.
     export CONFIG_FILE="$CONFIG_FILE"
 
-### CONSTANTS
-
     # Actions directory name.
     export ACTIONS_DIR="actions"
-    readonly ACTIONS_DIR="$ACTIONS_DIR"
 
     # Actions path
     export ACTIONS_PATH="${BASE_DIR}/${SRC_PATH}/${ACTIONS_DIR}"
-    readonly ACTIONS_PATH="$ACTIONS_PATH"
 
     # Utils directory name.
     export UTILS_DIR="utils"
-    readonly UTILS_DIR="$UTILS_DIR"
 
     # Utils path
     export UTILS_PATH="${BASE_DIR}/${SRC_PATH}/${UTILS_DIR}"
-    readonly UTILS_PATH="$UTILS_PATH"
 
     # Resources directory name.
     export RESOURCES_DIR="resources"
-    readonly RESOURCES_DIR="$RESOURCES_DIR"
 
     # Resources path.
     export RESOURCES_PATH="${BASE_DIR}/${SRC_PATH}/${RESOURCES_DIR}"
-    readonly RESOURCES_PATH="$RESOURCES_PATH"
+
+### CONSTANTS
 
     # BashX base source.
     BASHX_BASE_SOURCE="${BASH_SOURCE[0]}"
