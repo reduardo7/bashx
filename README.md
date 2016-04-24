@@ -159,7 +159,7 @@ Value: *0*
 
 ### check_requirements
 
-### __usage
+### usage
 
 ### help
 
