@@ -82,9 +82,9 @@ Default: `"$0.log"`
 Config file.
 
 
-#### SOURCES_PATH
+#### RESOURCES_PATH
 
-Sources path.
+Resources path.
 
 
 #### DEV_NULL

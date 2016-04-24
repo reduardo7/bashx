@@ -80,13 +80,13 @@ fi
     export UTILS_PATH="${BASE_DIR}/${SRC_PATH}/${UTILS_DIR}"
     readonly UTILS_PATH="$UTILS_PATH"
 
-    # Sources directory name.
-    export SOURCES_DIR="sources"
-    readonly SOURCES_DIR="$SOURCES_DIR"
+    # Resources directory name.
+    export RESOURCES_DIR="resources"
+    readonly RESOURCES_DIR="$RESOURCES_DIR"
 
-    # Sources path.
-    export SOURCES_PATH="${BASE_DIR}/${SRC_PATH}/${SOURCES_DIR}"
-    readonly SOURCES_PATH="$SOURCES_PATH"
+    # Resources path.
+    export RESOURCES_PATH="${BASE_DIR}/${SRC_PATH}/${RESOURCES_DIR}"
+    readonly RESOURCES_PATH="$RESOURCES_PATH"
 
     # BashX base source.
     BASHX_BASE_SOURCE="${BASH_SOURCE[0]}"
