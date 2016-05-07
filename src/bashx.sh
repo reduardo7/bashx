@@ -1359,28 +1359,27 @@ fi
         # Check requeirements
         check_requirements "${APP_REQUEIREMENTS}"
 
+        # Load utils
+        if [ -d "${UTILS_PATH}" ]; then
+            for __fn__path__ in ${UTILS_PATH}/* ; do
+                if [ -f "${__fn__path__}" ]; then
+                    # Create util function
+                    eval "$(file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
+                fi
+            done
+        fi
+
+        # Load actions
+        if [ -d "${ACTIONS_PATH}" ]; then
+            for __fn__path__ in ${ACTIONS_PATH}/* ; do
+                if [ -f "${__fn__path__}" ]; then
+                    # Create action function
+                    eval "${_ACTION_PREFIX}$(file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
+                fi
+            done
+        fi
+
         if [ $# -gt 0 ]; then
-
-            # Load utils
-            if [ -d "${UTILS_PATH}" ]; then
-                for __fn__path__ in ${UTILS_PATH}/* ; do
-                    if [ -f "${__fn__path__}" ]; then
-                        # Create util function
-                        eval "$(file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
-                    fi
-                done
-            fi
-
-            # Load actions
-            if [ -d "${ACTIONS_PATH}" ]; then
-                for __fn__path__ in ${ACTIONS_PATH}/* ; do
-                    if [ -f "${__fn__path__}" ]; then
-                        # Create action function
-                        eval "${_ACTION_PREFIX}$(file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
-                    fi
-                done
-            fi
-
             # If function exists
             if function_exists "${_ACTION_PREFIX}$1" ; then
                 # Exec
@@ -1395,6 +1394,7 @@ fi
                error "Parameter '$(style color:green)${1}$(style color:red)' not found. Call 'usage' to see help."
             fi
         fi
+
         if [ ${#1} == 0 ]; then
             if [ -z "${DEFAULT_ACTION}" ]; then
                 # Show usage
