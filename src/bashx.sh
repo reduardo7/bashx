@@ -154,6 +154,23 @@ fi
 
 ### EXEC
 
+  @str_replace() {
+    local options="g"
+    if [ $# -lt 4 ] || [ "$4" -ne $TRUE ]; then
+      options="${options}i"
+    fi
+    echo "$1" | sed "s/$2/$3/$options"
+  }
+
+  @file_name() {
+    local _fname="`basename "${1}"`"
+    if [ "$2" == "$TRUE" ]; then
+      # Remove extension
+      _fname="`@str_replace "${_fname}" "\..*$" ""`"
+    fi
+    echo ${_fname}
+  }
+
   # Run APP.
   # Run arguments as commands if any, or show "usage".
   #
@@ -162,18 +179,6 @@ fi
   # Use: At end of file, put next:
   #   @bxrun "$@"
   @bxrun() {
-    local APPINFO=" $(@print_app_info) "
-    local APPINFOB="+-$(@str_repeat $(@str_len "${APPINFO}") "-")-+"
-    local r=1
-    echo
-    @e "${APPINFOB}"
-    @e "| ${APPINFO} |"
-    @e ${APPINFOB}
-    @e
-
-    # Check requeirements
-    @check_requirements "${APP_REQUEIREMENTS}"
-
     # Load utils
     if [ -d "${UTILS_PATH}" ]; then
       for __fn__path__ in ${UTILS_PATH}/* ; do
@@ -193,6 +198,21 @@ fi
         fi
       done
     fi
+
+    # Start
+    local APPINFO=" $(@print_app_info) "
+    local APPINFOB="+-$(@str_repeat $(@str_len "${APPINFO}") "-")-+"
+    local r=1
+
+    echo
+
+    @e "${APPINFOB}"
+    @e "| ${APPINFO} |"
+    @e ${APPINFOB}
+    @e
+
+    # Check requeirements
+    @check_requirements "${APP_REQUEIREMENTS}"
 
     # On end Script
     trap @end EXIT
