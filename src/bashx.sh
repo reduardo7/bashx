@@ -218,16 +218,9 @@ fi
     fi
 
     # Start
-    local APPINFO=" $(@print_app_info) "
-    local APPINFOB="+-$(@str_repeat $(@str_len "${APPINFO}") "-")-+"
     local r=1
-
     echo
-
-    @e "${APPINFOB}"
-    @e "| ${APPINFO} |"
-    @e ${APPINFOB}
-    @e
+    @title "$(@print_app_info)"
 
     # Check requeirements
     @check_requirements "${APP_REQUEIREMENTS}"
