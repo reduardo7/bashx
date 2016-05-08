@@ -1,8 +1,8 @@
 # String length.
 #
-# 1: {String} Text.
+# *: {String} Text.
 # Out: {Integer} String length.
-# Return: String length.
-local l=${#1}
+
+local str="$(remove_format "$@")"
+local l=${#str}
 echo $l
-return $l
