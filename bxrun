@@ -7,7 +7,7 @@
 # ################### #
 
 # BashX Required Version (INTEGER) | bashx.version
-BASHX_REQUIRED_VERSION=200
+BASHX_REQUIRED_VERSION=212
 
 BASE_SOURCE="$0"
 BASE_DIR="$(cd "$(dirname "$BASE_SOURCE")" ; pwd)"
