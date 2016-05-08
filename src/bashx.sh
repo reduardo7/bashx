@@ -67,12 +67,14 @@ fi
 
   # Actions path
   export ACTIONS_PATH="${BASE_DIR}/${SRC_PATH}/${ACTIONS_DIR}"
+  export BASHX_ACTIONS_PATH="${BASHX_DIR}/src/actions"
 
   # Utils directory name.
   export UTILS_DIR="utils"
 
   # Utils path
   export UTILS_PATH="${BASE_DIR}/${SRC_PATH}/${UTILS_DIR}"
+  export BASHX_UTILS_PATH="${BASHX_DIR}/src/utils"
 
   # Resources directory name.
   export RESOURCES_DIR="resources"
@@ -179,6 +181,22 @@ fi
   # Use: At end of file, put next:
   #   @bxrun "$@"
   @bxrun() {
+    # Load base utils
+    for __fn__path__ in ${BASHX_UTILS_PATH}/* ; do
+      if [ -f "${__fn__path__}" ]; then
+        # Create base util function
+        eval "$(@file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
+      fi
+    done
+
+    # Load base actions
+    for __fn__path__ in ${BASHX_ACTIONS_PATH}/* ; do
+      if [ -f "${__fn__path__}" ]; then
+        # Create base action function
+        eval "${_ACTION_PREFIX}$(@file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
+      fi
+    done
+
     # Load utils
     if [ -d "${UTILS_PATH}" ]; then
       for __fn__path__ in ${UTILS_PATH}/* ; do
