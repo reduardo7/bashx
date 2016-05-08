@@ -1,10 +1,18 @@
 #!/bin/bash
 
-# ################### #
-#                     #
-# Application Manager #
-#                     #
-# ################### #
+############################################
+#                                          #
+# BashX                                    #
+#                                          #
+# Extended Bash Framework.                 #
+#                                          #
+# URL: https://github.com/reduardo7/bashx  #
+#                                          #
+# Author: Eduardo Daniel Cuomo             #
+#         eduardo.cuomo.ar@gmail.com       #
+#         reduardo7@gmail.com              #
+#                                          #
+############################################
 
 # BashX Required Version (INTEGER) | bashx.version
 BASHX_REQUIRED_VERSION=212
