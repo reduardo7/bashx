@@ -1,0 +1,3 @@
+# Alias of "end".
+
+@end $@
