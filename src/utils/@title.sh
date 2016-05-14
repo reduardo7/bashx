@@ -9,3 +9,4 @@ local l="+-$(@str-repeat $(@str-len "${t}") "-")-+"
 @e "${l}"
 @e "| ${t} `@style default`|"
 @e ${l}
+@e
