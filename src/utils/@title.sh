@@ -7,5 +7,5 @@ local t=" $@ "
 local l="+-$(@str-repeat $(@str-len "${t}") "-")-+"
 
 @e "${l}"
-@e "| ${t} |"
+@e "| ${t} `@style default`|"
 @e ${l}
