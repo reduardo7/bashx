@@ -39,7 +39,12 @@ fi
 
   # Default APP color. See "style" for more information.
   #COLOR_DEFAULT="system" # Default system color
-  export COLOR_DEFAULT="cyan_light"
+  export COLOR_DEFAULT="cyan-light"
+
+  # BashX output colors.
+  # 0: Disable output colors.
+  # 1: Enable output colors.
+  export BASHX_COLORS_ENABLED=1
 
   # Start character for formated print screen (see "e" function).
   export ECHO_CHAR="#"
