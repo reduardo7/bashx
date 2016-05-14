@@ -29,8 +29,8 @@ fi
 
 # Read
 local i=""
-read -n 1 -p "`@style default`${ECHO_CHAR} ${m}: " i
-echo
+read -n 1 -p "`@style default`${ECHO_CHAR} ${m}: " i 1>&2
+echo 1>&2
 i=$(@trim "$i")
 if [ -z "$i" ]; then
   # Default
@@ -38,11 +38,11 @@ if [ -z "$i" ]; then
 else
   # Validate input
   for x in $o; do
-    if [ "`@str_to_lower "${x}"`" == "`@str_to_lower "${i}"`" ]; then
+    if [ "`@str-to-lower "${x}"`" == "`@str-to-lower "${i}"`" ]; then
       # User accept
       return $TRUE
     fi
   done
 fi
 
-return 1
+return $FALSE

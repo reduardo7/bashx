@@ -1,4 +1,5 @@
 # Write to LOG to File
 #
 # *: Text to log
-@console.log "$@" >> "$LOG_FILE"
+
+@console-log "$@" >> "$LOG_FILE" 2>&1

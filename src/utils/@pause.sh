@@ -8,6 +8,6 @@ else
   local m="$@"
 fi
 @e
-read -n 1 -p "`@style default`${ECHO_CHAR} ${m}"
+read -n 1 -p "`@style default`${ECHO_CHAR} ${m}" 1>&2
 @e
 @e

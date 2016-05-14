@@ -92,9 +92,9 @@ local prms="$@"
     # Style code
     local y=""
     # To lower
-    local p="`@str_to_lower "$q"`"
+    local p="`@str-to-lower "$q"`"
     # Split
-    @str_explode "[=:]" "$p"
+    @str-explode "[=:]" "$p"
     # Parts
     local s=`@trim "${RESULT[0]}"`
     local v=`@trim "${RESULT[1]}"`

@@ -4,14 +4,14 @@
 # 2: {String} Command to execute on count down finish.
 # Return: {Integer} Return command exit code or "255" on user cancel.
 
-if [ $# -ne 2 ] || ! @is_number "$1" || [ -z "$2" ]; then
+if [ $# -ne 2 ] || ! @is-number "$1" || [ -z "$2" ]; then
   @error "Invalid call '@timeout'" 70
 fi
 @e
 local COUNT=$1
 local rta=0
 while [ ${COUNT} -gt 0 ] && [ ${rta} -eq 0 ] ; do
-  ui.echo_back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..."
+  @echo-back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..."
   read -n 1 -t 1 -p "" i
   local r=$?
   if [ "${i}" == "c" ] || [ "${i}" == "C" ] || [ "${i}" == "$KEY_ESC" ]; then
@@ -23,14 +23,14 @@ while [ ${COUNT} -gt 0 ] && [ ${rta} -eq 0 ] ; do
     fi
   fi
 done
-@echo_back # Remove last line
+@echo-back # Remove last line
 if [ ${COUNT} -eq 0 ]; then
-  @echo_back
+  @echo-back
   $2
   return $?
 else
   # Canceled
-  @echo_back "   Cancel by user!"
+  @echo-back "   Cancel by user!"
   @e
   return 255
 fi

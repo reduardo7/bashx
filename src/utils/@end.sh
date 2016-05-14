@@ -1,4 +1,4 @@
-# Exit from APP and execute the function setted in "@set_on_exit".
+# Exit from APP and execute the function setted in "@set-on-exit".
 #
 # 1: {Integer} (Default: 0) Exit code.
 
@@ -7,7 +7,7 @@ if [ "$_APP_EXIT" == "$FALSE" ]; then
     # Execute exit actions
     $_ON_EXIT
   fi
-  
+
   # Mark as exit
   _APP_EXIT=$TRUE
 
@@ -19,7 +19,7 @@ if [ "$_APP_EXIT" == "$FALSE" ]; then
 
   # Exit
   if [ $# -gt 1 ]; then
-    if [ @is_number "$1" == $TRUE ]; then
+    if [ @is-number "$1" == $TRUE ]; then
       exit $1
     else
       @error "Invalid exit code '$1'"

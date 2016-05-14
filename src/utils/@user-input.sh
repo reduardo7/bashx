@@ -20,12 +20,12 @@ if [ $# -gt 1 ]; then
 fi
 # 3: Max length
 local n=""
-if [ $# -gt 2 ] && @is_number "${3}"; then
+if [ $# -gt 2 ] && @is-number "${3}"; then
   n=" -n ${3}"
 fi
 # 4: Timeout
 local t=""
-if [ $# -gt 3 ] && @is_number "${4}"; then
+if [ $# -gt 3 ] && @is-number "${4}"; then
   t=" -t ${4}"
 fi
 # 5: Silent outut

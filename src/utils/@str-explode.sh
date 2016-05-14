@@ -5,7 +5,7 @@
 # Result in $RESULT.
 # Return: Array length.
 # Use:
-#    @str_explode ";" "bla@some.com bbb;john@home.com jjj"
+#    @str-explode ";" "bla@some.com bbb;john@home.com jjj"
 #    for i in ${RESULT[@]} ; do
 #        echo $i
 #    done

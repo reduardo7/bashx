@@ -13,19 +13,19 @@ local lpl=${#lp}
 if [ $# -gt 0 ] && [ ! -z "$1" ]; then
   src="$1"
   if [ ! -f "${src}" ] ; then
-    src="`@script_full_path`"
+    src="`@script-full-path`"
   fi
 else
-  src="`@script_full_path`"
+  src="`@script-full-path`"
 fi
 
-local srcName="`@script_file_name`"
+local srcName="`@script-file-name`"
 
 # Default style
 @style default
 
 # Action file
-local cmd="`@file_name "${src}" $TRUE`"
+local cmd="`@file-name "${src}" $TRUE`"
 local info="`grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/$(@style default)/g" | sed "s/^/$(@style default)${lp}/g"`"
 if [ ! -z "$info" ]; then
   info="|||${info}"

@@ -4,7 +4,7 @@
 
 # Start
 local t=" $@ "
-local l="+-$(@str_repeat $(@str_len "${t}") "-")-+"
+local l="+-$(@str-repeat $(@str-len "${t}") "-")-+"
 
 @e "${l}"
 @e "| ${t} |"

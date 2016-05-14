@@ -5,10 +5,10 @@
 # 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
 # Return: $TRUE if contains substring, $FALSE if not contains substring.
 if [ $# -lt 3 ]; then
-  @str_pos "$1" "$2" &> $DEV_NULL
+  @str-pos "$1" "$2" >$DEV_NULL 2>&1
   local r=$?
 else
-  @str_pos "$1" "$2" "$3" &> $DEV_NULL
+  @str-pos "$1" "$2" "$3" >$DEV_NULL 2>&1
   local r=$?
 fi
 return $r

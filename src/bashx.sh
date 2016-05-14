@@ -39,7 +39,7 @@ fi
 
   # Default APP color. See "style" for more information.
   #COLOR_DEFAULT="system" # Default system color
-  export COLOR_DEFAULT="cyan"
+  export COLOR_DEFAULT="cyan_light"
 
   # Start character for formated print screen (see "e" function).
   export ECHO_CHAR="#"
@@ -68,6 +68,7 @@ fi
   # Actions path
   export ACTIONS_PATH="${BASE_DIR}/${SRC_PATH}/${ACTIONS_DIR}"
   export BASHX_ACTIONS_PATH="${BASHX_DIR}/src/actions"
+  readonly BASHX_ACTIONS_PATH="$BASHX_ACTIONS_PATH"
 
   # Utils directory name.
   export UTILS_DIR="utils"
@@ -75,6 +76,7 @@ fi
   # Utils path
   export UTILS_PATH="${BASE_DIR}/${SRC_PATH}/${UTILS_DIR}"
   export BASHX_UTILS_PATH="${BASHX_DIR}/src/utils"
+  readonly BASHX_UTILS_PATH="$BASHX_UTILS_PATH"
 
   # Resources directory name.
   export RESOURCES_DIR="resources"
@@ -156,21 +158,14 @@ fi
 
 ### EXEC
 
-  @str_replace() {
-    local options="g"
-    if [ $# -lt 4 ] || [ "$4" -ne $TRUE ]; then
-      options="${options}i"
-    fi
-    echo "$1" | sed "s/$2/$3/$options"
+  # Overwrite by utils/@str-replace
+  @str-replace() {
+    echo "$1" | sed "s/$2/$3/g"
   }
 
-  @file_name() {
-    local _fname="`basename "${1}"`"
-    if [ "$2" == "$TRUE" ]; then
-      # Remove extension
-      _fname="`@str_replace "${_fname}" "\..*$" ""`"
-    fi
-    echo ${_fname}
+  # Overwrite by utils/@file-name
+  @file-name() {
+    @str-replace "$(basename "${1}")" "\..*$" ""
   }
 
   # Run APP.
@@ -185,7 +180,7 @@ fi
     for __fn__path__ in ${BASHX_UTILS_PATH}/* ; do
       if [ -f "${__fn__path__}" ]; then
         # Create base util function
-        eval "$(@file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
+        eval "$(@file-name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
       fi
     done
 
@@ -193,7 +188,7 @@ fi
     for __fn__path__ in ${BASHX_ACTIONS_PATH}/* ; do
       if [ -f "${__fn__path__}" ]; then
         # Create base action function
-        eval "${_ACTION_PREFIX}$(@file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
+        eval "${_ACTION_PREFIX}$(@file-name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
       fi
     done
 
@@ -202,7 +197,7 @@ fi
       for __fn__path__ in ${UTILS_PATH}/* ; do
         if [ -f "${__fn__path__}" ]; then
           # Create util function
-          eval "$(@file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
+          eval "$(@file-name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
         fi
       done
     fi
@@ -212,7 +207,7 @@ fi
       for __fn__path__ in ${ACTIONS_PATH}/* ; do
         if [ -f "${__fn__path__}" ]; then
           # Create action function
-          eval "${_ACTION_PREFIX}$(@file_name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
+          eval "${_ACTION_PREFIX}$(@file-name "${__fn__path__}" $TRUE)() { . ${__fn__path__}; }"
         fi
       done
     fi
@@ -220,10 +215,7 @@ fi
     # Start
     local r=1
     echo
-    @title "$(@print_app_info)"
-
-    # Check requeirements
-    @check_requirements "${APP_REQUEIREMENTS}"
+    @title "$(@app-info)"
 
     # On end Script
     trap @end EXIT
@@ -233,7 +225,7 @@ fi
 
     if [ $# -gt 0 ]; then
       # If function exists
-      if @function_exists "${_ACTION_PREFIX}$1" ; then
+      if @function-exists "${_ACTION_PREFIX}$1" ; then
         # Exec
         if [ "$1" == "help" ]; then
           ACTION="usage"

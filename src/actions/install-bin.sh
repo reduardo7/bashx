@@ -11,9 +11,9 @@
 local action="$1"
 local force="$2"
 
-local scrpt="`file_name "$BASE_SOURCE"`"
+local scrpt="`@file-name "$BASE_SOURCE"`"
 local bcfile="$HOME/.${scrpt}_completion"
-local bcline="source $bcfile"
+local bcline=". $bcfile"
 local rcs=".bashrc .zshrc .shrc"
 local l="PATH=\"$BASE_DIR:\$PATH\" ; export PATH=\"\$PATH\" ; $bcline"
 local p
@@ -29,9 +29,9 @@ case "$action" in
 	"install")
 		if $force || [ ! -f "$bcfile" ]; then
 			# Create file
-			e "Creating '$(style bold)$bcfile$(style default)' file..."
+			e "Creating '$(@style bold)$bcfile$(@style default)' file..."
 
-			echo "# bash completion for $scrpt (`script_full_path`)" > "$bcfile"
+			echo "# bash completion for $scrpt (`@script-full-path`)" > "$bcfile"
 			echo "_${scrpt}_methods() {" >> "$bcfile"
 			echo "	grep \"^\\s*\\(function\\s\\+\\)\\?${_ACTION_PREFIX}.\\+()\\s*{.*\$\" \"\${1}\" | while read line ; do" >> "$bcfile"
 			echo "		echo \"\$line\" | sed \"s/()\\s*{.*//g\" | sed \"s/\\s*\\(function\\s\\+\\)\\?${_ACTION_PREFIX}//g\"" >> "$bcfile"
@@ -45,7 +45,7 @@ case "$action" in
 			echo "			fi" >> "$bcfile"
 			echo "		done" >> "$bcfile"
 			echo "	fi" >> "$bcfile"
-			echo "	_${scrpt}_methods \"`script_full_path`\"" >> "$bcfile"
+			echo "	_${scrpt}_methods \"`@script-full-path`\"" >> "$bcfile"
 			echo "	_${scrpt}_methods \"${BASHX_BASE_SOURCE}\"" >> "$bcfile"
 			echo "}" >> "$bcfile"
 			echo "_${scrpt}() {" >> "$bcfile"
@@ -71,9 +71,9 @@ case "$action" in
 			if [ -f "$p" ]; then
 				if grep "$l" "$p" &> $DEV_NULL
 					then
-						e "Already installed in '$(style bold)$r$(style default)'"
+						e "Already installed in '$(@style bold)$r$(@style default)'"
 					else
-						e "Installing in '$(style bold)$r$(style default)'..."
+						e "Installing in '$(@style bold)$r$(@style default)'..."
 						echo >> "$p"
 						echo "$l" >> "$p"
 					fi
@@ -86,7 +86,7 @@ case "$action" in
 		e "Uninstalling..."
 		if [ -f "$bcfile" ]; then
 			# Delete file
-			e "Deleting '$(style bold)$bcfile$(style default)' file..."
+			e "Deleting '$(@style bold)$bcfile$(@style default)' file..."
 			if $force; then
 				# Force
 				rm -f "$bcfile"
@@ -101,7 +101,7 @@ case "$action" in
 			if [ -f "$p" ]; then
 				if grep "$l" "$p" &> $DEV_NULL
 					then
-						e "Removing from '$(style bold)$r$(style default)'..."
+						e "Removing from '$(@style bold)$r$(@style default)'..."
 						if $force; then
 							# Force
 							cat "$p" | grep -v "$l" > "${p}.2" && mv -f "${p}.2" "$p"
@@ -117,6 +117,6 @@ case "$action" in
 	;;
 	*)
 		# Invalid action
-		error "Invalid action '$(style bold)$action$(style default)'"
+		error "Invalid action '$(@style bold)$action$(@style default)'"
 	;;
 esac
