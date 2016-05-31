@@ -26,7 +26,7 @@ local srcName="`@script-file-name`"
 
 # Action file
 local cmd="`@file-name "${src}" $TRUE`"
-local info="`grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/$(@style default)/g" | sed "s/^/$(@style default)${lp}/g"`"
+local info="`grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/`@style default`/g" | sed "s/^/`@style default`${lp}/g"`"
 if [ ! -z "$info" ]; then
   info="|||${info}"
 fi

@@ -1,13 +1,12 @@
 # Pause.
 #
 # *: {String} (Optional) Message.
+local m="$@"
 
-if [ $# -le 0 ]; then
-  local m="Press any key to continue..."
+if [ -z "$m" ]; then
+  read -s -n 1
 else
-  local m="$@"
+  @e
+  read -s -n 1 -p "`@style default`${ECHO_CHAR} ${m}`@style system`" 1>&2
+  @e
 fi
-@e
-read -n 1 -p "`@style default`${ECHO_CHAR} ${m}" 1>&2
-@e
-@e

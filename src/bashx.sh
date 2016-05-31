@@ -145,9 +145,6 @@ fi
 
 ### VARS
 
-  # Result value for some functions.
-  export RESULT=""
-
   # Current called action.
   export ACTION=""
 
@@ -240,7 +237,7 @@ fi
         ${_ACTION_PREFIX}"$@"
         r=$?
       else
-         error "Parameter '$(@style color:green)${1}$(@style color:red)' not found. Call 'usage' to see help."
+         error "Parameter '`@style color:green`${1}`@style color:red`' not found. Call 'usage' to see help."
       fi
     fi
 

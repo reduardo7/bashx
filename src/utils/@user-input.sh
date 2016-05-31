@@ -5,8 +5,11 @@
 # 3: {Integer} (Default: "") Max length for input.
 # 4: {Integer} (Default: "") Timeout.
 # 5: {Boolean} (Default: $FALSE) Silent user output?
-# Result in $RESULT.
+# Output: Result
 # Return: 0 if valid user input, 1 if cancel, 2 if empty user input and returns default value.
+# Usage:
+#     txt=`@user-input "Enter text:"`
+#     exitCode=$?
 
 # 1: Message
 local m=""
@@ -33,12 +36,15 @@ local s=""
 if [ $# -gt 4 ] && [ ${5} == $TRUE ]; then
   s=" -s"
 fi
+
 # Execute
 local cmd="read${n}${s}${t}"
-${cmd} -p "`@style default`${ECHO_CHAR} ${m}" i
-echo
+${cmd} -p "`@style default`${ECHO_CHAR} ${m}`@style system`" i 1>&2
 local r=$?
 local rta=0
+
+echo 1>&2
+
 if [ "${i}" == "$KEY_ESC" ]; then
   rta=1
   i="${d}"
@@ -50,6 +56,7 @@ else
     i="${d}"
   fi
 fi
+
 # Result
-RESULT="${i}"
+echo "${i}"
 return ${rta}

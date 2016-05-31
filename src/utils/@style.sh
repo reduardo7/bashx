@@ -74,172 +74,174 @@
 #           - hidden | none | hide | false | 0 | $FALSE: Hide text.
 # Out: {String} Style console string.
 # Examples:
-#   e "normal color $(@style color:red)text in red $(@style color:black background:yellow)black color$(@style default) normal color"
+#   e "normal color `@style color:red`text in red `@style color:black background:yellow`black color`@style default` normal color"
 #   @style default # Restore default APP colors
 #   @style background gray # Set gray color as background color for next output
-#   e "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
+#   e "`@style color:red bold underline:on`Title`@style underline:off`:`@style normal dim` Description..."
 
 if [ $BASHX_COLORS_ENABLED = 1 ]; then
   # No parameters
   local prms="$@"
-    if [ $# -eq 0 ]; then
-      # Default color
-      prms="default"
-    fi
+  if [ $# -eq 0 ]; then
+    # Default color
+    prms="default"
+  fi
 
-    # Styles
-    local c=""
-    for q in "$prms" ; do
-      # Style code
-      local y=""
-      # To lower
-      local p="`@str-to-lower "$q"`"
-      # Split
-      @str-explode "[=:]" "$p"
-      # Parts
-      local s=`@trim "${RESULT[0]}"`
-      local v=`@trim "${RESULT[1]}"`
+  # Styles
+  local c=""
+  prms=(`@str-explode " " "$prms"`)
 
-      # Default
-      if [ -z "$v" ] && [ "$p" == "default" ]; then
-        # Reset style
-        if [ -z "$c" ]; then
-          c="0"
-        else
-          c="$c;0"
-        fi
-        # Default color
-        s="color"
-        v="${COLOR_DEFAULT}"
-      fi
+  for q in ${prms[@]} ; do
+    # Style code
+    local y=""
+    # To lower
+    local p="`@str-to-lower "$q"`"
+    # Split
+    p=(`@str-explode "[=:]" "$p"`)
+    # Parts
+    local s=`@trim "${p[0]}"`
+    local v=`@trim "${p[1]}"`
 
-      if [ ! -z "$v" ]; then
-        if [ "$s" == "color" ] && ( [ "$v" == "default" ] || [ "$v" == "normal" ] || [ "$v" == "auto" ] ); then
-          if [ -z "${COLOR_DEFAULT}"] || [ "${COLOR_DEFAULT}" == 'default' ] || [ "${COLOR_DEFAULT}" == 'normal' ] || [ "${COLOR_DEFAULT}" == 'auto' ]; then
-            # Invalid default or default not defined
-            y="0"
-            # Invalidate case
-            v=""
-            s=""
-          else
-            # Default color
-            v="${COLOR_DEFAULT}"
-          fi
-        fi
-        case "$s" in
-          "color")
-            case "$v" in
-              "black")              y="30" ;;
-              "blue")               y="34" ;;
-              "blue-light")         y="94" ;;
-              "cyan")               y="36" ;;
-              "cyan-light")         y="96" ;;
-              "gray")               y="90" ;;
-              "gray-light")         y="37" ;;
-              "green")              y="32" ;;
-              "green-light")        y="92" ;;
-              "magenta" | "purple") y="35" ;;
-              "magenta-light")      y="95" ;;
-              "red")                y="31" ;;
-              "red-light")          y="91" ;;
-              "yellow" | "coffe")   y="33" ;;
-              "yellow-light")       y="93" ;;
-              "white")              y="97" ;;
-              # Color (0 - 255)
-              [0-9])                y="38;5;${v}" ;;
-            esac
-            ;;
-          "background" | "bg")
-            case "$v" in
-              "black")                      y="40" ;;
-              "blue")                       y="44" ;;
-              "blue-light")                 y="104" ;;
-              "cyan")                       y="46" ;;
-              "cyan-light")                 y="106" ;;
-              "gray")                       y="100" ;;
-              "gray-light")                 y="47" ;;
-              "green")                      y="42" ;;
-              "green-light")                y="102" ;;
-              "magenta" | "purple")         y="45" ;;
-              "magenta-light")              y="105" ;;
-              "red")                        y="41" ;;
-              "red-light")                  y="101" ;;
-              "yellow" | "coffe")           y="43" ;;
-              "yellow-light")               y="103" ;;
-              "white")                      y="107" ;;
-              "system" | "normal" | "auto") y="49" ;;
-              # Color (0-255)
-              [0-9])                        y="48;5;${v}" ;;
-            esac
-            ;;
-          "underline")
-            case "$v" in
-              "on" | "true" | "1" | "${TRUE}")    y="4" ;;
-              "off" | "false" | "0" | "${FALSE}") y="24" ;;
-            esac
-            ;;
-          "bold")
-            case "$v" in
-              "on" | "true" | "1" | "${TRUE}")    y="1" ;;
-              "off" | "false" | "0" | "${FALSE}") y="21" ;;
-            esac
-            ;;
-          "dim")
-            # Gray stile
-            case "$v" in
-              "on" | "true" | "1" | "${TRUE}")    y="2" ;;
-              "off" | "false" | "0" | "${FALSE}") y="22" ;;
-            esac
-            ;;
-          "blink")
-            # Flashing text
-            case "$v" in
-              "on" | "true" | "1" | "${TRUE}")    y="5" ;;
-              "off" | "false" | "0" | "${FALSE}") y="25" ;;
-            esac
-            ;;
-          "reverse" | "negative")
-            case "$v" in
-              "on" | "true" | "1" | "${TRUE}")    y="7" ;;
-              "off" | "false" | "0" | "${FALSE}") y="27" ;;
-            esac
-            ;;
-          "display")
-            case "$v" in
-              "visible" | "show" | "true" | "1" | "${TRUE}")           y="28" ;;
-              "hidden" | "none" | "hide" | "false" | "0" | "${FALSE}") y="8" ;;
-            esac
-            ;;
-        esac
+    # Default
+    if [ -z "$v" ] && [ "$p" == "default" ]; then
+      # Reset style
+      if [ -z "$c" ]; then
+        c="0"
       else
-        case "$p" in
-          "bold")                 y="1" ;;
-          "underline")            y="4" ;;
-          "reverse" | "negative") y="7" ;;
-          "hidden" | "hide")      y="8" ;;
-          "show" | "visible")     y="28" ;;
-          # Gray stile
-          "dim")                  y="2" ;;
-          # Flashing text
-          "blink")                y="5" ;;
-          # No bold
-          "normal")               y="21" ;;
-          # Reset all styles
-          "reset")                y="0" ;;
-        esac
+        c="$c;0"
       fi
+      # Default color
+      s="color"
+      v="${COLOR_DEFAULT}"
+    fi
 
-      if [ ! -z "$y" ]; then
-        # Append style
-        if [ -z "$c" ]; then
-          c="$y"
+    if [ ! -z "$v" ]; then
+      if [ "$s" == "color" ] && ( [ "$v" == "default" ] || [ "$v" == "normal" ] || [ "$v" == "auto" ] ); then
+        if [ -z "${COLOR_DEFAULT}"] || [ "${COLOR_DEFAULT}" == 'default' ] || [ "${COLOR_DEFAULT}" == 'normal' ] || [ "${COLOR_DEFAULT}" == 'auto' ]; then
+          # Invalid default or default not defined
+          y="0"
+          # Invalidate case
+          v=""
+          s=""
         else
-          c="$c;$y"
+          # Default color
+          v="${COLOR_DEFAULT}"
         fi
       fi
-    done
-
-    if [ ! -z "${c}" ]; then
-      echo -en "\e[${c}m"
+      case "$s" in
+        "color")
+          case "$v" in
+            "black")              y="30" ;;
+            "blue")               y="34" ;;
+            "blue-light")         y="94" ;;
+            "cyan")               y="36" ;;
+            "cyan-light")         y="96" ;;
+            "gray")               y="90" ;;
+            "gray-light")         y="37" ;;
+            "green")              y="32" ;;
+            "green-light")        y="92" ;;
+            "magenta" | "purple") y="35" ;;
+            "magenta-light")      y="95" ;;
+            "red")                y="31" ;;
+            "red-light")          y="91" ;;
+            "yellow" | "coffe")   y="33" ;;
+            "yellow-light")       y="93" ;;
+            "white")              y="97" ;;
+            # Color (0 - 255)
+            [0-9])                y="38;5;${v}" ;;
+          esac
+          ;;
+        "background" | "bg")
+          case "$v" in
+            "black")                      y="40" ;;
+            "blue")                       y="44" ;;
+            "blue-light")                 y="104" ;;
+            "cyan")                       y="46" ;;
+            "cyan-light")                 y="106" ;;
+            "gray")                       y="100" ;;
+            "gray-light")                 y="47" ;;
+            "green")                      y="42" ;;
+            "green-light")                y="102" ;;
+            "magenta" | "purple")         y="45" ;;
+            "magenta-light")              y="105" ;;
+            "red")                        y="41" ;;
+            "red-light")                  y="101" ;;
+            "yellow" | "coffe")           y="43" ;;
+            "yellow-light")               y="103" ;;
+            "white")                      y="107" ;;
+            "system" | "normal" | "auto") y="49" ;;
+            # Color (0-255)
+            [0-9])                        y="48;5;${v}" ;;
+          esac
+          ;;
+        "underline")
+          case "$v" in
+            "on" | "true" | "1" | "${TRUE}")    y="4" ;;
+            "off" | "false" | "0" | "${FALSE}") y="24" ;;
+          esac
+          ;;
+        "bold")
+          case "$v" in
+            "on" | "true" | "1" | "${TRUE}")    y="1" ;;
+            "off" | "false" | "0" | "${FALSE}") y="21" ;;
+          esac
+          ;;
+        "dim")
+          # Gray stile
+          case "$v" in
+            "on" | "true" | "1" | "${TRUE}")    y="2" ;;
+            "off" | "false" | "0" | "${FALSE}") y="22" ;;
+          esac
+          ;;
+        "blink")
+          # Flashing text
+          case "$v" in
+            "on" | "true" | "1" | "${TRUE}")    y="5" ;;
+            "off" | "false" | "0" | "${FALSE}") y="25" ;;
+          esac
+          ;;
+        "reverse" | "negative")
+          case "$v" in
+            "on" | "true" | "1" | "${TRUE}")    y="7" ;;
+            "off" | "false" | "0" | "${FALSE}") y="27" ;;
+          esac
+          ;;
+        "display")
+          case "$v" in
+            "visible" | "show" | "true" | "1" | "${TRUE}")           y="28" ;;
+            "hidden" | "none" | "hide" | "false" | "0" | "${FALSE}") y="8" ;;
+          esac
+          ;;
+      esac
+    else
+      case "$p" in
+        "bold")                 y="1" ;;
+        "underline")            y="4" ;;
+        "reverse" | "negative") y="7" ;;
+        "hidden" | "hide")      y="8" ;;
+        "show" | "visible")     y="28" ;;
+        # Gray stile
+        "dim")                  y="2" ;;
+        # Flashing text
+        "blink")                y="5" ;;
+        # No bold
+        "normal")               y="21" ;;
+        # Reset all styles
+        "reset")                y="0" ;;
+      esac
     fi
+
+    if [ ! -z "$y" ]; then
+      # Append style
+      if [ -z "$c" ]; then
+        c="$y"
+      else
+        c="$c;$y"
+      fi
+    fi
+  done
+
+  if [ ! -z "${c}" ]; then
+    echo -en "\e[${c}m"
+  fi
 fi

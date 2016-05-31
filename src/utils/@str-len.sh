@@ -3,6 +3,5 @@
 # *: {String} Text.
 # Out: {Integer} String length.
 
-local str="$(@remove-format "$@")"
-local l=${#str}
-echo $l
+local str="`@remove-format "$@"`"
+echo ${#str}

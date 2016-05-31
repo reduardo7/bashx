@@ -31,7 +31,7 @@ fi
 local i=""
 read -n 1 -p "`@style default`${ECHO_CHAR} ${m}: " i 1>&2
 echo 1>&2
-i=$(@trim "$i")
+i="`@trim "$i"`"
 if [ -z "$i" ]; then
   # Default
   return $d

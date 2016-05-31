@@ -125,11 +125,6 @@ Char: `"$'\e'"`
 # Global Common Variables
 
 
-#### RESULT
-
-Result value for some functions.
-
-
 #### ACTION
 
 Current called action.
