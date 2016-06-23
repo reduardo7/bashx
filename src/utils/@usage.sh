@@ -30,5 +30,5 @@ local info="`grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/`@style default`/g" | 
 if [ ! -z "$info" ]; then
   info="|||${info}"
 fi
-@e "  `@style color:red`${srcName}`@style color:green` ${cmd}`@style default`${info}" | sed "s/|||.*\s\+>\s/ /g"
+@e "  `@style color:red`${srcName}`@style color:green` ${cmd}`@style default`${info}" 2>&1 | sed "s/|||.*\s\+>\s/ /g" 1>&2
 @e
