@@ -18,6 +18,8 @@
 BASHX_REQUIRED_VERSION=300
 
 defaults write org.R-project.R force.LANG en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 export OS_IS_LINUX=false
 export OS_IS_MAC=false
