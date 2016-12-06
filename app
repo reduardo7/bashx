@@ -17,6 +17,8 @@
 # BashX Required Version (INTEGER) | bashx.version
 BASHX_REQUIRED_VERSION=300
 
+defaults write org.R-project.R force.LANG en_US.UTF-8
+
 export OS_IS_LINUX=false
 export OS_IS_MAC=false
 export OS_IS_MINGW=false
