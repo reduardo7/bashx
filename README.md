@@ -19,7 +19,19 @@ Compatible with Android Bash!
 
 # Constants
 
+## OS Check
 
+### OS_IS_LINUX
+
+Value: `true` if current OS is Linux.
+
+### OS_IS_MAC
+
+Value: `true` if current OS is MAC.
+
+### OS_IS_MINGW
+
+Value: `true` if current OS is MINGW (Windows).
 
 ## Configuration
 

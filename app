@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ############################################
 #                                          #
@@ -16,6 +16,18 @@
 
 # BashX Required Version (INTEGER) | bashx.version
 BASHX_REQUIRED_VERSION=300
+
+export OS_IS_LINUX=false
+export OS_IS_MAC=false
+export OS_IS_MINGW=false
+
+if [ "$(uname)" == "Darwin" ]; then
+  export OS_IS_MAC=true        
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+  export OS_IS_LINUX=true
+elif [[ "$(expr substr $(uname -s) 1 10)" == MINGW* ]]; then
+  export OS_IS_MINGW=true
+fi
 
 BASE_SOURCE="$0"
 BASE_DIR="$(cd "$(dirname "$BASE_SOURCE")" ; pwd)"
@@ -43,11 +55,11 @@ export BASHX_CURRENT_VERSION=`cat "${BASHX_DIR}/src/bashx.version" 2>/dev/null |
 
     if type wget &>/dev/null
       then
-        wget --no-check-certificate https://github.com/reduardo7/bashx/tarball/v$BASHX_REQUIRED_VERSION -O - | tar -sxz || _err "Error downloading BashX"
+        wget --no-check-certificate https://github.com/reduardo7/bashx/tarball/v${BASHX_REQUIRED_VERSION} -O - | tar -xz || _err "Error downloading BashX v${BASHX_REQUIRED_VERSION}"
       else
         if type curl &>/dev/null
           then
-            curl -sL https://github.com/reduardo7/bashx/tarball/v$BASHX_REQUIRED_VERSION | tar -sxz || _err "Error downloading BashX"
+            curl -sL https://github.com/reduardo7/bashx/tarball/v${BASHX_REQUIRED_VERSION} | tar -xz || _err "Error downloading BashX v${BASHX_REQUIRED_VERSION}"
           else
             echo "# WGET/cURL are not installed!"
             echo "#"
@@ -70,7 +82,7 @@ export BASHX_CURRENT_VERSION=`cat "${BASHX_DIR}/src/bashx.version" 2>/dev/null |
   else
     if [[ $BASHX_CURRENT_VERSION -lt $BASHX_REQUIRED_VERSION ]]; then
       (
-        echo "# BashX requred version is v$BASHX_REQUIRED_VERSION, but version v$BASHX_CURRENT_VERSION is installed"
+        echo "# BashX requred version is v$BASHX_REQUIRED_VERSION, but version v${BASHX_CURRENT_VERSION} is installed"
         echo "# Updating BashX..."
         rm -rf ${BASHX_DIR} || _err "Error removing old version"
         _bxinstall || exit 1
