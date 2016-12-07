@@ -9,26 +9,29 @@
 local src
 local lp="    > "
 local lpl=${#lp}
+local pr
+
+$OS_IS_MAC && pr='E' || pr='r'
 
 if [ $# -gt 0 ] && [ ! -z "$1" ]; then
   src="$1"
   if [ ! -f "${src}" ] ; then
-    src="`@script-full-path`"
+    src="$(@script-full-path)"
   fi
 else
-  src="`@script-full-path`"
+  src="$(@script-full-path)"
 fi
 
-local srcName="`@script-file-name`"
+local srcName="$(@script-file-name)"
 
 # Default style
 @style default
 
 # Action file
-local cmd="`@file-name "${src}" $TRUE`"
-local info="`grep "^#\{2\}" "${src}" | sed "s/^#\{2\}\s\?/$(@style default)/g" | sed "s/^/$(@style default)${lp}/g"`"
+local cmd="$(@file-name "${src}" $TRUE)"
+local info="$(grep "^##" "${src}" | sed -${pr} "s/^##\s?/$(@style default)/g" | sed -${pr} "s/^/$(@style default)${lp}/g")"
 if [ ! -z "$info" ]; then
   info="|||${info}"
 fi
-@e "  `@style color:red`${srcName}`@style color:green` ${cmd}`@style default`${info}" 2>&1 | sed "s/|||.*\s\+>\s/ /g" 1>&2
+@e "  $(@style color:red)${srcName}$(@style color:green) ${cmd}$(@style default)${info}" 2>&1 | sed -${pr} "s/\|{3}.*\s+>\s/ /g"
 @e
