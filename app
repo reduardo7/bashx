@@ -17,21 +17,8 @@
 # BashX Required Version (INTEGER) | bashx.version
 BASHX_REQUIRED_VERSION=300
 
-defaults write org.R-project.R force.LANG en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-
-export OS_IS_LINUX=false
-export OS_IS_MAC=false
-export OS_IS_MINGW=false
-
-if [ "$(uname)" == "Darwin" ]; then
-  export OS_IS_MAC=true        
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-  export OS_IS_LINUX=true
-elif [[ "$(expr substr $(uname -s) 1 10)" == MINGW* ]]; then
-  export OS_IS_MINGW=true
-fi
 
 BASE_SOURCE="$0"
 BASE_DIR="$(cd "$(dirname "$BASE_SOURCE")" ; pwd)"

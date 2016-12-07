@@ -89,6 +89,22 @@ fi
   # Resources path.
   export RESOURCES_PATH="${BASE_DIR}/${SRC_PATH}/${RESOURCES_DIR}"
 
+### OS
+
+  export OS_IS_LINUX=false
+  export OS_IS_MAC=false
+  export OS_IS_MINGW=false
+
+  if [ "$(uname)" == "Darwin" ]; then
+    defaults write org.R-project.R force.LANG en_US.UTF-8
+    export TERM="xterm-color"
+    export OS_IS_MAC=true        
+  elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    export OS_IS_LINUX=true
+  elif [[ "$(expr substr $(uname -s) 1 10)" == MINGW* ]]; then
+    export OS_IS_MINGW=true
+  fi
+
 ### CONSTANTS
 
   # BashX base source.
