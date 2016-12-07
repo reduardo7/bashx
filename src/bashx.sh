@@ -144,7 +144,7 @@ fi
 
   # Key: ESC
   # \e | \033 | \x1B
-  export KEY_ESC=$'\e'
+  $OS_IS_MAC && export KEY_ESC=$'\x1B' || export KEY_ESC=$'\e'
   readonly KEY_ESC="$KEY_ESC"
 
 ### Load files

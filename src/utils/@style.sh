@@ -242,6 +242,6 @@ if [ $BASHX_COLORS_ENABLED = 1 ]; then
   done
 
   if [ ! -z "${c}" ]; then
-    echo -en "\e[${c}m"
+    echo -en "${KEY_ESC}[${c}m"
   fi
 fi
