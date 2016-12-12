@@ -8,6 +8,6 @@
 local _fname="`basename "${1}"`"
 if [ "$2" == "$TRUE" ]; then
   # Remove extension
-  _fname="`@str-replace "${_fname}" "\..*$" ""`"
+  _fname="`@str-replace "${_fname}" "\.[^\.]*$" ""`"
 fi
 echo ${_fname}
