@@ -3,5 +3,5 @@
 # *: {String} Message.
 
 @e
-@e "`@style color:red` $@"
+@e "$(@style color:red) $@"
 @e

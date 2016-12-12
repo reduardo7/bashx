@@ -1,10 +1,13 @@
 # Check if function exists.
 #
 # 1: {String} Function name.
-# Return: $TRUE if function exists, $FALSE if file not exists.
-declare -f "$1" >/dev/null
-if [ $? -eq 0 ]; then
-  return $TRUE
-else
-  return $FALSE
-fi
+# Return: 0 if function exists, 1 if file not exists.
+
+local func_name="$1"
+
+if declare -f "${func_name}" >$DEV_NULL 2>&1
+  then
+    return 0
+  else
+    return 1
+  fi

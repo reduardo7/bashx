@@ -5,17 +5,16 @@
 # 3: {Char} (Default: #) Character to print.
 # Out: {String} Colorized line.
 
-# Char
-if [ $# -gt 2 ]; then
-  local c="$3"
-else
-  local c="#"
-fi
+local color_from=$1
+local color_to=$2
+local chr="$3"
+
+[ -z "${chr}" ] && chr='#'
 
 # Print
-for i in {${1}..${2}} {${2}..${1}} ; do
-  echo -en "`@style color:${i}`${c}"
+for i in {${color_from}..${color_to}} {${color_to}..${color_from}} ; do
+  echo -en "`@style color:${i}`${chr}" >&2
 done
 
 # Default
-@style default
+@style default >&2

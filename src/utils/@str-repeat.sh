@@ -3,10 +3,13 @@
 # 1: {Integer} Number of repetitions.
 # 2: {String} String to repeat.
 # Out: {String} Repeated string.
-let fillsize=$1
-local fill=$2
-while [ ${fillsize} -gt 1 ] ; do
-  fill="${fill}$2"
-  let fillsize=${fillsize}-1
+
+let repeats_count=$1
+local str="$2"
+
+while [[ ${repeats_count} -gt 1 ]]; do
+  str="${str}$2"
+  let repeats_count=${repeats_count}-1
 done
-echo $fill
+
+echo $str

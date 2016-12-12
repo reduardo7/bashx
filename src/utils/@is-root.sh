@@ -1,10 +1,11 @@
 # Check if run as Root.
 #
-# Return: $TRUE if is root, $FALSE is not root.
-if [ "`id -u`" -ne 0 ]; then
+# Return: 0 if is root, 1 is not root.
+
+if [[ "$(id -u)" -ne 0 ]]; then
   # No Root
-  return $FALSE
+  return 1
 else
   # Root
-  return $TRUE
+  return 0
 fi

@@ -4,9 +4,12 @@
 # 2: {String} Command to execute on error.
 # Example: @check-error $? "Invalid operation".
 
-if @is-number "$1"; then
-  if [ $1 -gt 0 ]; then
+local code=$1
+local cmd="$2"
+
+if @is-number "${code}"; then
+  if [ ${code} -gt 0 ]; then
     # Error
-    @error "$2" $1
+    @error "${cmd}" ${code}
   fi
 fi

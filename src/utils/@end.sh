@@ -2,27 +2,29 @@
 #
 # 1: {Integer} (Default: 0) Exit code.
 
-if [ "$_APP_EXIT" == "$FALSE" ]; then
+local code=${code}
+
+if ! $_APP_EXIT ; then
   if [ ! -z "$_ON_EXIT" ]; then
     # Execute exit actions
     $_ON_EXIT
   fi
 
   # Mark as exit
-  _APP_EXIT=$TRUE
+  _APP_EXIT=true
 
   # Reset System color
-  @style reset
+  @style reset >&2
 
   # Space
-  echo
+  echo >&2
 
   # Exit
   if [ $# -gt 1 ]; then
-    if [ @is-number "$1" == $TRUE ]; then
-      exit $1
+    if @is-number "${code}"; then
+      exit ${code}
     else
-      @error "Invalid exit code '$1'"
+      @error "Invalid exit code '${code}'"
     fi
   else
     exit 0

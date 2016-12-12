@@ -1,4 +1,4 @@
-# User confirm.
+# User choice.
 #
 # 1: {String} Message.
 # 2: {String} Options. Chars separated by a space.
@@ -6,7 +6,7 @@
 # Out: User selection or Default.
 #
 # Example:
-#   user-choice "Message..." "a b c" "b"
+#   @user-choice "Message..." "a b c" "b"
 
 # Message
 local message="$1"
@@ -18,11 +18,11 @@ local result="$3"
 local user_input
 
 # Read
-read -n 1 -p "`@style default`${ECHO_CHAR} ${message} [${options}]: " user_input 1>&2
-echo 1>&2
+read -n 1 -p "$(@style default)${ECHO_CHAR} ${message} [${options}]: " user_input >&2
+echo >&2
 
 # Validate input
-user_input=`@trim "$user_input"`
+user_input=$(@trim "$user_input")
 if [ ! -z "$user_input" ]; then
   for x in ${options[@]}; do
     if [ "$x" == "$user_input" ]; then

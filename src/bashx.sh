@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ## BashX
 ##
@@ -6,14 +6,7 @@
 ##
 ## URL: https://github.com/reduardo7/bashx
 ##
-## Author: Eduardo Cuomo | eduardo.cuomo.ar@gmail.com | reduardo7@gmail.com
-
-# #############################################################################
-
-# Init.
-# Add the following lines at beginning of your file script:
-#   #!/bin/bash
-#   . "$(dirname "$0")/src/bashx.sh"
+## Author: Eduardo Cuomo <eduardo.cuomo.ar@gmail.com> <reduardo7@gmail.com>
 
 # #############################################################################
 
@@ -134,14 +127,6 @@ fi
   export DEV_NULL="/dev/null"
   readonly DEV_NULL="$DEV_NULL"
 
-  # Boolean true.
-  export TRUE=0
-  readonly TRUE="$TRUE"
-
-  # Boolean false.
-  export FALSE=1
-  readonly FALSE="$FALSE"
-
   # Key: ESC
   # \e | \033 | \x1B
   $OS_IS_MAC && export KEY_ESC=$'\x1B' || export KEY_ESC=$'\e'
@@ -170,7 +155,7 @@ fi
   export _ON_EXIT=''
 
   # TRUE if APP is terminated
-  export _APP_EXIT=$FALSE
+  export _APP_EXIT=false
 
   export _ACTION_PREFIX='@ACTIONS.'
 
@@ -227,7 +212,8 @@ fi
 
     # Start
     local r=1
-    echo
+    echo >&2
+
     @title "$(@app-info)"
 
     # On end Script

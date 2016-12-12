@@ -1,9 +1,12 @@
 # Check if is a number.
 #
 # 1: Required. Variable to check if is a number.
-# Return: $TRUE if variable is a number, $FALSE if variable is not a number.
-if [[ "$1" =~ ^[0-9]+$ ]]; then
-  return $TRUE
+# Return: 0 if variable is a number, 1 if variable is not a number.
+
+local v="$1"
+
+if [[ "${v}" =~ ^[0-9]+$ ]]; then
+  return 0
 else
-  return $FALSE
+  return 1
 fi

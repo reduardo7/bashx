@@ -194,7 +194,7 @@ Check if run as Root User.
 
 ##### Return
 
-`$TRUE` if *is* root user, `$FALSE` is *not* root user.
+`0` if *is* root user, `1` is *not* root user.
 
 ##### Example
 
@@ -230,7 +230,7 @@ Check if input is empty.
 
 ##### Return
 
-`$TRUE` if empty, `$FALSE` if not empty.
+`0` if empty, `1` if not empty.
 
 ##### Example
 

@@ -4,20 +4,28 @@
 # 2: {String} String to search.
 # 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
 # Out: {Integer|NULL} String position or NULL if not found.
-# Return: $TRUE on fonud, $FALSE on not found.
-if [ $# -lt 3 ] || [ $3 = $TRUE ]; then
-  # Case sensitive
-  local p="-bo"
-else
+# Return: 0 on fonud, 1 on not found.
+
+local src_str="$1"
+local search="$2"
+local case_sensitive=$3
+
+[ -z "${case_sensitive}" ] && case_sensitive=true
+
+local p='-bo'
+
+if ! ${case_sensitive}; then
   # Case insensitive
-  local p="-boi"
+  p="${p}i"
 fi
-local r=`echo "$1" | grep $p "$2" | sed 's/:.*$//'`
+
+local r=$(echo "${src_str}" | grep $p "${search}" | sed 's/:.*$//')
 echo $r
-if [ -z "$r" ] ; then
+
+if [ -z "$r" ]; then
   # No found
-  return $FALSE
+  return 1
 else
   # Found
-  return $TRUE
+  return 0
 fi

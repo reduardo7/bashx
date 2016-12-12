@@ -1,10 +1,12 @@
 # Right @trim text.
 #
 # 1: {String} String where @trim.
-# 2: {String} (Default: " ") String to @trim.
+# 2: {String} (Default: \s) String to @trim.
 # Out: {String} Trimed text.
-local chr=" "
-if [ $# -gt 1 ]; then
-  chr="$2"
-fi
-echo "$1" | sed "s/${chr}$//g"
+
+local src_str="$1"
+local trm_base="$2"
+
+[ -z "${trm_base}" ] && trm_base='\s'
+
+echo "$src_str" | sed "s/${trm_base}*$//"

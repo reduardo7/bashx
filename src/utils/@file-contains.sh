@@ -4,7 +4,7 @@
 # 2: {String} File where check.
 # Return: 0 if file contains the text, 1 if not contains the text.
 
-if grep -rils `@str-escape "$1"` `@str-escape "$2"` >$DEV_NULL 2>&1 ; then
+if grep -rils "$(@str-escape "$1")" "$(@str-escape "$2")" >$DEV_NULL 2>&1 ; then
   # Contains
   return 0
 else

@@ -3,18 +3,23 @@
 # 1: {String} String where replace.
 # 2: {String} Search string (REG EXP).
 # 3: {String} Replace.
-# 4: {Boolean} (Default: 1) 1 to ignore case.
+# 4: {Boolean} (Default: TRUE) TRUE to ignore case.
 # Out: {String} Result string.
 
-local options="g"
-if [ $# -lt 4 ] || [ "$4" -ne $TRUE ]; then
-  options="${options}i"
-fi
+local src_str="$1"
+local search="$2"
+local replace="$3"
+local ignore_case=$4
 
-local reg="s/$2/$3/$options"
+[ -z "${ignore_case}" ] && ignore_case=true
+
+local options='g'
+${ignore_case} && options="${options}i"
+
+local reg="s/${search}/${replace}/${options}"
 
 if $OS_IS_MAC; then
-  perl -C -Mutf8 -pe "$reg" <<< "$1"
+  perl -C -Mutf8 -pe "${reg}" <<< "${src_str}"
 else
-  sed "$reg" <<< "$1"
+  sed "${reg}" <<< "${src_str}"
 fi

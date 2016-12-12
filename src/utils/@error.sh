@@ -3,14 +3,15 @@
 # 1: {String} Error message.
 # 2: {Integer} (Default: 1) Exit code.
 
-if [ ! -z "$1" ]; then
-  @alert "Error! $1"
+local msg="$1"
+local code=$2
+
+[ -z "${code}" ] && code=1
+
+if [ ! -z "${msg}" ]; then
+  @alert "Error! ${msg}"
 else
   @e
 fi
 
-if [ $# -gt 1 ]; then
-  @end $2
-else
-  @end 1
-fi
+@end ${code}

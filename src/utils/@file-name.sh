@@ -1,13 +1,19 @@
 # Get file name.
 #
 # 1: {String} File path.
-# 2: {Boolean} (Default: $FALSE) Remove file extension from file name?
+# 2: {Boolean} (Default: true) Remove file extension from file name?
 # Out: {String} File name.
 
+local path="$1"
+local remove_ext=$2
+
+[ -z "${remove_ext}" ] && remove_ext=true
+
 # Remove path
-local _fname="`basename "${1}"`"
-if [ "$2" == "$TRUE" ]; then
-  # Remove extension
-  _fname="`@str-replace "${_fname}" "\.[^\.]*$" ""`"
-fi
-echo ${_fname}
+local _fname="$(basename "${1}")"
+
+# Remove extension
+${remove_ext} && _fname="$(@str-replace "${_fname}" '\.[^\.]*$' '')"
+
+# Result
+echo "${_fname}"
