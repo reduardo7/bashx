@@ -82,6 +82,6 @@ export BASHX_CURRENT_VERSION=`cat "${BASHX_DIR}/src/bashx.version" 2>/dev/null |
   fi
 
   . "${BASHX_DIR}/src/bashx.sh"
-  @bxrun "$@"
+  @init "$@"
   exit $?
 )
