@@ -1,10 +1,12 @@
 # Run APP.
-# Run arguments as commands if any, or show "usage".
+# Run arguments as commands if any, or show 'usage'.
 #
-# See "usage" to see how to use.
-#
-# Use: At end of file, put next:
+# Use: At end of /app file, put next:
 #   @init "$@"
+
+# Call @init once
+unset -f @init
+
 local p='()'
 
 # Load base utils
@@ -59,29 +61,29 @@ if [ $# -gt 0 ]; then
   # If function exists
   if @function-exists "${_ACTION_PREFIX}$1" ; then
     # Exec
-    if [ "$1" == "help" ]; then
-      ACTION="usage"
+    if [ "$1" == 'help' ]; then
+      ACTION='usage'
     else
       ACTION="$1"
     fi
     ${_ACTION_PREFIX}"$@"
     r=$?
   else
-      @error "Parameter '`@style color:green`${1}`@style color:red`' not found. Call 'usage' to see help."
+      @error "Parameter '$(@style color:green)${1}$(@style color:red)' not found. Call 'usage' to see help."
   fi
 fi
 
 if [ ${#1} == 0 ]; then
   if [ -z "${DEFAULT_ACTION}" ]; then
     # Show usage
-    ACTION="usage"
-    ${_ACTION_PREFIX}usage
+    ACTION='usage'
     r=1
   else
     # Call default action
     ACTION="$DEFAULT_ACTION"
-    ${_ACTION_PREFIX}${DEFAULT_ACTION}
   fi
+
+  ${_ACTION_PREFIX}${ACTION}
 fi
 
 # Return result code
