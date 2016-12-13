@@ -37,7 +37,7 @@ fi
 
 # 5: Silent outut
 local s=""
-if [ $# -gt 4 ] && [ ${5} == $TRUE ]; then
+if [ $# -gt 4 ] && ${5}; then
   s=" -s"
 fi
 

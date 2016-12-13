@@ -178,7 +178,7 @@ fi
     for __fn__path__ in ${BASHX_UTILS_PATH}/* ; do
       if [ -f "${__fn__path__}" ]; then
         # Create base util function
-        eval "$(@file-name "${__fn__path__}" $TRUE)${p} { . "${__fn__path__}"; }"
+        eval "$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
       fi
     done
 
@@ -186,7 +186,7 @@ fi
     for __fn__path__ in ${BASHX_ACTIONS_PATH}/* ; do
       if [ -f "${__fn__path__}" ]; then
         # Create base action function
-        eval "${_ACTION_PREFIX}$(@file-name "${__fn__path__}" $TRUE)${p} { . "${__fn__path__}"; }"
+        eval "${_ACTION_PREFIX}$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
       fi
     done
 
@@ -195,7 +195,7 @@ fi
       for __fn__path__ in ${UTILS_PATH}/* ; do
         if [ -f "${__fn__path__}" ]; then
           # Create util function
-          eval "$(@file-name "${__fn__path__}" $TRUE)${p} { . "${__fn__path__}"; }"
+          eval "$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
         fi
       done
     fi
@@ -205,7 +205,7 @@ fi
       for __fn__path__ in ${ACTIONS_PATH}/* ; do
         if [ -f "${__fn__path__}" ]; then
           # Create action function
-          eval "${_ACTION_PREFIX}$(@file-name "${__fn__path__}" $TRUE)${p} { . "${__fn__path__}"; }"
+          eval "${_ACTION_PREFIX}$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
         fi
       done
     fi

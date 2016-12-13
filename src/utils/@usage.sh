@@ -6,32 +6,30 @@
 # 1: {String} (Default: Current executed file) File to render usage.
 # Out: {String} Usage text.
 
-local src
-local lp="    > "
+local src="$1"
+local lp='    '
 local lpl=${#lp}
-local pr
+local src_name="$(@script-file-name)"
+local cmd="$(@file-name "${src}" true)"
+local first_line=true
+local sd="$(@style default)"
+local info
 
-$OS_IS_MAC && pr='E' || pr='r'
-
-if [ $# -gt 0 ] && [ ! -z "$1" ]; then
-  src="$1"
-  if [ ! -f "${src}" ] ; then
-    src="$(@script-full-path)"
-  fi
-else
+if [ -z "${src}" ] || [ ! -f "${src}" ]; then
   src="$(@script-full-path)"
 fi
 
-local srcName="$(@script-file-name)"
+@style default >&2
 
-# Default style
-@style default
+# Get comments from file
+egrep '^##' "${src}" | while read line
+  do
+    if ${first_line}; then
+      first_line=false
+      @e "  $(@style color:red)${src_name}$(@style color:green) ${cmd}${sd} $(@str-replace "${line}" '^##\s*' '')"
+    else
+      @e "$(@str-replace "${line}" '^##\s' "${sd}${lp}")"
+    fi
+  done
 
-# Action file
-local cmd="$(@file-name "${src}" $TRUE)"
-local info="$(grep "^##" "${src}" | sed -${pr} "s/^##\s?/$(@style default)/g" | sed -${pr} "s/^/$(@style default)${lp}/g")"
-if [ ! -z "$info" ]; then
-  info="|||${info}"
-fi
-@e "  $(@style color:red)${srcName}$(@style color:green) ${cmd}$(@style default)${info}" 2>&1 | sed -${pr} "s/\|{3}.*\s+>\s/ /g"
 @e
