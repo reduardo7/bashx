@@ -69,7 +69,7 @@ case "$action" in
 		for r in $rcs ; do
 			p="$HOME/$r"
 			if [ -f "$p" ]; then
-				if grep "$l" "$p" &> $DEV_NULL
+				if grep "$l" "$p" >/dev/null 2>&1
 					then
 						e "Already installed in '`@style bold`$r`@style default`'"
 					else
@@ -99,7 +99,7 @@ case "$action" in
 		for r in $rcs ; do
 			p="$HOME/$r"
 			if [ -f "$p" ]; then
-				if grep "$l" "$p" &> $DEV_NULL
+				if grep "$l" "$p" >/dev/null 2>&1
 					then
 						e "Removing from '`@style bold`$r`@style default`'..."
 						if $force; then

@@ -99,12 +99,6 @@ Config file.
 Resources path.
 
 
-#### DEV_NULL
-
-Null path.
-Value: `"/dev/null"`
-
-
 #### TRUE
 
 Boolean true.

@@ -117,10 +117,6 @@ fi
   export BASE_DIR="$BASE_DIR"
   readonly BASE_DIR="$BASE_DIR"
 
-  # Null path.
-  export DEV_NULL="/dev/null"
-  readonly DEV_NULL="$DEV_NULL"
-
   # Key: ESC
   # \e | \033 | \x1B
   $OS_IS_MAC && export KEY_ESC=$'\x1B' || export KEY_ESC=$'\e'

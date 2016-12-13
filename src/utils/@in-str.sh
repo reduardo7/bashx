@@ -11,5 +11,5 @@ local case_sensitive=$3
 
 [ -z "${case_sensitive}" ] && case_sensitive=true
 
-@str-pos "${src_str}" "${search}" ${case_sensitive} >$DEV_NULL 2>&1
+@str-pos "${src_str}" "${search}" ${case_sensitive} >/dev/null 2>&1
 return $?
