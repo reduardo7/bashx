@@ -60,27 +60,21 @@ fi
   # Config file.
   export CONFIG_FILE="$CONFIG_FILE"
 
-  # Actions directory name.
-  export ACTIONS_DIR="actions"
+  # Tests path
+  export TESTS_PATH="${BASE_DIR}/${SRC_PATH}/tests"
 
   # Actions path
-  export ACTIONS_PATH="${BASE_DIR}/${SRC_PATH}/${ACTIONS_DIR}"
+  export ACTIONS_PATH="${BASE_DIR}/${SRC_PATH}/actions"
   export BASHX_ACTIONS_PATH="${BASHX_DIR}/src/actions"
   readonly BASHX_ACTIONS_PATH="$BASHX_ACTIONS_PATH"
 
-  # Utils directory name.
-  export UTILS_DIR="utils"
-
   # Utils path
-  export UTILS_PATH="${BASE_DIR}/${SRC_PATH}/${UTILS_DIR}"
+  export UTILS_PATH="${BASE_DIR}/${SRC_PATH}/utils"
   export BASHX_UTILS_PATH="${BASHX_DIR}/src/utils"
   readonly BASHX_UTILS_PATH="$BASHX_UTILS_PATH"
 
-  # Resources directory name.
-  export RESOURCES_DIR="resources"
-
   # Resources path.
-  export RESOURCES_PATH="${BASE_DIR}/${SRC_PATH}/${RESOURCES_DIR}"
+  export RESOURCES_PATH="${BASE_DIR}/${SRC_PATH}/resources"
 
 ### OS
 
@@ -161,6 +155,13 @@ fi
 
 ### EXEC
 
+  # Preload
+  @trim() { . "${BASHX_UTILS_PATH}/@trim.sh"; }
+  @str-to-lower() { . "${BASHX_UTILS_PATH}/@str-to-lower.sh"; }
+  @str-explode() { . "${BASHX_UTILS_PATH}/@str-explode.sh"; }
+  @style() { . "${BASHX_UTILS_PATH}/@style.sh"; }
   @str-replace() { . "${BASHX_UTILS_PATH}/@str-replace.sh"; }
   @file-name() { . "${BASHX_UTILS_PATH}/@file-name.sh"; }
+
+  # Init
   @init() { . "${BASHX_DIR}/src/bashx.init.sh"; }

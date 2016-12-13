@@ -1,7 +1,4 @@
 # Print basic usage.
-# Using "ACTIONS." at begin of function name to set as argument method.
-# Put "#" before function to write extra help text.
-# Special chars: \n, \t (4 spaces)
 #
 # 1: {String} (Default: Current executed file) File to render usage.
 # Out: {String} Usage text.
@@ -19,10 +16,8 @@ if [ -z "${src}" ] || [ ! -f "${src}" ]; then
   src="$(@script-full-path)"
 fi
 
-@style default >&2
-
 # Get comments from file
-egrep '^##' "${src}" | while read line
+egrep '^##' "${src}" | egrep -v '^###' | while read line
   do
     if ${first_line}; then
       first_line=false

@@ -15,6 +15,3 @@ local chr="$3"
 for i in {${color_from}..${color_to}} {${color_to}..${color_from}} ; do
   echo -en "`@style color:${i}`${chr}" >&2
 done
-
-# Default
-@style default >&2
