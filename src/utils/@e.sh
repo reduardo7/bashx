@@ -4,9 +4,14 @@
 # Out: {String} Text.
 
 local str="$@"
+local reg='s/\t/    /g'
 
 # \t -> \s*4
-str=$(echo "${str}" | sed 's/\t/    /g')
+if $OS_IS_MAC; then
+  str="$(perl -C -Mutf8 -pe "${reg}" <<< "${str}")"
+else
+  str=$(sed "$reg" <<< "${str}")
+fi
 
 echo -e "$(@style default)${ECHO_CHAR} ${str}" >&2
 
