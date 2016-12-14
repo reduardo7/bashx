@@ -15,7 +15,7 @@
 ############################################
 
 # BashX Required Version (INTEGER) | bashx.version
-BASHX_REQUIRED_VERSION=300
+BASHX_REQUIRED_VERSION=400
 
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -34,7 +34,7 @@ export CURRENT_SOURCE="$CURRENT_DIR/$(basename "$0")"
 export BASHX_DIR="$BASE_DIR/src/bashx"
 export BASHX_CURRENT_VERSION=`cat "${BASHX_DIR}/src/bashx.version" 2>/dev/null || echo 1`
 
-# Running...
+# Install
 (
   _err() {
     echo "# $@"
@@ -80,7 +80,10 @@ export BASHX_CURRENT_VERSION=`cat "${BASHX_DIR}/src/bashx.version" 2>/dev/null |
       )
     fi
   fi
+)
 
+# Init
+(
   . "${BASHX_DIR}/src/bashx.sh"
   @init "$@"
   exit $?
