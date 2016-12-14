@@ -32,7 +32,7 @@ export BASE_DIR="$BASE_DIR"
 export CURRENT_DIR="$(pwd)"
 export CURRENT_SOURCE="$CURRENT_DIR/$(basename "$0")"
 export BASHX_DIR="$BASE_DIR/src/bashx"
-export BASHX_CURRENT_VERSION=`cat "${BASHX_DIR}/src/bashx.version" 2>/dev/null || echo 1`
+export BASHX_CURRENT_VERSION=$(cat "${BASHX_DIR}/src/bashx.version" 2>/dev/null || echo 1)
 
 # Install
 (
