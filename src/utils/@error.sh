@@ -8,10 +8,10 @@ local code=$2
 
 [ -z "${code}" ] && code=1
 
+@warn
+
 if [ ! -z "${msg}" ]; then
   @alert "Error! ${msg}"
-else
-  @print 3>&2
 fi
 
 @end ${code}

@@ -1,12 +1,8 @@
 # Print at screen.
 #
 # *: {String} Text to print.
-# Out: {String} Text.
 
-local str="$@"
+local str="$*"
 
 # \t -> \s*4
-echo -e "$(@style default)${ECHO_CHAR} $(@str-replace "${str}" '\t' '    ')" >&3
-
-# Style reset for next command
-@style reset >&3
+echo -e "$(@style default)${ECHO_CHAR} $(@str-replace "${str}" '\t' '    ')$(@style reset)" >&3

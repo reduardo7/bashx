@@ -2,6 +2,6 @@
 #
 # *: {String} Message.
 
-@print 3>&2
-@print "$(@style color:red) $@" 3>&2
-@print 3>&2
+local str="$*"
+
+@warn "$(@style color:red) ${str}"
