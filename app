@@ -44,11 +44,11 @@ export BASHX_CURRENT_VERSION=$(cat "${BASHX_DIR}/src/bashx.version" 2>/dev/null 
   _bxinstall() {
     echo "# Installing BashX..."
 
-    if type wget &>/dev/null
+    if type wget >/dev/null 2>&1
       then
         wget --no-check-certificate https://github.com/reduardo7/bashx/tarball/v${BASHX_REQUIRED_VERSION} -O - | tar -xz || _err "Error downloading BashX v${BASHX_REQUIRED_VERSION}"
       else
-        if type curl &>/dev/null
+        if type curl >/dev/null 2>&1
           then
             curl -sL https://github.com/reduardo7/bashx/tarball/v${BASHX_REQUIRED_VERSION} | tar -xz || _err "Error downloading BashX v${BASHX_REQUIRED_VERSION}"
           else
