@@ -1,24 +1,28 @@
 # Time out.
 #
-# 1: {Integer} Time out for count down.
+# 1: {Integer} Timeout for count down.
 # 2: {String} Command to execute on count down finish.
 # Return: {Integer} Return command exit code or "255" on user cancel.
 
+local timeout_num=$1
+local cmd_to_execute="$2"
 
-
-if [ $# -ne 2 ] || ! @is-number "$1" || [ -z "$2" ]; then
+if ! @is-number "${timeout_num}" || [ -z "${cmd_to_execute}" ]; then
   @error 'Invalid call "@timeout"' 70
 fi
 
 @e
-local COUNT=$1
-local rta=0
 
-while [ ${COUNT} -gt 0 ] && [ ${rta} -eq 0 ] ; do
+local COUNT=${timeout_num}
+local rta=0
+local r
+local i
+
+while [[ ${COUNT} -gt 0 ]] && [[ ${rta} -eq 0 ]] ; do
   @echo-back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..."
-  read -n 1 -t 1 -p '' i
-  local r=$?
-  if [ "${i}" == 'c' ] || [ "${i}" == 'C' ] || [ "${i}" == "$KEY_ESC" ]; then
+  read -n 1 -s -t 1 -p '' i
+  r=$?
+  if [ "${i}" == 'c' ] || [ "${i}" == 'C' ] || [ "${i}" == "${KEY_ESC}" ]; then
     rta=1
   else
     # 142 == No user input
@@ -30,9 +34,9 @@ done
 
 @echo-back # Remove last line
 
-if [ ${COUNT} -eq 0 ]; then
+if [[ ${COUNT} -eq 0 ]]; then
   @echo-back
-  $2
+  eval "${cmd_to_execute}"
   return $?
 else
   # Canceled

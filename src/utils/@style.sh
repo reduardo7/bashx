@@ -80,6 +80,8 @@
 #   e "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
 
 if [ $BASHX_COLORS_ENABLED = 1 ]; then
+  local OIFS="$IFS"
+
   # No parameters
   local prms="$@"
   if [ $# -eq 0 ]; then
@@ -89,7 +91,7 @@ if [ $BASHX_COLORS_ENABLED = 1 ]; then
 
   # Styles
   local c=''
-  prms=($(@str-explode ' ' "$prms"))
+  IFS=' ' prms=(${prms}) IFS="$OIFS"
 
   for q in ${prms[@]} ; do
     # Style code
@@ -97,7 +99,7 @@ if [ $BASHX_COLORS_ENABLED = 1 ]; then
     # To lower
     local p="$(@str-to-lower "$q")"
     # Split
-    p=($(@str-explode '[=:]' "$p"))
+    IFS='[=:]' p=(${p}) IFS="$OIFS"
     # Parts
     local s="$(@trim "${p[0]}")"
     local v="$(@trim "${p[1]}")"
@@ -117,7 +119,7 @@ if [ $BASHX_COLORS_ENABLED = 1 ]; then
 
     if [ ! -z "$v" ]; then
       if [ "$s" == 'color' ] && ( [ "$v" == 'default' ] || [ "$v" == 'normal' ] || [ "$v" == 'auto' ] ); then
-        if [ -z "${COLOR_DEFAULT}"] || [ "${COLOR_DEFAULT}" == 'default' ] || [ "${COLOR_DEFAULT}" == 'normal' ] || [ "${COLOR_DEFAULT}" == 'auto' ]; then
+        if [ -z "${COLOR_DEFAULT}" ] || [ "${COLOR_DEFAULT}" == 'default' ] || [ "${COLOR_DEFAULT}" == 'normal' ] || [ "${COLOR_DEFAULT}" == 'auto' ]; then
           # Invalid default or default not defined
           y='0'
           # Invalidate case

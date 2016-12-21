@@ -9,4 +9,4 @@ local trm_base="$2"
 
 [ -z "${trm_base}" ] && trm_base='\s'
 
-echo "$src_str" | sed "s/^${trm_base}*//" | sed "s/${trm_base}*$//"
+echo "${src_str}" | perl -C -Mutf8 -pe "s/^(${trm_base})*//" | perl -C -Mutf8 -pe "s/(${trm_base})*$//"

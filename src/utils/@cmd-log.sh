@@ -4,10 +4,14 @@
 # Out: {String} Command executed and result.
 # Return: Executed command exit code.
 
-echo 1>&2
-@str-repeat 80 '-' >&2
-echo "$ $@" >&2
-$@
+local cmd="$@"
+
+echo >&2
+@e "$(@str-repeat 80 '-')"
+echo "$ ${cmd}" >&2
+eval "${cmd}"
 local r=$?
-@str-repeat 80 '-' >&2
-return $r
+echo -e "$(@style reset)<END {$ ${cmd}} > ${r}" >&2
+@e "$(@str-repeat 80 '-')"
+echo >&2
+return ${r}

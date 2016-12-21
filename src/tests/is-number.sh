@@ -1,0 +1,20 @@
+@@assertNoOut '@is-number'
+@@assertNoOut '@is-number 0'
+@@assertNoOut '@is-number asd'
+@@assertNoOut '@is-number ""'
+@@assertNoOut '@is-number " "'
+
+@@assertExec '@is-number' true '0'
+@@assertExec '@is-number' true '1'
+@@assertExec '@is-number' true '01'
+@@assertExec '@is-number' true '10'
+@@assertExec '@is-number' true '99'
+
+
+@@assertExec '@is-number' false ''
+@@assertExec '@is-number' false 'a'
+@@assertExec '@is-number' false '" 0"'
+@@assertExec '@is-number' false '"0 "'
+@@assertExec '@is-number' false '" 0 "'
+@@assertExec '@is-number' false '"1 0"'
+@@assertExec '@is-number' false '""'

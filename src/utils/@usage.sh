@@ -1,6 +1,6 @@
 # Print basic usage.
 #
-# 1: {String} (Default: Current executed file) File to render usage.
+# 1: {String} File to render usage.
 # Out: {String} Usage text.
 
 local src="$1"
@@ -13,7 +13,7 @@ local sd="$(@style default)"
 local info
 
 if [ -z "${src}" ] || [ ! -f "${src}" ]; then
-  src="$(@script-full-path)"
+  @error "@usage: Invalid file '${src}'" 200
 fi
 
 # Get comments from file
