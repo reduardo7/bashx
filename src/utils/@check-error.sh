@@ -10,9 +10,9 @@ local cmd="$2"
 if @is-number "${code}"; then
   if [[ ${code} -gt 0 ]]; then
     # Error
-    ${cmd}
+    eval "${cmd}"
   fi
 else
   # Error
-  ${cmd}
+  eval "${cmd}"
 fi

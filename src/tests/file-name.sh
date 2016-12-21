@@ -1,0 +1,10 @@
+@@assertEqual "$(@file-name 'foo.bar')" 'foo.bar'
+@@assertEqual "$(@file-name 'foo.bar' false)" 'foo.bar'
+@@assertEqual "$(@file-name 'foo.bar' true)" 'foo'
+@@assertEqual "$(@file-name '/tmp/foo.bar.xx')" 'foo.bar.xx'
+@@assertEqual "$(@file-name '/a.b/foo')" 'foo'
+@@assertEqual "$(@file-name '/tmp/foo.bar.xx' true)" 'foo.bar'
+@@assertEqual "$(@file-name '/tmp/.foo.bar' true)" '.foo'
+@@assertEqual "$(@file-name '/tmp/.foo.bar.xx' true)" '.foo.bar'
+
+@@assertNoErrOut '@file-name "/tmp/foo.bar.xx"'

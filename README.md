@@ -234,3 +234,190 @@ if @is-empty "$x" ; then
     error "The first parameter is required"
 fi
 ```
+
+## Testing
+
+### Assert Functions
+
+#### @@assertFail
+
+Fails when it is called.
+
+##### Params
+
+**message** *{String}* Description about fail.
+
+#### @@assertTrue
+
+Fails when the parameter is not `true`.
+
+##### Params
+
+**var** Parameter to test.
+
+#### @@assertFalse
+
+Fails when the parameter is not `false`.
+
+##### Params
+
+**var** Parameter to test.
+
+#### @@assertEmpty
+
+Fails when the parameter is not *empty*.
+
+##### Params
+
+**var** *{String}* Parameter to test.
+
+#### @@assertNotEmpty
+
+Fails when the parameter is *empty*.
+
+##### Params
+
+**var** *{String}* Parameter to test.
+
+#### @@assertNumber
+
+Fails when the parameter is not a *number*.
+
+##### Params
+
+**var** Parameter to test.
+
+#### @@assertErrorCode
+
+Fails when the parameter is not a *number* or is an invalid *error code* (`code == 0` or `code > 255`).
+
+##### Params
+
+**code** Error code to test.
+
+### @@assertNotErrorCode
+
+Fails when the parameter is not a *number* or is a valid *error code* (`code == 0`).
+
+##### Params
+
+**code** Error code to test.
+
+### @@assertEqual
+
+Fails when the parameter *a* is not equal to parameter *b*.
+
+##### Params
+
+**str_a** *{String}* Parameter to test *a*.
+**str_b** *{String}* Parameter to test *b*.
+
+#### @@assertNotEqual
+
+Fails when the parameter *a* is equal to parameter *b*.
+
+##### Params
+
+**str_a** *{String}* Parameter to test *a*.
+**str_b** *{String}* Parameter to test *b*.
+
+#### @@assertContains
+
+Fails when the parameter *base* contains parameter *search*.
+
+##### Params
+
+**str_base** *{String}* String where to search.
+**str_search** *{String}* Strint to search.
+
+#### @@assertNotContains
+
+Fails when the parameter *base* not contains parameter *search*.
+
+##### Params
+
+**str_base** *{String}* String where to search.
+**str_search** *{String}* Strint to search.
+
+#### @@assertStartWith
+
+Fails when the parameter *base* starts with parameter *search*.
+
+##### Params
+
+**str_base** *{String}* String where to search.
+**str_search** *{String}* Strint to search.
+
+#### @@assertEndWith
+
+Fails when the parameter *base* ends with parameter *search*.
+
+##### Params
+
+**str_base** *{String}* String where to search.
+**str_search** *{String}* Strint to search.
+
+#### @@assertStdOut
+
+Fails when the command to execute does not have *std out*.
+
+##### Params
+
+**cmd** *{String}* Command to execute.
+
+#### @@assertNoStdOut
+
+Fails when the command to execute has *std out*.
+
+##### Params
+
+**cmd** *{String}* Command to execute.
+
+#### @@assertErrOut
+
+Fails when the command to execute does not have *err out*.
+
+##### Params
+
+**cmd** *{String}* Command to execute.
+
+#### @@assertNoErrOut
+
+Fails when the command to execute has *err out*.
+
+##### Params
+
+**cmd** *{String}* Command to execute.
+
+#### @@assertNoOut
+
+Fails when command to execute does not have *std out* or *err out*.
+
+##### Params
+
+**cmd** *{String}* Command to execute.
+
+#### @@assertExec
+
+Fails when the command to execute does not have the expected exit.
+
+##### Params
+
+**fn_name** *{String}* Function name (only it).
+**expected_exit** *{Boolean|Integer}* Expected execution result. `true` for *exit code = 0*; `false` for *exit code != 0*; *number* for expected *exit code*.
+**params** *{String}* *(Optional)* Parameter/s to use with the specified *function*. Examples: `true`, `"option a" "foo" false`, `123 ""`.
+
+#### @@assertRegExp
+
+Fails when the parameter to test no pass the *RegExp*.
+
+##### Params
+
+**reg_exp** *{String}* Test RegExp.
+**str** *{String}* String to test.
+
+### How run Core tests
+
+1. Delete downloaded `src/bashx`: `$ rm -r src/bashx`
+2. Create sym-link: `cd src && ln -s .. bashx && cd ..`
+3. Run tests: `./app run-tests`

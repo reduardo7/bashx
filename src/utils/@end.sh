@@ -1,13 +1,13 @@
-# Exit from APP and execute the function setted in "@set-on-exit".
+# Exit from APP and execute the function setted in "@on-exit".
 #
 # 1: {Integer} (Default: 0) Exit code.
 
-local code=${code}
-
 if ! $_APP_EXIT ; then
-  if [ ! -z "$_ON_EXIT" ]; then
+  local code=$1
+
+  if [ ! -z "${_ON_EXIT}" ]; then
     # Execute exit actions
-    $_ON_EXIT
+    eval "${_ON_EXIT}"
   fi
 
   # Mark as exit
@@ -20,12 +20,8 @@ if ! $_APP_EXIT ; then
   echo >&2
 
   # Exit
-  if [ $# -gt 1 ]; then
-    if @is-number "${code}"; then
-      exit ${code}
-    else
-      @error "Invalid exit code '${code}'"
-    fi
+  if @is-number "${code}"; then
+    exit ${code}
   else
     exit 0
   fi

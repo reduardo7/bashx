@@ -4,12 +4,13 @@
 # 2: {String} String to repeat.
 # Out: {String} Repeated string.
 
-let repeats_count=$1
-local str="$2"
+local repeats_count=$1
+local str_repeat="$2"
+local str=''
 
-while [[ ${repeats_count} -gt 1 ]]; do
-  str="${str}$2"
-  let repeats_count=${repeats_count}-1
+while [[ ${repeats_count} -gt 0 ]]; do
+  str="${str}${str_repeat}"
+  let repeats_count=$repeats_count-1
 done
 
-echo $str
+echo "${str}"
