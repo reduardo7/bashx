@@ -8,10 +8,14 @@ local code=$2
 
 [ -z "${code}" ] && code=1
 
-@warn
+@alert "@@@ Error! @@@"
 
 if [ ! -z "${msg}" ]; then
-  @alert "Error! ${msg}"
+  @warn
+  @alert "${msg}"
+  @warn
 fi
+
+@warn "Backtrace:\n$(@backtrace)"
 
 @end ${code}
