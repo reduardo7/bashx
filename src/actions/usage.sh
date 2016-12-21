@@ -1,9 +1,9 @@
 ##
 ## Print basic usage (this).
 
-@e
-@e "Usage:"
-@e
+@print
+@print "Usage:"
+@print
 
 # Actions
 if [ -d "${ACTIONS_PATH}" ]; then

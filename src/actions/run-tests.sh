@@ -31,11 +31,11 @@ __assertFail__() {
 }
 
 __testAssertFail__() {
-  @e "    - Test:            [$1]"
-  @e "    - Exit code:       $2"
-  @e "    - Expected result: $3"
-  @e "    - STD OUT:         [$(cat ${__assertion_exec_out_std__})]"
-  @e "    - ERR OUT:         [$(cat ${__assertion_exec_out_err__})]"
+  @print "    - Test:            [$1]"
+  @print "    - Exit code:       $2"
+  @print "    - Expected result: $3"
+  @print "    - STD OUT:         [$(cat ${__assertion_exec_out_std__})]"
+  @print "    - ERR OUT:         [$(cat ${__assertion_exec_out_err__})]"
   __assertFail__ "$4"
 }
 
@@ -218,7 +218,7 @@ __testAssertFail__() {
 if [ -d "${TESTS_PATH}" ]; then
   for f in ${TESTS_PATH}/* ; do
     if [ -f "${f}" ]; then
-      @e "$(@style color:yellow)Testing $(@file-name "${f}" true)..."
+      @print "$(@style color:yellow)Testing $(@file-name "${f}" true)..."
       let count=count+1
 
       __rmAssertionFailFile__
@@ -227,7 +227,7 @@ if [ -d "${TESTS_PATH}" ]; then
 
       if [[ ${test_result} -eq 0 ]]; then
           # Success
-          @e "$(@style color:green)Success"
+          @print "$(@style color:green)Success"
         else
           # Error
           let error_count=error_count+1
@@ -239,9 +239,9 @@ if [ -d "${TESTS_PATH}" ]; then
           @alert "Fail! Exit code: ${test_result}"
         fi
       
-      @e
-      @e "${line}"
-      @e
+      @print
+      @print "${line}"
+      @print
 
       [ -f "${__finish_tests_path__}" ] && break
     fi
@@ -254,11 +254,11 @@ fi
 __rmAssertionFailFile__
 __rmlastTestsFile__
 
-@e "Tests executed: ${count}"
-@e
+@print "Tests executed: ${count}"
+@print
 
 if [[ ${error_count} -eq 0 ]]; then
-  @e 'All tests success!'
+  @print 'All tests success!'
   exit 0
 else
   @error "${error_count} tests fail!"

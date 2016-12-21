@@ -7,11 +7,11 @@
 local cmd="$@"
 
 echo >&2
-@e "$(@str-repeat 80 '-')"
+@print "$(@str-repeat 80 '-')"
 echo "$ ${cmd}" >&2
 eval "${cmd}"
 local r=$?
 echo -e "$(@style reset)<END {$ ${cmd}} > ${r}" >&2
-@e "$(@str-repeat 80 '-')"
+@print "$(@str-repeat 80 '-')"
 echo >&2
 return ${r}

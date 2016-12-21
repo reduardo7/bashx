@@ -11,7 +11,7 @@ if ! @is-number "${timeout_num}" || [ -z "${cmd_to_execute}" ]; then
   @error 'Invalid call "@timeout"' 70
 fi
 
-@e
+@print
 
 local COUNT=${timeout_num}
 local rta=0
@@ -41,6 +41,6 @@ if [[ ${COUNT} -eq 0 ]]; then
 else
   # Canceled
   @echo-back '   Cancel by user!'
-  @e
+  @print
   return 255
 fi

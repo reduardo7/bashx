@@ -21,10 +21,10 @@ egrep '^##' "${src}" | egrep -v '^###' | while read line
   do
     if ${first_line}; then
       first_line=false
-      @e "  $(@style color:red)${src_name}$(@style color:green) ${cmd}${sd} $(@str-replace "${line}" '^##\s*' '')"
+      @print "  $(@style color:red)${src_name}$(@style color:green) ${cmd}${sd} $(@str-replace "${line}" '^##\s*' '')"
     else
-      @e "$(@str-replace "${line}" '^##\s' "${sd}${lp}")"
+      @print "$(@str-replace "${line}" '^##\s' "${sd}${lp}")"
     fi
   done
 
-@e
+@print

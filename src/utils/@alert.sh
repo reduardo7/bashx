@@ -2,6 +2,6 @@
 #
 # *: {String} Message.
 
-@e
-@e "$(@style color:red) $@"
-@e
+@print
+@print "$(@style color:red) $@"
+@print
