@@ -20,8 +20,8 @@ fi
 
 # Read
 local i=''
-read -n 1 -s -p "$(@style default)${ECHO_CHAR} ${m}: " i >&2
-echo >&2
+read -n 1 -s -p "$(@style default)${ECHO_CHAR} ${m}: " i >&3
+echo >&3
 
 i="$(@trim "${i}")"
 

@@ -43,11 +43,11 @@ fi
 
 # Execute
 local cmd="read${n}${s}${t}"
-${cmd} -p "$(@style default)${ECHO_CHAR} ${m}$(@style system)" i >&2
+${cmd} -p "$(@style default)${ECHO_CHAR} ${m}$(@style system)" i >&3
 local r=$?
 local rta=0
 
-echo >&2
+echo >&3
 
 if [ "${i}" == "$KEY_ESC" ]; then
   rta=1

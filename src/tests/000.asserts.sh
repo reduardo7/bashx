@@ -124,5 +124,7 @@
 @@assertExec "@@assertNoOut" true '"echo"'
 @@assertExec "@@assertNoOut" false '"echo asd"'
 @@assertExec "@@assertNoOut" false '"echo asd >&2"'
+@@assertExec "@@assertNoOut" false '"echo asd >&3"'
 @@assertExec "@@assertNoOut" false '"echo \"${KEY_ESC}\""'
 @@assertExec "@@assertNoOut" false '"echo \"${KEY_ESC}\" >&2"'
+@@assertExec "@@assertNoOut" false '"echo \"${KEY_ESC}\" >&3"'

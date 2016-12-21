@@ -7,6 +7,9 @@
 # Call @init once
 unset -f @init
 
+# info out > std out
+exec 3>&1
+
 local p='()'
 
 # Load base utils
@@ -47,7 +50,7 @@ fi
 
 # Start
 local r=1
-echo >&2
+echo >&3
 
 @title "$(@app-info)"
 

@@ -10,7 +10,7 @@ echo "## Other-line" >> ${tmp_file}
 @@assertExec '@usage' false
 @@assertExec '@usage /invalid/path/to/file/lh4' false
 
-output="$(@usage ${tmp_file} 2>&1)"
+output="$(@usage ${tmp_file} 3>&1)"
 rm -f ${tmp_file}
 
 @@assertNotEmpty "${output}"

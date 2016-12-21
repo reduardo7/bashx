@@ -13,6 +13,7 @@ local __assertion_fail_path__="$(mktemp)"
 local __finish_tests_path__="$(mktemp)"
 local __assertion_exec_out_std__="$(mktemp)"
 local __assertion_exec_out_err__="$(mktemp)"
+local __assertion_exec_out_info__="$(mktemp)"
 
 __rmAssertionFailFile__() {
   [ -f "${__assertion_fail_path__}" ] && rm -f "${__assertion_fail_path__}"
@@ -36,6 +37,7 @@ __testAssertFail__() {
   @print "    - Expected result: $3"
   @print "    - STD OUT:         [$(cat ${__assertion_exec_out_std__})]"
   @print "    - ERR OUT:         [$(cat ${__assertion_exec_out_err__})]"
+  @print "    - INFO OUT:        [$(cat ${__assertion_exec_out_info__})]"
   __assertFail__ "$4"
 }
 
@@ -137,7 +139,7 @@ __testAssertFail__() {
 }
 
 @@assertStdOut() { # cmd
-  local result="$( eval "$1" 2>/dev/null )"
+  local result="$( eval "$1" 2>/dev/null 3>/dev/null )"
   if [ -z "${result}" ]; then
     __assertFail__ "${FUNCNAME[0]} [$1] Output: [${result}] ($(caller))"
   fi
@@ -145,7 +147,7 @@ __testAssertFail__() {
 }
 
 @@assertNoStdOut() { # cmd
-  local result="$( eval "$1" 2>/dev/null )"
+  local result="$( eval "$1" 2>/dev/null 3>/dev/null )"
   if [ ! -z "${result}" ]; then
     __assertFail__ "${FUNCNAME[0]} [$1] Output: [${result}] ($(caller))"
   fi
@@ -153,7 +155,7 @@ __testAssertFail__() {
 }
 
 @@assertErrOut() { # cmd
-  local result="$( ( eval "$1" >/dev/null) 2>&1 )"
+  local result="$( ( eval "$1" >/dev/null 3>/dev/null ) 2>&1 )"
   if [ -z "${result}" ]; then
     __assertFail__ "${FUNCNAME[0]} [$1] Output: [${result}] ($(caller))"
   fi
@@ -161,7 +163,7 @@ __testAssertFail__() {
 }
 
 @@assertNoErrOut() { # cmd
-  local result="$( ( eval "$1" >/dev/null) 2>&1 )"
+  local result="$( ( eval "$1" >/dev/null 3>/dev/null ) 2>&1 )"
   if [ ! -z "${result}" ]; then
     __assertFail__ "${FUNCNAME[0]} [$1] Output: [${result}] ($(caller))"
   fi
@@ -169,7 +171,7 @@ __testAssertFail__() {
 }
 
 @@assertNoOut() { # cmd
-  local result="$( eval "$1" 2>&1 )"
+  local result="$( eval "$1" 2>&1 3>&1 )"
   if [ ! -z "${result}" ]; then
     __assertFail__ "${FUNCNAME[0]} [$1] Output: [${result}] ($(caller))"
   fi
@@ -183,9 +185,10 @@ __testAssertFail__() {
 
   rm -f ${__assertion_exec_out_std__}
   rm -f ${__assertion_exec_out_err__}
+  rm -f ${__assertion_exec_out_info__}
 
   local cmd="${assertFn} ${params}"
-  ( eval "${cmd}" >${__assertion_exec_out_std__} 2>${__assertion_exec_out_err__} ; exit $? )
+  ( eval "${cmd}" >${__assertion_exec_out_std__} 2>${__assertion_exec_out_err__} 3>${__assertion_exec_out_info__} ; exit $? )
   local result=$?
   
   if [[ "${expected}" =~ ^[0-9][0-9]*$ ]]; then

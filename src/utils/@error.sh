@@ -11,7 +11,7 @@ local code=$2
 if [ ! -z "${msg}" ]; then
   @alert "Error! ${msg}"
 else
-  @print
+  @print 3>&2
 fi
 
 @end ${code}

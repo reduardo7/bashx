@@ -14,10 +14,10 @@ if ! $_APP_EXIT ; then
   _APP_EXIT=true
 
   # Reset System color
-  @style reset >&2
+  @style reset >&3
 
   # Space
-  echo >&2
+  echo >&3
 
   # Exit
   if @is-number "${code}"; then

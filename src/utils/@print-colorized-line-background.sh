@@ -13,5 +13,5 @@ local chr="$3"
 
 # Print
 for i in {${color_from}..${color_to}} {${color_to}..${color_from}} ; do
-  echo -en "$(@style background:${i})${chr}" >&2
+  echo -en "$(@style background:${i})${chr}" >&3
 done

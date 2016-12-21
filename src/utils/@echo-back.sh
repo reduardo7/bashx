@@ -15,5 +15,5 @@ if [ $# -gt 1 ]; then
 fi
 
 local bl="\033[${n}A"
-echo -e "${bl}$(@style default)${ECHO_CHAR} ${text}$(@style system)" >&2 # Clear line
-@str-repeat 80 ' ' >&2
+echo -e "${bl}$(@style default)${ECHO_CHAR} ${text}$(@style system)" >&3 # Clear line
+@str-repeat 80 ' ' >&3

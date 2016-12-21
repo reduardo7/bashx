@@ -6,7 +6,7 @@
 local str="$@"
 
 # \t -> \s*4
-echo -e "$(@style default)${ECHO_CHAR} $(@str-replace "${str}" '\t' '    ')" >&2
+echo -e "$(@style default)${ECHO_CHAR} $(@str-replace "${str}" '\t' '    ')" >&3
 
 # Style reset for next command
-@style reset >&2
+@style reset >&3
