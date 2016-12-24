@@ -11,10 +11,10 @@ if @is-number "${code}"; then
   if [ ${code} -gt 0 ]; then
     # Error
     [ ! -z "${cmd}" ] && eval "${cmd}"
-    @error '' ${code}
+    @error '' true ${code}
   fi
 else
   # Error
   [ ! -z "${cmd}" ] && eval "${cmd}"
-  @error '' ${code}
+  @error '' true ${code}
 fi

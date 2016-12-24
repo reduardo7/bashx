@@ -13,7 +13,7 @@ local sd="$(@style default)"
 local info
 
 if [ -z "${src}" ] || [ ! -f "${src}" ]; then
-  @error "@usage: Invalid file '${src}'" 200
+  @error "@usage: Invalid file '${src}'" true 200
 fi
 
 # Get comments from file

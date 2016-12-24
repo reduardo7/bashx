@@ -72,7 +72,7 @@ if [ $# -gt 0 ]; then
     ${_ACTION_PREFIX}"$@"
     r=$?
   else
-      @error "Parameter '$(@style color:green)${1}$(@style color:red)' not found. Call 'usage' to see help."
+      @error "Parameter '$(@style color:green)${1}$(@style color:red)' not found. Call 'usage' to see help." false
   fi
 fi
 
