@@ -1,0 +1,22 @@
+array=("abc" "aaa bbb" "123" "aaa" "aaa 123 bbb" "a 5 b" "" true false 123 0)
+
+@@assertNoOut '@array-contains'
+@@assertNoOut '@array-contains "a"'
+@@assertNoOut '@array-contains "a" "b"'
+@@assertNoOut '@array-contains "a" "a"'
+@@assertNoOut '@array-contains "" "b"'
+@@assertNoOut '@array-contains "abc" "${array[@]}"'
+@@assertNoOut '@array-contains "" "${array[@]}"'
+@@assertNoOut '@array-contains true "${array[@]}"'
+@@assertNoOut '@array-contains 0 "${array[@]}"'
+
+@@assertExec '@array-contains' true '"abc" "${array[@]}"'
+@@assertExec '@array-contains' true 'true "${array[@]}"'
+@@assertExec '@array-contains' true '0 "${array[@]}"'
+@@assertExec '@array-contains' true 'false "${array[@]}"'
+@@assertExec '@array-contains' false '5 "${array[@]}"'
+@@assertExec '@array-contains' false '"5" "${array[@]}"'
+@@assertExec '@array-contains' false '"bbb" "${array[@]}"'
+@@assertExec '@array-contains' true '"aaa bbb" "${array[@]}"'
+@@assertExec '@array-contains' true '"0" "${array[@]}"'
+@@assertExec '@array-contains' false '"123 bbb" "${array[@]}"'

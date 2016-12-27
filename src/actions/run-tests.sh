@@ -1,5 +1,9 @@
-##
+## [tests-names]
 ## Run tests.
+## Params:
+##   tests-names: Tests names to execute separated by a space. If not setted, all tests will executed.
+
+local tests_names_to_execute=($*)
 
 let error_count=0
 let count=0
@@ -221,32 +225,35 @@ __testAssertFail__() {
 if [ -d "${TESTS_PATH}" ]; then
   for f in ${TESTS_PATH}/* ; do
     if [ -f "${f}" ]; then
-      @print "$(@style color:yellow)Testing $(@file-name "${f}" true)..."
-      let count=count+1
+      local src_test_name="$(@file-name "${f}" true)"
+      if [ -z "${tests_names_to_execute}" ] || @array-contains "${src_test_name}" "${tests_names_to_execute[@]}" ]]; then
+        @print "$(@style color:yellow)Testing ${src_test_name}..."
+        let count=count+1
 
-      __rmAssertionFailFile__
-      ( . "${f}" ; exit $? )
-      test_result=$?
+        __rmAssertionFailFile__
+        ( . "${f}" ; exit $? )
+        test_result=$?
 
-      if [[ ${test_result} -eq 0 ]]; then
-          # Success
-          @print "$(@style color:green)Success"
-        else
-          # Error
-          let error_count=error_count+1
-          if [ -f "${__assertion_fail_path__}" ]; then
-            __rmAssertionFailFile__
+        if [[ ${test_result} -eq 0 ]]; then
+            # Success
+            @print "$(@style color:green)Success"
           else
-            @alert "Warning: No exit from assert"
+            # Error
+            let error_count=error_count+1
+            if [ -f "${__assertion_fail_path__}" ]; then
+              __rmAssertionFailFile__
+            else
+              @alert "Warning: No exit from assert"
+            fi
+            @alert "Fail! Exit code: ${test_result}"
           fi
-          @alert "Fail! Exit code: ${test_result}"
-        fi
-      
-      @print
-      @print "${line}"
-      @print
+        
+        @print
+        @print "${line}"
+        @print
 
-      [ -f "${__finish_tests_path__}" ] && break
+        [ -f "${__finish_tests_path__}" ] && break
+      fi
     fi
   done
 fi
