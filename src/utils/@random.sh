@@ -2,4 +2,4 @@
 #
 # Out: {String} Random string.
 
-env LC_CTYPE=C tr -dc "a-zA-Z0-9" < /dev/urandom | head -c 10
+env LC_ALL=C tr -dc "a-zA-Z0-9" < /dev/urandom | head -c 10
