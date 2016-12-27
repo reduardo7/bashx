@@ -21,11 +21,5 @@ else
   local options='g'
   ${ignore_case} && options="${options}i"
 
-  local reg="s/${search}/${replace}/${options}"
-
-  if $OS_IS_MAC; then
-    perl -C -Mutf8 -pe "${reg}" <<< "${src_str}"
-  else
-    sed "${reg}" <<< "${src_str}"
-  fi
+  perl -C -Mutf8 -pe "s/${search}/${replace}/${options}" <<< "${src_str}"
 fi

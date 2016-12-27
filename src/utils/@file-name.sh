@@ -13,7 +13,7 @@ local remove_ext=$2
 local _fname="$(basename "${1}")"
 
 # Remove extension
-${remove_ext} && _fname="$(@str-replace "${_fname}" '^\(..*\)\.[^\.]*$' '\1')"
+${remove_ext} && _fname="$(@str-replace "${_fname}" '\.[^.]+$' '')"
 
 # Result
 echo "${_fname}"
