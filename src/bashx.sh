@@ -155,7 +155,6 @@ fi
   @trim() { . "${BASHX_UTILS_PATH}/@trim.sh"; }
   @str-to-lower() { . "${BASHX_UTILS_PATH}/@str-to-lower.sh"; }
   @style() { . "${BASHX_UTILS_PATH}/@style.sh"; }
-  @str-replace() { . "${BASHX_UTILS_PATH}/@str-replace.sh"; }
   @file-name() { . "${BASHX_UTILS_PATH}/@file-name.sh"; }
 
   # Init
