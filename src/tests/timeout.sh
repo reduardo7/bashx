@@ -1,3 +1,5 @@
+$OS_IS_MAC && exit 0
+
 tmp_file="$(mktemp)"
 [ -f "${tmp_file}" ] && rm -f ${tmp_file}
 
