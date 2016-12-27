@@ -10,22 +10,27 @@ local src_str="$1"
 local search="$2"
 local case_sensitive=$3
 
-[ -z "${case_sensitive}" ] && case_sensitive=true
+if [ -z "${src_str}" ] || [ -z "${search}" ]; then
+  # Empty variable
+  return 1
+fi
 
-local p='-bo'
+[ -z "${case_sensitive}" ] && case_sensitive=true
 
 if ! ${case_sensitive}; then
   # Case insensitive
-  p="${p}i"
+  src_str="$(@str-to-lower "${src_str}")"
+  search="$(@str-to-lower "${search}")"
 fi
 
-local r=$(echo "${src_str}" | grep $p "${search}" | sed 's/:.*$//')
-echo $r
+local tmp="${src_str%${search}*}"
+local index=${#tmp}
 
-if [ -z "$r" ]; then
-  # No found
+if [[ ${index} -eq ${#src_str} ]]; then
+  # Not found
   return 1
 else
   # Found
+  echo ${index}
   return 0
 fi
