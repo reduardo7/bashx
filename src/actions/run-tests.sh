@@ -264,5 +264,5 @@ if [[ ${error_count} -eq 0 ]]; then
   @print 'All tests success!'
   exit 0
 else
-  @error "${error_count} tests fail!"
+  @error "${error_count} tests fail!" false
 fi
