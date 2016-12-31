@@ -21,5 +21,5 @@ else
   local options='g'
   ${ignore_case} && options="${options}i"
 
-  perl -C -Mutf8 -pe "s/${search}/${replace}/${options}" <<< "${src_str}"
+  perl -C -Mutf8 -pe "s/${search}/${replace}/${options}" <<<"${src_str}"
 fi

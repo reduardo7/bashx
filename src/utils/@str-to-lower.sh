@@ -3,4 +3,4 @@
 # *: {String} String to convert.
 # Out: {String} Result string.
 
-echo "$@" | tr '[A-Z]' '[a-z]'
+tr '[A-Z]' '[a-z]' <<<"$*"
