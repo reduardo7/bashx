@@ -17,8 +17,10 @@
 # BashX Required Version (INTEGER) | bashx.version
 BASHX_REQUIRED_VERSION=400
 
-export LC_CTYPE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+#export LC_CTYPE=en_US.UTF-8
+#export LC_ALL=en_US.UTF-8
+export LC_CTYPE=C
+export LC_ALL=C
 
 BASE_SOURCE="$0"
 BASE_DIR="$(cd "$(dirname "$BASE_SOURCE")" ; pwd)"

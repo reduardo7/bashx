@@ -421,3 +421,7 @@ Fails when the parameter to test no pass the *RegExp*.
 1. Delete downloaded `src/bashx`: `$ rm -r src/bashx`
 2. Create sym-link: `cd src && ln -s .. bashx && cd ..`
 3. Run tests: `./app run-tests`
+
+# Optimizations
+
+See: http://tldp.org/LDP/abs/html/optimizations.html
