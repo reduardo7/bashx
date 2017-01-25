@@ -15,7 +15,7 @@
 ############################################
 
 # BashX Required Version (INTEGER) | bashx.version
-BASHX_REQUIRED_VERSION=400
+BASHX_REQUIRED_VERSION=310
 
 #export LC_CTYPE=en_US.UTF-8
 #export LC_ALL=en_US.UTF-8
