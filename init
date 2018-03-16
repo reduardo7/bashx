@@ -41,7 +41,7 @@ fi
 # #############################################################################
 
 ### CONFIG
-# Update with your configuration or use the "config.env" file.
+# Update with your configuration or use the "[script-name].env" file.
 
   # APP Title.
   export APP_TITLE="BashX"
@@ -77,7 +77,7 @@ fi
   export LOG_FILE="$0.log"
 
   # Config file.
-  export CONFIG_FILE="$CONFIG_FILE"
+  export CONFIG_FILE="${CONFIG_FILE}"
 
   # Tests path
   export TESTS_PATH="${BASE_DIR}/${SRC_PATH}/tests"
@@ -146,8 +146,9 @@ fi
   # Config
   if [ -z "${CONFIG_FILE}" ]; then
     # Default file
-    export CONFIG_FILE="config.env"
+    export CONFIG_FILE="${CURRENT_SOURCE}.env"
   fi
+
   # Load config
   if [ -f "${CONFIG_FILE}" ]; then
     . ${CONFIG_FILE}
