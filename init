@@ -1,15 +1,34 @@
 #!/usr/bin/env bash
 
-## BashX
-##
-## Extended Bash Framework.
-##
-## URL: https://github.com/reduardo7/bashx
-##
-## Author: Eduardo Cuomo <eduardo.cuomo.ar@gmail.com> <reduardo7@gmail.com>
+############################################
+#                                          #
+# BashX                                    #
+#                                          #
+# Extended Bash Framework.                 #
+#                                          #
+# URL: https://github.com/reduardo7/bashx  #
+#                                          #
+# Author: Eduardo Daniel Cuomo             #
+#         eduardo.cuomo.ar@gmail.com       #
+#         reduardo7@gmail.com              #
+#                                          #
+############################################
 
-# #############################################################################
+export LC_CTYPE=C
+export LC_ALL=C
 
+BASE_SOURCE="$0"
+BASE_DIR="$(cd "$(dirname "$BASE_SOURCE")" ; pwd)"
+while [ -h "$BASE_SOURCE" ]; do
+  BASE_SOURCE="$(readlink "$BASE_SOURCE")"
+  BASE_DIR="$(cd "$BASE_DIR" ; cd "$(dirname "$BASE_SOURCE")" ; pwd)"
+  BASE_SOURCE="$(cd "$BASE_DIR" ; pwd)/$(basename "$BASE_SOURCE")"
+done
+export BASE_SOURCE="$BASE_SOURCE"
+export BASE_DIR="$BASE_DIR"
+export CURRENT_DIR="$(pwd)"
+export CURRENT_SOURCE="$CURRENT_DIR/$(basename "$0")"
+export BASHX_DIR="${HOME}/.bashx/${BASHX_VERSION}"
 # Go to script path (working directory)
 cd "$BASE_DIR"
 
@@ -22,7 +41,7 @@ fi
 # #############################################################################
 
 ### CONFIG
-# Update with your configuration or use the "config.ini" file.
+# Update with your configuration or use the "config.env" file.
 
   # APP Title.
   export APP_TITLE="BashX"
@@ -127,7 +146,7 @@ fi
   # Config
   if [ -z "${CONFIG_FILE}" ]; then
     # Default file
-    export CONFIG_FILE="${SRC_PATH}/config.ini"
+    export CONFIG_FILE="config.env"
   fi
   # Load config
   if [ -f "${CONFIG_FILE}" ]; then
@@ -159,3 +178,8 @@ fi
 
   # Init
   @init() { . "${BASHX_DIR}/src/bashx.init.sh"; }
+
+
+# At the end of file, call next:
+# @init "$@"
+
