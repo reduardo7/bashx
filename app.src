@@ -1,3 +1,17 @@
+############################################
+#                                          #
+# BashX                                    #
+#                                          #
+# Extended Bash Framework.                 #
+#                                          #
+# URL: https://github.com/reduardo7/bashx  #
+#                                          #
+# Author: Eduardo Daniel Cuomo             #
+#         eduardo.cuomo.ar@gmail.com       #
+#         reduardo7@gmail.com              #
+#                                          #
+############################################
+
 export LC_CTYPE=C
 export LC_ALL=C
 
@@ -18,13 +32,12 @@ _err() {
 
 [ -z "${BASHX_VERSION}" ] && _err 'BASHX_VERSION is required'
 
-BASHX_DIR="${HOME}/.bashx/${BASHX_VERSION}"
-m_ed="Error downloading BashX v${BASHX_VERSION}"
-g_repo="https://github.com/reduardo7/bashx/tarball/${BASHX_VERSION}"
-tmp_dir="$(mktemp -d)"
-
 # Install
 if [ ! -d "${BASHX_DIR}" ]; then
+  BASHX_DIR="${HOME}/.bashx/${BASHX_VERSION}"
+  m_ed="Error downloading BashX v${BASHX_VERSION}"
+  g_repo="https://github.com/reduardo7/bashx/tarball/${BASHX_VERSION}"
+  tmp_dir="$(mktemp -d)"
 
   _e "Installing BashX..."
   cd "${tmp_dir}"
@@ -40,9 +53,9 @@ if [ ! -d "${BASHX_DIR}" ]; then
   mkdir -p "${BASHX_DIR}"
   rm -rf "${BASHX_DIR}"
   mv reduardo7-bashx-* "${BASHX_DIR}"
-fi
 
-# Cleanup
-cd "${BASHX_DIR}"
-rm -rf "${tmp_dir}"
+  # Cleanup
+  cd "${BASHX_DIR}"
+  rm -rf "${tmp_dir}"
+fi
 
