@@ -14,7 +14,9 @@
 
 export LC_CTYPE=C
 export LC_ALL=C
+export tmp_dir="$(mktemp -d)"
 
+(
 set -e
 
 _e() {
@@ -34,12 +36,12 @@ _err() {
 
 # Install
 if [ ! -d "${BASHX_DIR}" ]; then
-  BASHX_DIR="${HOME}/.bashx/${BASHX_VERSION}"
-  m_ed="Error downloading BashX v${BASHX_VERSION}"
-  g_repo="https://github.com/reduardo7/bashx/tarball/${BASHX_VERSION}"
-  tmp_dir="$(mktemp -d)"
-
   _e "Installing BashX..."
+
+  BASHX_DIR="${HOME}/.bashx/${BASHX_VERSION}"
+  m_ed="Error downloading BashX ${BASHX_VERSION}"
+  g_repo="https://github.com/reduardo7/bashx/tarball/${BASHX_VERSION}"
+
   cd "${tmp_dir}"
 
   if type wget >/dev/null 2>&1 ; then
@@ -53,9 +55,10 @@ if [ ! -d "${BASHX_DIR}" ]; then
   mkdir -p "${BASHX_DIR}"
   rm -rf "${BASHX_DIR}"
   mv reduardo7-bashx-* "${BASHX_DIR}"
-
-  # Cleanup
-  cd "${BASHX_DIR}"
-  rm -rf "${tmp_dir}"
 fi
+)
+e=$?
+# Cleanup
+rm -rf "${tmp_dir}"
+exit $e
 
