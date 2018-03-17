@@ -14,10 +14,8 @@
 
 export LC_CTYPE=C
 export LC_ALL=C
+export BASHX_DIR="${HOME}/.bashx/${BASHX_VERSION}"
 export tmp_dir="$(mktemp -d)"
-
-(
-set -e
 
 _e() {
   echo "# $*"
@@ -35,10 +33,11 @@ _err() {
 [ -z "${BASHX_VERSION}" ] && _err 'BASHX_VERSION is required'
 
 # Install
+(
+set -e
 if [ ! -d "${BASHX_DIR}" ]; then
   _e "Installing BashX..."
 
-  BASHX_DIR="${HOME}/.bashx/${BASHX_VERSION}"
   m_ed="Error downloading BashX ${BASHX_VERSION}"
   g_repo="https://github.com/reduardo7/bashx/tarball/${BASHX_VERSION}"
 
