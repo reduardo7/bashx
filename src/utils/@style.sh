@@ -79,7 +79,7 @@
 #   @style background gray # Set gray color as background color for next output
 #   e "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
 
-if [ $BASHX_COLORS_ENABLED = 1 ]; then
+if $BASHX_COLORS_ENABLED; then
   local OIFS="$IFS"
 
   # No parameters

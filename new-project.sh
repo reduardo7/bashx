@@ -32,20 +32,7 @@ touch "${PROJECT_NAME}"
 
 echo '#!/usr/bin/env bash' >"${PROJECT_NAME}"
 echo >>"${PROJECT_NAME}"
-echo '############################################' >>"${PROJECT_NAME}"
-echo '#                                          #' >>"${PROJECT_NAME}"
-echo '# BashX                                    #' >>"${PROJECT_NAME}"
-echo '#                                          #' >>"${PROJECT_NAME}"
-echo '# Extended Bash Framework.                 #' >>"${PROJECT_NAME}"
-echo '#                                          #' >>"${PROJECT_NAME}"
-echo '# URL: https://github.com/reduardo7/bashx  #' >>"${PROJECT_NAME}"
-echo '#                                          #' >>"${PROJECT_NAME}"
-echo '# Author: Eduardo Daniel Cuomo             #' >>"${PROJECT_NAME}"
-echo '#         eduardo.cuomo.ar@gmail.com       #' >>"${PROJECT_NAME}"
-echo '#         reduardo7@gmail.com              #' >>"${PROJECT_NAME}"
-echo '#                                          #' >>"${PROJECT_NAME}"
-echo '############################################' >>"${PROJECT_NAME}"
-echo >>"${PROJECT_NAME}"
+echo '# BashX | https://github.com/reduardo7/bashx' >>"${PROJECT_NAME}"
 echo "export BASHX_VERSION=\"${BASHX_VERSION}\" ; bash -c \"\$(echo '$(echo "${code}" | base64)' | base64 -d)\" || exit \$?" >>"${PROJECT_NAME}"
 echo ". \"\${HOME}/.bashx/\${BASHX_VERSION}/init\"" >>"${PROJECT_NAME}"
 echo >>"${PROJECT_NAME}"
@@ -61,3 +48,4 @@ chmod a+x "${PROJECT_NAME}"
 ###############################################################################
 
 _log Project created at ${PROJECT_NAME}
+

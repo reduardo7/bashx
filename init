@@ -4,7 +4,7 @@
 #                                          #
 # BashX                                    #
 #                                          #
-# Extended Bash Framework.                 #
+# Extended Bash Framework                  #
 #                                          #
 # URL: https://github.com/reduardo7/bashx  #
 #                                          #
@@ -27,12 +27,14 @@ done
 export BASE_SOURCE="$BASE_SOURCE"
 export BASE_DIR="$BASE_DIR"
 export CURRENT_DIR="$(pwd)"
-export CURRENT_SOURCE="$CURRENT_DIR/$(basename "$0")"
-export BASHX_DIR="${HOME}/.bashx/${BASHX_VERSION}"
+export CURRENT_SCRIPT="$(basename "$0")"
+export CURRENT_SOURCE="$CURRENT_DIR/$CURRENT_SCRIPT"
+export BASHX_DIR="$HOME/.bashx/$BASHX_VERSION"
+
 # Go to script path (working directory)
 cd "$BASE_DIR"
 
-# Test and force run with "bash" interpreter.
+# Test and force run with "bash" interpreter
 if [ -z "$BASH" ]; then
   bash "$(basename "$BASE_SOURCE")" "$@"
   exit $?
@@ -41,59 +43,58 @@ fi
 # #############################################################################
 
 ### CONFIG
-# Update with your configuration or use the "[script-name].env" file.
+# Update with your configuration or use the "[script-name].env" file
 
-  # APP Title.
+  # APP Title
   export APP_TITLE="BashX"
 
   # APP Version.
   export APP_VERSION="1.0"
 
-  # Default APP color. See "style" for more information.
+  # Default APP color. See "style" for more information
   #COLOR_DEFAULT="system" # Default system color
   export COLOR_DEFAULT="cyan-light"
 
-  # BashX output colors.
-  # 0: Disable output colors.
-  # 1: Enable output colors.
-  export BASHX_COLORS_ENABLED=1
+  # BashX output colors
+  export BASHX_COLORS_ENABLED=true
 
-  # Start character for formated print screen (see "e" function).
+  # Start character for formated print screen (see "e" function)
   export ECHO_CHAR="#"
 
-  # Application requeirements.
+  # Application requeirements
   # To extend requeirements, use:
   #   export APP_REQUEIREMENTS="${APP_REQUEIREMENTS} other app command extra foo"
   export APP_REQUEIREMENTS="printf sed grep read date dirname readlink basename let"
 
-  # Default action to call.
-  # Action to use if script called without arguments.
+  # Default action to call
+  # Action to use if script called without arguments
   export DEFAULT_ACTION="usage"
 
-  # BashX SRC path.
-  export SRC_PATH="src"
+  # BashX SRC path
+  export SRC_PATH="$BASE_DIR/.$CURRENT_SCRIPT"
+  export BASHX_SRC_PATH="src"
 
-  # Log file (& path).
+  # Log file (& path)
   export LOG_FILE="$0.log"
 
-  # Config file.
-  export CONFIG_FILE="${CONFIG_FILE}"
+  # Config file
+  export CONFIG_FILE="$CONFIG_FILE"
 
   # Tests path
-  export TESTS_PATH="${BASE_DIR}/${SRC_PATH}/tests"
+  export TESTS_PATH="$BASE_DIR/$SRC_PATH/tests"
 
   # Actions path
-  export ACTIONS_PATH="${BASE_DIR}/${SRC_PATH}/actions"
-  export BASHX_ACTIONS_PATH="${BASHX_DIR}/src/actions"
+  export ACTIONS_PATH="$BASE_DIR/$SRC_PATH/actions"
+  export BASHX_ACTIONS_PATH="$BASHX_DIR/$BASHX_SRC_PATH/actions"
   readonly BASHX_ACTIONS_PATH="$BASHX_ACTIONS_PATH"
 
   # Utils path
-  export UTILS_PATH="${BASE_DIR}/${SRC_PATH}/utils"
-  export BASHX_UTILS_PATH="${BASHX_DIR}/src/utils"
+  export UTILS_PATH="$BASE_DIR/$SRC_PATH/utils"
+  export BASHX_UTILS_PATH="$BASHX_DIR/$BASHX_SRC_PATH/utils"
   readonly BASHX_UTILS_PATH="$BASHX_UTILS_PATH"
 
   # Resources path.
-  export RESOURCES_PATH="${BASE_DIR}/${SRC_PATH}/resources"
+  export RESOURCES_PATH="$BASE_DIR/$SRC_PATH/resources"
 
 ### OS
 
@@ -116,11 +117,11 @@ fi
   # BashX base source.
   BASHX_BASE_SOURCE="${BASH_SOURCE[0]}"
   while [ -h "$BASHX_BASE_SOURCE" ]; do
-    BASHX_BASE_DIR="$(cd -P `dirname "$BASHX_BASE_SOURCE"` && pwd)"
+    BASHX_BASE_DIR="$(cd -P "$(dirname "$BASHX_BASE_SOURCE")" && pwd)"
     BASHX_BASE_SOURCE=`readlink "$BASHX_BASE_SOURCE"`
     [[ $BASHX_BASE_SOURCE != /* ]] && BASHX_BASE_SOURCE="$BASHX_BASE_DIR/$BASHX_BASE_SOURCE"
   done
-  [ -z "$BASHX_BASE_DIR"] && BASHX_BASE_DIR="$(cd -P `dirname "$BASHX_BASE_SOURCE"` && pwd)"
+  [ -z "$BASHX_BASE_DIR"] && BASHX_BASE_DIR="$(cd -P "$(dirname "$BASHX_BASE_SOURCE")" && pwd)"
   export BASHX_BASE_SOURCE="$BASHX_BASE_SOURCE"
   readonly BASHX_BASE_SOURCE="$BASHX_BASE_SOURCE"
 
@@ -146,7 +147,7 @@ fi
   # Config
   if [ -z "${CONFIG_FILE}" ]; then
     # Default file
-    export CONFIG_FILE="${CURRENT_SOURCE}.env"
+    export CONFIG_FILE="${SRC_PATH}.env"
   fi
 
   # Load config
@@ -164,7 +165,7 @@ fi
   # On exit command
   export _ON_EXIT=''
 
-  # TRUE if APP is terminated
+  # True if APP is terminated
   export _APP_EXIT=false
 
   export _ACTION_PREFIX='@ACTIONS.'
@@ -178,9 +179,6 @@ fi
   @file-name() { . "${BASHX_UTILS_PATH}/@file-name.sh"; }
 
   # Init
+  # At the end of file, call it:
   @init() { . "${BASHX_DIR}/src/bashx.init.sh"; }
-
-
-# At the end of file, call next:
-# @init "$@"
 
