@@ -24,7 +24,7 @@ done
 for __fn__path__ in ${BASHX_ACTIONS_PATH}/* ; do
   if [ -f "${__fn__path__}" ]; then
     # Create base action function
-    eval "${_ACTION_PREFIX}$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
+    eval "${_ACTION_PREFIX}.$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
   fi
 done
 
@@ -43,7 +43,7 @@ if [ -d "${ACTIONS_PATH}" ]; then
   for __fn__path__ in ${ACTIONS_PATH}/* ; do
     if [ -f "${__fn__path__}" ]; then
       # Create action function
-      eval "${_ACTION_PREFIX}$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
+      eval "${_ACTION_PREFIX}.$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
     fi
   done
 fi
@@ -62,14 +62,14 @@ trap @end INT
 
 if [ $# -gt 0 ]; then
   # If function exists
-  if @function-exists "${_ACTION_PREFIX}$1" ; then
+  if @function-exists "${_ACTION_PREFIX}.$1" ; then
     # Exec
     if [ "$1" == 'help' ]; then
       ACTION='usage'
     else
       ACTION="$1"
     fi
-    ${_ACTION_PREFIX}"$@"
+    ${_ACTION_PREFIX}."$@"
     r=$?
   else
       @error "Parameter '$(@style color:green)${1}$(@style color:red)' not found. Call 'usage' to see help." false
@@ -86,9 +86,8 @@ if [ ${#1} == 0 ]; then
     ACTION="$DEFAULT_ACTION"
   fi
 
-  ${_ACTION_PREFIX}${ACTION}
+  ${_ACTION_PREFIX}.${ACTION}
 fi
 
 # Return result code
 @end $r
-

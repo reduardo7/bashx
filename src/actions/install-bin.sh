@@ -34,8 +34,8 @@ case "$action" in
 cat > "$bcfile" <<EOF
 # bash completion for $scrpt (`@script-full-path`)
 _${scrpt}_methods() {
-  grep \"^\\s*\\(function\\s\\+\\)\\?${_ACTION_PREFIX}.\\+()\\s*{.*\$\" \"\${1}\" | while read line ; do
-    echo \"\$line\" | sed \"s/()\\s*{.*//g\" | sed \"s/\\s*\\(function\\s\\+\\)\\?${_ACTION_PREFIX}//g\"
+  grep \"^\\s*\\(function\\s\\+\\)\\?${_ACTION_PREFIX}\\..\\+()\\s*{.*\$\" \"\${1}\" | while read line ; do
+    echo \"\$line\" | sed \"s/()\\s*{.*//g\" | sed \"s/\\s*\\(function\\s\\+\\)\\?${_ACTION_PREFIX}\\.//g\"
   done
 }
 _${scrpt}_lst() {

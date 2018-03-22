@@ -105,7 +105,7 @@ fi
   if [ "$(uname)" == "Darwin" ]; then
     defaults write org.R-project.R force.LANG en_US.UTF-8
     export TERM="xterm-color"
-    export OS_IS_MAC=true        
+    export OS_IS_MAC=true
   elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     export OS_IS_LINUX=true
   elif [[ "$(expr substr $(uname -s) 1 10)" == MINGW* ]]; then
@@ -168,7 +168,7 @@ fi
   # True if APP is terminated
   export _APP_EXIT=false
 
-  export _ACTION_PREFIX='@ACTIONS.'
+  export _ACTION_PREFIX='@Actions'
 
 ### EXEC
 
@@ -181,4 +181,3 @@ fi
   # Init
   # At the end of file, call it:
   @init() { . "${BASHX_DIR}/src/bashx.init.sh"; }
-
