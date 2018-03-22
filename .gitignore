@@ -1,4 +1,4 @@
 .*.swp
 *.log
-/src/config.ini
-/src/bashx
+/.history
+
