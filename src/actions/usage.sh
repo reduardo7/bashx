@@ -6,10 +6,11 @@
 @print
 
 # Main
-egrep "^\\s*${_ACTION_PREFIX}\.[^()]+\\(\\)\\s*\\{" "${CURRENT_SOURCE}" | while read line
-  do
+egrep "^\\s*${_ACTION_PREFIX}\.[^()]+\\(\\)\\s*\\{" "${CURRENT_SOURCE}" \
+  | egrep -v "^\\s*${_ACTION_PREFIX}\._" \
+  | while read line ; do
     line="$(@style color:red)${CURRENT_SCRIPT} $(@style color:green)$(@str-replace "${line}" "^\\s*${_ACTION_PREFIX/\@/\\@}\\." '')"
-    line="$(@str-replace "${line}" '\(\)\s*\{\s*#+\s*' "$(@style default) ")"
+    line="$(@str-replace "${line}" '\(\)\s*\{\s*#*\s*' "$(@style default) ")"
     line="$(@str-replace "${line}" '\s*\\n\s*' "\n${ECHO_CHAR}     ")"
     line="$(@str-replace "${line}" '\s*\\t\s*' '    ')"
     @print "  ${line}"
@@ -17,11 +18,14 @@ egrep "^\\s*${_ACTION_PREFIX}\.[^()]+\\(\\)\\s*\\{" "${CURRENT_SOURCE}" | while 
   done
 
 _usage() {
+  local src_name="$(@script-file-name)"
   local src="$1"
+  local cmd="$(@file-name "${src}" true)"
+
+  [[ "${cmd}" == _* ]] && return 0 # Brak
+
   local lp='    '
   local lpl=${#lp}
-  local src_name="$(@script-file-name)"
-  local cmd="$(@file-name "${src}" true)"
   local first_line=true
   local sd="$(@style default)"
   local info
@@ -46,7 +50,7 @@ _usage() {
 
 # Actions
 if [ -d "${ACTIONS_PATH}" ]; then
-  for f in ${ACTIONS_PATH}/* ; do
+  for f in ${ACTIONS_PATH}/*.sh ; do
     if [ -f "${f}" ]; then
       _usage "${f}"
     fi
@@ -54,7 +58,7 @@ if [ -d "${ACTIONS_PATH}" ]; then
 fi
 
 # Base Actions
-for f in ${BASHX_ACTIONS_PATH}/* ; do
+for f in ${BASHX_ACTIONS_PATH}/*.sh ; do
   if [ -f "${f}" ]; then
     _usage "${f}"
   fi
