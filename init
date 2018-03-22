@@ -173,10 +173,10 @@ fi
 ### EXEC
 
   # Preload
-  @trim() { . "${BASHX_UTILS_PATH}/@trim.sh"; }
-  @str-to-lower() { . "${BASHX_UTILS_PATH}/@str-to-lower.sh"; }
-  @style() { . "${BASHX_UTILS_PATH}/@style.sh"; }
-  @file-name() { . "${BASHX_UTILS_PATH}/@file-name.sh"; }
+  @trim() { . "${BASHX_UTILS_PATH}/trim.sh"; }
+  @str-to-lower() { . "${BASHX_UTILS_PATH}/str-to-lower.sh"; }
+  @style() { . "${BASHX_UTILS_PATH}/style.sh"; }
+  @file-name() { . "${BASHX_UTILS_PATH}/file-name.sh"; }
 
   # Init
   # At the end of file, call it:

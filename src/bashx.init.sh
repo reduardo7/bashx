@@ -13,15 +13,15 @@ exec 3>&1
 local p='()'
 
 # Load base utils
-for __fn__path__ in ${BASHX_UTILS_PATH}/* ; do
+for __fn__path__ in ${BASHX_UTILS_PATH}/*.sh ; do
   if [ -f "${__fn__path__}" ]; then
     # Create base util function
-    eval "$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
+    eval "@$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
   fi
 done
 
 # Load base actions
-for __fn__path__ in ${BASHX_ACTIONS_PATH}/* ; do
+for __fn__path__ in ${BASHX_ACTIONS_PATH}/*.sh ; do
   if [ -f "${__fn__path__}" ]; then
     # Create base action function
     eval "${_ACTION_PREFIX}.$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
@@ -30,7 +30,7 @@ done
 
 # Load custom utils
 if [ -d "${UTILS_PATH}" ]; then
-  for __fn__path__ in ${UTILS_PATH}/* ; do
+  for __fn__path__ in ${UTILS_PATH}/*.sh ; do
     if [ -f "${__fn__path__}" ]; then
       # Create util function
       eval "$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
@@ -40,7 +40,7 @@ fi
 
 # Load custom actions
 if [ -d "${ACTIONS_PATH}" ]; then
-  for __fn__path__ in ${ACTIONS_PATH}/* ; do
+  for __fn__path__ in ${ACTIONS_PATH}/*.sh ; do
     if [ -f "${__fn__path__}" ]; then
       # Create action function
       eval "${_ACTION_PREFIX}.$(@file-name "${__fn__path__}" true)${p} { . "${__fn__path__}"; }"
