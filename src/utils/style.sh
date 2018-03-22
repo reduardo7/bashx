@@ -1,83 +1,87 @@
-# Change screen print style.
-#
-# 1-*: Style strings.
-#   The style separator can be:
-#       - : (two points)
-#       - = (equal)
-#   Simple:
-#       - bold: Bold text.
-#       - underline: Underline.
-#       - reverse | negative: Invert color.
-#       - hidden | hide: Hide text.
-#       - show | visible: Show hidden text.
-#       - dim: Gray style.
-#       - blink: Flashing text.
-#       - normal: Text without bold format.
-#       - reset: Reset all styles to system default.
-#       - default: Reset all styles to APP style.
-#   Colors: Use "color[:=]*", where "*" can be:
-#       - black
-#       - blue
-#       - blue-light
-#       - cyan
-#       - cyan-light
-#       - gray
-#       - gray-light
-#       - green
-#       - green-light
-#       - magenta | purple
-#       - magenta-light
-#       - red
-#       - red-light
-#       - yellow | coffe
-#       - yellow-light
-#       - white
-#       - default | normal | auto: Default APP color.
-#       - [A Number between 0 and 255]: Print custom color.
-#   Background: Use "background[:=]*" or "bg[:=]*", where "*" can be:
-#       - black
-#       - blue
-#       - blue-light
-#       - cyan
-#       - cyan-light
-#       - gray
-#       - gray-light
-#       - green
-#       - green-light
-#       - magenta | purple
-#       - magenta-light
-#       - red
-#       - red-light
-#       - yellow | coffe
-#       - yellow-light
-#       - white
-#       - system | normal | auto: Default system background color.
-#       - [A Number between 0 and 255]: Print custom color.
-#   Styles: Use as "style[:=]status":
-#       - underline: Underline.
-#           - on | true | 1: Enable underline.
-#           - off | false | 0: Disable underline.
-#       - bold: Bold.
-#           - on | true | 1: Enable bold.
-#           - off | false | 0: Disable bold.
-#       - dim: Gray style.
-#           - on | true | 1: Enable dim.
-#           - off | false | 0: Disable dim.
-#       - blink: Flashing text.
-#           - on | true | 1: Enable blink.
-#           - off | false | 0: Disable blink.
-#       - reverse | negative: Invert color.
-#           - on | true | 1: Enable negative.
-#           - off | false | 0: Disable negative.
-#       - display: Show or hide text.
-#           - visible | show | true | 1: Show text.
-#           - hidden | none | hide | false | 0: Hide text.
-# Out: {String} Style console string.
-# Examples:
-#   e "normal color $(@style color:red)text in red $(@style color:black background:yellow)black color$(@style default) normal color"
-#   @style default # Restore default APP colors
-#   @style background gray # Set gray color as background color for next output
-#   e "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
+## {style*}
+## Change screen print style.
+##
+## 1-*: Style strings.
+##   The style separator can be:
+##       - : (two points)
+##       - = (equal)
+##   Simple:
+##       - bold: Bold text.
+##       - underline: Underline.
+##       - reverse | negative: Invert color.
+##       - hidden | hide: Hide text.
+##       - show | visible: Show hidden text.
+##       - dim: Gray style.
+##       - blink: Flashing text.
+##       - normal: Text without bold format.
+##       - reset: Reset all styles to system default.
+##       - default: Reset all styles to APP style.
+##   Colors: Use "color[:=]*", where "*" can be:
+##       - black
+##       - blue
+##       - blue-light
+##       - cyan
+##       - cyan-light
+##       - gray
+##       - gray-light
+##       - green
+##       - green-light
+##       - magenta | purple
+##       - magenta-light
+##       - red
+##       - red-light
+##       - yellow | coffe
+##       - yellow-light
+##       - white
+##       - default | normal | auto: Default APP color.
+##       - [A Number between 0 and 255]: Print custom color.
+##   Background: Use "background[:=]*" or "bg[:=]*", where "*" can be:
+##       - black
+##       - blue
+##       - blue-light
+##       - cyan
+##       - cyan-light
+##       - gray
+##       - gray-light
+##       - green
+##       - green-light
+##       - magenta | purple
+##       - magenta-light
+##       - red
+##       - red-light
+##       - yellow | coffe
+##       - yellow-light
+##       - white
+##       - system | normal | auto: Default system background color.
+##       - [A Number between 0 and 255]: Print custom color.
+##   Styles: Use as "style[:=]status":
+##       - underline: Underline.
+##           - on | true | 1: Enable underline.
+##           - off | false | 0: Disable underline.
+##       - bold: Bold.
+##           - on | true | 1: Enable bold.
+##           - off | false | 0: Disable bold.
+##       - dim: Gray style.
+##           - on | true | 1: Enable dim.
+##           - off | false | 0: Disable dim.
+##       - blink: Flashing text.
+##           - on | true | 1: Enable blink.
+##           - off | false | 0: Disable blink.
+##       - reverse | negative: Invert color.
+##           - on | true | 1: Enable negative.
+##           - off | false | 0: Disable negative.
+##       - display: Show or hide text.
+##           - visible | show | true | 1: Show text.
+##           - hidden | none | hide | false | 0: Hide text.
+## Out: {String} Style console string.
+##
+## Examples:
+##   @print "normal color $(@style color:red)text in red $(@style color:black background:yellow)black color$(@style default) normal color"
+##   # Restore default APP colors
+##   @style default
+##   # Set gray color as background color for next output
+##   @style background gray
+##   @print "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
 
 if $BASHX_COLORS_ENABLED; then
   local OIFS="$IFS"

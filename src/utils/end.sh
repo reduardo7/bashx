@@ -1,6 +1,7 @@
-# Exit from APP and execute the function setted in "@on-exit".
-#
-# 1: {Integer} (Default: 0) Exit code.
+## code
+## Exit from APP and execute the function setted in "@on-exit".
+##
+## code: {Integer} (Default: 0) Exit code.
 
 if ! $_APP_EXIT ; then
   local code=$1

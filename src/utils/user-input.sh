@@ -1,15 +1,17 @@
-# Request user info.
-#
-# 1: {String} (Default: "") Message.
-# 2: {String} (Default: "") Default value.
-# 3: {Integer} (Default: "") Max length for input.
-# 4: {Integer} (Default: "") Timeout.
-# 5: {Boolean} (Default: false) Silent user output?
-# Output: Result
-# Return: 0 if valid user input, 1 if cancel, 2 if empty user input and returns default value.
-# Usage:
-#     txt=`@user-input "Enter text:"`
-#     exitCode=$?
+## [msg [default [max_len [timeout [silent]]]]]
+## Request user info.
+##
+## msg:     {String} (Default: "") Message.
+## default: {String} (Default: "") Default value.
+## max_len: {Integer} (Default: "") Max length for input.
+## timeout: {Integer} (Default: "") Timeout.
+## siletn:  {Boolean} (Default: false) Silent user output?
+## Output:  User input result.
+## Return:  0 if valid user input, 1 if cancel, 2 if empty user input and returns default value.
+##
+## Usage example:
+##     txt="$(@user-input "Enter text:")"
+##     exitCode=$?
 
 # 1: Message
 local m=""

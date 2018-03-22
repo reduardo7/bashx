@@ -1,8 +1,9 @@
-# Time out.
-#
-# 1: {Integer} Timeout for count down.
-# 2: {String} Command to execute on count down finish.
-# Return: {Integer} Return command exit code or "255" on user cancel.
+## timeout cmd
+## Time out.
+##
+## timeout: {Integer} Timeout for count down.
+## cmd:     {String} Command to execute on count down finish.
+## Return:  {Integer} Return command exit code or "255" on user cancel.
 
 local timeout_num=$1
 local cmd_to_execute="$2"

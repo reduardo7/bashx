@@ -1,6 +1,7 @@
-# Show red alert message.
-#
-# *: {String} Message.
+## *
+## Show red alert message.
+##
+## *: {String} Message.
 
 local str="$*"
 

@@ -1,3 +1,4 @@
-# VOID function.
-# Used in empty functions.
+##
+## VOID function.
+## Used in empty functions.
 :

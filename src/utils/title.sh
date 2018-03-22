@@ -1,6 +1,7 @@
-# Show title.
-#
-# *: {String} Message.
+## *
+## Show title.
+##
+## *: {String} Message.
 
 # Start
 local t=" $@ "

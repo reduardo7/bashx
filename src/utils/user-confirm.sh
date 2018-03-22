@@ -1,9 +1,11 @@
-# User confirm.
-#
-# 1: {String} (Optional) Message.
-# 2: {Array} (Default: ( "y" )) Valid options. Case insensitive.
-# 3: {Boolean} (Default: false) Default result on non user input. true to confirm, false to no confirm.
-# Return: 0 if user confirm, 1 if user not confirm.
+## [msg [options [default]]]
+## User confirm.
+##
+## msg:     {String} (Optional) Message.
+## options: {Array} (Default: ( "y" )) Valid options. Case insensitive.
+## default: {Boolean} (Default: false) Default result on non user input.
+##          true to confirm, false to no confirm.
+## Return:  0 if user confirm, 1 if user not confirm.
 
 local m="$1"
 local o=( $2 )

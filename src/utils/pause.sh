@@ -1,6 +1,7 @@
-# Pause.
-#
-# *: {String} (Optional) Message.
+## *
+## Pause.
+##
+## *: {String} (Optional) Message.
 
 local m="$@"
 

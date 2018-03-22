@@ -1,10 +1,11 @@
-# String position.
-#
-# 1: {String} String where search.
-# 2: {String} String to search.
-# 3: {Boolean} (Default: TRUE) TRUE for case sensitive.
-# Out: {Integer|NULL} String position or NULL if not found.
-# Return: 0 on fonud, 1 on not found.
+## src search [case_sens]
+## String position.
+##
+## src:       {String} String where search.
+## search:    {String} String to search.
+## case_sens: {Boolean} (Default: TRUE) TRUE for case sensitive.
+## Out:       {Integer|NULL} String position or NULL if not found.
+## Return:    0 on fonud, 1 on not found.
 
 local src_str="$1"
 local search="$2"

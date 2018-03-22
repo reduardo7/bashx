@@ -1,8 +1,9 @@
-# Re-print last line.
-#
-# 1: {Integer} (Default: 1) Lines to meve back. If is not a number, used as text.
-# *: {String} Text to print.
-# Out: {String} Text.
+## lines *
+## Re-print last line.
+##
+## lines: {Integer} (Default: 1) Lines to meve back. If is not a number, used as text.
+## *:     {String} Text to print.
+## Out:   {String} Text.
 
 local n=1
 local text="$@"

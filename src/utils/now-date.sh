@@ -1,5 +1,6 @@
-# Current date.
-#
-# Out: {String} Date.
+##
+## Current date.
+##
+## Out: {String} Date.
 
 date '+%Y-%m-%d'

@@ -1,8 +1,9 @@
-# Show error message and exit.
-#
-# 1: {String} Error message.
-# 2: {Boolean} (Default: true) Show Backtrace?
-# 2: {Integer} (Default: 1) Exit code.
+## msg [print_backtrace [code]]
+## Show error message and exit.
+##
+## msg:             {String} Error message.
+## print_backtrace: {Boolean} (Default: true) Show Backtrace?
+## code:            {Integer} (Default: 1) Exit code.
 
 local msg="$1"
 local show_backtrace=$2

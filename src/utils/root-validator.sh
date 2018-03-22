@@ -1,6 +1,7 @@
-# Check if running as ROOT, or exit from script.
-#
-# *: (Optional) Message.
+## [*]
+## Check if running as ROOT, or exit from script.
+##
+## *: (Optional) Message.
 
 if ! @is-root ; then
   if [ $# -eq 0 ] ; then

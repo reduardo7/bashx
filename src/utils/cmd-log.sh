@@ -1,8 +1,9 @@
-# Print command and their result.
-#
-# *: {String} Command to print and execute.
-# Out: {String} Command executed and result.
-# Return: Executed command exit code.
+## *
+## Print command and their result.
+##
+## *:      {String} Command to print and execute.
+## Out:    {String} Command executed and result.
+## Return: Executed command exit code.
 
 local cmd="$@"
 

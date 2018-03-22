@@ -1,12 +1,13 @@
-# User choice.
-#
-# 1: {String} Message.
-# 2: {String} Options. Chars separated by a space.
-# 3: {Char} (Default: "") Default value on non user input or invalid choice.
-# Out: User selection or Default.
-#
-# Example:
-#   @user-choice "Message..." "a b c" "b"
+## msg options [default]
+## User choice.
+##
+## msg:     {String} Message.
+## options: {String} Options. Chars separated by a space.
+## default: {Char} (Default: "") Default value on non user input or invalid choice.
+## Out:     User selection or Default.
+##
+## Usage example:
+##   @user-choice "Message..." "a b c" "b"
 
 # Message
 local message="$1"

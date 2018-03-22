@@ -1,6 +1,7 @@
-# Print at screen.
-#
-# *: {String} Text to print.
+## *
+## Print at screen.
+##
+## *: {String} Text to print.
 
 local str="$*"
 

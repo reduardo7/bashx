@@ -1,4 +1,6 @@
-# Current time.
-#
-# Out: {String} Time.
+##
+## Current time.
+##
+## Out: {String} Time.
+
 date '%H:%M:%S'

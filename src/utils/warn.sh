@@ -1,6 +1,7 @@
-# Print warning at screen.
-#
-# *: {String} Text to print.
+## *
+## Print warning at screen.
+##
+## *: {String} Text to print.
 
 local str="$*"
 

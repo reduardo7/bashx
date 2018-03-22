@@ -1,5 +1,6 @@
-# Current script file name.
-#
-# Out: {String} Current script file name.
+##
+## Current script file name.
+##
+## Out: {String} Current script file name.
 
 basename "$0"

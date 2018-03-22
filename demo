@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# BashX | https://github.com/reduardo7/bashx
+export BASHX_VERSION="master"
+bash -c "$(echo 'ZXhwb3J0IExDX0NUWVBFPUMKZXhwb3J0IExDX0FMTD1DCmV4cG9ydCBCQVNIWF9ESVI9IiR7SE9N
+RX0vLmJhc2h4LyR7QkFTSFhfVkVSU0lPTn0iCmV4cG9ydCB0bXBfZGlyPSIkKG1rdGVtcCAtZCki
+Cl9lKCkgewogIGVjaG8gIiMgJCoiCn0KX3coKSB7CiAgX2UgIiQqIiA+JjIKfQpfZXJyKCkgewog
+IF93ICJFcnJvciEgJCoiCiAgZXhpdCAxCn0KWyAteiAiJHtCQVNIWF9WRVJTSU9OfSIgXSAmJiBf
+ZXJyICdCQVNIWF9WRVJTSU9OIGlzIHJlcXVpcmVkJwooCnNldCAtZQppZiBbICEgLWQgIiR7QkFT
+SFhfRElSfSIgXTsgdGhlbgogIF9lICJJbnN0YWxsaW5nIEJhc2hYLi4uIgogIG1fZWQ9IkVycm9y
+IGRvd25sb2FkaW5nIEJhc2hYICR7QkFTSFhfVkVSU0lPTn0iCiAgZ19yZXBvPSJodHRwczovL2dp
+dGh1Yi5jb20vcmVkdWFyZG83L2Jhc2h4L3RhcmJhbGwvJHtCQVNIWF9WRVJTSU9OfSIKICBjZCAi
+JHt0bXBfZGlyfSIKICBpZiB0eXBlIHdnZXQgPi9kZXYvbnVsbCAyPiYxIDsgdGhlbgogICAgd2dl
+dCAtLW5vLWNoZWNrLWNlcnRpZmljYXRlICR7Z19yZXBvfSAtTyAtIHwgdGFyIC14eiB8fCBfZXJy
+ICIke21fZWR9IgogIGVsaWYgdHlwZSBjdXJsID4vZGV2L251bGwgMj4mMSA7IHRoZW4KICAgIGN1
+cmwgLXNMICR7Z19yZXBvfSB8IHRhciAteHogfHwgX2VyciAiJHttX2VkfSIKICBlbHNlCiAgICBf
+ZXJyICJ3Z2V0IG9yIGN1cmwgYXJlIHJlcXVpcmVkISBJbnN0YWxsIHdnZXQgb3IgY3VybCB0byBj
+b250aW51ZSIKICBmaQogIG1rZGlyIC1wICIke0JBU0hYX0RJUn0iCiAgcm0gLXJmICIke0JBU0hY
+X0RJUn0iCiAgbXYgcmVkdWFyZG83LWJhc2h4LSogIiR7QkFTSFhfRElSfSIKZmkKKQplPSQ/CnJt
+IC1yZiAiJHt0bXBfZGlyfSIKZXhpdCAkZQo=' | base64 -d)" || exit $?
+. "${HOME}/.bashx/${BASHX_VERSION}/init"
+
+### Begin Example ###
+
+@Actions.action1() { # \\n Action without arguments
+  # ... Your code here ...
+  @print Action 1
+}
+
+@Actions.action2() { # param1 param2 \\n Action with arguments
+  # ... Your code here ...
+  @print Action 2
+  @print Param1: $1
+  @print Param2: $2
+}
+
+### End Example ###
+
+@init "$@"

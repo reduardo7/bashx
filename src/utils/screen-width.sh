@@ -1,5 +1,6 @@
-# Screen width.
-#
-# Out: {Integer} Screen width.
+##
+## Screen width.
+##
+## Out: {Integer} Screen width.
 
 tput cols

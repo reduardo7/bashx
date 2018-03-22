@@ -1,8 +1,9 @@
-# Repeat string.
-#
-# 1: {Integer} Number of repetitions.
-# 2: {String} String to repeat.
-# Out: {String} Repeated string.
+## count str
+## Repeat string.
+##
+## count: {Integer} Number of repetitions.
+## str:   {String} String to repeat.
+## Out:   {String} Repeated string.
 
 local repeats_count=$1
 local str_repeat="$2"

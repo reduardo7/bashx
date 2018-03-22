@@ -1,8 +1,10 @@
-# Check error.
-#
-# 1: {Integer} Exit code. Example: $?
-# 2: {String} (Optional) Command to execute on error.
-# Example: @check-error $? "Invalid operation".
+## code [cmd]
+## Check error.
+##
+## code: {Integer} Exit code. Example: $?
+## cmd:  {String} (Optional) Command to execute on error.
+##
+## Example: @check-error $? "Invalid operation".
 
 local code=$1
 local cmd="$2"
