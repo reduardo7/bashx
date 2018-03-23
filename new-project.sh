@@ -23,7 +23,7 @@ fi
 
 _log Preparing source...
 
-code="$(cat app.src | grep -v -E '^\s*#.*' | sed '/^\s*$/d')"
+code="$(cat src/init-app.sh | grep -v -E '^\s*#.*' | sed '/^\s*$/d')"
 
 ###############################################################################
 

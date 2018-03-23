@@ -36,7 +36,7 @@ _err() {
 (
 set -e
 if [ ! -d "${BASHX_DIR}" ]; then
-  _e "Installing BashX..."
+  _e "Installing BashX ${BASHX_VERSION}..."
 
   m_ed="Error downloading BashX ${BASHX_VERSION}"
   g_repo="https://github.com/reduardo7/bashx/tarball/${BASHX_VERSION}"
@@ -58,6 +58,5 @@ fi
 )
 e=$?
 # Cleanup
-rm -rf "${tmp_dir}"
+rm -rf "${tmp_dir}" >/dev/null 2>&1
 exit $e
-
