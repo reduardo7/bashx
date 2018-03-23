@@ -4,7 +4,7 @@ set -e
 
 BASHX_VERSION="$1"
 PROJECT_NAME="$2"
-_ACTION_PREFIX="@Actions"
+ACTION_PREFIX="@Actions"
 
 _log() {
   echo "# $*"
@@ -41,12 +41,12 @@ bash -c "\$(echo '$(echo "${code}" | base64)' | base64 -d)" || exit \$?
 
 ### Begin Example ###
 
-${_ACTION_PREFIX}.action1() { # \\\\n Action without arguments
+${ACTION_PREFIX}.action1() { # \\\\n Action without arguments
   # ... Your code here ...
   @print Action 1
 }
 
-${_ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
+${ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
   # ... Your code here ...
   @print Action 2
   @print Param1: \$1

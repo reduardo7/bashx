@@ -11,11 +11,11 @@
 local action="$1"
 local force="$2"
 
-local scrpt="`@file-name "$BASE_SOURCE"`"
+local scrpt="${SCRIPT_FILE_NAME"
 local bcfile="$HOME/.${scrpt}_completion"
 local bcline=". $bcfile"
 local rcs=".bashrc .zshrc .shrc"
-local l="PATH=\"$BASE_DIR:\$PATH\" ; export PATH=\"\$PATH\" ; $bcline"
+local l="PATH=\"$SCRIPT_DIR:\$PATH\" ; export PATH=\"\$PATH\" ; $bcline"
 local p
 local r
 
@@ -32,10 +32,10 @@ case "$action" in
       @print "Creating '`@style bold`$bcfile`@style default`' file..."
 
 cat > "$bcfile" <<EOF
-# bash completion for $scrpt (`@script-full-path`)
+# bash completion for $scrpt ($SCRIPT_FULL_PATH)
 _${scrpt}_methods() {
-  grep \"^\\s*\\(function\\s\\+\\)\\?${_ACTION_PREFIX}\\..\\+()\\s*{.*\$\" \"\${1}\" | while read line ; do
-    echo \"\$line\" | sed \"s/()\\s*{.*//g\" | sed \"s/\\s*\\(function\\s\\+\\)\\?${_ACTION_PREFIX}\\.//g\"
+  grep \"^\\s*\\(function\\s\\+\\)\\?${ACTION_PREFIX}\\..\\+()\\s*{.*\$\" \"\${1}\" | while read line ; do
+    echo \"\$line\" | sed \"s/()\\s*{.*//g\" | sed \"s/\\s*\\(function\\s\\+\\)\\?${ACTION_PREFIX}\\.//g\"
   done
 }
 _${scrpt}_lst() {
@@ -46,7 +46,7 @@ _${scrpt}_lst() {
       fi
     done
   fi
-  _${scrpt}_methods \"`@script-full-path`\"
+  _${scrpt}_methods \"${SCRIPT_FULL_PATH}\"
   _${scrpt}_methods \"${BASHX_BASE_SOURCE}\"
 }
 _${scrpt}() {

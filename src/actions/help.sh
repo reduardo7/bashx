@@ -1,18 +1,18 @@
 ##
 ## Print basic usage (this).
 
-local prefix="$(@script-file-name) "
+local prefix="${SCRIPT_FILE_NAME} "
 
 @print
 @print "Usage:"
 @print
 
 # Main
-egrep "^\\s*${_ACTION_PREFIX}\.[^()]+\\(\\)\\s*\\{" "${CURRENT_SOURCE}" \
-  | egrep -v "^\\s*${_ACTION_PREFIX}\._" \
+egrep "^\\s*${ACTION_PREFIX}\.[^()]+\\(\\)\\s*\\{" "${SCRIPT_FULL_PATH}" \
+  | egrep -v "^\\s*${ACTION_PREFIX}\._" \
   | while read line
   do
-    line="  $(@style color:red)${prefix}$(@style color:green)$(@str-replace "${line}" "^\\s*${_ACTION_PREFIX/\@/\\@}\\." '')"
+    line="  $(@style color:red)${prefix}$(@style color:green)$(@str-replace "${line}" "^\\s*${ACTION_PREFIX/\@/\\@}\\." '')"
     line="$(@str-replace "${line}" '\(\)\s*\{\s*#*\s*' "$(@style default) ")"
     line="$(@str-replace "${line}" '\s*\\n\s*' "\n${ECHO_CHAR}     ")"
     @print "$(@str-replace "${line}" '\s*\\t\s*' '    ')"

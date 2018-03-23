@@ -2,7 +2,7 @@
 ## Development Doc.
 
 _doc() {
-  local prefix="$(@style color:red)$(@script-file-name)"
+  local prefix="$(@style color:red)${SCRIPT_FILE_NAME}"
 
   @title "Development Documentation"
   @title Utils
