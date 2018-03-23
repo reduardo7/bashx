@@ -68,7 +68,7 @@ fi
 
   # Default action to call
   # Action to use if script called without arguments
-  export DEFAULT_ACTION="usage"
+  export DEFAULT_ACTION="help"
 
   # BashX SRC path
   export SRC_PATH="$BASE_DIR/.$CURRENT_SCRIPT"

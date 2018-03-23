@@ -24,7 +24,7 @@ if [ -z "${src}" ] || [ ! -f "${src}" ]; then
 fi
 
 if [ ! -z "${prefix}" ]; then
-  prefix="${prefix} "
+  prefix="$(@style color:red)${prefix}"
 fi
 
 # Get comments from file

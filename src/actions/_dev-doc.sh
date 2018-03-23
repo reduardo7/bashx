@@ -4,15 +4,12 @@
 _doc() {
   local prefix="$(@style color:red)$(@script-file-name)"
 
-  @print
-  @print "Development Documentation"
-  @print
-
+  @title "Development Documentation"
   @title Utils
 
   for f in $BASHX_UTILS_PATH/*.sh ; do
     if [ -f "${f}" ]; then
-      @usage "${f}"
+      @usage "${f}" '@'
     fi
   done
 }

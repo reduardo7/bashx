@@ -1,5 +1,5 @@
 # Run APP.
-# Run arguments as commands if any, or show 'usage'.
+# Run arguments as commands if any, or show 'help'.
 #
 # Use: At end of /app file, put next:
 #   @init "$@"
@@ -65,21 +65,21 @@ if [ $# -gt 0 ]; then
   if @function-exists "${_ACTION_PREFIX}.$1" ; then
     # Exec
     if [ "$1" == 'help' ]; then
-      ACTION='usage'
+      ACTION='help'
     else
       ACTION="$1"
     fi
     ${_ACTION_PREFIX}."$@"
     r=$?
   else
-      @error "Parameter '$(@style color:green)${1}$(@style color:red)' not found. Call 'usage' to see help." false
+      @error "Parameter '$(@style color:green)${1}$(@style color:red)' not found. Call 'help' to see help." false
   fi
 fi
 
 if [ ${#1} == 0 ]; then
-  if [ -z "${DEFAULT_ACTION}" ]; then
-    # Show usage
-    ACTION='usage'
+  if [ -z "${helpDEFAULT_ACTION}" ]; then
+    # Show help
+    ACTION='help'
     r=1
   else
     # Call default action
