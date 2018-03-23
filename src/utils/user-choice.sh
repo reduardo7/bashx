@@ -19,7 +19,7 @@ local result="$3"
 local user_input
 
 # Read
-read -n 1 -p "$(@style default)${ECHO_CHAR} ${message} [${options}]: " user_input >&3
+read -n 1 -p "$(@style default)${APP_PRINT_PREFIX} ${message} [${options}]: " user_input >&3
 echo >&3
 
 # Validate input

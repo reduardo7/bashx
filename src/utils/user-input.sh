@@ -45,7 +45,7 @@ fi
 
 # Execute
 local cmd="read${n}${s}${t}"
-${cmd} -p "$(@style default)${ECHO_CHAR} ${m}$(@style system)" i >&3
+${cmd} -p "$(@style default)${APP_PRINT_PREFIX} ${m}$(@style system)" i >&3
 local r=$?
 local rta=0
 

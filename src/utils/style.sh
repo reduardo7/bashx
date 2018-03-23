@@ -83,7 +83,7 @@
 ##   @style background gray
 ##   @print "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
 
-if $BASHX_COLORS_ENABLED; then
+if $APP_COLORS_ENABLED; then
   local OIFS="$IFS"
 
   # No parameters
@@ -118,12 +118,12 @@ if $BASHX_COLORS_ENABLED; then
       fi
       # Default color
       s='color'
-      v="${COLOR_DEFAULT}"
+      v="${APP_COLOR_DEFAULT}"
     fi
 
     if [ ! -z "$v" ]; then
       if [ "$s" == 'color' ] && ( [ "$v" == 'default' ] || [ "$v" == 'normal' ] || [ "$v" == 'auto' ] ); then
-        if [ -z "${COLOR_DEFAULT}" ] || [ "${COLOR_DEFAULT}" == 'default' ] || [ "${COLOR_DEFAULT}" == 'normal' ] || [ "${COLOR_DEFAULT}" == 'auto' ]; then
+        if [ -z "${APP_COLOR_DEFAULT}" ] || [ "${APP_COLOR_DEFAULT}" == 'default' ] || [ "${APP_COLOR_DEFAULT}" == 'normal' ] || [ "${APP_COLOR_DEFAULT}" == 'auto' ]; then
           # Invalid default or default not defined
           y='0'
           # Invalidate case
@@ -131,7 +131,7 @@ if $BASHX_COLORS_ENABLED; then
           s=''
         else
           # Default color
-          v="${COLOR_DEFAULT}"
+          v="${APP_COLOR_DEFAULT}"
         fi
       fi
       case "$s" in

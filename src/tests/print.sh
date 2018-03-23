@@ -6,5 +6,5 @@ output="$(@print "foo\tbar" 3>&1)"
 @@assertNotContains "${output}" "foo\tbar"
 @@assertContains "${output}" 'foo'
 @@assertContains "${output}" 'bar'
-@@assertContains "${output}" "${ECHO_CHAR}"
+@@assertContains "${output}" "${APP_PRINT_PREFIX}"
 @@assertEndWith "${output}" "$(@style reset)"

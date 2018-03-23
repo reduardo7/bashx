@@ -55,7 +55,8 @@ ${ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
 
 ### End Example ###
 
-@init "\$@"
+# Run APP
+@run-app "\$@"
 EOF
 
 chmod a+x "${PROJECT_NAME}"

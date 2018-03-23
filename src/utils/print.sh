@@ -6,4 +6,4 @@
 local str="$*"
 
 # \t -> \s*4
-echo -e "$(@style default)${ECHO_CHAR} $(@str-replace "${str}" '\t' '    ')$(@style reset)" >&3
+echo -e "$(@style default)${APP_PRINT_PREFIX} $(@str-replace "${str}" '\t' '    ')$(@style reset)" >&3

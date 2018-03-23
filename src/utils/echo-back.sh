@@ -16,5 +16,5 @@ if [ $# -gt 1 ]; then
 fi
 
 local bl="\033[${n}A"
-echo -e "${bl}$(@style default)${ECHO_CHAR} ${text}$(@style system)" >&3 # Clear line
+echo -e "${bl}$(@style default)${APP_PRINT_PREFIX} ${text}$(@style system)" >&3 # Clear line
 @str-repeat 80 ' ' >&3

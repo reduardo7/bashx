@@ -36,4 +36,4 @@ IC1yZiAiJHt0bXBfZGlyfSIKZXhpdCAkZQo=' | base64 -d)" || exit $?
 
 ### End Example ###
 
-@init "$@"
+@run-app "$@"
