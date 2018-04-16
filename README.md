@@ -1,21 +1,21 @@
-BashX | Extended Bash Framework
-===============================
+# BashX | Bash eXtended
 
-# Description
+## Description
 
-Simple bash extension. Bash Framework. Helps to bash programming. Add common functions to help the developer.
+- **_Bash Framework_**.
+- Helps to bash scripting.
+- Add common functions to help the developer.
+- Compatible with _Android Shell_.
 
-Compatible with Android Bash!
-
-## Why use it?
+### Why use it
 
 - Very easy to implement.
 - No additionals components required.
 - No need to learn a new language.
 - No need to learn a new syntax.
-- Common functions and utils.
+- Common functions and utils already implemented.
 
-# Quick start
+## Quick start
 
 You can start your project with:
 
@@ -23,16 +23,19 @@ You can start your project with:
 ./new-project.sh BASHX_VERSION PROJECT_NAME
 ```
 
-Where `BASHX_VERSION` is a [_tag_ from this repository](https://github.com/reduardo7/bashx/tags) and `PROJECT_NAME` is the script name.
+Where:
 
-## Examples
+- `BASHX_VERSION` is a [_tag_ from this repository](https://github.com/reduardo7/bashx/tags)
+- `PROJECT_NAME` is the _script name_.
+
+### Examples
 
 ```bash
 ./new-project.sh 1.0 my-app
-./new-project.sh 1.0 ~/projects/my-script.sh
+./new-project.sh 2.1 ~/projects/my-script.sh
 ```
 
-# Doc
+## Doc
 
 Show _Devepopment Documentation_ using:
 
@@ -40,6 +43,6 @@ Show _Devepopment Documentation_ using:
 ./demo _dev-doc
 ```
 
-# Optimizations
+## Optimizations
 
-See: http://tldp.org/LDP/abs/html/optimizations.html
+See: [http://tldp.org/LDP/abs/html/optimizations.html](http://tldp.org/LDP/abs/html/optimizations.html)
