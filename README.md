@@ -35,6 +35,42 @@ Where:
 ./new-project.sh 2.1 ~/projects/my-script.sh
 ```
 
+#### Project Structure
+
+```text
+--> project-directory-name
+    |
+    +-> my-script-name
+    |
+    +-> .my-script-name.src
+    |
+    +-> my-script-name.src/
+        |
+        +-> actions/
+        |   |
+        |   +-> [action-name].sh
+        |   |
+        |   +-> *
+        |
+        +-> tests/
+        |   |
+        |   +-> [test-name].sh
+        |   |
+        |   +-> *
+        |
+        +-> utils/
+        |   |
+        |   +-> [util-name].sh
+        |   |
+        |   +-> *
+        |
+        +-> resources/
+            |
+            +-> [resource].[ext]
+            |
+            +-> *
+```
+
 ## Doc
 
 Show _Devepopment Documentation_ using:
