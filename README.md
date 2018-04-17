@@ -38,37 +38,37 @@ Where:
 #### Project Structure
 
 ```text
---> project-directory-name
-    |
-    +-> my-script-name
-    |
-    +-> .my-script-name.src
-    |
-    +-> my-script-name.src/
-        |
-        +-> actions/
-        |   |
-        |   +-> [action-name].sh
-        |   |
-        |   +-> *
-        |
-        +-> tests/
-        |   |
-        |   +-> [test-name].sh
-        |   |
-        |   +-> *
-        |
-        +-> utils/
-        |   |
-        |   +-> [util-name].sh
-        |   |
-        |   +-> *
-        |
-        +-> resources/
-            |
-            +-> [resource].[ext]
-            |
-            +-> *
+--> project-directory-name         # Optional. Container directory.
+    |                              #
+    +-> my-script-name             # Required. Main script.
+    |                              #
+    +-> .my-script-name.env        # Optional. Config file.
+    |                              #
+    +-> my-script-name.src/        # Optional. Sources.
+        |                          #
+        +-> actions/               # Optional. Actions scripts.
+        |   |                      #
+        |   +-> [action-name].sh   #    Test script example...
+        |   |                      #
+        |   +-> *                  #    Test script example...
+        |                          #
+        +-> tests/                 # Optional. Test scripts.
+        |   |                      #
+        |   +-> [test-name].sh     #     Test script example...
+        |   |                      #
+        |   +-> *                  #     Test script example...
+        |                          #
+        +-> utils/                 # Optional. Utils scripts.
+        |   |                      #
+        |   +-> [util-name].sh     #     Test script example...
+        |   |                      #
+        |   +-> *                  #     Test script example...
+        |                          #
+        +-> resources/             # Optional. Resources files.
+            |                      #
+            +-> [resource].[ext]   #     Resource file...
+            |                      #
+            +-> *                  #     Resource file...
 ```
 
 ## Doc
