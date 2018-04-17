@@ -75,7 +75,7 @@ Where:
 
 ## Doc
 
-Show _Devepopment Documentation_ using:
+Show _Development Documentation_ using:
 
 ```bash
 ./demo _dev-doc
