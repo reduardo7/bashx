@@ -6,6 +6,7 @@
 - Helps to bash scripting.
 - Add common functions to help the developer.
 - Compatible with _Android Shell_.
+- Auto-documentation/help generation.
 
 ### Why use it
 
@@ -14,6 +15,7 @@
 - No need to learn a new language.
 - No need to learn a new syntax.
 - Common functions and utils already implemented.
+- Auto-documentation/help from source code comments.
 
 ## Quick start
 
