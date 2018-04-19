@@ -184,15 +184,18 @@ fi
 ## Current called action.
 export ACTION=""
 
+## APP Temporary path.
+export APP_TMP_PATH="$(mktemp -d)"
+
 # #############################################################################
 
 ### PRIVATE VARS
 
 # On exit command
-export _ON_EXIT=''
+_ON_EXIT=''
 
 # True if APP is terminated
-export _APP_EXIT=false
+_APP_EXIT=false
 
 # #############################################################################
 

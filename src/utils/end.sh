@@ -3,16 +3,21 @@
 ##
 ## code: {Integer} (Default: 0) Exit code.
 
-if ! $_APP_EXIT ; then
+if ! ${_APP_EXIT} ; then
   local code=$1
+
+  # Mark as exit
+  _APP_EXIT=true
 
   if [ ! -z "${_ON_EXIT}" ]; then
     # Execute exit actions
     eval "${_ON_EXIT}"
   fi
 
-  # Mark as exit
-  _APP_EXIT=true
+  # Cleanup
+  if [ ! -z "${APP_TMP_PATH}" ]; then
+    rm -rf "${APP_TMP_PATH}"
+  fi
 
   # Reset System color
   @style reset >&3

@@ -1,7 +1,8 @@
-## [tests-names]
+## [*]
 ## Run tests.
-## Params:
-##   tests-names: Tests names to execute separated by a space. If not setted, all tests will executed.
+##
+## *: {String} (Optional) Tests names to execute separated by a space.
+##    If not setted, all tests will be executed.
 
 local tests_names_to_execute=($*)
 
@@ -194,7 +195,7 @@ __testAssertFail__() {
   local cmd="${assertFn} ${params}"
   ( eval "${cmd}" >${__assertion_exec_out_std__} 2>${__assertion_exec_out_err__} 3>${__assertion_exec_out_info__} ; exit $? )
   local result=$?
-  
+
   if [[ "${expected}" =~ ^[0-9][0-9]*$ ]]; then
     [[ ${result} -eq ${expected} ]] && __testAssertFail__ "$cmd" ${result} ${expected} "$(caller)"
   elif ${expected}; then
@@ -247,7 +248,7 @@ if [ -d "${TESTS_PATH}" ]; then
             fi
             @alert "Fail! Exit code: ${test_result}"
           fi
-        
+
         @print
         @print "${line}"
         @print
