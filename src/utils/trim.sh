@@ -1,13 +1,18 @@
-## src [search]
-## Trim text.
+## text [to_remove]
+## Remove starting and ending spaces from text.
 ##
-## src:    {String} String where @trim.
-## search: {String} (Default: \s) String to @trim.
-## Out:    {String} Trimed text.
+## text:      {String} Text.
+## to_remove: {String} (Optional. Default: ' ') String to remove
+## Out: {String} Trimed text.
 
-local src_str="$1"
-local trm_base="$2"
+local a="$1"
+local b=''
+local s="${2:- }"
 
-[ -z "${trm_base}" ] && trm_base='\s'
+while [[ ${#a} -ne ${#b} ]]; do
+  b="$a"
+  a="${a#$s}" # LTRIM
+  a="${a%$s}" # RTRIM
+done
 
-perl -C -Mutf8 -pe "s/^(${trm_base})*//" <<<"${src_str}" | perl -C -Mutf8 -pe "s/(${trm_base})*$//"
+echo -n "$a"
