@@ -103,8 +103,8 @@ if $APP_COLORS_ENABLED; then
     # Split
     IFS='[=:]' p=(${p}) IFS="$OIFS"
     # Parts
-    local s="$(@trim "${p[0]}")"
-    local v="$(@trim "${p[1]}")"
+    local s="${p[0]}"
+    local v="${p[1]}"
 
     # Default
     if [ -z "$v" ] && [ "$p" == 'default' ]; then
