@@ -97,11 +97,9 @@ if $APP_COLORS_ENABLED; then
   local c=''
   IFS=' ' prms=(${prms}) IFS="$OIFS"
 
-  for q in ${prms[@]} ; do
+  for p in ${prms[@]} ; do
     # Style code
     local y=''
-    # To lower
-    local p="$(@str-to-lower "$q")"
     # Split
     IFS='[=:]' p=(${p}) IFS="$OIFS"
     # Parts
