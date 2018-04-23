@@ -1,33 +1,31 @@
 #!/usr/bin/env bash
 
-set -e
+export BASHX_DIR="."
+. ./init
 
 BASHX_VERSION="$1"
 PROJECT_NAME="$2"
-ACTION_PREFIX="@Actions"
 
-_log() {
-  echo "# $*"
+_usg() {
+  @error "Usage: ${SCRIPT_CALLED} BASHX_VERSION PROJECT_NAME"
 }
 
-_err() {
-  _log "Error! $*"
-  exit 1
-}
+[ ! -z "${BASHX_VERSION}" ] || _usg
+[ ! -z "${PROJECT_NAME}" ] || _usg
 
 if [ -f "${PROJECT_NAME}" ] || [ -d "${PROJECT_NAME}" ]; then
-  _err File or directory ${PROJECT_NAME} already exists
+  @error "File or directory ${PROJECT_NAME} already exists"
 fi
 
 ###############################################################################
 
-_log Preparing source...
+@print Preparing source...
 
-code="$(cat src/init-app.sh | grep -v -E '^\s*#.*' | sed '/^\s*$/d')"
+init_script="$(@script-minify < src/init-app.sh)"
 
 ###############################################################################
 
-_log Writting file ${PROJECT_NAME}...
+@print Writting file ${PROJECT_NAME}...
 
 touch "${PROJECT_NAME}"
 
@@ -36,7 +34,7 @@ cat > "${PROJECT_NAME}" <<EOF
 
 # BashX | https://github.com/reduardo7/bashx
 export BASHX_VERSION="${BASHX_VERSION}"
-bash -c "\$(echo '$(echo "${code}" | base64 -w 0)' | base64 --decode)" || exit \$?
+(${init_script}) || exit \$?
 . "\${HOME}/.bashx/\${BASHX_VERSION}/init"
 
 ### Begin Example ###
@@ -63,4 +61,4 @@ chmod a+x "${PROJECT_NAME}"
 
 ###############################################################################
 
-_log Project created at ${PROJECT_NAME}
+@print Project created at ${PROJECT_NAME}

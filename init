@@ -57,7 +57,7 @@ export SCRIPT_DIR="$SCRIPT_DIR"
 ## Current script directory.
 readonly SCRIPT_DIR="$SCRIPT_DIR"
 
-export BASHX_DIR="$HOME/.bashx/$BASHX_VERSION"
+export BASHX_DIR="${BASHX_DIR:-$HOME/.bashx/$BASHX_VERSION}"
 ## Core directory.
 readonly BASHX_DIR="$BASHX_DIR"
 

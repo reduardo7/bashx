@@ -1,5 +1,5 @@
 ##
-## Print backtrace
+## Print backtrace.
 ##
 ## Out: {String} Backtrace.
 
