@@ -58,7 +58,7 @@ export SCRIPT_DIR="$SCRIPT_DIR"
 readonly SCRIPT_DIR="$SCRIPT_DIR"
 
 export BASHX_DIR="${BASHX_DIR:-$HOME/.bashx/$BASHX_VERSION}"
-## Core directory.
+## Core directory (can be overridden before load).
 readonly BASHX_DIR="$BASHX_DIR"
 
 export BASHX_SRC_PATH="$BASHX_DIR/src"
@@ -128,13 +128,8 @@ readonly ACTION_PREFIX="$ACTION_PREFIX"
 ## Current script SRC path.
 export SRC_PATH="$SCRIPT_DIR/$SCRIPT_FILE_NAME.src"
 
-# Config file
-if [ -z "$APP_CONFIG_FILE" ]; then
-  # Default file
-  APP_CONFIG_FILE="$SCRIPT_DIR/.$SCRIPT_FILE_NAME.env"
-fi
-## Configuration file.
-export APP_CONFIG_FILE="$APP_CONFIG_FILE"
+## Configuration file (can be overridden before load).
+export APP_CONFIG_FILE="${APP_CONFIG_FILE:-$SCRIPT_DIR/.$SCRIPT_FILE_NAME.env}"
 
 ## APP Title.
 export APP_TITLE="BashX"
