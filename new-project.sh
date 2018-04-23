@@ -36,7 +36,7 @@ cat > "${PROJECT_NAME}" <<EOF
 
 # BashX | https://github.com/reduardo7/bashx
 export BASHX_VERSION="${BASHX_VERSION}"
-bash -c "\$(echo '$(echo "${code}" | base64 -w 0)' | base64 -d)" || exit \$?
+bash -c "\$(echo '$(echo "${code}" | base64 -w 0)' | base64 --decode)" || exit \$?
 . "\${HOME}/.bashx/\${BASHX_VERSION}/init"
 
 ### Begin Example ###
