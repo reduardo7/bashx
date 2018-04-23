@@ -14,49 +14,41 @@
 
 export LC_CTYPE=C
 export LC_ALL=C
-export BASHX_DIR="${HOME}/.bashx/${BASHX_VERSION}"
-export tmp_dir="$(mktemp -d)"
 
-_e() {
-  echo "# $*"
-}
+_e(){ echo "# $*";}
+_w(){ _e $* >&2;}
+_x(){ _w Error: $*;exit 1;}
 
-_w() {
-  _e "$*" >&2
-}
+[ -z "${BASHX_VERSION}" ] && _x BASHX_VERSION is required
 
-_err() {
-  _w "Error! $*"
-  exit 1
-}
-
-[ -z "${BASHX_VERSION}" ] && _err 'BASHX_VERSION is required'
+export BASHX_DIR="${BASHX_DIR:-$HOME/.bashx/$BASHX_VERSION}"
+export t="$(mktemp -d)"
 
 # Install
 (
 set -e
-if [ ! -d "${BASHX_DIR}" ]; then
-  _e "Installing BashX ${BASHX_VERSION}..."
+if [ ! -d "$BASHX_DIR" ]; then
+  _e Installing BashX ${BASHX_VERSION}...
 
-  m_ed="Error downloading BashX ${BASHX_VERSION}"
-  g_repo="https://github.com/reduardo7/bashx/tarball/${BASHX_VERSION}"
+  m="Error downloading BashX ${BASHX_VERSION}"
+  g="https://github.com/reduardo7/bashx/tarball/${BASHX_VERSION}"
 
-  cd "${tmp_dir}"
+  cd "$t"
 
   if type wget >/dev/null 2>&1 ; then
-    wget --no-check-certificate ${g_repo} -O - | tar -xz || _err "${m_ed}"
+    wget --no-check-certificate $g -O - | tar -xz || _x $m
   elif type curl >/dev/null 2>&1 ; then
-    curl -sL ${g_repo} | tar -xz || _err "${m_ed}"
+    curl -sL $g | tar -xz || _x $m
   else
-    _err "wget or curl are required! Install wget or curl to continue"
+    _x wget or curl are required. Install wget or curl to continue
   fi
 
-  mkdir -p "${BASHX_DIR}"
-  rm -rf "${BASHX_DIR}"
-  mv reduardo7-bashx-* "${BASHX_DIR}"
+  mkdir -p "$BASHX_DIR"
+  rm -rf "$BASHX_DIR"
+  mv reduardo7-bashx-* "$BASHX_DIR"
 fi
 )
 e=$?
 # Cleanup
-rm -rf "${tmp_dir}" >/dev/null 2>&1
+rm -rf "$t" >/dev/null 2>&1 || true
 exit $e
