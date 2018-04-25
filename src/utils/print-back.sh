@@ -1,9 +1,8 @@
 ## lines *
-## Re-print last line.
+## Go back {lines} lines and print the text.
 ##
 ## lines: {Integer} (Default: 1) Lines to meve back. If is not a number, used as text.
 ## *:     {String} Text to print.
-## Out:   {String} Text.
 
 local n=1
 local text="$@"
@@ -18,3 +17,4 @@ fi
 local bl="\033[${n}A"
 echo -e "${bl}$(@style default)${APP_PRINT_PREFIX} ${text}$(@style system)" >&3 # Clear line
 @str-repeat 80 ' ' >&3
+

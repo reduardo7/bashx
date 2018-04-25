@@ -30,7 +30,7 @@ while ( [ "${wait_type}" == 'd' ] && [ ! -d "${path}" ] ) || ( [ "${wait_type}" 
         fi
       fi
 
-      @echo-back "Waiting for '${path}'${p}"
+      @print-back "Waiting for '${path}'${p}"
 
       if [ "${p}" == '...' ]; then
         p='.'

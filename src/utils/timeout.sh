@@ -20,7 +20,7 @@ local r
 local i
 
 while [[ ${COUNT} -gt 0 ]] && [[ ${rta} -eq 0 ]] ; do
-  @echo-back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..."
+  @print-back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..."
   read -n 1 -s -t 1 -p '' i
   r=$?
   if [ "${i}" == 'c' ] || [ "${i}" == 'C' ] || [ "${i}" == "${KEY_ESC}" ]; then
@@ -33,15 +33,15 @@ while [[ ${COUNT} -gt 0 ]] && [[ ${rta} -eq 0 ]] ; do
   fi
 done
 
-@echo-back # Remove last line
+@print-back # Remove last line
 
 if [[ ${COUNT} -eq 0 ]]; then
-  @echo-back
+  @print-back
   eval "${cmd_to_execute}"
   return $?
 else
   # Canceled
-  @echo-back '   Cancel by user!'
+  @print-back '   Cancel by user!'
   @print
   return 255
 fi
