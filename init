@@ -161,6 +161,9 @@ export ACTIONS_PATH="$SRC_PATH/actions"
 ## Utils path.
 export UTILS_PATH="$SRC_PATH/utils"
 
+## Events path.
+export EVENTS_PATH="$SRC_PATH/events"
+
 ## Resources path.
 export RESOURCES_PATH="$SRC_PATH/resources"
 

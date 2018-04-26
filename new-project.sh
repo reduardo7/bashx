@@ -7,14 +7,14 @@ BASHX_VERSION="$1"
 PROJECT_NAME="$2"
 
 _usg() {
-  @error "Usage: ${SCRIPT_CALLED} BASHX_VERSION PROJECT_NAME"
+  @error "Usage: ${SCRIPT_CALLED} BASHX_VERSION PROJECT_NAME" false
 }
 
 [ ! -z "${BASHX_VERSION}" ] || _usg
 [ ! -z "${PROJECT_NAME}" ] || _usg
 
 if [ -f "${PROJECT_NAME}" ] || [ -d "${PROJECT_NAME}" ]; then
-  @error "File or directory ${PROJECT_NAME} already exists"
+  @error "File or directory ${PROJECT_NAME} already exists" false
 fi
 
 ###############################################################################

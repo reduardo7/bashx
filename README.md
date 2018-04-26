@@ -66,6 +66,16 @@ Where:
         |   |                      #
         |   +-> *                  #     Test script example...
         |                          #
+        +-> events/                # Optional. Events scripts. Executed in next order:
+        |   |                      #
+        |   +-> invalid-action.sh  #     Optional. Called on invalid action.
+        |   |                      #
+        |   +-> start.sh           #     Optional. Called on start.
+        |   |                      #
+        |   +-> error.sh           #     Optional. Called on error (exit code != 0).
+        |   |                      #
+        |   +-> exit.sh            #     Optional. Called on exit.
+        |                          #
         +-> resources/             # Optional. Resources files.
             |                      #
             +-> [resource].[ext]   #     Resource file...
@@ -80,6 +90,13 @@ Show _Development Documentation_ using:
 ```bash
 ./demo _dev-doc
 ```
+
+### Events Workflow
+
+1. `src/events/invalid-action.sh` is called if an invalid action was used.
+2. `src/events/start.sh` is called before valid action is called.
+3. `src/events/error.sh` is called when an error has occurred.
+4. `src/events/exit.sh` is called before finishing.
 
 ## Optimizations
 

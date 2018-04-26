@@ -10,7 +10,10 @@ unset -f @run-app
 
 # Start
 local r=1
-echo >&3
+
+echo >&3 # Space
+
+ACTION="$1"
 
 @title "$(@app-info)"
 
@@ -20,23 +23,9 @@ trap @end EXIT
 # On CTRL + C
 trap @end INT
 
-if [ $# -gt 0 ]; then
-  # If function exists
-  if @function-exists "${ACTION_PREFIX}.$1" ; then
-    # Exec
-    if [ "$1" == 'help' ]; then
-      ACTION='help'
-    else
-      ACTION="$1"
-    fi
-    ${ACTION_PREFIX}."$@"
-    r=$?
-  else
-      @error "Parameter '$(@style color:green)${1}$(@style color:red)' not found. Call 'help' to see help." false
-  fi
-fi
+if [ -z "${ACTION}" ]; then
+  # Empty Action
 
-if [ ${#1} == 0 ]; then
   if [ -z "${APP_DEFAULT_ACTION}" ]; then
     # Show help
     ACTION='help'
@@ -47,6 +36,37 @@ if [ ${#1} == 0 ]; then
   fi
 
   ${ACTION_PREFIX}.${ACTION}
+elif [ $# -gt 0 ]; then
+  shift # Remove "Action" from parameters
+
+  # If function (Action) exists
+  if @function-exists "${ACTION_PREFIX}.${ACTION}" ; then
+    # On Start
+    if [ -f "${EVENTS_PATH}/start.sh" ]; then
+      appOnStart() {
+        . "${EVENTS_PATH}/start.sh"
+      }
+      appOnStart
+      unset -f appOnStart
+    fi
+
+    # Exec
+    ${ACTION_PREFIX}.${ACTION} "$@"
+    r=$?
+  else
+    # Invalid Action
+    if [ -f "${EVENTS_PATH}/invalid-action.sh" ]; then
+      appOnInvalidAction() {
+        . "${EVENTS_PATH}/invalid-action.sh"
+      }
+      appOnInvalidAction
+      r=$?
+      unset -f appOnInvalidAction
+    else
+      local _sr="$(@style color:red)"
+      @error "Parameter '$(@style color:green)${ACTION}${_sr}' not found. Call '$(@style bold)help${_sr}' to see help." false
+    fi
+  fi
 fi
 
 # Return result code
