@@ -42,7 +42,7 @@ if [ ! -d "$BASHX_DIR" ]; then
     cd "$t"
 
     if type wget >/dev/null 2>&1 ; then
-      wget --no-check-certificate $g -O - | tar -xz || _x $m
+      wget -q $g -O - | tar -xz || _x $m
     elif type curl >/dev/null 2>&1 ; then
       curl -sL $g | tar -xz || _x $m
     else
