@@ -14,8 +14,7 @@ echo >&3
 eval "set -x ; ${cmd}"
 local r=$?
 set +x
-echo
-echo -e "$(@style reset)Exit code: ${r}" >&3
+@print "Exit code: ${r}"
 @print "$(@str-repeat 80 '-')"
 echo >&3
 return ${r}
