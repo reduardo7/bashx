@@ -64,7 +64,7 @@ elif [ $# -gt 0 ]; then
       unset -f appOnInvalidAction
     else
       local _sr="$(@style color:red)"
-      @error "Parameter '$(@style color:green)${ACTION}${_sr}' not found. Call '$(@style bold)help${_sr}' to see help." false
+      @error "Parameter '$(@style color:green)${ACTION}${_sr}' not found. Call '$(@style bold)help${_sr}' to see help."
     fi
   fi
 fi

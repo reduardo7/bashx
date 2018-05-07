@@ -33,7 +33,7 @@ __rmlastTestsFile__
 
 __assertFail__() {
   @alert "Assert Fail: $@"
-  touch "${__assertion_fail_path__}" || @error "Can not wirte '${__assertion_fail_path__}' file!"
+  touch "${__assertion_fail_path__}" || @error "Can not wirte '${__assertion_fail_path__}' file!" true
   exit 1
 }
 
@@ -217,7 +217,7 @@ __testAssertFail__() {
 
 @@lastTest() {
   @alert 'WARNING: Forced finish tests! {@@lastTest}'
-  touch "${__finish_tests_path__}" || @error "Can not wirte '${__finish_tests_path__}' file!"
+  touch "${__finish_tests_path__}" || @error "Can not wirte '${__finish_tests_path__}' file!" true
   return 0
 }
 
@@ -273,5 +273,5 @@ if [[ ${error_count} -eq 0 ]]; then
   @print 'All tests success!'
   exit 0
 else
-  @error "${error_count} tests fail!" false
+  @error "${error_count} tests fail!"
 fi
