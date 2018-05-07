@@ -7,9 +7,8 @@
 # Start
 local t=" $@ "
 local l=$(@str-len "${t}")
-l="+-$(@str-repeat $l '-')-+"
 
-@print "${l}"
+@print-line $l '-' '+-' '-+'
 @print "| ${t} $(@style default)|"
-@print "${l}"
+@print-line $l '-' '+-' '-+'
 @print

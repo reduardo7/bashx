@@ -10,11 +10,11 @@
 local cmd="$@"
 
 echo >&3
-@print "$(@str-repeat 80 '-')"
+@print-line
 eval "set -x ; ${cmd}"
 local r=$?
 set +x
 @print "Exit code: ${r}"
-@print "$(@str-repeat 80 '-')"
+@print-line
 echo >&3
 return ${r}
