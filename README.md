@@ -101,19 +101,9 @@ Show _Development Documentation_ using:
 
 ### Command log (set -x)
 
-- Avoid usage of **BashX** _Functions_ inside of `-x` section.
+- Avoid usage of **BashX** _Functions_ inside of `set -x` section.
 
 #### Command log examples
-
-```bash
-...
-set -x
-  ...
-  echo my test
-  ...
-set +x
-...
-```
 
 ```bash
 ...
@@ -122,6 +112,16 @@ set +x
   echo my test
   ...
 )
+...
+```
+
+```bash
+...
+set -x
+  ...
+  echo my test
+  ...
+set +x
 ...
 ```
 
