@@ -2,13 +2,10 @@
 ## Check if running as ROOT, or exit from script.
 ##
 ## Params:
-##   *: (Optional) Message.
+##   *: {String} Message.
+##      Optional. Default: "This script must be run as root!".
 
 if ! @is-root ; then
-  if [ $# -eq 0 ] ; then
-    local m='This script must be run as root!'
-  else
-    local m="$@"
-  fi
-  @error "$m"
+  local message="${*:-This script must be run as root!}"
+  @error "$message"
 fi

@@ -2,14 +2,12 @@
 ## User confirm.
 ##
 ## Params:
-##   msg: {String} (Optional) Message.
+##   msg: {String} Message.
+##        Optional. Default: "Confirm?".
+##
 ## Return: 0 if user confirm, 1 if user not confirm.
 
-local msg="$1"
-
-if [ -z "$msg" ]; then
-  msg="Confirm?"
-fi
+local msg="${1:-Confirm?}"
 
 echo -n "$(@style default)${APP_PRINT_PREFIX} $msg (y/n) " >&3
 

@@ -74,6 +74,7 @@
 ##         - display: Show or hide text.
 ##             - visible | show | true | 1: Show text.
 ##             - hidden | none | hide | false | 0: Hide text.
+##
 ## Out: {String} Style console string.
 ##
 ## Examples:

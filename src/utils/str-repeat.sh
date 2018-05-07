@@ -4,6 +4,7 @@
 ## Params:
 ##   count: {Integer} Number of repetitions.
 ##   str:   {String} String to repeat.
+##
 ## Out: {String} Repeated string.
 
 local repeats_count=$1

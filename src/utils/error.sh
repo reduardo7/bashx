@@ -3,8 +3,10 @@
 ##
 ## Params:
 ##   msg:             {String} Error message.
-##   print_backtrace: {Boolean} (Default: false) Show Backtrace?
-##   code:            {Integer} (Default: 1) Exit code.
+##   print_backtrace: {Boolean} Show Backtrace?
+##                    Optional. Default: false.
+##   code:            {Integer} Exit code.
+##                    Otional. Default: 1.
 
 local msg="$1"
 local print_backtrace=${2:-false}

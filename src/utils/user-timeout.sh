@@ -1,16 +1,17 @@
 ## timeout cmd
-## Time out.
+## Execute command after specific time.
 ##
 ## Params:
 ##   timeout: {Integer} Timeout for count down.
 ##   cmd:     {String} Command to execute on count down finish.
+##
 ## Return: {Integer} Return command exit code or "255" on user cancel.
 
 local timeout_num=$1
 local cmd_to_execute="$2"
 
 if ! @is-number "${timeout_num}" || [ -z "${cmd_to_execute}" ]; then
-  @error 'Invalid call "@timeout"' true 70
+  @error 'Invalid call' true 70
 fi
 
 @print

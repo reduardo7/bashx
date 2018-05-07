@@ -2,7 +2,8 @@
 ## Exit from APP and execute the function setted in "@on-exit".
 ##
 ## Params:
-##   code: {Integer} (Default: 0) Exit code.
+##   code: {Integer} Exit code.
+##         Optional. Default: 0.
 
 if ! ${_APP_EXIT} ; then
   local code=${1:-0}

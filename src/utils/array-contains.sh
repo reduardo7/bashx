@@ -4,6 +4,7 @@
 ## Params:
 ##   source:       {String} Element/String to search.
 ##   search_array: {Array} Array where search for.
+##
 ## Return: 0 if contains the search string, 1 if not contains the search string.
 ##
 ## Usage example:

@@ -4,7 +4,9 @@
 ## Params:
 ##   src:    {String} String to cut.
 ##   limit:  {Integer} Limit.
-##   offset: {Integer} (Optional) Offset.
+##   offset: {Integer} Offset.
+##           Optional. Default: 0.
+##
 ## Out: {String} Result string
 
 local src_str="$1"

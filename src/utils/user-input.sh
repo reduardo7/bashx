@@ -2,11 +2,17 @@
 ## Request user info.
 ##
 ## Params:
-##   msg:     {String} (Default: "") Message.
-##   default: {String} (Default: "") Default value.
-##   max_len: {Integer} (Default: "") Max length for input.
-##   timeout: {Integer} (Default: "") Timeout.
-##   siletn:  {Boolean} (Default: false) Silent user output?
+##   msg:     {String} Message.
+##            Default: "".
+##   default: {String} Default value.
+##            Default: "".
+##   max_len: {Integer} Max length for input.
+##            Default: "".
+##   timeout: {Integer} Timeout.
+##            Default: "".
+##   siletn:  {Boolean} Silent user output?
+##            Default: false.
+##
 ## Output: User input result.
 ## Return: 0 if valid user input, 1 if cancel, 2 if empty user input and returns default value.
 ##

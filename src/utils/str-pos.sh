@@ -4,7 +4,9 @@
 ## Params:
 ##   src:       {String} String where search.
 ##   search:    {String} String to search.
-##   case_sens: {Boolean} (Default: TRUE) TRUE for case sensitive.
+##   case_sens: {Boolean} True for case sensitive.
+##              Optional. Default: true.
+##
 ## Out: {Integer|NULL} String position or NULL if not found.
 ## Return: 0 on fonud, 1 on not found.
 

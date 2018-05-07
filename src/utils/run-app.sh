@@ -1,6 +1,8 @@
 ## @
 ## Run APP.
-## Run arguments as commands if any, or show 'help'.
+##
+## Params:
+##   @: APP parameters.
 ##
 ## Use: At end of /app file, put next:
 ##   @run-app "$@"

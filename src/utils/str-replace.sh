@@ -5,7 +5,9 @@
 ##   src:         {String} String where replace.
 ##   search:      {String} Search string (REG EXP).
 ##   replace:     {String} Replace.
-##   ignore_case: {Boolean} (Default: true) True to ignore case.
+##   ignore_case: {Boolean}True to ignore case.
+##                Optional. Default: true.
+##
 ## Out: {String} Result string.
 
 local src_str="$1"

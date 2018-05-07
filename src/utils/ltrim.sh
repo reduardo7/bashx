@@ -3,7 +3,9 @@
 ##
 ## Params:
 ##   text:      {String} Text.
-##   to_remove: {String} (Optional. Default: ' ') String to remove
+##   to_remove: {String} String to remove.
+##              Optional. Default: " ".
+##
 ## Out: {String} Trimed text.
 
 local a="$1"

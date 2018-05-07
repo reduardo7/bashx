@@ -1,6 +1,7 @@
 ## <<
 ## Script minify.
 ##
+## Input (read from /dev/stdin): File path.
 ## Out: {String} Minified script.
 
 local minify=''

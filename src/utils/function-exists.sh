@@ -3,6 +3,7 @@
 ##
 ## Params:
 ##   func_name: {String} Function name.
+##
 ## Return: 0 if function exists, 1 if file not exists.
 
 local func_name="$1"

@@ -1,9 +1,9 @@
 ## *
 ## Print command and their result.
-## Use it instead of "set -x".
 ##
 ## Params:
 ##   *: {String} Command to print and execute.
+##
 ## Out: {String} Command executed and result.
 ## Return: Executed command exit code.
 

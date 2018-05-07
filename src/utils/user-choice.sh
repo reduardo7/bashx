@@ -4,7 +4,9 @@
 ## Params:
 ##   msg:     {String} Message.
 ##   options: {String} Options. Chars separated by a space.
-##   default: {Char} (Default: "") Default value on non user input or invalid choice.
+##   default: {Char} Default value on non user input or invalid choice.
+##            Optional. Default: "".
+##
 ## Out: User selection or Default.
 ##
 ## Usage example:
