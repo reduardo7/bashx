@@ -1,8 +1,6 @@
 script='fnx() { local x="x" ; echo "${x}a${x}" ; } ; fnx'
-cmd="@cmd-log '${script}'"
-
-output="$(eval "${cmd}" 3>/dev/null)"
+output="$(@cmd-log "${script}" 3>/dev/null 2>/dev/null)"
 @@assertContains "${output}" 'xax'
 
-output="$( (eval "${cmd}" >/dev/null ) 3>&1 )"
-@@assertContains "${output}" "${script}"
+output="$(var=123 ; fnx() { c="var=456 ; echo [${1}]" ; echo "$c" ; eval "$c" ; } ; @cmd-log fnx "\\\$var" 3>/dev/null 2>/dev/null)"
+@@assertContains "${output}" '[456]'
