@@ -1,0 +1,4 @@
+##
+## Alias of "@end".
+
+@end "$@"

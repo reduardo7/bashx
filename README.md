@@ -93,9 +93,14 @@ Show _Development Documentation_ using:
 
 ## Tips
 
-### Command log
+### Command log (set -x)
 
-Use `@cmd-log` instead of `set -x`.
+- Use `@cmd-log` instead of `set -x`.
+
+### APP Exit && Error
+
+- Use `@exit`, `@die` or `@end` to exit.
+- Use `@error` to print an error and exit.
 
 ### Events Workflow
 
