@@ -1,8 +1,9 @@
 ## [*]
 ## Run tests.
 ##
-## *: {String} (Optional) Tests names to execute separated by a space.
-##    If not setted, all tests will be executed.
+## Params:
+##   *: {String} (Optional) Tests names to execute separated by a space.
+##      If not setted, all tests will be executed.
 
 local tests_names_to_execute=($*)
 

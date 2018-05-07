@@ -1,11 +1,12 @@
 ## src search replace [ignore_case]
 ## Replace string.
 ##
-## src:         {String} String where replace.
-## search:      {String} Search string (REG EXP).
-## replace:     {String} Replace.
-## ignore_case: {Boolean} (Default: true) True to ignore case.
-## Out:         {String} Result string.
+## Params:
+##   src:         {String} String where replace.
+##   search:      {String} Search string (REG EXP).
+##   replace:     {String} Replace.
+##   ignore_case: {Boolean} (Default: true) True to ignore case.
+## Out: {String} Result string.
 
 local src_str="$1"
 local search="$2"

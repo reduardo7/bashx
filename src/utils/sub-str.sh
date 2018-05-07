@@ -1,10 +1,11 @@
 ## src limit [offset]
 ## Sub string.
 ##
-## src:    {String} String to cut.
-## limit:  {Integer} Limit.
-## offset: {Integer} (Optional) Offset.
-## Out:    {String} Result string
+## Params:
+##   src:    {String} String to cut.
+##   limit:  {Integer} Limit.
+##   offset: {Integer} (Optional) Offset.
+## Out: {String} Result string
 
 local src_str="$1"
 local limit=$2

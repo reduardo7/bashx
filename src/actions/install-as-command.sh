@@ -1,5 +1,6 @@
 ## action [-f]
 ## Install auto-complete and bin files in current user shell.
+##
 ## Params:
 ##   action: Action to do. Valid values:
 ##     install: Install auto-complete funcion. Use "-f" to force re-install.

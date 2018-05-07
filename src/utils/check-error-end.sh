@@ -1,8 +1,9 @@
 ## code [cmd]
 ## Check error.
 ##
-## code: {Integer} Exit code. Example: $?
-## cmd:  {String} (Optional) Command to execute on error.
+## Params:
+##   code: {Integer} Exit code. Example: $?
+##   cmd:  {String} (Optional) Command to execute on error.
 ##
 ## Example: @check-error $? "Invalid operation".
 

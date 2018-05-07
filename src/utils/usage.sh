@@ -1,8 +1,9 @@
 ## file [prefix]
 ## Print basic usage.
 ##
-## file: {String} File to render usage.
-## prefix: {String} Prefix to render.
+## Params:
+##   file:   {String} File to render usage.
+##   prefix: {String} Prefix to render.
 ## Out: {String} Usage text.
 
 local src="$1"

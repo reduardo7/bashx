@@ -1,13 +1,14 @@
 ## [msg [default [max_len [timeout [silent]]]]]
 ## Request user info.
 ##
-## msg:     {String} (Default: "") Message.
-## default: {String} (Default: "") Default value.
-## max_len: {Integer} (Default: "") Max length for input.
-## timeout: {Integer} (Default: "") Timeout.
-## siletn:  {Boolean} (Default: false) Silent user output?
-## Output:  User input result.
-## Return:  0 if valid user input, 1 if cancel, 2 if empty user input and returns default value.
+## Params:
+##   msg:     {String} (Default: "") Message.
+##   default: {String} (Default: "") Default value.
+##   max_len: {Integer} (Default: "") Max length for input.
+##   timeout: {Integer} (Default: "") Timeout.
+##   siletn:  {Boolean} (Default: false) Silent user output?
+## Output: User input result.
+## Return: 0 if valid user input, 1 if cancel, 2 if empty user input and returns default value.
 ##
 ## Usage example:
 ##     txt="$(@user-input "Enter text:")"

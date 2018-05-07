@@ -1,8 +1,9 @@
 ## [msg]
 ## User confirm.
 ##
-## msg:     {String} (Optional) Message.
-## Return:  0 if user confirm, 1 if user not confirm.
+## Params:
+##   msg: {String} (Optional) Message.
+## Return: 0 if user confirm, 1 if user not confirm.
 
 local msg="$1"
 

@@ -1,7 +1,8 @@
 ## *
 ## Show title.
 ##
-## *: {String} Message.
+## Params:
+##   *: {String} Message.
 
 # Start
 local t=" $@ "

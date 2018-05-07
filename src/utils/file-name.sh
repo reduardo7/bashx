@@ -1,9 +1,10 @@
 ## file [remove_extension]
 ## Get file name.
 ##
-## file:             {String} File path.
-## remove_extension: {Boolean} (Default: false) Remove file extension from file name?
-## Out:              {String} File name.
+## Params:
+##   file:             {String} File path.
+##   remove_extension: {Boolean} (Default: false) Remove file extension from file name?
+## Out: {String} File name.
 
 local path="$1"
 local remove_ext=$2

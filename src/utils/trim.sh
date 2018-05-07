@@ -1,8 +1,9 @@
 ## text [to_remove]
 ## Remove starting and ending spaces from text.
 ##
-## text:      {String} Text.
-## to_remove: {String} (Optional. Default: ' ') String to remove
+## Params:
+##   text:      {String} Text.
+##   to_remove: {String} (Optional. Default: ' ') String to remove
 ## Out: {String} Trimed text.
 
 local a="$1"

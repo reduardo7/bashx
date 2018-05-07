@@ -1,10 +1,11 @@
 ## src search [case_sens]
 ## String contains substring?
 ##
-## src:       {String} String where search.
-## search:    {String} Substring to search.
-## case_sens: {Boolean} (Default: TRUE) TRUE for case sensitive.
-## Return:    0 if contains substring, 1 if not contains substring.
+## Params:
+##   src:       {String} String where search.
+##   search:    {String} Substring to search.
+##   case_sens: {Boolean} (Default: TRUE) TRUE for case sensitive.
+## Return: 0 if contains substring, 1 if not contains substring.
 
 local src_str="$1"
 local search="$2"

@@ -1,7 +1,8 @@
 ## *
 ## Print at screen.
 ##
-## *: {String} Text to print.
+## Params:
+##   *: {String} Text to print.
 
 local str="$*"
 

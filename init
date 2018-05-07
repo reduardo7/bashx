@@ -125,8 +125,11 @@ readonly ACTION_PREFIX="$ACTION_PREFIX"
 
 ### Configs
 
-## Current script SRC path.
-export SRC_PATH="$SCRIPT_DIR/$SCRIPT_FILE_NAME.src"
+## Current script Sources directory.
+export SRC_DIR="${SRC_DIR:-$SCRIPT_FILE_NAME.src}"
+
+## Current script Sources path.
+export SRC_PATH="$SCRIPT_DIR/$SRC_DIR"
 
 ## Configuration file (can be overridden before load).
 export APP_CONFIG_FILE="${APP_CONFIG_FILE:-$SCRIPT_DIR/.$SCRIPT_FILE_NAME.env}"

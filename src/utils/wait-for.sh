@@ -1,11 +1,12 @@
 ## type path [timeout [show_message]]
 ## Wait for directory/file exists.
 ##
-## type:         {char} [d|f] d=Direcotry | f=File
-## path:         {String} Directory/file path.
-## timeout:      {Integer} (Optional | Default: 0) Timeout. 0 to disable timeout.
-## show_message: {Boolean} (Optional | Default: true) Show message.
-## Return:       0 if file exists, 1 if file not exists (time-out).
+## Params:
+##   type:         {char} [d|f] d=Direcotry | f=File
+##   path:         {String} Directory/file path.
+##   timeout:      {Integer} (Optional | Default: 0) Timeout. 0 to disable timeout.
+##   show_message: {Boolean} (Optional | Default: true) Show message.
+## Return:  0 if file exists, 1 if file not exists (time-out).
 
 local wait_type="$1"
 local path="$2"
