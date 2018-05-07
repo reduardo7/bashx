@@ -28,7 +28,7 @@ You can start your project with:
 Where:
 
 - `BASHX_VERSION` is a [_tag_ from this repository](https://github.com/reduardo7/bashx/tags)
-- `PROJECT_NAME` is the _script name_.
+- `PROJECT_NAME` is the _script name_ with _full path_.
 
 ### Examples
 
@@ -132,10 +132,10 @@ set +x
 
 ### Events Workflow
 
-1. `src/events/invalid-action.sh` is called if an invalid action was used.
-2. `src/events/start.sh` is called before valid action is called.
-3. `src/events/error.sh` is called when an error has occurred.
-4. `src/events/exit.sh` is called before finishing.
+1. `src/events/invalid-action.sh` is triggered if an invalid action was used.
+2. `src/events/start.sh` is triggered before a valid action is called.
+3. `src/events/error.sh` is triggered when an error has occurred.
+4. `src/events/exit.sh` is triggered before script has finished.
 
 ## Optimizations
 
