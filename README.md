@@ -101,7 +101,17 @@ Show _Development Documentation_ using:
 
 ### Command log (set -x)
 
-- Use `@cmd-log` instead of `set -x`.
+```bash
+...
+set -x
+  ...
+  echo my test
+  ...
+set +x
+...
+```
+
+- Avoid usage of **BashX** _Functions_ inside of `-x` section.
 
 ### APP Exit && Error
 

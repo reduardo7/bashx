@@ -9,12 +9,16 @@
 
 local cmd="$@"
 
-echo >&3
+@print
 @print-line
-eval "set -x ; ${cmd}"
+
+@print "\$ ${cmd}"
+eval "${cmd}"
 local r=$?
-set +x
-@print "Exit code: ${r}"
+
+@print
+@print "\$ ${cmd} > Exit code: ${r}"
 @print-line
-echo >&3
+@print
+
 return ${r}
