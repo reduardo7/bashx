@@ -93,6 +93,12 @@ Show _Development Documentation_ using:
 
 ## Tips
 
+### Print/Log (echo ...)
+
+- `echo` is used for function output.
+- Use `@print` to print log messages.
+- Use `@warn` to print warning messages.
+
 ### Command log (set -x)
 
 - Use `@cmd-log` instead of `set -x`.
