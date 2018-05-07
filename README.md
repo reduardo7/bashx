@@ -91,6 +91,12 @@ Show _Development Documentation_ using:
 ./demo _dev-doc
 ```
 
+## Tips
+
+### Command log
+
+Use `@cmd-log` instead of `set -x`.
+
 ### Events Workflow
 
 1. `src/events/invalid-action.sh` is called if an invalid action was used.

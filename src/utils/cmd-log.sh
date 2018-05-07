@@ -1,5 +1,6 @@
 ## *
 ## Print command and their result.
+## Use it instead of "set -x".
 ##
 ## Params:
 ##   *:      {String} Command to print and execute.
