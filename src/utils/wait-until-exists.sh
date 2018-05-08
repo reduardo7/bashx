@@ -9,7 +9,7 @@
 ##   show_message: {Boolean} Show message.
 ##                 Optional. Default: true.
 ##
-## Return:  0 if file exists, 1 if file not exists (time-out).
+## Return: 0 if file exists, 1 if file not exists (time-out).
 
 local wait_type="$1"
 local path="$2"
