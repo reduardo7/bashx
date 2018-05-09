@@ -12,7 +12,7 @@ local prefix="$2"
 local cmd="$(@file-name "${src}" true)"
 
 if [[ "${cmd}" == _* ]]; then
-  return 0 # Brak
+  return 0
 fi
 
 local lp='    '
@@ -22,7 +22,7 @@ local sd="$(@style default)"
 local info
 
 if [ -z "${src}" ] || [ ! -f "${src}" ]; then
-  @error "Invalid file '${src}'" true 200
+  @throw-invalid-state "Invalid file '${src}'"
 fi
 
 if [ ! -z "${prefix}" ]; then

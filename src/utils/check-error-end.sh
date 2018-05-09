@@ -3,7 +3,8 @@
 ##
 ## Params:
 ##   code: {Integer} Exit code. Example: $?
-##   cmd:  {String} (Optional) Command to execute on error.
+##   cmd:  {String} Command to execute on error.
+##         Optional.
 ##
 ## Example: @check-error $? "Invalid operation".
 

@@ -10,9 +10,8 @@
 local timeout_num=$1
 local cmd_to_execute="$2"
 
-if ! @is-number "${timeout_num}" || [ -z "${cmd_to_execute}" ]; then
-  @error 'Invalid call' true 70
-fi
+@is-number "${timeout_num}" || @throw-invalid-param "$0" timeout_num
+[ -z "${cmd_to_execute}" ] && @throw-invalid-param "$0" cmd_to_execute
 
 @print
 

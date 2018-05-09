@@ -8,12 +8,17 @@ export BASHX_VERSION="master"
 ### Begin Example ###
 
 @Actions.action1() { # \\n Action without arguments
-  # ... Your code here ...
-  @print Action 1
+  @print "
+  Action 1
+  Multi-Line
+"
 }
 
-@Actions.action2() { # param1 param2 \\n Action with arguments
-  # ... Your code here ...
+@Actions.action2() { # param1 [param2] \\n Action with arguments
+  local param1="$1"
+  local param2="$2"
+  [ "$param1" != 'asd' ] && @throw-invalid-param "$0" param1
+
   @print Action 2
   @print Param1: $1
   @print Param2: $2

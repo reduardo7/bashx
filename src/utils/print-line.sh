@@ -1,4 +1,4 @@
-## [len [str [prefix [sufix]]]]
+## [len [str [prefix [suffix]]]]
 ## Print line.
 ##
 ## Params:
@@ -8,12 +8,12 @@
 ##           Optional. Default: '='.
 ##   prefix: {String} Line prefix.
 ##           Optional. Default: ''.
-##   sufix:  {String} Line sufix.
+##   suffix:  {String} Line suffix.
 ##           Optional. Default: ''.
 
 local len=${1:-80}
 local str="${2:-=}"
 local prefix="${3}"
-local sufix="${4}"
+local suffix="${4}"
 
-@print "${prefix}$(@str-repeat ${len} "${str}")${sufix}"
+@print "${prefix}$(@str-repeat ${len} "${str}")${suffix}"

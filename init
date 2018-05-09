@@ -188,6 +188,9 @@ export ACTION=""
 ## APP Temporary path.
 export APP_TMP_PATH="$(mktemp -d)"
 
+## True if APP is terminated with illegal error
+APP_EXIT_ILLEGAL_ERROR=false
+
 # #############################################################################
 
 ### PRIVATE VARS

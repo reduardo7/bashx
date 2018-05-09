@@ -12,8 +12,6 @@ local msg="$1"
 local print_backtrace=${2:-false}
 local code=${3:-1}
 
-@alert "@@@ Error! @@@"
-
 if [ ! -z "${msg}" ]; then
   @warn
   @alert "${msg}"
