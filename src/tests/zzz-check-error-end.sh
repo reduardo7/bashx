@@ -1,3 +1,5 @@
+# This test should be the last executed
+
 str='asdfg'
 
 @@assertNoOut "@check-error-end 0 'echo ${str}'"

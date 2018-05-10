@@ -1,14 +1,15 @@
-## file [prefix]
-## Print basic usage.
+## src [prefix]
+## Print basic script usage.
 ##
 ## Params:
-##   file:   {String} File to render usage.
-##   prefix: {String} Prefix to render.
+##   src:    {String} File to read usage.
+##   prefix: {String} Usage prefix.
+##           Optional. Default: ${SCRIPT_FILE_NAME}.
 ##
 ## Out: {String} Usage text.
 
 local src="$1"
-local prefix="$2"
+local prefix="${2:-$SCRIPT_FILE_NAME}"
 local cmd="$(@file-name "${src}" true)"
 
 if [[ "${cmd}" == _* ]]; then

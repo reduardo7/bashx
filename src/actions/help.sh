@@ -2,22 +2,12 @@
 ## Print basic usage (this).
 
 local prefix="${SCRIPT_FILE_NAME} "
+local line
 
-@print
-@print "Usage:"
-@print
+@title 'Help & Usage'
 
 # Main
-egrep "^\\s*${ACTION_PREFIX}\.[^()]+\\(\\)\\s*\\{" "${SCRIPT_FULL_PATH}" \
-  | egrep -v "^\\s*${ACTION_PREFIX}\._" \
-  | while read line
-  do
-    line="  $(@style color:red)${prefix}$(@style color:green)$(@str-replace "${line}" "^\\s*${ACTION_PREFIX/\@/\\@}\\." '')"
-    line="$(@str-replace "${line}" '\(\)\s*\{\s*#*\s*' "$(@style default) ")"
-    line="$(@str-replace "${line}" '\s*\\n\s*' "\n${APP_PRINT_PREFIX}     ")"
-    @print "$(@str-replace "${line}" '\s*\\t\s*' '    ')"
-    @print # Space
-  done
+@usage-main "${SCRIPT_FULL_PATH}" "${prefix}"
 
 # Actions
 if [ -d "${ACTIONS_PATH}" ]; then

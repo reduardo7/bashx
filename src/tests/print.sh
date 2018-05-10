@@ -3,7 +3,7 @@ output="$(@print 'no print' 3>/dev/null)"
 
 output="$(@print "foo\tbar" 3>&1)"
 @@assertNotEmpty "${output}"
-@@assertNotContains "${output}" "foo\tbar"
+@@assertNotContains "${output}" "foo  bar"
 @@assertContains "${output}" 'foo'
 @@assertContains "${output}" 'bar'
 @@assertContains "${output}" "${APP_PRINT_PREFIX}"

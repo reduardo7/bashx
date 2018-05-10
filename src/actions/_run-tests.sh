@@ -229,12 +229,15 @@ if [ -d "${TESTS_PATH}" ]; then
   for f in ${TESTS_PATH}/* ; do
     if [ -f "${f}" ]; then
       local src_test_name="$(@file-name "${f}" true)"
-      if [ -z "${tests_names_to_execute}" ] || @array-contains "${src_test_name}" "${tests_names_to_execute[@]}" ]]; then
+      if [ -z "${tests_names_to_execute}" ] || @array-contains "${src_test_name}" "${tests_names_to_execute[@]}" ; then
         @print "$(@style color:yellow)Testing ${src_test_name}..."
         let count=count+1
 
         __rmAssertionFailFile__
-        ( . "${f}" ; exit $? )
+        (
+          . "${f}"
+          exit $?
+        )
         test_result=$?
 
         if [[ ${test_result} -eq 0 ]]; then

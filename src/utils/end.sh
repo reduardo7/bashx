@@ -39,7 +39,7 @@ if ! ${_APP_EXIT} ; then
   fi
 
   # Cleanup
-  if [ ! -z "${APP_TMP_PATH}" ]; then
+  if [ ! -z "${APP_TMP_PATH}" ] && [ -d "${APP_TMP_PATH}" ]; then
     rm -rf "${APP_TMP_PATH}" || true
   fi
 
