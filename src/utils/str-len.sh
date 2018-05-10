@@ -6,5 +6,5 @@
 ##
 ## Out: {Integer} String length.
 
-local str="$(@remove-format "$@")"
+local str="$(@remove-format "$*")"
 echo ${#str}

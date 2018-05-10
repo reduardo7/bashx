@@ -8,14 +8,16 @@
 ##
 ## Out: {String} File name.
 
-local path="$1"
-local remove_ext=${2:-false}
+local file="$1"
+local remove_extension=${2:-false}
 
-# Remove path
-local _fname="$(basename "${1}")"
+if [ ! -z "${file}" ]; then
+  # Remove path
+  local _fname="$(basename "${file}")"
 
-# Remove extension
-${remove_ext} && _fname="${_fname%.*}"
+  # Remove extension
+  ${remove_extension} && _fname="${_fname%.*}"
 
-# Result
-echo "${_fname}"
+  # Result
+  echo "${_fname}"
+fi

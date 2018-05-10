@@ -38,7 +38,7 @@ if [ -z "${ACTION}" ]; then
   fi
 
   ${ACTION_PREFIX}.${ACTION}
-elif [ $# -gt 0 ]; then
+elif [[ $# -gt 0 ]]; then
   shift # Remove "Action" from parameters
 
   # If function (Action) exists
@@ -65,7 +65,7 @@ elif [ $# -gt 0 ]; then
       r=$?
       unset -f appOnInvalidAction
     else
-      local _sr="$(@style color:red)"
+      local _sr="$(@style default color:red)"
       @error "Parameter '$(@style color:green)${ACTION}${_sr}' not found. Call '$(@style bold)help${_sr}' to see help."
     fi
   fi

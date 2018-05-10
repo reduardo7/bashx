@@ -10,63 +10,55 @@
 ##            Default: "".
 ##   timeout: {Integer} Timeout.
 ##            Default: "".
-##   siletn:  {Boolean} Silent user output?
+##   silent:  {Boolean} Silent user output?
 ##            Default: false.
 ##
 ## Output: User input result.
-## Return: 0 if valid user input, 1 if cancel, 2 if empty user input and returns default value.
+## Return: 0 if valid user input;
+##         1 if cancel;
+##         2 if empty user input and returns default value.
 ##
 ## Usage example:
-##     txt="$(@user-input "Enter text:")"
-##     exitCode=$?
+##   local txt="$(@user-input "Enter text:")"
+##   local exitCode=$?
 
-# 1: Message
-local m=""
-if [ $# -gt 0 ]; then
-  m="${1}"
+local msg="$1"
+local default="$2"
+local max_len="$3"
+local timeout="$4"
+local silent=${5:-false}
+
+local cmd='read'
+
+if [ ! -z "${max_len}" ] && @is-number "${max_len}"; then
+  cmd="${cmd} -n ${max_len}"
 fi
 
-# 2: Default Value
-local d=""
-if [ $# -gt 1 ]; then
-  d="${2}"
+if [ ! -z "${timeout}" ] && @is-number "${timeout}"; then
+  cmd="${cmd} -t ${timeout}"
 fi
 
-# 3: Max length
-local n=""
-if [ $# -gt 2 ] && @is-number "${3}"; then
-  n=" -n ${3}"
-fi
-
-# 4: Timeout
-local t=""
-if [ $# -gt 3 ] && @is-number "${4}"; then
-  t=" -t ${4}"
-fi
-
-# 5: Silent outut
-local s=""
-if [ $# -gt 4 ] && ${5}; then
-  s=" -s"
+if ${silent}; then
+  cmd="${cmd} -s"
 fi
 
 # Execute
-local cmd="read${n}${s}${t}"
-${cmd} -p "$(@style default)${APP_PRINT_PREFIX} ${m}$(@style system)" i >&3
+local i
+${cmd} -p "$(@style default)${APP_PRINT_PREFIX} ${msg}$(@style system)" i >&3
 local r=$?
 local rta=0
 
 echo >&3
 
-if [ "${i}" == "$KEY_ESC" ]; then
+if [ "${i}" == "${KEY_ESC}" ]; then
   rta=1
-  i="${d}"
+  i="${default}"
 else
   # 142 == No user input
   if [ "${r}" == '142' ] || [ -z "${i}" ]; then
     # Default value
     rta=2
-    i="${d}"
+    i="${default}"
   fi
 fi
 

@@ -10,20 +10,18 @@
 ##
 ## Out: {String} Result string.
 
-local src_str="$1"
+local src="$1"
 local search="$2"
 local replace="$3"
-local ignore_case=$4
+local ignore_case=${4:-true}
 
-if [ -z "${src_str}" ]; then
+if [ -z "${src}" ]; then
   echo ''
 elif [ -z "${search}" ]; then
-  echo "${src_str}"
+  echo "${src}"
 else
-  [ -z "${ignore_case}" ] && ignore_case=true
-
   local options='g'
   ${ignore_case} && options="${options}i"
 
-  perl -C -Mutf8 -pe "s/${search}/${replace}/${options}" <<<"${src_str}"
+  perl -C -Mutf8 -pe "s/${search}/${replace}/${options}" <<<"${src}"
 fi

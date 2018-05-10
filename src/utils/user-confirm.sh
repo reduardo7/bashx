@@ -9,10 +9,11 @@
 
 local msg="${1:-Confirm?}"
 
-echo -n "$(@style default)${APP_PRINT_PREFIX} $msg (y/n) " >&3
+echo -n "$(@style default)${APP_PRINT_PREFIX} ${msg} (y/n) " >&3
 
 while true ; do
   read -s -n 1 choice >&3
+
   case "$choice" in
     y|Y ) echo Y >&3 ; return 0 ;;
     n|N ) echo N >&3 ; return 1 ;;

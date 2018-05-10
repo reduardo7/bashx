@@ -8,14 +8,17 @@
 ##
 ## Out: {String} Trimed text.
 
-local a="$1"
-local b=''
-local s="${2:- }"
+local text="$1"
+local to_remove="${2:- }"
 
-while [[ ${#a} -ne ${#b} ]]; do
-  b="$a"
-  a="${a#$s}" # LTRIM
-  a="${a%$s}" # RTRIM
-done
+if [ ! -z "${text}" ] && [ ! -z "${to_remove}" ]; then
+  local old=''
 
-echo -n "$a"
+  while [[ ${#text} -ne ${#old} ]]; do
+    old="${text}"
+    text="${text#$to_remove}" # LTRIM
+    text="${text%$to_remove}" # RTRIM
+  done
+fi
+
+echo -n "${text}"

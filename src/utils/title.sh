@@ -5,7 +5,7 @@
 ##   *: {String} Message.
 
 # Start
-local t=" $@ "
+local t=" $* "
 local l=$(@str-len "${t}")
 
 @print-line $l '-' '+-' '-+'

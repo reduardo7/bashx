@@ -9,12 +9,12 @@
 ##
 ## Out: {String} Result string
 
-local src_str="$1"
+local src="$1"
 local limit=$2
 local offset=$3
 
-if [ -z "${offset}" ] || [[ ${offset} -eq 0 ]]; then
-  echo "${src_str:0:${limit}}"
+if [ -z "${offset}" ] || [[ ${offset} -eq 0 ]] || ! @is-number "${offset}"; then
+  echo "${src:0:${limit}}"
 else
-  echo "${src_str:${offset}:${limit}}"
+  echo "${src:${offset}:${limit}}"
 fi

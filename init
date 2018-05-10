@@ -146,6 +146,9 @@ export APP_COLOR_DEFAULT="cyan-light"
 ## Output colors?
 export APP_COLORS_ENABLED=true
 
+## APP colsumns width.
+export APP_WIDTH=80
+
 ## Start character for formated print screen. See "@print" for more information.
 export APP_PRINT_PREFIX="#"
 

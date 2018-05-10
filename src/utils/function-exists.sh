@@ -8,9 +8,8 @@
 
 local func_name="$1"
 
-if declare -f "${func_name}" >/dev/null 2>&1
-  then
-    return 0
-  else
-    return 1
-  fi
+if [ ! -z "${func_name}" ]; then
+  declare -f "${func_name}" >/dev/null 2>&1 && return 0
+fi
+
+return 1

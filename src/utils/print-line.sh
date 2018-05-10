@@ -1,9 +1,9 @@
 ## [len [str [prefix [suffix]]]]
-## Print line.
+## Print line with {str}.
 ##
 ## Params:
 ##   len:    {Integer} Line length ({str} repeat count).
-##           Optional. Default: 80.
+##           Optional. Default: ${APP_WIDTH}.
 ##   str:    {String} String to repeat in line.
 ##           Optional. Default: '='.
 ##   prefix: {String} Line prefix.
@@ -11,7 +11,7 @@
 ##   suffix:  {String} Line suffix.
 ##           Optional. Default: ''.
 
-local len=${1:-80}
+local len=${1:-$APP_WIDTH}
 local str="${2:-=}"
 local prefix="${3}"
 local suffix="${4}"

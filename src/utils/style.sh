@@ -85,12 +85,12 @@
 ##   @style background gray
 ##   @print "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
 
-if $APP_COLORS_ENABLED; then
+if ${APP_COLORS_ENABLED}; then
   local OIFS="$IFS"
 
   # No parameters
   local prms="$@"
-  if [ $# -eq 0 ]; then
+  if [[ $# -eq 0 ]]; then
     # Default color
     prms='default'
   fi

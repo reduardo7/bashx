@@ -1,8 +1,8 @@
-## msg options [default]
+## message options [default]
 ## User choice.
 ##
 ## Params:
-##   msg:     {String} Message.
+##   message: {String} Message.
 ##   options: {String} Options. Chars separated by a space.
 ##   default: {Char} Default value on non user input or invalid choice.
 ##            Optional. Default: "".
@@ -15,10 +15,14 @@
 # Message
 local message="$1"
 # Options
-local options=("$2")
+local options=($2)
 # Default result
-local result="$3"
+local default="$3"
 
+[ -z "$message" ] && @throw-invalid-param "$0" message
+[ -z "$options" ] && @throw-invalid-param "$0" options
+
+local result="$default"
 local user_input
 
 # Read
@@ -26,15 +30,15 @@ read -n 1 -p "$(@style default)${APP_PRINT_PREFIX} ${message} [${options}]: " us
 echo >&3
 
 # Validate input
-user_input=$(@trim "$user_input")
-if [ ! -z "$user_input" ]; then
-  for x in ${options[@]}; do
-    if [ "$x" == "$user_input" ]; then
+user_input=$(@trim "${user_input}")
+if [ ! -z "${user_input}" ]; then
+  for option in ${options[@]}; do
+    if [ "${option}" == "${user_input}" ]; then
       # Valid input
-      result="$x"
+      result="${option}"
     fi
   done
 fi
 
 # Result
-echo $result
+echo "${result}"

@@ -2,20 +2,21 @@
 ## Install auto-complete and bin files in current user shell.
 ##
 ## Params:
-##   action: Action to do. Valid values:
-##     install: Install auto-complete funcion. Use "-f" to force re-install.
+##   action: {Constant} Action to do. Valid values:
+##     install:   Install auto-complete funcion. Use "-f" to force re-install.
 ##     uninstall: Uninstall auto-complete function. Use "-f" for no inreractive mode.
-##   -f: Force action (no interactive).
+##   -f:     {Constant} Force action (no interactive).
+##           Optional. Default: "".
 
-[ -z "$HOME" ] || [ ! -d "$HOME" ] && error "Invalid Env \$HOME='$HOME'"
+[ -z "$HOME" ] || [ ! -d "$HOME" ] && @throw-invalid-param "$0" HOME
 
 local action="$1"
 local force="$2"
 
-local scrpt="${SCRIPT_FILE_NAME"
-local bcfile="$HOME/.${scrpt}_completion"
+local scrpt="${SCRIPT_FILE_NAME}"
+local bcfile="${HOME}/.${scrpt}_completion"
 local bcline=". $bcfile"
-local rcs=".bashrc .zshrc .shrc"
+local rcs=(.bashrc .zshrc .shrc)
 local l="PATH=\"$SCRIPT_DIR:\$PATH\" ; export PATH=\"\$PATH\" ; $bcline"
 local p
 local r
@@ -27,12 +28,12 @@ else
 fi
 
 case "$action" in
-  "install")
+  install)
     if $force || [ ! -f "$bcfile" ]; then
       # Create file
-      @print "Creating '`@style bold`$bcfile`@style default`' file..."
+      @print "Creating '$(@style bold)$bcfile$(@style default)' file..."
 
-cat > "$bcfile" <<EOF
+      cat > "$bcfile" <<EOF
 # bash completion for $scrpt ($SCRIPT_FULL_PATH)
 _${scrpt}_methods() {
   grep \"^\\s*\\(function\\s\\+\\)\\?${ACTION_PREFIX}\\..\\+()\\s*{.*\$\" \"\${1}\" | while read line ; do
@@ -71,12 +72,12 @@ EOF
 
     for r in $rcs ; do
       p="$HOME/$r"
+
       if [ -f "$p" ]; then
-        if grep "$l" "$p" >/dev/null 2>&1
-          then
-            @print "Already installed in '`@style bold`$r`@style default`'"
+        if grep -q "$l" "$p" ; then
+            @print "Already installed at '$(@style bold)$r$(@style default)'"
           else
-            @print "Installing in '`@style bold`$r`@style default`'..."
+            @print "Installing in '$(@style bold)$r$(@style default)'..."
             echo >> "$p"
             echo "$l" >> "$p"
           fi
@@ -85,11 +86,13 @@ EOF
 
     @print "Done!"
   ;;
-  "uninstall")
+  uninstall)
     @print "Uninstalling..."
+
     if [ -f "$bcfile" ]; then
       # Delete file
-      @print "Deleting '`@style bold`$bcfile`@style default`' file..."
+      @print "Deleting '$(@style bold)$bcfile$(@style default)' file..."
+
       if $force; then
         # Force
         rm -f "$bcfile"
@@ -104,7 +107,7 @@ EOF
       if [ -f "$p" ]; then
         if grep "$l" "$p" >/dev/null 2>&1
           then
-            @print "Removing from '`@style bold`$r`@style default`'..."
+            @print "Removing from '$(@style bold)$r$(@style default)'..."
             if $force; then
               # Force
               cat "$p" | grep -v "$l" > "${p}.2" && mv -f "${p}.2" "$p"
@@ -120,6 +123,6 @@ EOF
   ;;
   *)
     # Invalid action
-    @error "Invalid action '`@style bold`$action`@style default`'"
+    @throw-invalid-param "$0" action
   ;;
 esac

@@ -3,4 +3,8 @@
 ##
 ## Out: {Integer} Screen width.
 
-tput cols
+if type tput >/dev/null 2>/dev/null; then
+  tput cols
+else
+  echo ${APP_WIDTH}
+fi

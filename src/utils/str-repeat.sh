@@ -7,13 +7,16 @@
 ##
 ## Out: {String} Repeated string.
 
-local repeats_count=$1
-local str_repeat="$2"
-local str=''
+local count=$1
+local str="$2"
 
-while [[ ${repeats_count} -gt 0 ]]; do
-  str="${str}${str_repeat}"
-  let repeats_count=$repeats_count-1
-done
+if [ ! -z "${count}" ] && [[ ${count} -gt 0 ]] && [ ! -z "${str}" ]; then
+  local result=''
 
-echo "${str}"
+  while [[ ${count} -gt 0 ]]; do
+    result="${result}${str}"
+    count=$((count - 1))
+  done
+
+  echo "${result}"
+fi

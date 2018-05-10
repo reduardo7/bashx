@@ -5,4 +5,4 @@
 ## Params:
 ##   *: Text to log
 
-@console-log "$@" >> "$LOG_FILE_PATH" 2>&1
+@console-log "$*" >> "$LOG_FILE_PATH" 2>&1

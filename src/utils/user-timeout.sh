@@ -1,27 +1,30 @@
-## timeout cmd
+## timeout cmd [message]
 ## Execute command after specific time.
 ##
 ## Params:
 ##   timeout: {Integer} Timeout for count down.
 ##   cmd:     {String} Command to execute on count down finish.
+##   message: {String} Message.
+##            Optional. Default: "Count down".
 ##
 ## Return: {Integer} Return command exit code or "255" on user cancel.
 
-local timeout_num=$1
-local cmd_to_execute="$2"
+local timeout=$1
+local cmd="$2"
+local message="${3:-Count down}"
 
-@is-number "${timeout_num}" || @throw-invalid-param "$0" timeout_num
-[ -z "${cmd_to_execute}" ] && @throw-invalid-param "$0" cmd_to_execute
+@is-number "${timeout}" || @throw-invalid-param "$0" timeout
+[ -z "${cmd}" ] && @throw-invalid-param "$0" cmd
 
 @print
 
-local COUNT=${timeout_num}
+local count=${timeout}
 local rta=0
 local r
 local i
 
-while [[ ${COUNT} -gt 0 ]] && [[ ${rta} -eq 0 ]] ; do
-  @print-back "Count down [${COUNT}]... Press [C] or [ESC] to cancel..."
+while [[ ${count} -gt 0 ]] && [[ ${rta} -eq 0 ]] ; do
+  @print-back "${message} [${count}]... Press [C] or [ESC] to cancel..."
   read -n 1 -s -t 1 -p '' i
   r=$?
   if [ "${i}" == 'c' ] || [ "${i}" == 'C' ] || [ "${i}" == "${KEY_ESC}" ]; then
@@ -29,16 +32,16 @@ while [[ ${COUNT} -gt 0 ]] && [[ ${rta} -eq 0 ]] ; do
   else
     # 142 == No user input
     if [ "${r}" == '142' ]; then
-      let COUNT=COUNT-1
+      count=$((count - 1))
     fi
   fi
 done
 
 @print-back # Remove last line
 
-if [[ ${COUNT} -eq 0 ]]; then
+if [[ ${count} -eq 0 ]]; then
   @print-back
-  eval "${cmd_to_execute}"
+  eval "${cmd}"
   return $?
 else
   # Canceled

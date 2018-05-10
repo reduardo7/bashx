@@ -6,7 +6,7 @@
 if [[ "$(id -u)" -ne 0 ]]; then
   # No Root
   return 1
-else
-  # Root
-  return 0
 fi
+
+# Root
+return 0

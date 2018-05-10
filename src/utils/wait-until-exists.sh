@@ -22,7 +22,8 @@ local show_message=$4
 local p='...'
 local count=0
 
-while ( [ "${wait_type}" == 'd' ] && [ ! -d "${path}" ] ) || ( [ "${wait_type}" == 'f' ] && [ ! -f "${path}" ] )
+while ( [ "${wait_type}" == 'd' ] && [ ! -d "${path}" ] ) \
+  || ( [ "${wait_type}" == 'f' ] && [ ! -f "${path}" ] )
   do
     if ${show_message}; then
       if [[ ${timeout} -gt 1 ]]; then
@@ -30,7 +31,7 @@ while ( [ "${wait_type}" == 'd' ] && [ ! -d "${path}" ] ) || ( [ "${wait_type}" 
           # Time out!
           return 1
         else
-          let count=count+1
+          count=$((count+1))
         fi
       fi
 

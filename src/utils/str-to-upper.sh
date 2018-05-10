@@ -6,4 +6,6 @@
 ##
 ## Out: {String} Result string.
 
-tr '[a-z]' '[A-Z]' <<<"$*"
+local text="$*"
+
+[ ! -z "${text}" ] && tr '[a-z]' '[A-Z]' <<<"${text}"
