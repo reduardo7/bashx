@@ -1,8 +1,8 @@
 result="$(@app-info)"
 
-@@assertNotEmpty "${result}"
-@@assertContains "${result}" "${APP_TITLE}"
-@@assertContains "${result}" "v${APP_VERSION}"
+@@assert.notEmpty "${result}"
+@@assert.contains "${result}" "${APP_TITLE}"
+@@assert.contains "${result}" "v${APP_VERSION}"
 
-@@assertStdOut "@app-info 'output this'"
-@@assertNoErrOut "@app-info 'no output this'"
+@@assert.stdOut "@app-info 'output this'"
+@@assert.noErrOut "@app-info 'no output this'"

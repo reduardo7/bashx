@@ -6,6 +6,6 @@ else
   is_root=true
 fi
 
-@@assertNoOut '@is-root'
+@@assert.noOut '@is-root'
 
-@@assertExec '@is-root' ${is_root}
+@@assert.exec '@is-root' ${is_root}

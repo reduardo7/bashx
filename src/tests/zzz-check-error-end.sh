@@ -2,24 +2,24 @@
 
 str='asdfg'
 
-@@assertNoOut "@check-error-end 0 'echo ${str}'"
-@@assertErrOut "@check-error-end 1 'echo ${str} >&2'"
-@@assertStdOut "@check-error-end 1 'echo ${str}'"
+@@assert.noOut "@check-error-end 0 'echo ${str}'"
+@@assert.errOut "@check-error-end 1 'echo ${str} >&2'"
+@@assert.stdOut "@check-error-end 1 'echo ${str}'"
 
 result="$(@check-error-end 0 "echo ${str}" 2>/dev/null)"
-@@assertEmpty "${result}"
+@@assert.empty "${result}"
 
 result="$(@check-error-end 1 "echo ${str}" 2>/dev/null)"
-@@assertEqual "${str}" "${result}"
+@@assert.equal "${str}" "${result}"
 
 result="$(@check-error-end 200 "echo ${str}" 2>/dev/null)"
-@@assertEqual "${str}" "${result}"
+@@assert.equal "${str}" "${result}"
 
 result="$(@check-error-end 1 "echo ${str}" 2>/dev/null ; echo "xxx")"
-@@assertEqual "${str}" "${result}"
+@@assert.equal "${str}" "${result}"
 
 result="$(@check-error-end 0 "echo xxx" 2>/dev/null ; echo "${str}")"
-@@assertEqual "${str}" "${result}"
+@@assert.equal "${str}" "${result}"
 
-@@assertExec '@check-error-end' true '0 "echo xxx"'
-@@assertExec '@check-error-end' false '1 "echo xxx"'
+@@assert.exec '@check-error-end' true '0 "echo xxx"'
+@@assert.exec '@check-error-end' false '1 "echo xxx"'

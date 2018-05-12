@@ -1,8 +1,8 @@
-@@assertNoErrOut '@screen-width'
-@@assertStdOut '@screen-width'
+@@assert.noErrOut '@screen-width'
+@@assert.stdOut '@screen-width'
 
 sw="$(@screen-width)"
 
-@@assertNumber "${sw}"
+@@assert.number "${sw}"
 
-[[ ${sw} -gt 0 ]] || @@assertFail "Screen Width: ${sw} <= 0"
+[[ ${sw} -gt 0 ]] || @@assert.fail "Screen Width: ${sw} <= 0"

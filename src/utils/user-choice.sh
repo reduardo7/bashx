@@ -19,8 +19,8 @@ local options=($2)
 # Default result
 local default="$3"
 
-[ -z "$message" ] && @throw-invalid-param "$0" message
-[ -z "$options" ] && @throw-invalid-param "$0" options
+[ -z "$message" ] && @throw-invalid-param "${FUNCNAME[0]}" message
+[ -z "$options" ] && @throw-invalid-param "${FUNCNAME[0]}" options
 
 local result="$default"
 local user_input

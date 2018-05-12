@@ -1,14 +1,14 @@
-file="$(mktemp)"
+file="$(@mktemp)"
 
 echo foo >${file}
 echo bar >>${file}
 echo goo >>${file}
 
 result="$(@file-contains 'bar' "${file}")"
-@@assertNoOut "${result}"
+@@assert.noOut "${result}"
 
 @file-contains 'bar' "${file}"
-@@assertNotErrorCode $?
+@@assert.notErrorCode $?
 
 @file-contains 'xx' "${file}"
-@@assertErrorCode $?
+@@assert.errorCode $?

@@ -1,8 +1,8 @@
-@@assertNoErrOut '@str-len'
-@@assertNoErrOut '@str-len "a"'
+@@assert.noErrOut '@str-len'
+@@assert.noErrOut '@str-len "a"'
 
 sl="$(@str-len "$(@style color:blue)abc$(@style color:default) ")"
 
-@@assertNumber "${sl}"
+@@assert.number "${sl}"
 
-[[ ${sl} -eq 4 ]] || @@assertFail "Str-Len: ${sl} != 4"
+[[ ${sl} -eq 4 ]] || @@assert.fail "Str-Len: ${sl} != 4"

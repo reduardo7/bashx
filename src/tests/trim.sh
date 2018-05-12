@@ -1,12 +1,12 @@
-@@assertNoErrOut '@trim'
-@@assertNoErrOut '@trim a'
+@@assert.noErrOut '@trim'
+@@assert.noErrOut '@trim a'
 
-@@assertEqual 'a b1' "$(@trim ' a b1 ')"
-@@assertEqual 'a b2' "$(@trim '    a b2     ')"
+@@assert.equal 'a b1' "$(@trim ' a b1 ')"
+@@assert.equal 'a b2' "$(@trim '    a b2     ')"
 
-@@assertEqual ' a x b4 ' "$(@trim 'xxx a x b4 xxx' 'x')"
-@@assertEqual 'XXX a x b5 XXX' "$(@trim 'XXX a x b5 XXX' 'x')"
+@@assert.equal ' a x b4 ' "$(@trim 'xxx a x b4 xxx' 'x')"
+@@assert.equal 'XXX a x b5 XXX' "$(@trim 'XXX a x b5 XXX' 'x')"
 
-@@assertEqual ' ab ' "$(@trim 'ab ab ab' 'ab')"
-@@assertEqual 'ab' "$(@trim 'ab ab ab' 'ab ')"
-@@assertEqual 'ba' "$(@trim 'abbaab' 'ab')"
+@@assert.equal ' ab ' "$(@trim 'ab ab ab' 'ab')"
+@@assert.equal 'ab' "$(@trim 'ab ab ab' 'ab ')"
+@@assert.equal 'ba' "$(@trim 'abbaab' 'ab')"
