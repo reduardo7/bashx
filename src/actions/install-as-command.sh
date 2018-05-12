@@ -8,7 +8,7 @@
 ##   -f:     {Constant} Force action (no interactive).
 ##           Optional. Default: "".
 
-[ -z "$HOME" ] || [ ! -d "$HOME" ] && @throw-invalid-param "$0" HOME
+[ -z "$HOME" ] || [ ! -d "$HOME" ] && @throw-invalid-param "${FUNCNAME[0]}" HOME
 
 local action="$1"
 local force="$2"
@@ -123,6 +123,6 @@ EOF
   ;;
   *)
     # Invalid action
-    @throw-invalid-param "$0" action
+    @throw-invalid-param "${FUNCNAME[0]}" action
   ;;
 esac

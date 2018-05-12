@@ -14,7 +14,7 @@ local to=$((timeout - 1))
 local s
 local ms
 
-[[ $to -lt 1 ]] && @throw-invalid-param "$0" timeout
+[[ $to -lt 1 ]] && @throw-invalid-param "${FUNCNAME[0]}" timeout
 
 for s in $(seq 0 $to); do
   for ms in $(seq 0 25 75); do

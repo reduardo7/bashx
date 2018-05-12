@@ -1,4 +1,4 @@
-@@assertNoErrOut '@random'
-@@assertStdOut '@random'
+@@assert.noErrOut '@random'
+@@assert.stdOut '@random'
 
-@@assertRegExp '^[a-zA-Z0-9]+$' "$(@random)"
+@@assert.regExp '^[a-zA-Z0-9]+$' "$(@random)"

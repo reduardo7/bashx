@@ -1,10 +1,10 @@
 output="$(@print 'no print' 3>/dev/null)"
-@@assertEmpty "${output}"
+@@assert.empty "${output}"
 
 output="$(@print "foo\tbar" 3>&1)"
-@@assertNotEmpty "${output}"
-@@assertNotContains "${output}" "foo  bar"
-@@assertContains "${output}" 'foo'
-@@assertContains "${output}" 'bar'
-@@assertContains "${output}" "${APP_PRINT_PREFIX}"
-@@assertEndWith "${output}" "$(@style reset)"
+@@assert.notEmpty "${output}"
+@@assert.notContains "${output}" "foo  bar"
+@@assert.contains "${output}" 'foo'
+@@assert.contains "${output}" 'bar'
+@@assert.contains "${output}" "${APP_PRINT_PREFIX}"
+@@assert.endWith "${output}" "$(@style reset)"

@@ -13,8 +13,8 @@ local timeout=$1
 local cmd="$2"
 local message="${3:-Count down}"
 
-@is-number "${timeout}" || @throw-invalid-param "$0" timeout
-[ -z "${cmd}" ] && @throw-invalid-param "$0" cmd
+@is-number "${timeout}" || @throw-invalid-param "${FUNCNAME[0]}" timeout
+[ -z "${cmd}" ] && @throw-invalid-param "${FUNCNAME[0]}" cmd
 
 @print
 

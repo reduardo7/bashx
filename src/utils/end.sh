@@ -5,12 +5,13 @@
 ##   code: {Integer} Exit code.
 ##         Optional. Default: 0.
 
-if ! ${_APP_EXIT} ; then
-  local code=${1:-0}
+local code=${1:-0}
 
-  if ! @is-number ${code}; then
-    code=0
-  fi
+if ! @is-number ${code}; then
+  code=0
+fi
+
+if ! ${_APP_EXIT} ; then
 
   # Mark as exit
   _APP_EXIT=true
@@ -48,7 +49,7 @@ if ! ${_APP_EXIT} ; then
 
   # Space
   echo >&3
-
-  # Exit
-  exit ${code}
 fi
+
+# Exit
+exit ${code}

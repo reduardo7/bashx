@@ -3,6 +3,7 @@
 ##
 ## Params:
 ##   script_name:    {String} Function/Script name.
+##                   Tip: You can use "${FUNCNAME[0]}" or "$0".
 ##   variable_name:  {String} Parameter/Variable name.
 ##   note:           {String} Extra note about the error.
 ##                   Optional.

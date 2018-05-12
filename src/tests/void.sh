@@ -1,5 +1,5 @@
-@@assertNoOut '@void'
-@@assertNoOut '@void "a" "b"'
+@@assert.noOut '@void'
+@@assert.noOut '@void "a" "b"'
 
 code="$(@void ; echo $?)"
-@@assertNotErrorCode $code
+@@assert.notErrorCode $code
