@@ -12,10 +12,6 @@ local src="$1"
 local prefix="${2:-$SCRIPT_FILE_NAME}"
 local cmd="$(@file-name "${src}" true)"
 
-if [[ "${cmd}" == _* ]]; then
-  return 0
-fi
-
 local lp='    '
 local lpl=${#lp}
 local first_line=true
