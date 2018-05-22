@@ -173,6 +173,9 @@ export EVENTS_PATH="$SRC_PATH/events"
 ## Resources path.
 export RESOURCES_PATH="$SRC_PATH/resources"
 
+## Valid events options.
+EVENTS_OPTS=(invalid-action start error exit)
+
 # #############################################################################
 
 ### Load config

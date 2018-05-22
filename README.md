@@ -68,13 +68,13 @@ Where:
         |                          #
         +-> events/                # Optional. Events scripts. Executed in next order:
         |   |                      #
-        |   +-> invalid-action.sh  #     Optional. Called on invalid action.
+        |   +-> invalid-action.sh  #     Optional. Triggered on invalid action called.
         |   |                      #
-        |   +-> start.sh           #     Optional. Called on start.
+        |   +-> start.sh           #     Optional. Triggered on start.
         |   |                      #
-        |   +-> error.sh           #     Optional. Called on error (exit code != 0).
+        |   +-> error.sh           #     Optional. Triggered on error (exit code != 0).
         |   |                      #
-        |   +-> exit.sh            #     Optional. Called on exit.
+        |   +-> exit.sh            #     Optional. Triggered on exit.
         |                          #
         +-> resources/             # Optional. Resources files.
             |                      #
@@ -82,6 +82,8 @@ Where:
             |                      #
             +-> *                  #     Resource file...
 ```
+
+Valid events options: `EVENTS_OPTS`.
 
 ## Doc
 

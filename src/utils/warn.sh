@@ -6,4 +6,4 @@
 
 local str="$*"
 
-@print "${str}$(@style reset)" 3>&2
+@print "${str}" 3>&2
