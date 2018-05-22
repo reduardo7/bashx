@@ -1,4 +1,4 @@
-## task action name | task bashx_ver project_path
+## task action? name? | task bashx_ver project_path [title]
 ## BashX Framework Utils.
 ##
 ## Params:
@@ -8,11 +8,14 @@
 ##                    util:         Utils.
 ##                    test:         Tests.
 ##                    event:        Event.
+##                    init-config:  Initialize configuration file.
+##                                  Param {name} will not be used.
 ##                    init-project: Initialize project.
 ##   action:        {Constant} Action to do.
 ##                  Values:
 ##                    add:    Add task.
 ##                    remove: Remove task.
+##                 Optional for {task == 'init-config'}.
 ##   name:         {String} Script name.
 ##                 If {action == "event"} then the {name} parameter can be:
 ##                   invalid-action: Triggered on invalid action called.
@@ -20,8 +23,11 @@
 ##                   start:          Triggered on start, before a valid action is called.
 ##                   error:          Triggered on error (exit code != 0).
 ##                   finish:         Triggered on execution finished.
+##                 Optional for {task == 'init-config'}.
 ##   bashx_ver:    {String} BashX version for new project.
-##   project_path: {String} New project path.
+##   project_path: {String} Project script name with path.
+##   title:        {String} New project title.
+##                 Optional. Default: read from {project_path}.
 ##
 ## Examples:
 ##   * Add "foo" to Actions:
@@ -39,10 +45,15 @@ local hs='#' ; hs="${hs}${hs}"
 _initProject() {
   local BASHX_VERSION="$1"
   local PROJECT_PATH="$2"
+  local PROJECT_TITLE="$3"
 
   if [ ! -z "${BASHX_VERSION}" ] && [ ! -z "${PROJECT_PATH}" ]; then
     if [ -f "${PROJECT_PATH}" ] || [ -d "${PROJECT_PATH}" ]; then
       @error "File or directory ${PROJECT_PATH} already exists"
+    fi
+
+    if [ -z "${PROJECT_TITLE}" ]; then
+      PROJECT_TITLE="$(@file-name "${PROJECT_PATH}" true)"
     fi
 
     ###############################################################################
@@ -94,53 +105,66 @@ EOF
   fi
 }
 
+_initConfig() {
+  if [ -f "${APP_CONFIG_FILE}" ]; then
+    @warn "Configuration file '$(@style bold color:blue)${APP_CONFIG_FILE}$(@style default)' already exists!"
+  else
+    touch "${APP_CONFIG_FILE}" || @error "Can not create file '$(@style bold color:blue)${APP_CONFIG_FILE}$(@style default)'"
+    @print "Configuration file '$(@style bold color:blue)${APP_CONFIG_FILE}$(@style default)' $(@style bold color:green)added$(@style default)!"
+  fi
+
+  @end
+}
+
 _doAction() {
   local action="$1"
   local name="$2"
   local path="$3"
   local script="${path}/${name}.sh"
 
-  case "${action}" in
-    # Add
-    add)
-      if [ ! -d "${path}" ]; then
-        mkdir -p "${path}" || @error "Can not create directory '$(@style bold color:blue)${path}$(@style default)'"
-        @print "Directory '$(@style bold color:blue)${path}$(@style default)' $(@style bold color:green)created$(@style default)!"
-      fi
+  if [ ! -z "${name}" ] && [ ! -z "${action}" ]; then
+    case "${action}" in
+      # Add
+      add)
+        if [ ! -d "${path}" ]; then
+          mkdir -p "${path}" || @error "Can not create directory '$(@style bold color:blue)${path}$(@style default)'"
+          @print "Directory '$(@style bold color:blue)${path}$(@style default)' $(@style bold color:green)created$(@style default)!"
+        fi
 
-      if [ -f "${script}" ]; then
-        @warn "Script '$(@style bold color:blue)${script}$(@style default)' already exists!"
-      else
-        cat /dev/stdin >"${script}" || @error "Can not create file '$(@style bold color:blue)${script}$(@style default)'"
-        @print "Script '$(@style bold color:blue)${script}$(@style default)' $(@style bold color:green)added$(@style default)!"
-      fi
-
-      @end
-      ;;
-
-    # Remove
-    remove)
-      if [ -d "${path}" ]; then
         if [ -f "${script}" ]; then
-          rm -f "${script}" || @error "Can not remove file '$(@style bold color:blue)${script}$(@style default)'"
-          @print "File '$(@style bold color:blue)${script}$(@style default)' $(@style bold color:red)deleted$(@style default)!"
+          @warn "Script '$(@style bold color:blue)${script}$(@style default)' already exists!"
+        else
+          cat /dev/stdin >"${script}" || @error "Can not create file '$(@style bold color:blue)${script}$(@style default)'"
+          @print "Script '$(@style bold color:blue)${script}$(@style default)' $(@style bold color:green)added$(@style default)!"
         fi
 
-        # Empty directory?
-        if [ -z "$(ls -A "${path}")" ]; then
-          rm -rf "${path}" || @error "Can not remove directory '$(@style bold color:blue)${path}$(@style default)'"
-          @print "Directory '$(@style bold color:blue)${path}$(@style default)' now is empty, $(@style bold color:red)deleted$(@style default)!"
+        @end
+        ;;
+
+      # Remove
+      remove)
+        if [ -d "${path}" ]; then
+          if [ -f "${script}" ]; then
+            rm -f "${script}" || @error "Can not remove file '$(@style bold color:blue)${script}$(@style default)'"
+            @print "File '$(@style bold color:blue)${script}$(@style default)' $(@style bold color:red)deleted$(@style default)!"
+          fi
+
+          # Empty directory?
+          if [ -z "$(ls -A "${path}")" ]; then
+            rm -rf "${path}" || @error "Can not remove directory '$(@style bold color:blue)${path}$(@style default)'"
+            @print "Directory '$(@style bold color:blue)${path}$(@style default)' now is empty, $(@style bold color:red)deleted$(@style default)!"
+          fi
         fi
-      fi
 
-      @end
-      ;;
+        @end
+        ;;
 
-    *) @warn 'Invalid action!' ;;
-  esac
+      *) @warn 'Invalid action!' ;;
+    esac
+  fi
 }
 
-if [ ! -z "${name}" ] && [ ! -z "${action}" ] && [ ! -z "${task}" ]; then
+if [ ! -z "${task}" ]; then
   case "${task}" in
 
     action|actions) _doAction "${action}" "${name}" "${ACTIONS_PATH}" <<EOF
@@ -188,9 +212,9 @@ EOF
       fi
       ;;
 
-    init-project)
-      _initProject "$2" "$3"
-      ;;
+    init-config) _initConfig ;;
+
+    init-project) _initProject "$2" "$3" "$4" ;;
 
     *) @warn 'Invalid task!' ;;
 
