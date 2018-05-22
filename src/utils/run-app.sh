@@ -41,6 +41,15 @@ if [ -z "${ACTION}" ]; then
 elif [[ $# -gt 0 ]]; then
   shift # Remove "Action" from parameters
 
+  # On Ready
+  if [ -f "${EVENTS_PATH}/ready.sh" ]; then
+    appOnReady() {
+      . "${EVENTS_PATH}/ready.sh"
+    }
+    appOnReady
+    unset -f appOnReady
+  fi
+
   # If function (Action) exists
   if @function-exists "${ACTION_PREFIX}.${ACTION}" ; then
     # On Start

@@ -22,19 +22,22 @@
 You can start your project with:
 
 ```bash
-./new-project.sh BASHX_VERSION PROJECT_NAME
+./demo _bashx init-project {BASHX_VERSION} {PROJECT_PATH}
 ```
 
 Where:
 
 - `BASHX_VERSION` is a [_tag_ from this repository](https://github.com/reduardo7/bashx/tags)
-- `PROJECT_NAME` is the _script name_ with _full path_.
+- `PROJECT_PATH` is the _script name_ with _full path_.
 
 ### Examples
 
 ```bash
-./new-project.sh 1.0 my-app
-./new-project.sh 2.1 ~/projects/my-script.sh
+./demo _bashx init-project 1.0 my-app
+```
+
+```bash
+./demo _bashx init-project 1.2 ~/projects/my-script.sh
 ```
 
 #### Project Structure
@@ -70,11 +73,13 @@ Where:
         |   |                      #
         |   +-> invalid-action.sh  #     Optional. Triggered on invalid action called.
         |   |                      #
-        |   +-> start.sh           #     Optional. Triggered on start.
+        |   +-> ready.sh           #     Optional. Triggered on ready.
+        |   |                      #
+        |   +-> start.sh           #     Optional. Triggered on start the selected action.
         |   |                      #
         |   +-> error.sh           #     Optional. Triggered on error (exit code != 0).
         |   |                      #
-        |   +-> exit.sh            #     Optional. Triggered on exit.
+        |   +-> finish.sh          #     Optional. Triggered on execution finished.
         |                          #
         +-> resources/             # Optional. Resources files.
             |                      #
@@ -155,9 +160,12 @@ set +x
 ### Events Workflow
 
 1. `src/events/invalid-action.sh` is triggered if an invalid action was used.
-2. `src/events/start.sh` is triggered before a valid action is called.
-3. `src/events/error.sh` is triggered when an error has occurred.
-4. `src/events/exit.sh` is triggered before script has finished.
+2. `src/events/ready.sh` is triggered on the initialization is complete.
+3. `src/events/start.sh` is triggered before a valid action is called.
+4. `src/events/error.sh` is triggered when an error has occurred.
+5. `src/events/finish.sh` is triggered on execution finished.
+
+Valid events options constant: `EVENTS_OPTS`.
 
 ## Optimizations
 

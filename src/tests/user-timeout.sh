@@ -1,4 +1,4 @@
-$OS_IS_MAC && exit 0
+$OS_IS_MAC && return 0
 
 tmp_file="$(@mktemp false)"
 
@@ -22,4 +22,4 @@ rm -f ${tmp_file} || @@assert.fail "Error deleting ${tmp_file}!"
 [ -f "${tmp_file}" ] && @@assert.fail "${cmd_touch} should not have been created!"
 
 # All ok
-exit 0
+return 0

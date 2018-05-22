@@ -174,7 +174,7 @@ export EVENTS_PATH="$SRC_PATH/events"
 export RESOURCES_PATH="$SRC_PATH/resources"
 
 ## Valid events options.
-EVENTS_OPTS=(invalid-action start error exit)
+EVENTS_OPTS=(invalid-action ready start error finish)
 
 # #############################################################################
 

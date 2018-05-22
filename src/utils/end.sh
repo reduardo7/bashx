@@ -4,11 +4,14 @@
 ## Params:
 ##   code: {Integer} Exit code.
 ##         Optional. Default: 0.
+##
+## Warning!
+##   Avoid calling this function from sub-shell.
 
 local code=${1:-0}
 
 if ! @is-number ${code}; then
-  code=0
+  code=1
 fi
 
 if ! ${_APP_EXIT} ; then
@@ -25,18 +28,18 @@ if ! ${_APP_EXIT} ; then
     unset -f appOnError
   fi
 
-  # On Exit
-  if [ -f "${EVENTS_PATH}/exit.sh" ]; then
-    appOnExit() {
-      . "${EVENTS_PATH}/exit.sh"
-    }
-    appOnExit ${code}
-    unset -f appOnExit
-  fi
-
   if [ ! -z "${_ON_EXIT}" ]; then
     # Execute exit actions
     ( eval "${_ON_EXIT}" )
+  fi
+
+  # On Finish
+  if [ -f "${EVENTS_PATH}/finish.sh" ]; then
+    appOnFinish() {
+      . "${EVENTS_PATH}/finish.sh"
+    }
+    appOnFinish ${code}
+    unset -f appOnFinish
   fi
 
   # Cleanup

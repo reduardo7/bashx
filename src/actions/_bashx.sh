@@ -1,23 +1,27 @@
-## task action name
+## task action name | task bashx_ver project_path
 ## BashX Framework Utils.
 ##
 ## Params:
-##   task:   {Constant} Task.
-##           Values:
-##             action: Actions.
-##             util:   Utils.
-##             test:   Tests.
-##             event:  Event.
-##   action: {Constant} Action to do.
-##           Values:
-##             add:    Add task.
-##             remove: Remove task.
-##   name:   {String} Script name.
-##           If {action == "event"} then the {name} parameter can be:
-##             invalid-action: Triggered on invalid action called.
-##             start:          Triggered on start.
-##             error:          Triggered on error (exit code != 0).
-##             exit:           Triggered on exit.
+##   task:          {Constant} Task.
+##                  Values:
+##                    action:       Actions.
+##                    util:         Utils.
+##                    test:         Tests.
+##                    event:        Event.
+##                    init-project: Initialize project.
+##   action:        {Constant} Action to do.
+##                  Values:
+##                    add:    Add task.
+##                    remove: Remove task.
+##   name:         {String} Script name.
+##                 If {action == "event"} then the {name} parameter can be:
+##                   invalid-action: Triggered on invalid action called.
+##                   ready:          Triggered on the initialization is complete.
+##                   start:          Triggered on start, before a valid action is called.
+##                   error:          Triggered on error (exit code != 0).
+##                   finish:         Triggered on execution finished.
+##   bashx_ver:    {String} BashX version for new project.
+##   project_path: {String} New project path.
 ##
 ## Examples:
 ##   * Add "foo" to Actions:
@@ -31,6 +35,64 @@ local task="$1"
 local action="$2"
 local name="$3"
 local hs='#' ; hs="${hs}${hs}"
+
+_initProject() {
+  local BASHX_VERSION="$1"
+  local PROJECT_PATH="$2"
+
+  if [ ! -z "${BASHX_VERSION}" ] && [ ! -z "${PROJECT_PATH}" ]; then
+    if [ -f "${PROJECT_PATH}" ] || [ -d "${PROJECT_PATH}" ]; then
+      @error "File or directory ${PROJECT_PATH} already exists"
+    fi
+
+    ###############################################################################
+
+    @print "Preparing source..."
+
+    init_script="$(@script-minify < "${BASHX_SRC_PATH}/init-app.sh")" || @error "Error preparing source"
+
+    ###############################################################################
+
+    @print "Writting file ${PROJECT_PATH}..."
+
+    touch "${PROJECT_PATH}" || @error "Can not write '${PROJECT_PATH}'"
+
+    cat > "${PROJECT_PATH}" <<EOF
+#!/usr/bin/env bash
+
+# BashX | https://github.com/reduardo7/bashx
+export BASHX_VERSION="${BASHX_VERSION}"
+(${init_script}) || exit \$?
+. "\${HOME}/.bashx/\${BASHX_VERSION}/init"
+
+### Begin Example ###
+
+${ACTION_PREFIX}.action1() { # \\\\n Action without arguments
+  # ... Your code here ...
+  @print Action 1
+}
+
+${ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
+  # ... Your code here ...
+  @print Action 2
+  @print Param1: \$1
+  @print Param2: \$2
+}
+
+### End Example ###
+
+# Run APP
+@run-app "\$@"
+EOF
+
+    chmod a+x "${PROJECT_PATH}"
+
+    ###############################################################################
+
+    @print "Project created at ${PROJECT_PATH}"
+    @end
+  fi
+}
 
 _doAction() {
   local action="$1"
@@ -124,6 +186,10 @@ EOF
       else
         @warn 'Invalid name!'
       fi
+      ;;
+
+    init-project)
+      _initProject "$2" "$3"
       ;;
 
     *) @warn 'Invalid task!' ;;
