@@ -83,7 +83,7 @@ Where:
             +-> *                  #     Resource file...
 ```
 
-Valid events options: `EVENTS_OPTS`.
+Valid events options constant: `EVENTS_OPTS`.
 
 ## Doc
 
@@ -99,6 +99,18 @@ Show _Development Documentation_ using:
 
 ```bash
 ./demo _bashx
+```
+
+## Global Variables
+
+### `BASHX_COLORS_DISABLED`
+
+Set vale to `1` to diable **BashX** output colors, disabling the `@style` function.
+
+**Example:**
+
+```bash
+BASHX_COLORS_DISABLED=1 ./demo
 ```
 
 ## Tips

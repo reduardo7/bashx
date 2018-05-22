@@ -77,6 +77,10 @@
 ##
 ## Out: {String} Style console string.
 ##
+## Global Variables:
+##   BASHX_COLORS_DISABLED: {Integer} Set vale to '1' to diable this function
+##                          and disable output colors.
+##
 ## Examples:
 ##   @print "normal color $(@style color:red)text in red $(@style color:black background:yellow)black color$(@style default) normal color"
 ##   # Restore default APP colors
@@ -85,7 +89,7 @@
 ##   @style background gray
 ##   @print "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
 
-if ${APP_COLORS_ENABLED}; then
+if ${APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
   local OIFS="$IFS"
 
   # No parameters
