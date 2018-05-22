@@ -87,10 +87,18 @@ Valid events options: `EVENTS_OPTS`.
 
 ## Doc
 
+### Development Documentation
+
 Show _Development Documentation_ using:
 
 ```bash
 ./demo _dev-doc
+```
+
+### Framework Utilities
+
+```bash
+./demo _bashx
 ```
 
 ## Tips
