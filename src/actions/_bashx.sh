@@ -55,7 +55,7 @@ _doAction() {
         fi
 
         # Empty directory?
-        if ! [ "$(ls -A "${path}")" ]; then
+        if [ -z "$(ls -A "${path}")" ]; then
           rm -rvf "${path}"
           @print "Directory '$(@style bold color:blue)${path}$(@style default)' now is empty, $(@style bold color:red)deleted$(@style default)!"
         fi
