@@ -125,6 +125,8 @@ readonly ACTION_PREFIX="$ACTION_PREFIX"
 
 ### Configs
 
+export BASHX_DOC_MARK='##'
+
 ## Current script Sources directory.
 export SRC_DIR="${SRC_DIR:-$SCRIPT_FILE_NAME.src}"
 
@@ -220,48 +222,16 @@ exec 3>&1
 @str-to-lower() { . "$BASHX_UTILS_PATH/str-to-lower.sh"; }
 @style() { . "$BASHX_UTILS_PATH/style.sh"; }
 @file-name() { . "$BASHX_UTILS_PATH/file-name.sh"; }
+@load-functions() { . "${BASHX_UTILS_PATH}/load-functions.sh"; }
 
 # #############################################################################
 
-### Load
+### Bootstrap
 
-p='()'
+# Load base
+@load-functions "${BASHX_UTILS_PATH}" '@'
+@load-functions "${BASHX_ACTIONS_PATH}" "${ACTION_PREFIX}."
 
-# Load base utils
-for __fn__path__ in $BASHX_UTILS_PATH/*.sh ; do
-  if [ -f "$__fn__path__" ]; then
-    # Create base util function
-    eval "@$(@file-name "$__fn__path__" true)$p { . "$__fn__path__"; }"
-  fi
-done
-
-# Load base actions
-for __fn__path__ in $BASHX_ACTIONS_PATH/*.sh ; do
-  if [ -f "$__fn__path__" ]; then
-    # Create base action function
-    eval "$ACTION_PREFIX.$(@file-name "$__fn__path__" true)$p { . "$__fn__path__"; }"
-  fi
-done
-
-# Load custom utils
-if [ -d "$UTILS_PATH" ]; then
-  for __fn__path__ in $UTILS_PATH/*.sh ; do
-    if [ -f "$__fn__path__" ]; then
-      # Create util function
-      eval "$(@file-name "$__fn__path__" true)$p { . "$__fn__path__"; }"
-    fi
-  done
-fi
-
-# Load custom actions
-if [ -d "$ACTIONS_PATH" ]; then
-  for __fn__path__ in $ACTIONS_PATH/*.sh ; do
-    if [ -f "$__fn__path__" ]; then
-      # Create action function
-      eval "$ACTION_PREFIX.$(@file-name "$__fn__path__" true)$p { . "$__fn__path__"; }"
-    fi
-  done
-fi
-
-unset p
-unset __fn__path__
+# Load custom
+[ ! -d "${UTILS_PATH}" ] || @load-functions "${UTILS_PATH}"
+[ ! -d "${ACTIONS_PATH}" ] || @load-functions "${ACTIONS_PATH}" "${ACTION_PREFIX}."

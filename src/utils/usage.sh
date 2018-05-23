@@ -27,13 +27,13 @@ if [ ! -z "${prefix}" ]; then
 fi
 
 # Get comments from file
-egrep '^##' "${src}" | egrep -v '^###' | while read line
+egrep "^${BASHX_DOC_MARK}" "${src}" | egrep -v "^${BASHX_DOC_MARK}#" | while read line
   do
     if ${first_line}; then
       first_line=false
-      @print "  ${prefix}$(@style color:green)${cmd}${sd} $(@str-replace "${line}" '^##\s*' '')"
+      @print "  ${prefix}$(@style color:green)${cmd}${sd} $(@str-replace "${line}" "^${BASHX_DOC_MARK}\\s*" '')"
     else
-      @print "$(@str-replace "${line}" '^##\s' "${sd}${lp}")"
+      @print "$(@str-replace "${line}" "^${BASHX_DOC_MARK}\\s" "${sd}${lp}")"
     fi
   done
 
