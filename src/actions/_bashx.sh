@@ -33,6 +33,8 @@
 ##     {action}:
 ##       `add`: Add new resource.
 ##         {value1}: File or directory path to add.
+##         {value2}: Destination file or directory name.
+##                   Optional. Default: {value1} base name.
 ##
 ## Examples:
 ##   * Add "foo" to Actions:
@@ -54,15 +56,16 @@ local value3="$5"
 
 if [ ! -z "${task}" ]; then
   case "${task}" in
-    action|actions) fwUtils.doAction "${action}" "${value1}" ;;
-    test|tests) fwUtils.doTest "${action}" "${value1}" ;;
-    util|utils) fwUtils.doUtil "${action}" "${value1}" ;;
-    event|events) fwUtils.doEvent "${action}" "${value1}" ;;
+    action|actions) fwUtils.taskAction "${action}" "${value1}" ;;
+    test|tests) fwUtils.taskTest "${action}" "${value1}" ;;
+    util|utils) fwUtils.taskUtil "${action}" "${value1}" ;;
+    event|events) fwUtils.taskEvent "${action}" "${value1}" ;;
+    resource|resources) fwUtils.taskResource "${action}" "${value1}" "${value2}" ;;
     init) case "${action}" in
-      config) fwUtils.initConfig ;;
-      project) fwTools.initProject "${value1}" "${value2}" "${value3}" ;;
-      *) @warn 'Invalid init action!' ;;
-    esac ;;
+        config) fwUtils.taskInitConfig ;;
+        project) fwUtils.taskInitProject "${value1}" "${value2}" "${value3}" ;;
+        *) @warn 'Invalid init action!' ;;
+      esac ;;
     *) @warn 'Invalid task!' ;;
   esac
 fi
