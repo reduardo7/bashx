@@ -44,15 +44,15 @@ export bashx_version="${bashx_version}"
 ### Begin Example ###
 
 ${ACTION_PREFIX}.action1() { # \\\\n Action without arguments
-# ... Your code here ...
-@print Action 1
+  # ... Your code here ...
+  @print Action 1
 }
 
 ${ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
-# ... Your code here ...
-@print Action 2
-@print Param1: \$1
-@print Param2: \$2
+  # ... Your code here ...
+  @print Action 2
+  @print Param1: \$1
+  @print Param2: \$2
 }
 
 ### End Example ###
