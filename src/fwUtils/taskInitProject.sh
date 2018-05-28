@@ -37,9 +37,9 @@ if [ ! -z "${bashx_version}" ] && [ ! -z "${project_path}" ]; then
 #!/usr/bin/env bash
 
 # BashX | https://github.com/reduardo7/bashx
-export bashx_version="${bashx_version}"
+export BASHX_VERSION="${bashx_version}"
 (${init_script}) || exit \$?
-. "\${HOME}/.bashx/\${bashx_version}/init"
+. "\${HOME}/.bashx/\${BASHX_VERSION}/init"
 
 ### Begin Example ###
 
