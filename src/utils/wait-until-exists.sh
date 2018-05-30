@@ -9,43 +9,25 @@
 ##   show_message: {Boolean} Show message.
 ##                 Optional. Default: true.
 ##
-## Return: 0 if file exists, 1 if file not exists (time-out).
+## Return: 0 if file exists, 1 if file not exists after timeout.
 
 local wait_type="$1"
 local path="$2"
-local timeout=$3
-local show_message=$4
+local timeout=${3:-0}
+local show_message=${4:-true}
 
-[ ! -z "${timeout}" ] && timeout=0
-[ -z "${show_message}" ] && show_message=true
+local cmd
+local msg
 
-local p='...'
-local count=0
+case "${wait_type}" in
+  d|D) cmd="[ -d '${path}' ]" ;;
+  f|F) cmd="[ -f '${path}' ]" ;;
+  *) @throw@throw-invalid-param "${FUNCNAME[0]}" wait_type
+fi
 
-while ( [ "${wait_type}" == 'd' ] && [ ! -d "${path}" ] ) \
-  || ( [ "${wait_type}" == 'f' ] && [ ! -f "${path}" ] )
-  do
-    if ${show_message}; then
-      if [[ ${timeout} -gt 1 ]]; then
-        if [[ ${timeout} -lt ${count} ]]; then
-          # Time out!
-          return 1
-        else
-          count=$((count+1))
-        fi
-      fi
+if ! ${show_message}; then
+  msg='false'
+fi
 
-      @print-back "Waiting for '${path}'${p}"
-
-      if [ "${p}" == '...' ]; then
-        p='.'
-      else
-        p="${p}."
-      fi
-    fi
-
-    sleep 1
-  done
-
-# Exists
-return 0
+@wait-until "${cmd}" 1 ${timeout} "${msg}"
+return $?
