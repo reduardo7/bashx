@@ -1,8 +1,9 @@
-## @
+## [action [@]]
 ## Run APP.
 ##
 ## Params:
-##   @: APP parameters.
+##   action: {String} Action to do.
+##   @:      APP parameters.
 ##
 ## Use: At end of /app file, put next:
 ##   @run-app "$@"

@@ -40,6 +40,54 @@ Where:
 ./demo _bashx init-project 1.2 ~/projects/my-script.sh
 ```
 
+## Manual start
+
+**1)** Add next at beginning of the script file:
+
+```bash
+export BASHX_VERSION="v1.2.1"
+(export LC_CTYPE=C;export LC_ALL=C;set -e;_x() { echo "# Error: ${1:-Installation fail}" >&2;exit 1;};[ -z "${BASHX_VERSION}" ] && _x 'BASHX_VERSION is required';export BASHX_DIR="${BASHX_DIR:-$HOME/.bashx/$BASHX_VERSION}";if [ ! -d "$BASHX_DIR" ]; then export setup_url='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh';if type wget >/dev/null 2>&1 ; then sh -c "$(wget -q $setup_url -O -)" || _x;elif type curl >/dev/null 2>&1 ; then sh -c "$(curl -fsSL $setup_url)" || _x;else _x 'wget or curl are required. Install wget or curl to continue';fi;fi) || exit $?
+. "${HOME}/.bashx/${BASHX_VERSION}/init"
+```
+
+**2)** Write your code.
+
+**3)** Optionally, add next at end of the script file, to work as _cli_:
+
+```bash
+@run-app "$@"
+```
+
+### Project Example
+
+```bash
+#!/usr/bin/env bash
+
+# BashX | https://github.com/reduardo7/bashx
+export BASHX_VERSION="v1.2.1"
+(export LC_CTYPE=C;export LC_ALL=C;set -e;_x() { echo "# Error: ${1:-Installation fail}" >&2;exit 1;};[ -z "${BASHX_VERSION}" ] && _x 'BASHX_VERSION is required';export BASHX_DIR="${BASHX_DIR:-$HOME/.bashx/$BASHX_VERSION}";if [ ! -d "$BASHX_DIR" ]; then export setup_url='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh';if type wget >/dev/null 2>&1 ; then sh -c "$(wget -q $setup_url -O -)" || _x;elif type curl >/dev/null 2>&1 ; then sh -c "$(curl -fsSL $setup_url)" || _x;else _x 'wget or curl are required. Install wget or curl to continue';fi;fi) || exit $?
+. "${HOME}/.bashx/${BASHX_VERSION}/init"
+
+@Actions.action1() { # \\n Action without arguments
+  @print "
+  Action 1
+  Multi-Line
+"
+}
+
+@Actions.action2() { # param1 [param2] \\n Action with arguments\\n\\tdescription second line\\nother line
+  local param1="$1"
+  local param2="$2"
+  [ "$param1" != 'asd' ] && @throw-invalid-param "${FUNCNAME[0]}" param1
+
+  @print Action 2
+  @print Param1: $1
+  @print Param2: $2
+}
+
+@run-app "$@"
+```
+
 #### Project Structure
 
 ```text

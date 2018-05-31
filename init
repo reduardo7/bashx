@@ -119,6 +119,7 @@ readonly KEY_ESC="$KEY_ESC"
 
 export ACTION_PREFIX='@Actions'
 ## Action prefix.
+## Used with @run-app
 readonly ACTION_PREFIX="$ACTION_PREFIX"
 
 # #############################################################################
