@@ -5,6 +5,8 @@
 ## Params:
 ##   path:    {String} Related path for write permission is granted.
 ##   command: {String} Command to execute.
+##
+## Return: Executed {command} exit code.
 
 local path="$1"
 local command="$2"
@@ -13,9 +15,11 @@ if [ -w "${path}" ]; then
   ( set -ex
     bash -c "${command}"
   )
+  return $?
 else
   @required sudo
   ( set -ex
     sudo bash -c "${command}"
   )
+  return $?
 fi
