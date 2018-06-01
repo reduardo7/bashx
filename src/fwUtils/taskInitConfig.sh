@@ -1,6 +1,3 @@
-##
-## Initialize configuration file.
-
 if [ -f "${APP_CONFIG_FILE}" ]; then
   @warn "Configuration file '$(@style bold color:blue)${APP_CONFIG_FILE}$(@style default)' already exists!"
 else

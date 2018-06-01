@@ -23,8 +23,10 @@
 ##   {task} == `init`
 ##     {action}:
 ##       `config`:  Initialize configuration file.
+##                  Create configuration file if not exists from APP_CONFIG_FILE constant.
 ##       `project`: Initialize project.
 ##         {value1}: BashX version for new project.
+##                   See https://github.com/reduardo7/bashx/releases for available versions.
 ##         {value2}: Project script name with path.
 ##         {value3}: New project title.
 ##                   Optional. Default: read from {value2}.

@@ -36,8 +36,9 @@ if [ ! -z "${bashx_version}" ] && [ ! -z "${project_path}" ]; then
   cat > "${project_path}" <<EOF
 #!/usr/bin/env bash
 
-# BashX | https://github.com/reduardo7/bashx
+export APP_TITLE="${project_title}"
 export BASHX_VERSION="${bashx_version}"
+# BashX | https://github.com/reduardo7/bashx
 (${init_script}) || exit \$?
 . "\${HOME}/.bashx/\${BASHX_VERSION}/init"
 
