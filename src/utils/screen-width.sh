@@ -1,10 +1,20 @@
-##
+## [default_width]
 ## Screen width.
+##
+## Params:
+##   default: {Integer} Screen width default if `tput` is not exists.
+##            Optional. Default: $APP_WIDTH
 ##
 ## Out: {Integer} Screen width.
 
-if type tput >/dev/null 2>/dev/null; then
+local default_width=${1:-${APP_WIDTH}}
+
+if command -v tput >/dev/null 2>&1; then
   tput cols
 else
-  echo ${APP_WIDTH}
+  if ! @is-number "${default_width}"; then
+    default_width=${APP_WIDTH}
+  fi
+
+  echo ${default_width}
 fi

@@ -1,5 +1,6 @@
 ## path command
 ## Run with `sudo` if necessary.
+## If {path} is not writable then run with `sudo`.
 ##
 ## Params:
 ##   path:    {String} Related path for write permission is granted.
@@ -13,12 +14,8 @@ if [ -w "${path}" ]; then
     bash -c "${command}"
   )
 else
-  if type sudo >/dev/null 2>/dev/null
-    then
-      ( set -ex
-        sudo bash -c "${command}"
-      )
-    else
-      @error "sudo command not found"
-    fi
+  @required sudo
+  ( set -ex
+    sudo bash -c "${command}"
+  )
 fi
