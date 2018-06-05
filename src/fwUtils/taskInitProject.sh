@@ -21,6 +21,8 @@ if [ ! -z "${bashx_version}" ] && [ ! -z "${project_path}" ]; then
     project_title="$(@file-name "${project_path}" true)"
   fi
 
+  local project_env=".${project_title}.env"
+
   ###############################################################################
 
   @print "Preparing source..."
@@ -36,13 +38,17 @@ if [ ! -z "${bashx_version}" ] && [ ! -z "${project_path}" ]; then
   cat > "${project_path}" <<EOF
 #!/usr/bin/env bash
 
-export APP_TITLE="${project_title}"
-export BASHX_VERSION="${bashx_version}"
 # BashX | https://github.com/reduardo7/bashx
+export BASHX_VERSION="${bashx_version}"
 (${init_script}) || exit \$?
 . "\${HOME}/.bashx/\${BASHX_VERSION}/init"
 
 ### Begin Example ###
+
+# Configuration Example.
+# This section can be moved to "${project_env}" file.
+export APP_TITLE="${project_title}"
+export APP_VERSION="1.0"
 
 ${ACTION_PREFIX}.action1() { # \\\\n Action without arguments
   # ... Your code here ...
