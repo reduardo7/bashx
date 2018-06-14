@@ -6,7 +6,7 @@
 
 local msg="$*"
 
-APP_EXIT_ILLEGAL_ERROR=true
+BASHX_APP_EXIT_ILLEGAL_ERROR=true
 
 echo >&2
 @alert '@@@ Error! @@@'

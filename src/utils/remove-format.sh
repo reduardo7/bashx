@@ -10,6 +10,6 @@
 
 local pr
 
-$OS_IS_MAC && pr='E' || pr='r'
+$BASHX_OS_IS_MAC && pr='E' || pr='r'
 
-sed -${pr} "s/${KEY_ESC}\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" <<<"$*"
+sed -${pr} "s/${BASHX_KEY_ESC}\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" <<<"$*"

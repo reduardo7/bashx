@@ -8,7 +8,7 @@
 ##            Optional.
 
 local options="$1"
-local prefix="${SCRIPT_FILE_NAME} "
+local prefix="${BX_SCRIPT_FILE_NAME} "
 local line
 local print_all=false
 
@@ -21,11 +21,11 @@ esac
 @title 'Help & Usage'
 
 # Main
-@usage-main "${SCRIPT_FULL_PATH}" "${prefix}"
+@usage-main "${BX_SCRIPT_FULL_PATH}" "${prefix}"
 
 # Actions
-if [ -d "${ACTIONS_PATH}" ]; then
-  for f in ${ACTIONS_PATH}/*.sh ; do
+if [ -d "${BX_ACTIONS_PATH}" ]; then
+  for f in ${BX_ACTIONS_PATH}/*.sh ; do
     if [ -f "${f}" ]; then
       if ${print_all} || [[ "$(@file-name "${f}" true)" != _* ]]; then
         @usage "${f}" "${prefix}"

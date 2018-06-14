@@ -1,4 +1,4 @@
-fwUtils.commonAction "$1" "$2" "${UTILS_PATH}" <<EOF
+fwUtils.commonAction "$1" "$2" "${BX_UTILS_PATH}" <<EOF
 ${BASHX_DOC_MARK} param1 [param2]
 ${BASHX_DOC_MARK} Description...
 ${BASHX_DOC_MARK}

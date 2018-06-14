@@ -7,8 +7,8 @@
 local str="$*"
 local line
 
-[ -z "${__print_var_prefix__}" ] && __print_var_prefix__="$(@style default)${APP_PRINT_PREFIX} "
-[ -z "${__print_var_suffix__}" ] && __print_var_suffix__="${KEY_ESC}[0m"
+[ -z "${__print_var_prefix__}" ] && __print_var_prefix__="$(@style default)${BX_APP_PRINT_PREFIX} "
+[ -z "${__print_var_suffix__}" ] && __print_var_suffix__="${BASHX_KEY_ESC}[0m"
 
 # \t -> \s*2
 str="$(@str-replace "${str}" '\t' '  ')"

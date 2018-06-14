@@ -27,7 +27,7 @@ while [[ ${count} -gt 0 ]] && [[ ${rta} -eq 0 ]] ; do
   @print-back "${message} [${count}]... Press [C] or [ESC] to cancel..."
   read -n 1 -s -t 1 -p '' i
   r=$?
-  if [ "${i}" == 'c' ] || [ "${i}" == 'C' ] || [ "${i}" == "${KEY_ESC}" ]; then
+  if [ "${i}" == 'c' ] || [ "${i}" == 'C' ] || [ "${i}" == "${BASHX_KEY_ESC}" ]; then
     rta=1
   else
     # 142 == No user input

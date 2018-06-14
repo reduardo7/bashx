@@ -5,12 +5,12 @@ if [ -n "${orig}" ]; then
   orig="${orig}"
   if [ -f "${orig}" ] || [ -d "${orig}" ]; then
     [ -n "${dest}" ] || dest="$(@file-name "${orig}")"
-    dest="${RESOURCES_PATH}/${dest}"
+    dest="${BX_RESOURCES_PATH}/${dest}"
 
     if [ -f "${dest}" ] || [ -d "${dest}" ]; then
       @error "${dest} already exist!"
     else
-      [ -d "${RESOURCES_PATH}" ] || mkdir -p "${RESOURCES_PATH}"
+      [ -d "${BX_RESOURCES_PATH}" ] || mkdir -p "${BX_RESOURCES_PATH}"
       cp -vrf "${orig}" "${dest}"
       @print "Resource '${orig}' added!"
       @print "Resource: '${dest}'"

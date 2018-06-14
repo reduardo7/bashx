@@ -23,7 +23,8 @@
 ##   {task} == `init`
 ##     {action}:
 ##       `config`:  Initialize configuration file.
-##                  Create configuration file if not exists from APP_CONFIG_FILE constant.
+##                  Create configuration file if not exists from
+##                  ${BX_APP_CONFIG_FILE} constant.
 ##       `project`: Initialize project.
 ##         {value1}: BashX version for new project.
 ##                   See https://github.com/reduardo7/bashx/releases for available versions.
@@ -44,7 +45,7 @@
 ##   * Remove "bar" from Utils:
 ##       _bashx util remove bar
 ##   * Initialize project:
-##       _bashx init project v1.2 ~/project/my-script 'My Super-Script'
+##       _bashx init project v1.4 ~/project/my-script 'My Super-Script'
 
 @title "$(@style bold color:red)BashX$(@style default) Framework Utils"
 

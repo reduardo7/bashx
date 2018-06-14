@@ -3,4 +3,4 @@
 ##
 ## Out: {String} APP title and version.
 
-echo "${APP_TITLE} v${APP_VERSION}"
+echo "${BX_APP_TITLE} v${BX_APP_VERSION}"

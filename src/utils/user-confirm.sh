@@ -9,7 +9,7 @@
 
 local msg="${1:-Confirm?}"
 
-echo -n "$(@style default)${APP_PRINT_PREFIX} ${msg} (y/n) " >&3
+echo -n "$(@style default)${BX_APP_PRINT_PREFIX} ${msg} (y/n) " >&3
 
 while true ; do
   read -s -n 1 choice >&3

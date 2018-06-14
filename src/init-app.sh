@@ -24,14 +24,14 @@ _x() {
 
 [ -z "${BASHX_VERSION}" ] && _x 'BASHX_VERSION is required'
 
-export BASHX_DIR="${BASHX_DIR:-$HOME/.bashx/$BASHX_VERSION}"
+export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/${BASHX_VERSION}}"
 
-if [ ! -d "$BASHX_DIR" ]; then
+if [ ! -d "${BASHX_DIR}" ]; then
   export setup_url='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh'
   if type wget >/dev/null 2>&1 ; then
-    sh -c "$(wget -q $setup_url -O -)" || _x
+    sh -c "$(wget -q ${setup_url} -O -)" || _x
   elif type curl >/dev/null 2>&1 ; then
-    sh -c "$(curl -fsSL $setup_url)" || _x
+    sh -c "$(curl -fsSL ${setup_url})" || _x
   else
     _x 'wget or curl are required. Install wget or curl to continue'
   fi

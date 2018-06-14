@@ -26,9 +26,9 @@ _x() {
 
 [ -z "${BASHX_VERSION}" ] && _x BASHX_VERSION is required
 type wget >/dev/null 2>&1 || _x tar is required. Install tar to continue
-export BASHX_DIR="${BASHX_DIR:-$HOME/.bashx/$BASHX_VERSION}"
+export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}"
 
-if [ ! -d "$BASHX_DIR" ]; then
+if [ ! -d "${BASHX_DIR}" ]; then
   export t="$(mktemp -d)"
 
   # Install
@@ -49,9 +49,9 @@ if [ ! -d "$BASHX_DIR" ]; then
       _x wget or curl are required. Install wget or curl to continue
     fi
 
-    mkdir -p "$BASHX_DIR"
-    rm -rf "$BASHX_DIR"
-    mv reduardo7-bashx-* "$BASHX_DIR"
+    mkdir -p "${BASHX_DIR}"
+    rm -rf "${BASHX_DIR}"
+    mv reduardo7-bashx-* "${BASHX_DIR}"
   )
   e=$?
 

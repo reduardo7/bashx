@@ -16,7 +16,7 @@ local r=1
 
 echo >&3 # Space
 
-ACTION="$1"
+BASHX_ACTION="$1"
 
 @title "$(@app-info)"
 
@@ -26,57 +26,59 @@ trap @end EXIT
 # On CTRL + C
 trap @end INT
 
-if [ -z "${ACTION}" ]; then
+if [ -z "${BASHX_ACTION}" ]; then
   # Empty Action
 
-  if [ -z "${APP_DEFAULT_ACTION}" ]; then
+  if [ -z "${BX_APP_DEFAULT_ACTION}" ]; then
     # Show help
-    ACTION='help'
+    BASHX_ACTION='help'
     r=1
   else
     # Call default action
-    ACTION="$APP_DEFAULT_ACTION"
+    BASHX_ACTION="${BX_APP_DEFAULT_ACTION}"
   fi
 
-  ${ACTION_PREFIX}.${ACTION}
+  export BASHX_ACTION="${BASHX_ACTION}"
+  ${BASHX_ACTION_PREFIX}.${BASHX_ACTION}
 elif [[ $# -gt 0 ]]; then
   shift # Remove "Action" from parameters
+  export BASHX_ACTION="${BASHX_ACTION}"
 
   # On Ready
-  if [ -f "${EVENTS_PATH}/ready.sh" ]; then
+  if [ -f "${BX_EVENTS_PATH}/ready.sh" ]; then
     appOnReady() {
-      . "${EVENTS_PATH}/ready.sh"
+      . "${BX_EVENTS_PATH}/ready.sh"
     }
     appOnReady
     unset -f appOnReady
   fi
 
   # If function (Action) exists
-  if @function-exists "${ACTION_PREFIX}.${ACTION}" ; then
+  if @function-exists "${BASHX_ACTION_PREFIX}.${BASHX_ACTION}" ; then
     # On Start
-    if [ -f "${EVENTS_PATH}/start.sh" ]; then
+    if [ -f "${BX_EVENTS_PATH}/start.sh" ]; then
       appOnStart() {
-        . "${EVENTS_PATH}/start.sh"
+        . "${BX_EVENTS_PATH}/start.sh"
       }
       appOnStart
       unset -f appOnStart
     fi
 
     # Exec
-    ${ACTION_PREFIX}.${ACTION} "$@"
+    ${BASHX_ACTION_PREFIX}.${BASHX_ACTION} "$@"
     r=$?
   else
     # Invalid Action
-    if [ -f "${EVENTS_PATH}/invalid-action.sh" ]; then
+    if [ -f "${BX_EVENTS_PATH}/invalid-action.sh" ]; then
       appOnInvalidAction() {
-        . "${EVENTS_PATH}/invalid-action.sh"
+        . "${BX_EVENTS_PATH}/invalid-action.sh"
       }
       appOnInvalidAction
       r=$?
       unset -f appOnInvalidAction
     else
       local _sr="$(@style default color:red)"
-      @error "Action '$(@style color:green)${ACTION}${_sr}' not found. See '$(@style bold)help${_sr}' for help."
+      @error "Action '$(@style color:green)${BASHX_ACTION}${_sr}' not found. See '$(@style bold)help${_sr}' for help."
     fi
   fi
 fi
