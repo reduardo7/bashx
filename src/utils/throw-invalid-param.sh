@@ -6,12 +6,14 @@
 ##   note:          {String} Extra note about the error.
 ##                  Optional.
 
+# Read variable value. Should be the first line of this function.
+local variable_value="$(eval "echo -e -n \"\$${1}\"")"
+
 local variable_name="$1"
 local note="$2"
 local script_name="${FUNCNAME[2]}"
 local msg
 local line
-local variable_value="$(eval "echo -e -n \"\$${variable_name}\"")"
 
 if [ -z "${variable_value}" ]; then
   msg="[${variable_name}] can not be emtpy"
@@ -25,7 +27,4 @@ if [ ! -z "${note}" ]; then
   done
 fi
 
-@throw-invalid-state "
-Invalid call of [${script_name}].
-  > ${msg}
-"
+@throw-invalid-state "Invalid call of [${script_name}].\n  > ${msg}"

@@ -6,6 +6,6 @@
 ##
 ## Out: {String} Result string.
 
-local text="$*"
+local text="$@"
 
 [ ! -z "${text}" ] && tr '[a-z]' '[A-Z]' <<<"${text}"

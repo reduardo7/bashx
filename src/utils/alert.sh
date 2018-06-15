@@ -4,6 +4,4 @@
 ## Params:
 ##   *: {String} Message.
 
-local str="$*"
-
-@warn "$(@style color:red) ${str}"
+@warn "$(@style color:red)$@"

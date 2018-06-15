@@ -16,11 +16,11 @@ export LC_CTYPE=C
 export LC_ALL=C
 
 _e() {
-  echo "# $*"
+  echo "# $@"
 }
 
 _x() {
-  _e "Error: $*" >&2
+  _e "Error: $@" >&2
   exit 1
 }
 

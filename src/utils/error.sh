@@ -1,5 +1,5 @@
 ## msg [print_backtrace [code]]
-## Show error message and exit.
+## Show error message at stderr and exit.
 ##
 ## Params:
 ##   msg:             {String} Error message.
@@ -18,7 +18,6 @@ if [ ! -z "${msg}" ]; then
   @warn
 fi
 
-$print_backtrace && @warn "Backtrace:
-$(@backtrace)"
+$print_backtrace && @warn "Backtrace:\n$(@backtrace)"
 
 @end ${code}

@@ -5,7 +5,7 @@
 ##   *: {String} Message.
 ##      Optional.
 
-local m="$*"
+local m="$@"
 
 if [ -z "$m" ]; then
   read -s -n 1 >&3
