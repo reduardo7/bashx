@@ -49,7 +49,7 @@ elif [[ $# -gt 0 ]]; then
     appOnReady() {
       . "${BX_EVENTS_PATH}/ready.sh"
     }
-    appOnReady
+    appOnReady "$@"
     unset -f appOnReady
   fi
 
@@ -60,7 +60,7 @@ elif [[ $# -gt 0 ]]; then
       appOnStart() {
         . "${BX_EVENTS_PATH}/start.sh"
       }
-      appOnStart
+      appOnStart "$@"
       unset -f appOnStart
     fi
 
@@ -73,7 +73,7 @@ elif [[ $# -gt 0 ]]; then
       appOnInvalidAction() {
         . "${BX_EVENTS_PATH}/invalid-action.sh"
       }
-      appOnInvalidAction
+      appOnInvalidAction "$@"
       r=$?
       unset -f appOnInvalidAction
     else

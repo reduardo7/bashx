@@ -22,7 +22,7 @@ local msg
 case "${wait_type}" in
   d|D) cmd="[ -d '${path}' ]" ;;
   f|F) cmd="[ -f '${path}' ]" ;;
-  *) @throw@throw-invalid-param "${FUNCNAME[0]}" wait_type
+  *) @throw@throw-invalid-param wait_type
 fi
 
 if ! ${show_message}; then

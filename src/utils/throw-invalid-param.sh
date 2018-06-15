@@ -2,15 +2,13 @@
 ## Throw illegal error and exit.
 ##
 ## Params:
-##   script_name:    {String} Function/Script name.
-##                   Tip: You can use "${FUNCNAME[0]}" or "$0".
-##   variable_name:  {String} Parameter/Variable name.
-##   note:           {String} Extra note about the error.
-##                   Optional.
+##   variable_name: {String} Parameter/Variable name.
+##   note:          {String} Extra note about the error.
+##                  Optional.
 
-local script_name="$1"
-local variable_name="$2"
-local note="$3"
+local variable_name="$1"
+local note="$2"
+local script_name="${FUNCNAME[2]}"
 local msg
 local line
 local variable_value="$(eval "echo -e -n \"\$${variable_name}\"")"

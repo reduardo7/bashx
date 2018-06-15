@@ -8,7 +8,7 @@
 ##   -f:     {Booelan} Force action (no interactive).
 ##           Optional. Default: false.
 
-[ -z "${HOME}" ] || [ ! -d "${HOME}" ] && @throw-invalid-param "${FUNCNAME[0]}" HOME
+[ -z "${HOME}" ] || [ ! -d "${HOME}" ] && @throw-invalid-param HOME
 
 local action="$1"
 local force="${2:-false}"
@@ -123,6 +123,6 @@ EOF
   ;;
   *)
     # Invalid action
-    @throw-invalid-param "${FUNCNAME[0]}" action
+    @throw-invalid-param action
   ;;
 esac

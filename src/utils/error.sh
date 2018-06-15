@@ -18,6 +18,7 @@ if [ ! -z "${msg}" ]; then
   @warn
 fi
 
-$print_backtrace && @warn "Backtrace:\n$(@backtrace)"
+$print_backtrace && @warn "Backtrace:
+$(@backtrace)"
 
 @end ${code}

@@ -11,8 +11,8 @@ local prefix="$2"
 local p='()'
 local file_path
 
-[ ! -z "${functions_path}" ] || @throw-invalid-param "${FUNCNAME[0]}" functions_path
-[ -d "${functions_path}" ] || @throw-invalid-param "${FUNCNAME[0]}" functions_path 'Is not a valid path'
+[ ! -z "${functions_path}" ] || @throw-invalid-param functions_path
+[ -d "${functions_path}" ] || @throw-invalid-param functions_path 'Is not a valid path'
 
 for file_path in ${functions_path}/*.sh ; do
   if [ -f "$file_path" ]; then

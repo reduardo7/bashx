@@ -17,7 +17,7 @@ export BASHX_VERSION="master"
 @Actions.action2() { # param1 [param2] \\n Action with arguments\\n\\tdescription second line\\nother line
   local param1="$1"
   local param2="$2"
-  [ "$param1" != 'asd' ] && @throw-invalid-param "${FUNCNAME[0]}" param1
+  [ "$param1" != 'asd' ] && @throw-invalid-param param1
 
   @print Action 2
   @print Param1: $1
