@@ -21,11 +21,7 @@ if ! ${_BASHX_APP_EXIT} ; then
 
   # On Error
   if [[ ${code} -ne 0 ]] && [ -f "${BX_EVENTS_PATH}/error.sh" ]; then
-    appOnError() {
-      . "${BX_EVENTS_PATH}/error.sh"
-    }
-    appOnError ${code}
-    unset -f appOnError
+    . "${BX_EVENTS_PATH}/error.sh"
   fi
 
   if [ ! -z "${_BASHX_ON_EXIT}" ]; then
@@ -35,11 +31,7 @@ if ! ${_BASHX_APP_EXIT} ; then
 
   # On Finish
   if [ -f "${BX_EVENTS_PATH}/finish.sh" ]; then
-    appOnFinish() {
-      . "${BX_EVENTS_PATH}/finish.sh"
-    }
-    appOnFinish ${code}
-    unset -f appOnFinish
+    . "${BX_EVENTS_PATH}/finish.sh"
   fi
 
   # Cleanup

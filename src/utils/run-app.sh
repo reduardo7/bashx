@@ -46,22 +46,14 @@ elif [[ $# -gt 0 ]]; then
 
   # On Ready
   if [ -f "${BX_EVENTS_PATH}/ready.sh" ]; then
-    appOnReady() {
-      . "${BX_EVENTS_PATH}/ready.sh"
-    }
-    appOnReady "$@"
-    unset -f appOnReady
+    . "${BX_EVENTS_PATH}/ready.sh"
   fi
 
   # If function (Action) exists
   if @function-exists "${BASHX_ACTION_PREFIX}.${BASHX_ACTION}" ; then
     # On Start
     if [ -f "${BX_EVENTS_PATH}/start.sh" ]; then
-      appOnStart() {
-        . "${BX_EVENTS_PATH}/start.sh"
-      }
-      appOnStart "$@"
-      unset -f appOnStart
+      . "${BX_EVENTS_PATH}/start.sh"
     fi
 
     # Exec
@@ -70,12 +62,7 @@ elif [[ $# -gt 0 ]]; then
   else
     # Invalid Action
     if [ -f "${BX_EVENTS_PATH}/invalid-action.sh" ]; then
-      appOnInvalidAction() {
-        . "${BX_EVENTS_PATH}/invalid-action.sh"
-      }
-      appOnInvalidAction "$@"
-      r=$?
-      unset -f appOnInvalidAction
+      . "${BX_EVENTS_PATH}/invalid-action.sh"
     else
       local _sr="$(@style default color:red)"
       @error "Action '$(@style color:green)${BASHX_ACTION}${_sr}' not found. See '$(@style bold)help${_sr}' for help."
