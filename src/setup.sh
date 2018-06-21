@@ -25,7 +25,7 @@ _x() {
 }
 
 [ -z "${BASHX_VERSION}" ] && _x BASHX_VERSION is required
-type wget >/dev/null 2>&1 || _x tar is required. Install tar to continue
+type tar >/dev/null 2>&1 || _x tar is required. Install tar to continue
 export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}"
 
 if [ ! -d "${BASHX_DIR}" ]; then
