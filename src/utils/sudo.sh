@@ -17,9 +17,16 @@ if [ -w "${path}" ]; then
   )
   return $?
 else
-  @required sudo
-  ( set -ex
-    sudo bash -c "${command}"
-  )
-  return $?
+  if ${BASHX_OS_IS_MINGW}; then
+    ( set -ex
+      bash -c "${command}"
+    )
+    return $?
+  else
+    @required sudo
+    ( set -ex
+      sudo bash -c "${command}"
+    )
+    return $?
+  fi
 fi
