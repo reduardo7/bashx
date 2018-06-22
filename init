@@ -117,6 +117,17 @@ $BASHX_OS_IS_MAC && export BASHX_KEY_ESC=$'\x1B' || export BASHX_KEY_ESC=$'\e'
 ## Key: ESC
 readonly BASHX_KEY_ESC="${BASHX_KEY_ESC}"
 
+# \n - New Line
+export BASHX_NL='
+'
+## New Line constant (\n)
+readonly BASHX_NL="${BASHX_NL}"
+
+# \t - Tab
+export BASHX_TAB='  '
+## New Line constant (\t)
+readonly BASHX_TAB="${BASHX_TAB}"
+
 export BASHX_ACTION_PREFIX='@Actions'
 ## Action prefix. Used at @run-app.
 readonly BASHX_ACTION_PREFIX="${BASHX_ACTION_PREFIX}"
