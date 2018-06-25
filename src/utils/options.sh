@@ -26,6 +26,7 @@
 local options="$@"
 local variable
 local config
+local config_keys
 local config_key
 local config_var
 local config_var_val_def
@@ -42,36 +43,40 @@ IFS=' ' variables=(${options}) IFS="$OIFS"
 
 for variable in ${variables[@]} ; do
   IFS=':' config=(${variable}) IFS="$OIFS"
-  config_key="${config[0]}"
-  config_var="${config[1]}"
-  config_input=${config[2]:-false}
+  config_keys="${config[0]}"
+  IFS='' config_keys=(${config_keys}) IFS="$OIFS"
 
-  [[ ${#config_key} -eq 1 ]] || @throw-invalid-param options 'Invalid KEY value'
-  [ ! -z "${config_var}" ] || @throw-invalid-param options 'Invalid VARIABLE value'
-  @is-boolean "${config_input}" || @throw-invalid-param options 'Invalid INPUT value'
+  for config_key in ${config_keys[@]} ; do
+    config_var="${config[1]}"
+    config_input=${config[2]:-false}
 
-  config_var="${config_var_prefix}$(@str-to-upper "${config_var}")"
+    [[ ${#config_key} -eq 1 ]] || @throw-invalid-param options 'Invalid KEY value'
+    [ ! -z "${config_var}" ] || @throw-invalid-param options 'Invalid VARIABLE value'
+    @is-boolean "${config_input}" || @throw-invalid-param options 'Invalid INPUT value'
 
-  if [ -z "${script_opts}" ]; then
-    script_opts="${config_key}"
-  else
-    script_opts="${script_opts}${config_key}"
-  fi
+    config_var="${config_var_prefix}$(@str-to-upper "${config_var}")"
 
-  if ${config_input}; then
-    config_var_val_def='=()'
-    config_var_val='+=($OPTARG)'
-  else
-    config_var_val_def='=false'
-    config_var_val='=true'
-    script_opts="${script_opts}i:"
-  fi
+    if [ -z "${script_opts}" ]; then
+      script_opts="${config_key}"
+    else
+      script_opts="${script_opts}${config_key}"
+    fi
 
-  [ -z "${script_vars}" ] || script_vars="${script_vars}${BASHX_NL}"
-  [ -z "${script_case}" ] || script_case="${script_case}${BASHX_NL}${BASHX_TAB}${BASHX_TAB}"
-  script_vars="${script_vars}${config_var}${config_var_val_def}"
-  script_opts="${script_opts}:"
-  script_case="${script_case}${config_key}) ${config_var}${config_var_val} ;;"
+    if ${config_input}; then
+      config_var_val_def='=()'
+      config_var_val='+=($OPTARG)'
+    else
+      config_var_val_def='=false'
+      config_var_val='=true'
+      script_opts="${script_opts}i:"
+    fi
+
+    [ -z "${script_vars}" ] || script_vars="${script_vars}${BASHX_NL}"
+    [ -z "${script_case}" ] || script_case="${script_case}${BASHX_NL}${BASHX_TAB}${BASHX_TAB}"
+    script_vars="${script_vars}${config_var}${config_var_val_def}"
+    script_opts="${script_opts}:"
+    script_case="${script_case}${config_key}) ${config_var}${config_var_val} ;;"
+  done
 done
 
 cat <<EOF

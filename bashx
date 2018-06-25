@@ -15,10 +15,10 @@ export BASHX_VERSION="master"
 }
 
 @Actions.action2() { # param1 [param2] \\n Action with arguments\\n\\tdescription second line\\nother line
-  eval "$(@options n:new p:path:true)"
+  eval "$(@options nN:new pP:path:true)"
 
-  @print "'n' parameter: ${OPTARG_NEW}"
-  @print "'p' parameter: ${OPTARG_PATH[@]}"
+  @print "'n' or 'N' parameter: ${OPTARG_NEW}"
+  @print "'p' or 'P' parameter: ${OPTARG_PATH[@]}"
 
   local param1="$1"
   local param2="$2"
