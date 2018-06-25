@@ -11,22 +11,15 @@
 local path="$1"
 local command="$2"
 
-if [ -w "${path}" ]; then
+if ${BASHX_OS_IS_MINGW} || [ -w "${path}" ]; then
   ( set -ex
     bash -c "${command}"
   )
   return $?
 else
-  if ${BASHX_OS_IS_MINGW}; then
-    ( set -ex
-      bash -c "${command}"
-    )
-    return $?
-  else
-    @required sudo
-    ( set -ex
-      sudo bash -c "${command}"
-    )
-    return $?
-  fi
+  @required sudo
+  ( set -ex
+    sudo bash -c "${command}"
+  )
+  return $?
 fi
