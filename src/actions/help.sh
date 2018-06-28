@@ -1,22 +1,13 @@
-## [options]
+## [-a --all]
 ## Print basic usage (this).
 ##
-## Params:
-##   options: {Constant} Options.
-##            Values:
-##              all: Print hidden actions too.
-##            Optional.
+## Options:
+##   -a|--all: Print hidden actions too.
 
-local options="$1"
+eval "$(@options 'print_all:-a|--all')"
+
 local prefix="${BX_SCRIPT_FILE_NAME} "
 local line
-local print_all=false
-
-case "${options}" in
-  all)
-    print_all=true
-    ;;
-esac
 
 @title 'Help & Usage'
 
