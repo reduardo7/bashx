@@ -22,7 +22,7 @@
 You can start your project with:
 
 ```bash
-./demo _bashx init-project {BASHX_VERSION} {PROJECT_PATH}
+./bashx _bashx init-project {BASHX_VERSION} {PROJECT_PATH}
 ```
 
 Where:
@@ -33,11 +33,11 @@ Where:
 ### Examples
 
 ```bash
-./demo _bashx init-project v1.5 my-app
+./bashx _bashx init-project v1.5 my-app
 ```
 
 ```bash
-./demo _bashx init-project v1.5 ~/projects/my-script.sh
+./bashx _bashx init-project v1.5 ~/projects/my-script.sh
 ```
 
 ## Manual start
@@ -145,13 +145,13 @@ Valid events options constant: `BASHX_EVENTS_OPTS`.
 Show _Development Documentation_ using:
 
 ```bash
-./demo _dev-doc
+./bashx _dev-doc
 ```
 
 ### Framework Utilities
 
 ```bash
-./demo _bashx
+./bashx _bashx
 ```
 
 ## Global Variables
@@ -163,7 +163,7 @@ Set vale to `1` to diable **BashX** output colors, disabling the `@style` functi
 **Example:**
 
 ```bash
-BASHX_COLORS_DISABLED=1 ./demo
+BASHX_COLORS_DISABLED=1 ./bashx
 ```
 
 ## Tips
