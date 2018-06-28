@@ -1,4 +1,4 @@
-## [-a --all]
+## [-a]
 ## Print basic usage (this).
 ##
 ## Options:
