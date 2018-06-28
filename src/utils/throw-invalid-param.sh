@@ -1,4 +1,4 @@
-## script_name variable_name [note]
+## variable_name [note]
 ## Throw illegal error and exit.
 ##
 ## Params:
