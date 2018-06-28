@@ -5,36 +5,35 @@
 ##   options*: {Map} Valid options specifications.
 ##
 ##
-## Options Format: [KEY:VARIABLE:INPUT]*
+## Options Format: [VARIABLE:KEY:INPUT]*
 ##   where:
-##     KEY:      {Char} Option key.
-##     VARIABLE: {String} Valid variable name (without spaces).
-##               This produces a variable like "OPTARG_XXX".
+##     VARIABLE: {String} Valid local variable name (without spaces).
+##               This produces a local variable with this name.
+##     KEY:      {Char} Full option key.
+##               Use `|` to concatenate multiple options.
 ##     INPUT:    {Boolean} Option with input?
 ##               Optional. Default: false.
 ##
-## Options Example: n:new p:path:true x:foo:false
+## Options Example: 'new:-n' 'path:-p:true' 'foo:-x:false'
 ##   This produces next variables:
-##     - OPTARG_NEW with TRUE when "-n" is present or FALSE when "-n" is not present.
-##     - OPTARG_PATH with user inputs values as Array, or EMPTY on empty user input.
+##     - "new" with TRUE when "-n" is present or FALSE when "-n" is not present.
+##     - "path" with user inputs values as Array, or EMPTY on empty user input.
+##     - "foo" with TRUE when "-x" is present or FALSE when "-x" is not present.
 ##
 ## Usage example:
-##   eval "$(@options n:new p:path:true)"
-##   @print "'n' parameter: ${OPTARG_NEW}"
-##   @print "'p' parameter: ${OPTARG_PATH[@]}"
+##   eval "$(@options 'new:-n|-N' 'path:-p|--path:true')"
+##   @print "'-n|-N' parameter: ${new}"
+##   @print "'-p|--path' parameter: ${path[@]} (${#path[@]})"
 
 local options="$@"
 local variable
 local config
-local config_keys
 local config_key
 local config_var
 local config_var_val_def
 local config_var_val
 local config_input
-local config_var_prefix='OPTARG_'
 local script_vars=''
-local script_opts=''
 local script_case=''
 local OIFS="$IFS"
 local variables
@@ -43,55 +42,57 @@ IFS=' ' variables=(${options}) IFS="$OIFS"
 
 for variable in ${variables[@]} ; do
   IFS=':' config=(${variable}) IFS="$OIFS"
-  config_keys="${config[0]}"
-  IFS='' config_keys=(${config_keys}) IFS="$OIFS"
+  config_var="${config[0]}"
+  config_key="${config[1]}"
+  config_input=${config[2]:-false}
 
-  for config_key in ${config_keys[@]} ; do
-    config_var="${config[1]}"
-    config_input=${config[2]:-false}
+  [[ ${#config_key} -ge 1 ]] || @throw-invalid-param options 'Invalid KEY'
+  [ ! -z "${config_var}" ] || @throw-invalid-param options 'Empty VARIABLE'
+  @is-boolean "${config_input}" || @throw-invalid-param options 'Invalid INPUT value'
 
-    [[ ${#config_key} -eq 1 ]] || @throw-invalid-param options 'Invalid KEY value'
-    [ ! -z "${config_var}" ] || @throw-invalid-param options 'Invalid VARIABLE value'
-    @is-boolean "${config_input}" || @throw-invalid-param options 'Invalid INPUT value'
+  if ${config_input}; then
+    config_var_val_def='=()'
+    config_var_val='+=($1) ; shift'
+  else
+    config_var_val_def='=false'
+    config_var_val='=true'
+  fi
 
-    config_var="${config_var_prefix}$(@str-to-upper "${config_var}")"
-
-    if [ -z "${script_opts}" ]; then
-      script_opts="${config_key}"
-    else
-      script_opts="${script_opts}${config_key}"
-    fi
-
-    if ${config_input}; then
-      config_var_val_def='=()'
-      config_var_val='+=($OPTARG)'
-    else
-      config_var_val_def='=false'
-      config_var_val='=true'
-      script_opts="${script_opts}i:"
-    fi
-
-    [ -z "${script_vars}" ] || script_vars="${script_vars}${BASHX_NL}"
-    [ -z "${script_case}" ] || script_case="${script_case}${BASHX_NL}${BASHX_TAB}${BASHX_TAB}"
-    script_vars="${script_vars}${config_var}${config_var_val_def}"
-    script_opts="${script_opts}:"
-    script_case="${script_case}${config_key}) ${config_var}${config_var_val} ;;"
-  done
+  [ -z "${script_vars}" ] || script_vars="${script_vars}${BASHX_NL}"
+  [ -z "${script_case}" ] || script_case="${script_case}${BASHX_NL}${BASHX_TAB}${BASHX_TAB}"
+  script_vars="${script_vars}local ${config_var}${config_var_val_def}"
+  script_case="${script_case}${config_key}) shift ; ${config_var}${config_var_val} ;;"
 done
 
 cat <<EOF
 ${script_vars}
-while getopts ${script_opts} opt
-do
-  case "\$opt" in
+local OPTARG
+while true; do
+  OPTARG="\$1"
+  case "\$OPTARG" in
     ${script_case}
-    \?) @error "ERROR: Invalid option -\$OPTARG" ;;
-    :) @error "Missing option argument for -\$OPTARG" ;;
-    *) @error "Unimplemented option: -\$OPTARG" ;;
+    -*) @error "Unrecognized option \$OPTARG" ;;
+    *) break ;;
   esac
 done
-shift \$((OPTIND - 1))
+unset OPTARG
 EOF
+
+
+# while true; do
+#     case $1 in
+#       -R) level=1
+#             shift
+#             case $1 in
+#               *[!0-9]* | "") ;;
+#               *) level=$1; shift ;;
+#             esac ;;
+#         # ... Other options ...
+#         -*) echo "$0: Unrecognized option $1" >&2
+#             exit 2;;
+#         *) break ;;
+#     esac
+# done
 
 # OPTARG_NET=false
 # OPTARG_PORTS='' #@TODO
