@@ -1,17 +1,19 @@
-## action [-f]
+## [-f] action
 ## Install auto-complete and bin files in current user shell.
 ##
 ## Params:
 ##   action: {Constant} Action to do. Valid values:
 ##     install:   Install auto-complete funcion. Use "-f" to force re-install.
 ##     uninstall: Uninstall auto-complete function. Use "-f" for no inreractive mode.
-##   -f:     {Booelan} Force action (no interactive).
-##           Optional. Default: false.
+##
+## Options:
+##   -f|--force: Force action (no interactive).
+
+eval "$(@options 'force:-f|--force')"
 
 [ -z "${HOME}" ] || [ ! -d "${HOME}" ] && @throw-invalid-param HOME
 
 local action="$1"
-local force="${2:-false}"
 
 local scrpt="${BX_SCRIPT_FILE_NAME}"
 local bcfile="${HOME}/.${scrpt}_completion"
@@ -20,12 +22,6 @@ local rcs=(.bashrc .zshrc .shrc)
 local l="PATH=\"${BX_SCRIPT_DIR}:\$PATH\" ; export PATH=\"\$PATH\" ; ${bcline}"
 local p
 local r
-
-if [ "$force" == "-f" ]; then
-  force=true
-else
-  force=false
-fi
 
 case "$action" in
   install)
