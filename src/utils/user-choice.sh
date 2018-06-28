@@ -19,14 +19,14 @@ local options=($2)
 # Default result
 local default="$3"
 
-[ -z "$message" ] && @throw-invalid-param "${FUNCNAME[0]}" message
-[ -z "$options" ] && @throw-invalid-param "${FUNCNAME[0]}" options
+[ -z "$message" ] && @throw-invalid-param message
+[ -z "$options" ] && @throw-invalid-param options
 
 local result="$default"
 local user_input
 
 # Read
-read -n 1 -p "$(@style default)${APP_PRINT_PREFIX} ${message} [${options}]: " user_input >&3
+read -n 1 -p "$(@style default)${BX_APP_PRINT_PREFIX} ${message} [${options}]: " user_input >&3
 echo >&3
 
 # Validate input

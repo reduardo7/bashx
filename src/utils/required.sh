@@ -7,7 +7,7 @@
 ## Usage example:
 ##   @required docker docker-compose composer npm
 
-local cmds=( $* )
+local cmds=( $@ )
 local cmd
 
 for cmd in ${cmds[@]}; do

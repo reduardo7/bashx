@@ -3,7 +3,7 @@
 ##
 ## Params:
 ##   len:    {Integer} Line length ({str} repeat count).
-##           Optional. Default: ${APP_WIDTH}.
+##           Optional. Default: ${BX_APP_WIDTH}.
 ##   str:    {String} String to repeat in line.
 ##           Optional. Default: '='.
 ##   prefix: {String} Line prefix.
@@ -11,7 +11,7 @@
 ##   suffix:  {String} Line suffix.
 ##           Optional. Default: ''.
 
-local len=${1:-$APP_WIDTH}
+local len=${1:-${BX_APP_WIDTH}}
 local str="${2:-=}"
 local prefix="${3}"
 local suffix="${4}"

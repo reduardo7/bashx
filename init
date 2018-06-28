@@ -14,22 +14,22 @@
 #                                          #
 ############################################
 
-export LC_CTYPE=C
-export LC_ALL=C
+[ -z "${LC_CTYPE}" ] && export LC_CTYPE=C || true
+[ -z "${LC_ALL}" ] && export LC_ALL="${LC_CTYPE}" || true
 
-SCRIPT_CALLED="$0"
-SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_CALLED")" ; pwd)"
-SCRIPT_FILE_NAME="$(basename "$SCRIPT_CALLED")"
-while [ -h "$SCRIPT_CALLED" ]; do
-  SCRIPT_CALLED="$(readlink "$SCRIPT_CALLED")"
-  SCRIPT_DIR="$(cd "$SCRIPT_DIR" ; cd "$(dirname "$SCRIPT_CALLED")" ; pwd)"
-  SCRIPT_FILE_NAME="$(basename "$SCRIPT_CALLED")"
-  SCRIPT_CALLED="$(cd "$SCRIPT_DIR" ; pwd)/$SCRIPT_FILE_NAME"
+BX_SCRIPT_CALLED="$0"
+BX_SCRIPT_DIR="$(cd "$(dirname "${BX_SCRIPT_CALLED}")" ; pwd)"
+BX_SCRIPT_FILE_NAME="$(basename "${BX_SCRIPT_CALLED}")"
+while [ -h "${BX_SCRIPT_CALLED}" ]; do
+  BX_SCRIPT_CALLED="$(readlink "${BX_SCRIPT_CALLED}")"
+  BX_SCRIPT_DIR="$(cd "${{BX_SCRIPT_DIR}}" ; cd "$(dirname "${BX_SCRIPT_CALLED}")" ; pwd)"
+  BX_SCRIPT_FILE_NAME="$(basename "${BX_SCRIPT_CALLED}")"
+  BX_SCRIPT_CALLED="$(cd "${BX_SCRIPT_DIR}" ; pwd)/${BX_SCRIPT_FILE_NAME}"
 done
 
 # Test and force run with "bash" interpreter
 if [ -z "$BASH" ]; then
-  bash "$(basename "$SCRIPT_CALLED")" "$@"
+  bash "$(basename "${BX_SCRIPT_CALLED}")" "$@"
   exit $?
 fi
 
@@ -37,90 +37,100 @@ fi
 
 ### Constants
 
-export CURRENT_DIR="$(pwd)"
+export BX_CURRENT_DIR="$(pwd)"
 ## Current user directory.
-readonly CURRENT_DIR="$CURRENT_DIR"
+readonly BX_CURRENT_DIR="${BX_CURRENT_DIR}"
 
-export SCRIPT_CALLED="$SCRIPT_CALLED"
+export BX_SCRIPT_CALLED="${BX_SCRIPT_CALLED}"
 ## Called script.
-readonly SCRIPT_CALLED="$SCRIPT_CALLED"
+readonly BX_SCRIPT_CALLED="${BX_SCRIPT_CALLED}"
 
-export SCRIPT_FILE_NAME="$SCRIPT_FILE_NAME"
+export BX_SCRIPT_FILE_NAME="${BX_SCRIPT_FILE_NAME}"
 ## Current script file name.
-readonly SCRIPT_FILE_NAME="$SCRIPT_FILE_NAME"
+readonly BX_SCRIPT_FILE_NAME="${BX_SCRIPT_FILE_NAME}"
 
-export SCRIPT_FULL_PATH="$CURRENT_DIR/$SCRIPT_FILE_NAME"
+export BX_SCRIPT_FULL_PATH="${BX_CURRENT_DIR}/${BX_SCRIPT_FILE_NAME}"
 ## Current script full path.
-readonly SCRIPT_FULL_PATH="$SCRIPT_FULL_PATH"
+readonly BX_SCRIPT_FULL_PATH="${BX_SCRIPT_FULL_PATH}"
 
-export SCRIPT_DIR="$SCRIPT_DIR"
+export BX_SCRIPT_DIR="${BX_SCRIPT_DIR}"
 ## Current script directory.
-readonly SCRIPT_DIR="$SCRIPT_DIR"
+readonly BX_SCRIPT_DIR="${BX_SCRIPT_DIR}"
 
-export BASHX_DIR="${BASHX_DIR:-$HOME/.bashx/$BASHX_VERSION}"
+export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/${BASHX_VERSION}}"
 ## Core directory (can be overridden before load).
-readonly BASHX_DIR="$BASHX_DIR"
+readonly BASHX_DIR="${BASHX_DIR}"
 
-export BASHX_SRC_PATH="$BASHX_DIR/src"
+export BASHX_SRC_PATH="${BASHX_DIR}/src"
 ## Core SRC path.
-readonly BASHX_SRC_PATH="$BASHX_SRC_PATH"
+readonly BASHX_SRC_PATH="${BASHX_SRC_PATH}"
 
-export BASHX_ACTIONS_PATH="$BASHX_SRC_PATH/actions"
+export BASHX_ACTIONS_PATH="${BASHX_SRC_PATH}/actions"
 ## Core actions path.
-readonly BASHX_ACTIONS_PATH="$BASHX_ACTIONS_PATH"
+readonly BASHX_ACTIONS_PATH="${BASHX_ACTIONS_PATH}"
 
-export BASHX_UTILS_PATH="$BASHX_SRC_PATH/utils"
+export BASHX_UTILS_PATH="${BASHX_SRC_PATH}/utils"
 ## Core utils path.
-readonly BASHX_UTILS_PATH="$BASHX_UTILS_PATH"
+readonly BASHX_UTILS_PATH="${BASHX_UTILS_PATH}"
 
 
 ### OS
 
-export OS_IS_LINUX=false
-export OS_IS_MAC=false
-export OS_IS_MINGW=false
+export BASHX_OS_IS_LINUX=false
+export BASHX_OS_IS_MAC=false
+export BASHX_OS_IS_MINGW=false
 
 if [ "$(uname)" == "Darwin" ]; then
   defaults write org.R-project.R force.LANG en_US.UTF-8
   export TERM="xterm-color"
-  export OS_IS_MAC=true
+  export BASHX_OS_IS_MAC=true
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-  export OS_IS_LINUX=true
+  export BASHX_OS_IS_LINUX=true
 elif [[ "$(expr substr $(uname -s) 1 10)" == MINGW* ]]; then
-  export OS_IS_MINGW=true
+  export BASHX_OS_IS_MINGW=true
 fi
 
 ## Is Linux OS?
-readonly OS_IS_LINUX=$OS_IS_LINUX
+readonly BASHX_OS_IS_LINUX=${BASHX_OS_IS_LINUX}
 ## Is Mac OS?
-readonly OS_IS_MAC=$OS_IS_MAC
+readonly BASHX_OS_IS_MAC=${BASHX_OS_IS_MAC}
 ## Is Win OS?
-readonly OS_IS_MINGW=$OS_IS_MINGW
+readonly BASHX_OS_IS_MINGW=${BASHX_OS_IS_MINGW}
 
 BASHX_BASE_SOURCE="${BASH_SOURCE[0]}"
-while [ -h "$BASHX_BASE_SOURCE" ]; do
-  BASHX_BASE_DIR="$(cd -P "$(dirname "$BASHX_BASE_SOURCE")" && pwd)"
-  BASHX_BASE_SOURCE=`readlink "$BASHX_BASE_SOURCE"`
-  [[ "$BASHX_BASE_SOURCE" != /* ]] && BASHX_BASE_SOURCE="$BASHX_BASE_DIR/$BASHX_BASE_SOURCE"
+while [ -h "${BASHX_BASE_SOURCE}" ]; do
+  BASHX_BASE_DIR="$(cd -P "$(dirname "${BASHX_BASE_SOURCE}")" && pwd)"
+  BASHX_BASE_SOURCE=`readlink "${BASHX_BASE_SOURCE}"`
+  [[ "${BASHX_BASE_SOURCE}" != /* ]] && BASHX_BASE_SOURCE="${BASHX_BASE_DIR}/${BASHX_BASE_SOURCE}"
 done
-[ -z "$BASHX_BASE_DIR"] && BASHX_BASE_DIR="$(cd -P "$(dirname "$BASHX_BASE_SOURCE")" && pwd)"
-export BASHX_BASE_SOURCE="$BASHX_BASE_SOURCE"
-## BashX base source.
-readonly BASHX_BASE_SOURCE="$BASHX_BASE_SOURCE"
+[ -z "${BASHX_BASE_DIR}"] && BASHX_BASE_DIR="$(cd -P "$(dirname "${BASHX_BASE_SOURCE}")" && pwd)"
+export BASHX_BASE_SOURCE="${BASHX_BASE_SOURCE}"
+## BashX base source path.
+readonly BASHX_BASE_SOURCE="${BASHX_BASE_SOURCE}"
 
-export BASHX_BASE_DIR="$BASHX_BASE_DIR"
-# BashX base path.
-readonly BASHX_BASE_DIR="$BASHX_BASE_DIR"
+export BASHX_BASE_DIR="${BASHX_BASE_DIR}"
+# BashX base directory path.
+readonly BASHX_BASE_DIR="${BASHX_BASE_DIR}"
 
 # \e | \033 | \x1B
-$OS_IS_MAC && export KEY_ESC=$'\x1B' || export KEY_ESC=$'\e'
+$BASHX_OS_IS_MAC && export BASHX_KEY_ESC=$'\x1B' || export BASHX_KEY_ESC=$'\e'
 ## Key: ESC
-readonly KEY_ESC="$KEY_ESC"
+readonly BASHX_KEY_ESC="${BASHX_KEY_ESC}"
 
-export ACTION_PREFIX='@Actions'
-## Action prefix.
-## Used with @run-app
-readonly ACTION_PREFIX="$ACTION_PREFIX"
+# \n - New Line
+export BASHX_NL='
+'
+## New Line constant (\n)
+readonly BASHX_NL="${BASHX_NL}"
+
+# \t - Tab
+export BASHX_TAB='  '
+## New Line constant (\t)
+readonly BASHX_TAB="${BASHX_TAB}"
+
+export BASHX_ACTION_PREFIX='@Actions'
+## Action prefix. Used at @run-app.
+readonly BASHX_ACTION_PREFIX="${BASHX_ACTION_PREFIX}"
 
 # #############################################################################
 
@@ -128,63 +138,64 @@ readonly ACTION_PREFIX="$ACTION_PREFIX"
 
 export BASHX_DOC_MARK='##'
 
-## Current script Sources directory.
-export SRC_DIR="${SRC_DIR:-$SCRIPT_FILE_NAME.src}"
+## Current script Sources directory. Customizable with: BASHX_SRC_DIR.
+export BX_SRC_DIR="${BASHX_SRC_DIR:-${BX_SCRIPT_FILE_NAME}.src}"
 
-## Current script Sources path.
-export SRC_PATH="$SCRIPT_DIR/$SRC_DIR"
+## Current script Sources path. Constant.
+export BX_SRC_PATH="${BX_SCRIPT_DIR}/${BX_SRC_DIR}"
 
-## Configuration file (can be overridden before load).
-export APP_CONFIG_FILE="${APP_CONFIG_FILE:-$SCRIPT_DIR/.$SCRIPT_FILE_NAME.env}"
+## Configuration file (can be overridden before load). Customizable with: BASHX_APP_CONFIG_FILE.
+export BX_APP_CONFIG_FILE="${BASHX_APP_CONFIG_FILE:-${BX_SCRIPT_DIR}/.${BX_SCRIPT_FILE_NAME}.env}"
 
-## APP Title.
-export APP_TITLE="BashX"
+## APP Title. Customizable with: BASHX_APP_CONFIG_FILE.
+export BX_APP_TITLE="BashX"
 
 ## APP Version.
-export APP_VERSION="1.0"
+export BX_APP_VERSION="1.0"
 
 ## Default APP color. See "@style" for more information.
-export APP_COLOR_DEFAULT="cyan-light"
+export BX_APP_COLOR_DEFAULT="cyan-light"
 
 ## Output colors?
-export APP_COLORS_ENABLED=true
+export BX_APP_COLORS_ENABLED=true
 
 ## APP colsumns width.
-export APP_WIDTH=80
+export BX_APP_WIDTH=80
 
 ## Start character for formated print screen. See "@print" for more information.
-export APP_PRINT_PREFIX="#"
+export BX_APP_PRINT_PREFIX="#"
 
 ## Default action to call. Action to use if script called without arguments.
-export APP_DEFAULT_ACTION="help"
+export BX_APP_DEFAULT_ACTION="help"
 
 ## Log file path.
-export LOG_FILE_PATH="$SCRIPT_FULL_PATH.log"
+export BX_LOG_FILE_PATH="${BX_SCRIPT_FULL_PATH}.log"
 
 ## Tests path.
-export TESTS_PATH="$SRC_PATH/tests"
+export BX_TESTS_PATH="${BX_SRC_PATH}/tests"
 
 ## Actions path.
-export ACTIONS_PATH="$SRC_PATH/actions"
+export BX_ACTIONS_PATH="${BX_SRC_PATH}/actions"
 
 ## Utils path.
-export UTILS_PATH="$SRC_PATH/utils"
+export BX_UTILS_PATH="${BX_SRC_PATH}/utils"
 
 ## Events path.
-export EVENTS_PATH="$SRC_PATH/events"
+export BX_EVENTS_PATH="${BX_SRC_PATH}/events"
 
 ## Resources path.
-export RESOURCES_PATH="$SRC_PATH/resources"
+export BX_RESOURCES_PATH="${BX_SRC_PATH}/resources"
 
 ## Valid events options.
-EVENTS_OPTS=(invalid-action ready start error finish)
+export BASHX_EVENTS_OPTS=(invalid-action ready start error finish)
+readonly BASHX_EVENTS_OPTS=${BASHX_EVENTS_OPTS}
 
 # #############################################################################
 
 ### Load config
 
-if [ -f "$APP_CONFIG_FILE" ]; then
-  . $APP_CONFIG_FILE
+if [ -f "${BX_APP_CONFIG_FILE}" ]; then
+  . "${BX_APP_CONFIG_FILE}"
 fi
 
 # #############################################################################
@@ -192,23 +203,23 @@ fi
 ### VARS
 
 ## Current called action.
-export ACTION=""
+export BASHX_ACTION=''
 
 ## APP Temporary path.
-export APP_TMP_PATH="$(mktemp -d)"
+export BX_APP_TMP_PATH="$(mktemp -d)"
 
 ## True if APP is terminated with illegal error
-APP_EXIT_ILLEGAL_ERROR=false
+BASHX_APP_EXIT_ILLEGAL_ERROR=false
 
 # #############################################################################
 
 ### PRIVATE VARS
 
 # On exit command
-_ON_EXIT=''
+_BASHX_ON_EXIT=''
 
 # True if APP is terminated
-_APP_EXIT=false
+_BASHX_APP_EXIT=false
 
 # #############################################################################
 
@@ -219,10 +230,10 @@ exec 3>&1
 
 ### Preload required
 
-@trim() { . "$BASHX_UTILS_PATH/trim.sh"; }
-@str-to-lower() { . "$BASHX_UTILS_PATH/str-to-lower.sh"; }
-@style() { . "$BASHX_UTILS_PATH/style.sh"; }
-@file-name() { . "$BASHX_UTILS_PATH/file-name.sh"; }
+@trim() { . "${BASHX_UTILS_PATH}/trim.sh"; }
+@str-to-lower() { . "${BASHX_UTILS_PATH}/str-to-lower.sh"; }
+@style() { . "${BASHX_UTILS_PATH}/style.sh"; }
+@file-name() { . "${BASHX_UTILS_PATH}/file-name.sh"; }
 @load-functions() { . "${BASHX_UTILS_PATH}/load-functions.sh"; }
 
 # #############################################################################
@@ -231,8 +242,8 @@ exec 3>&1
 
 # Load base
 @load-functions "${BASHX_UTILS_PATH}" '@'
-@load-functions "${BASHX_ACTIONS_PATH}" "${ACTION_PREFIX}."
+@load-functions "${BASHX_ACTIONS_PATH}" "${BASHX_ACTION_PREFIX}."
 
 # Load custom
-[ ! -d "${UTILS_PATH}" ] || @load-functions "${UTILS_PATH}"
-[ ! -d "${ACTIONS_PATH}" ] || @load-functions "${ACTIONS_PATH}" "${ACTION_PREFIX}."
+[ ! -d "${BX_UTILS_PATH}" ] || @load-functions "${BX_UTILS_PATH}"
+[ ! -d "${BX_ACTIONS_PATH}" ] || @load-functions "${BX_ACTIONS_PATH}" "${BASHX_ACTION_PREFIX}."

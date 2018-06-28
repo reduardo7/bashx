@@ -89,7 +89,7 @@
 ##   @style background gray
 ##   @print "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
 
-if ${APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
+if ${BX_APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
   local OIFS="$IFS"
 
   # No parameters
@@ -122,12 +122,12 @@ if ${APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
       fi
       # Default color
       s='color'
-      v="${APP_COLOR_DEFAULT}"
+      v="${BX_APP_COLOR_DEFAULT}"
     fi
 
     if [ ! -z "$v" ]; then
       if [ "$s" == 'color' ] && ( [ "$v" == 'default' ] || [ "$v" == 'normal' ] || [ "$v" == 'auto' ] ); then
-        if [ -z "${APP_COLOR_DEFAULT}" ] || [ "${APP_COLOR_DEFAULT}" == 'default' ] || [ "${APP_COLOR_DEFAULT}" == 'normal' ] || [ "${APP_COLOR_DEFAULT}" == 'auto' ]; then
+        if [ -z "${BX_APP_COLOR_DEFAULT}" ] || [ "${BX_APP_COLOR_DEFAULT}" == 'default' ] || [ "${BX_APP_COLOR_DEFAULT}" == 'normal' ] || [ "${BX_APP_COLOR_DEFAULT}" == 'auto' ]; then
           # Invalid default or default not defined
           y='0'
           # Invalidate case
@@ -135,7 +135,7 @@ if ${APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
           s=''
         else
           # Default color
-          v="${APP_COLOR_DEFAULT}"
+          v="${BX_APP_COLOR_DEFAULT}"
         fi
       fi
       case "$s" in
@@ -252,6 +252,6 @@ if ${APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
   done
 
   if [ ! -z "${c}" ]; then
-    echo -en "${KEY_ESC}[${c}m"
+    echo -en "${BASHX_KEY_ESC}[${c}m"
   fi
 fi

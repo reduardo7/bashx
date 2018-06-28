@@ -41,21 +41,21 @@ if [ ! -z "${bashx_version}" ] && [ ! -z "${project_path}" ]; then
 # BashX | https://github.com/reduardo7/bashx
 export BASHX_VERSION="${bashx_version}"
 (${init_script}) || exit \$?
-. "\${HOME}/.bashx/\${BASHX_VERSION}/init"
+. "\${HOME:-/tmp}/.bashx/\${BASHX_VERSION}/init"
 
 ### Begin Example ###
 
 # Configuration Example.
 # This section can be moved to "${project_env}" file.
-export APP_TITLE="${project_title}"
-export APP_VERSION="1.0"
+export BX_APP_TITLE="${project_title}"
+export BX_APP_VERSION="1.0"
 
-${ACTION_PREFIX}.action1() { # \\\\n Action without arguments
+${BASHX_ACTION_PREFIX}.action1() { # \\\\n Action without arguments
   # ... Your code here ...
   @print Action 1
 }
 
-${ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
+${BASHX_ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
   # ... Your code here ...
   @print Action 2
   @print Param1: \$1

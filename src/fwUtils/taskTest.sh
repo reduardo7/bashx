@@ -1,5 +1,5 @@
-fwUtils.commonAction "$1" "$2" "${TESTS_PATH}" <<EOF
+fwUtils.commonAction "$1" "$2" "${BX_TESTS_PATH}" <<EOF
 ${BASHX_DOC_MARK} Description...
 
-@error '@TODO Implement me!'
+@throw-not-implemented '@TODO'
 EOF

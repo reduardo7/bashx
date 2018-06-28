@@ -1,9 +1,7 @@
 ## *
-## Print warning at screen.
+## Print at stderr.
 ##
 ## Params:
 ##   *: {String} Text to print.
 
-local str="$*"
-
-@print "${str}" 3>&2
+@print "$@" 3>&2

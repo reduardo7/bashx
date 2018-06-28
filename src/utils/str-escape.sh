@@ -6,6 +6,8 @@
 ##
 ## Out: {String} Escaped string.
 
-if [ ! -z "$*" ]; then
-  printf '%q' "$*"
+local str="$@"
+
+if [ ! -z "${str}" ]; then
+  printf '%q' "${str}"
 fi

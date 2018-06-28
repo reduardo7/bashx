@@ -4,10 +4,8 @@
 ## Params:
 ##   *: {String} Error message.
 
-local msg="$*"
-
-APP_EXIT_ILLEGAL_ERROR=true
+BASHX_APP_EXIT_ILLEGAL_ERROR=true
 
 echo >&2
 @alert '@@@ Error! @@@'
-@error "$msg" true 1
+@error "$@" true 1

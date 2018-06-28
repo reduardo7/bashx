@@ -13,8 +13,8 @@ local timeout=$1
 local cmd="$2"
 local message="${3:-Count down}"
 
-@is-number "${timeout}" || @throw-invalid-param "${FUNCNAME[0]}" timeout
-[ -z "${cmd}" ] && @throw-invalid-param "${FUNCNAME[0]}" cmd
+@is-number "${timeout}" || @throw-invalid-param timeout
+[ -z "${cmd}" ] && @throw-invalid-param cmd
 
 @print
 
@@ -27,7 +27,7 @@ while [[ ${count} -gt 0 ]] && [[ ${rta} -eq 0 ]] ; do
   @print-back "${message} [${count}]... Press [C] or [ESC] to cancel..."
   read -n 1 -s -t 1 -p '' i
   r=$?
-  if [ "${i}" == 'c' ] || [ "${i}" == 'C' ] || [ "${i}" == "${KEY_ESC}" ]; then
+  if [ "${i}" == 'c' ] || [ "${i}" == 'C' ] || [ "${i}" == "${BASHX_KEY_ESC}" ]; then
     rta=1
   else
     # 142 == No user input
