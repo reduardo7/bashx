@@ -14,6 +14,8 @@
 #                                          #
 ############################################
 
+set +e
+
 [ -z "${LC_CTYPE}" ] && export LC_CTYPE=C || true
 [ -z "${LC_ALL}" ] && export LC_ALL="${LC_CTYPE}" || true
 
