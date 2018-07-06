@@ -9,7 +9,7 @@
 ##   where:
 ##     VARIABLE: {String} Valid local variable name (without spaces).
 ##               This produces a local variable with this name.
-##     KEY:      {Char} Full option key.
+##     KEY:      {Char} Full option key starting with "-".
 ##               Use `|` to concatenate multiple options.
 ##     INPUT:    {Boolean} Option with input?
 ##               Optional. Default: false.
@@ -46,9 +46,10 @@ for variable in ${variables[@]} ; do
   config_key="${config[1]}"
   config_input=${config[2]:-false}
 
-  [[ ${#config_key} -ge 1 ]] || @throw-invalid-param options 'Invalid KEY'
-  [ ! -z "${config_var}" ] || @throw-invalid-param options 'Empty VARIABLE'
-  @is-boolean "${config_input}" || @throw-invalid-param options 'Invalid INPUT value'
+  [[ ${#config_key} -ge 2 ]] || @throw-invalid-param config_key 'Invalid KEY. Showld contains 2 or more characters'
+  [[ "${config_key}" == -* ]] || @throw-invalid-param config_key 'Invalid KEY. Should start with "-"'
+  [ ! -z "${config_var}" ] || @throw-invalid-param config_var 'Empty VARIABLE'
+  @is-boolean "${config_input}" || @throw-invalid-param config_input 'Invalid INPUT value'
 
   if ${config_input}; then
     config_var_val_def='=()'
