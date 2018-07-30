@@ -22,7 +22,7 @@
 You can start your project with:
 
 ```bash
-./bashx _bashx init-project {BASHX_VERSION} {PROJECT_PATH}
+./bashx _bashx init project {BASHX_VERSION} {PROJECT_PATH}
 ```
 
 Where:
@@ -33,11 +33,11 @@ Where:
 ### Examples
 
 ```bash
-./bashx _bashx init-project v1.5 my-app
+./bashx _bashx init project v1.5 my-app
 ```
 
 ```bash
-./bashx _bashx init-project v1.5 ~/projects/my-script.sh
+./bashx _bashx init project v1.5 ~/projects/my-script.sh
 ```
 
 ## Manual start
