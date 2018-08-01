@@ -33,11 +33,11 @@ Where:
 ### Examples
 
 ```bash
-./bashx _bashx init project v1.5 my-app
+./bashx _bashx init project v1.6 my-app
 ```
 
 ```bash
-./bashx _bashx init project v1.5 ~/projects/my-script.sh
+./bashx _bashx init project v1.6 ~/projects/my-script.sh
 ```
 
 ## Manual start
@@ -45,9 +45,12 @@ Where:
 **1)** Add next at beginning of the script file:
 
 ```bash
-export BASHX_VERSION="v1.5"
-(export LC_CTYPE=C;export LC_ALL=C;set -e;_x() { echo "# Error: ${1:-Installation fail}" >&2;exit 1;};[ -z "${BASHX_VERSION}" ] && _x 'BASHX_VERSION is required';export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/${BASHX_VERSION}";if [ ! -d "${BASHX_DIR}" ]; then export setup_url='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh';if type wget >/dev/null 2>&1 ; then sh -c "$(wget -q ${setup_url} -O -)" || _x;elif type curl >/dev/null 2>&1 ; then sh -c "$(curl -fsSL ${setup_url})" || _x;else _x 'wget or curl are required. Install wget or curl to continue';fi;fi) || exit $?
+###############################################################################
+# BashX | https://github.com/reduardo7/bashx
+export BASHX_VERSION="v1.6"
+(export LC_CTYPE=C;export LC_ALL=C;set -e;x() { s="$*";echo "# Error: ${s:-Installation fail}" >&2;exit 1;};d=/dev/null;[ -z "$BASHX_VERSION" ] && x BASHX_VERSION is required;export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}";if [ ! -d "$BASHX_DIR" ]; then u='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh';if type wget >$d 2>&1 ; then sh -c "$(wget -q $u -O -)" || x;elif type curl >$d 2>&1 ; then sh -c "$(curl -fsSL $u)" || x;else x wget or curl are required. Install wget or curl to continue;fi;fi) || exit $?
 . "${HOME:-/tmp}/.bashx/${BASHX_VERSION}/init"
+###############################################################################
 ```
 
 **2)** Write your code.
@@ -63,10 +66,12 @@ export BASHX_VERSION="v1.5"
 ```bash
 #!/usr/bin/env bash
 
+###############################################################################
 # BashX | https://github.com/reduardo7/bashx
-export BASHX_VERSION="v1.5"
-(export LC_CTYPE=C;export LC_ALL=C;set -e;_x() { echo "# Error: ${1:-Installation fail}" >&2;exit 1;};[ -z "${BASHX_VERSION}" ] && _x 'BASHX_VERSION is required';export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/${BASHX_VERSION}";if [ ! -d "${BASHX_DIR}" ]; then export setup_url='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh';if type wget >/dev/null 2>&1 ; then sh -c "$(wget -q ${setup_url} -O -)" || _x;elif type curl >/dev/null 2>&1 ; then sh -c "$(curl -fsSL ${setup_url})" || _x;else _x 'wget or curl are required. Install wget or curl to continue';fi;fi) || exit $?
+export BASHX_VERSION="v1.6"
+(export LC_CTYPE=C;export LC_ALL=C;set -e;x() { s="$*";echo "# Error: ${s:-Installation fail}" >&2;exit 1;};d=/dev/null;[ -z "$BASHX_VERSION" ] && x BASHX_VERSION is required;export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}";if [ ! -d "$BASHX_DIR" ]; then u='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh';if type wget >$d 2>&1 ; then sh -c "$(wget -q $u -O -)" || x;elif type curl >$d 2>&1 ; then sh -c "$(curl -fsSL $u)" || x;else x wget or curl are required. Install wget or curl to continue;fi;fi) || exit $?
 . "${HOME:-/tmp}/.bashx/${BASHX_VERSION}/init"
+###############################################################################
 
 @Actions.action1() { # \\n Action without arguments
   @print "

@@ -2,7 +2,7 @@
 ## Print basic usage (this).
 ##
 ## Options:
-##   -a|--all: Print hidden actions too.
+##   -a|--all: Show hidden actions help.
 
 eval "$(@options 'print_all:-a|--all')"
 

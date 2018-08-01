@@ -17,22 +17,24 @@ export LC_ALL=C
 
 set -e
 
-_x() {
-  echo "# Error: ${1:-Installation fail}" >&2
+x() {
+  s="$*"
+  echo "# Error: ${s:-Installation fail}" >&2
   exit 1
 }
 
-[ -z "${BASHX_VERSION}" ] && _x 'BASHX_VERSION is required'
+d=/dev/null
+[ -z "$BASHX_VERSION" ] && x BASHX_VERSION is required
 
-export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/${BASHX_VERSION}}"
+export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}"
 
-if [ ! -d "${BASHX_DIR}" ]; then
-  export setup_url='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh'
-  if type wget >/dev/null 2>&1 ; then
-    sh -c "$(wget -q ${setup_url} -O -)" || _x
-  elif type curl >/dev/null 2>&1 ; then
-    sh -c "$(curl -fsSL ${setup_url})" || _x
+if [ ! -d "$BASHX_DIR" ]; then
+  u='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh'
+  if type wget >$d 2>&1 ; then
+    sh -c "$(wget -q $u -O -)" || x
+  elif type curl >$d 2>&1 ; then
+    sh -c "$(curl -fsSL $u)" || x
   else
-    _x 'wget or curl are required. Install wget or curl to continue'
+    x wget or curl are required. Install wget or curl to continue
   fi
 fi
