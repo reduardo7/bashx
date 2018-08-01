@@ -51,7 +51,7 @@ export BX_SCRIPT_FILE_NAME="${BX_SCRIPT_FILE_NAME}"
 ## Current script file name.
 readonly BX_SCRIPT_FILE_NAME="${BX_SCRIPT_FILE_NAME}"
 
-export BX_SCRIPT_FULL_PATH="${BX_CURRENT_DIR}/${BX_SCRIPT_FILE_NAME}"
+export BX_SCRIPT_FULL_PATH="${BX_SCRIPT_DIR}/${BX_SCRIPT_FILE_NAME}"
 ## Current script full path.
 readonly BX_SCRIPT_FULL_PATH="${BX_SCRIPT_FULL_PATH}"
 
