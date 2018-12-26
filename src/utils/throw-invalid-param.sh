@@ -15,6 +15,10 @@ local script_name="${FUNCNAME[2]}"
 local msg
 local line
 
+if [ "${script_name}" = 'source' ]; then
+  script_name="${FUNCNAME[3]}"
+fi
+
 if [ -z "${variable_value}" ]; then
   msg="[${variable_name}] can not be emtpy"
 else
