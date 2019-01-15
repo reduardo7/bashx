@@ -150,25 +150,25 @@ export BX_SRC_PATH="${BX_SCRIPT_DIR}/${BX_SRC_DIR}"
 export BX_APP_CONFIG_FILE="${BASHX_APP_CONFIG_FILE:-${BX_SCRIPT_DIR}/.${BX_SCRIPT_FILE_NAME}.env}"
 
 ## APP Title. Customizable with: BASHX_APP_CONFIG_FILE.
-export BX_APP_TITLE="BashX"
+export BX_APP_TITLE="${BX_APP_TITLE:-BashX}"
 
 ## APP Version.
-export BX_APP_VERSION="1.0"
+export BX_APP_VERSION="${BX_APP_VERSION:-1.0}"
 
 ## Default APP color. See "@style" for more information.
-export BX_APP_COLOR_DEFAULT="cyan-light"
+export BX_APP_COLOR_DEFAULT="${BX_APP_COLOR_DEFAULT:-cyan-light}"
 
 ## Output colors?
-export BX_APP_COLORS_ENABLED=true
+export BX_APP_COLORS_ENABLED=${BX_APP_COLORS_ENABLED:-true}
 
 ## APP colsumns width.
-export BX_APP_WIDTH=80
+export BX_APP_WIDTH=${BX_APP_WIDTH:-80}
 
 ## Start character for formated print screen. See "@print" for more information.
-export BX_APP_PRINT_PREFIX="#"
+export BX_APP_PRINT_PREFIX="${BX_APP_PRINT_PREFIX:-#}"
 
 ## Default action to call. Action to use if script called without arguments.
-export BX_APP_DEFAULT_ACTION="help"
+export BX_APP_DEFAULT_ACTION="${BX_APP_DEFAULT_ACTION:-help}"
 
 ## Log file path.
 export BX_LOG_FILE_PATH="${BX_SCRIPT_FULL_PATH}.log"
