@@ -140,8 +140,8 @@ readonly BASHX_ACTION_PREFIX="${BASHX_ACTION_PREFIX}"
 
 export BASHX_DOC_MARK='##'
 
-## Current script Sources directory. Customizable with: BASHX_SRC_DIR.
-export BX_SRC_DIR="${BASHX_SRC_DIR:-${BX_SCRIPT_FILE_NAME}.src}"
+## Current script Sources directory. Customizable with: BX_SRC_DIR.
+export BX_SRC_DIR="${BX_SRC_DIR:-${BX_SCRIPT_FILE_NAME}.src}"
 
 ## Current script Sources path. Constant.
 export BX_SRC_PATH="${BX_SCRIPT_DIR}/${BX_SRC_DIR}"
