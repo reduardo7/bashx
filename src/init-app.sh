@@ -14,6 +14,7 @@
 
 export LC_CTYPE=C
 export LC_ALL=C
+export LANG=C
 
 set -e
 
