@@ -40,7 +40,7 @@ if [ ! -z "${bashx_version}" ] && [ ! -z "${project_path}" ]; then
 
 ###############################################################################
 # BashX | https://github.com/reduardo7/bashx
-export BASHX_VERSION="${bashx_version}"
+set +ex;export BASHX_VERSION="${bashx_version}"
 (${init_script}) || exit \$?
 . "\${HOME:-/tmp}/.bashx/\${BASHX_VERSION}/init"
 ###############################################################################

@@ -66,6 +66,7 @@ for variable in ${variables[@]} ; do
 done
 
 cat <<EOF
+[[ "\$-" == *x* ]] ; local _d_optios=\$? ; set +x
 ${script_vars}
 local OPTARG
 while true; do
@@ -77,6 +78,7 @@ while true; do
   esac
 done
 unset OPTARG
+[[ \${_d_optios} == 0 ]] && set -x
 EOF
 
 

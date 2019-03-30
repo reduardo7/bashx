@@ -11,7 +11,7 @@
 ##
 ## Return: 0 if file exists, 1 if file not exists after timeout.
 
-local wait_type="$1"
+local type="$1"
 local path="$2"
 local timeout=${3:-0}
 local show_message=${4:-true}
@@ -19,10 +19,10 @@ local show_message=${4:-true}
 local cmd
 local msg
 
-case "${wait_type}" in
+case "${type}" in
   d|D) cmd="[ -d '${path}' ]" ;;
   f|F) cmd="[ -f '${path}' ]" ;;
-  *) @throw@throw-invalid-param wait_type
+  *) @throw-invalid-param type
 fi
 
 if ! ${show_message}; then
