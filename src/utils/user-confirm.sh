@@ -28,5 +28,5 @@ else
   echo N >&3
 fi
 
-read -s -t 0.5 choice
+read -s -t 1 choice
 return ${result}
