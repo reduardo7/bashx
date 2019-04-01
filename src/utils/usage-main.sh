@@ -9,7 +9,7 @@
 ## Out: {String} Usage text.
 
 local src="$1"
-local prefix="${2:-$BX_SCRIPT_FILE_NAME}"
+local prefix="${2:-$BX_SCRIPT_FILE_NAME} "
 local line
 local cmd="$(@file-name "${src}" true)"
 
