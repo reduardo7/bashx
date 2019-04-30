@@ -58,6 +58,8 @@ elif [[ $# -gt 0 ]]; then
 
     # Exec
     ${BASHX_ACTION_PREFIX}.${BASHX_ACTION} "$@"
+    # ${BASHX_ACTION_PREFIX}.${BASHX_ACTION} "$@" 4>&1 1>&2 2>&4 4>&- | grep -v '++ local _r_'
+    # ${BASHX_ACTION_PREFIX}.${BASHX_ACTION} "$@" 2> >( grep '++ local _r_' >&2 )
     r=$?
   else
     # Invalid Action

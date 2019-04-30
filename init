@@ -38,6 +38,11 @@ fi
 
 # #############################################################################
 
+### Ensure environment constants
+
+[[ ! -z "${UID}" ]] || export UID=$(id -u)
+[[ ! -z "${GID}" ]] || export GID=$(id -g)
+
 ### Constants
 
 export BX_CURRENT_DIR="$(pwd)"

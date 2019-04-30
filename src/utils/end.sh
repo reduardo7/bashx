@@ -26,7 +26,9 @@ if ! ${_BASHX_APP_EXIT} ; then
 
   if [ ! -z "${_BASHX_ON_EXIT}" ]; then
     # Execute exit actions
-    ( eval "${_BASHX_ON_EXIT}" )
+    (
+      eval "${_BASHX_ON_EXIT}"
+    )
   fi
 
   # On Finish
