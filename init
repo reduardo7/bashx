@@ -237,6 +237,9 @@ _BASHX_APP_EXIT=false
 # info out > std out
 exec 3>&1
 
+# Debug (set +x) prompt
+PS4='> !DEBUG: '
+
 # #############################################################################
 
 ### Preload required

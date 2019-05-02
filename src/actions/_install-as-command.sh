@@ -66,7 +66,7 @@ fi; fi
 EOF
     fi
 
-    for r in ${rcs} ; do
+    for r in ${rcs[@]} ; do
       p="${HOME}/${r}"
 
       if [ -f "${p}" ]; then
@@ -98,7 +98,7 @@ EOF
       fi
     fi
 
-    for r in ${rcs} ; do
+    for r in ${rcs[@]} ; do
       p="${HOME}/${r}"
       if [ -f "${p}" ]; then
         if grep "${l}" "${p}" >/dev/null 2>&1

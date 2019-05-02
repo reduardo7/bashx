@@ -6,7 +6,10 @@
 ##   prefix:         {String} Prefix.
 ##                   Optional. Default: empty.
 
-[[ "$-" == *x* ]] ; local _d_load_function=$? ; set +x
+local _d_load_function_debug="$-"
+set +x
+[[ "${_d_load_function}" == *x* ]]
+local _d_load_function=$?
 
 local functions_path="$1"
 local prefix="$2"
@@ -23,14 +26,15 @@ for file_path in ${functions_path}/*.sh ; do
     local v="${n//-/_}" ; v="${v//\./_}"
 
     eval "
-      __${prefix}${n}${p} {
-        . \"${file_path}\"
-      }
-
       ${prefix}${n}${p} {
-        [[ \"\$-\" == *x* ]] ; local _d_${v}=\$? ; set +x
-        __${prefix}${n} \"\$@\"
+        local _d_${v}_debug=\"\$-\"
+        set +x
+        [[ \"\${_d_${v}_debug}\" == *x* ]]
+        local _d_${v}=\$?
+
+        . \"${file_path}\"
         local _r_${v}=\$?
+
         [[ \${_d_${v}} == 0 ]] && set -x
         return \${_r_${v}}
       }
