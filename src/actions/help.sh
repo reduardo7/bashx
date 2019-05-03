@@ -6,7 +6,7 @@
 
 eval "$(@options 'print_all:-a|--all')"
 
-local prefix="${BX_SCRIPT_FILE_NAME} "
+local prefix="${BX_SCRIPT_FILE_NAME}"
 local line
 
 @title 'Help & Usage'
