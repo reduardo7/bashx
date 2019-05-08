@@ -219,9 +219,6 @@ export BX_APP_TMP_PATH="$(mktemp -d)"
 ## True if APP is terminated with illegal error.
 BASHX_APP_EXIT_ILLEGAL_ERROR=false
 
-# True if APP is in debug mode.
-alias BASHX_APP_DEBUG='[[ "$-" == *x* ]]'
-
 # #############################################################################
 
 ### PRIVATE VARS

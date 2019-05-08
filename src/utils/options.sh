@@ -68,8 +68,6 @@ done
 cat <<EOF
 local _d_options_debug="\$-"
 set +x
-[[ "\${_d_options_debug}" == *x* ]]
-local _d_optios=\$?
 
 ${script_vars}
 local OPTARG
@@ -83,7 +81,7 @@ while true; do
 done
 unset OPTARG
 
-[[ \${_d_optios} == 0 ]] && set -x
+[[ "\${_d_options_debug}" == *x* ]] && set -x || true
 EOF
 
 

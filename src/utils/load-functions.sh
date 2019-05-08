@@ -8,8 +8,6 @@
 
 local _d_load_function_debug="$-"
 set +x
-[[ "${_d_load_function}" == *x* ]]
-local _d_load_function=$?
 
 local functions_path="$1"
 local prefix="$2"
@@ -29,17 +27,15 @@ for file_path in ${functions_path}/*.sh ; do
       ${prefix}${n}${p} {
         local _d_${v}_debug=\"\$-\"
         set +x
-        [[ \"\${_d_${v}_debug}\" == *x* ]]
-        local _d_${v}=\$?
 
         . \"${file_path}\"
         local _r_${v}=\$?
 
-        [[ \${_d_${v}} == 0 ]] && set -x
+        [[ \"\${_d_${v}_debug}\" == *x* ]] && set -x || true
         return \${_r_${v}}
       }
     "
   fi
 done
 
-[[ ${_d_load_function} == 0 ]] && set -x
+[[ "${_d_load_function_debug}" == *x* ]] && set -x || true
