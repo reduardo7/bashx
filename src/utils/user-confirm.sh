@@ -14,7 +14,7 @@ local result=3
 echo -n "$(@style default)${BX_APP_PRINT_PREFIX} ${msg} (y/n) " >&3
 
 while [[ ${result} -gt 1 ]] ; do
-  read -s -n 1 choice >&3
+  read -s -n 1 choice >&3 || true
 
   case "${choice}" in
     y|Y ) result=0 ;;
@@ -28,5 +28,5 @@ else
   echo N >&3
 fi
 
-read -s -t 1 choice
+read -s -t 1 choice || true
 return ${result}
