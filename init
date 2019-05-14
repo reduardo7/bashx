@@ -25,7 +25,7 @@ BX_SCRIPT_DIR="$(cd "$(dirname "${BX_SCRIPT_CALLED}")" ; pwd)"
 BX_SCRIPT_FILE_NAME="$(basename "${BX_SCRIPT_CALLED}")"
 while [ -h "${BX_SCRIPT_CALLED}" ]; do
   BX_SCRIPT_CALLED="$(readlink "${BX_SCRIPT_CALLED}")"
-  BX_SCRIPT_DIR="$(cd "${{BX_SCRIPT_DIR}}" ; cd "$(dirname "${BX_SCRIPT_CALLED}")" ; pwd)"
+  BX_SCRIPT_DIR="$(cd "${BX_SCRIPT_DIR}" ; cd "$(dirname "${BX_SCRIPT_CALLED}")" ; pwd)"
   BX_SCRIPT_FILE_NAME="$(basename "${BX_SCRIPT_CALLED}")"
   BX_SCRIPT_CALLED="$(cd "${BX_SCRIPT_DIR}" ; pwd)/${BX_SCRIPT_FILE_NAME}"
 done
