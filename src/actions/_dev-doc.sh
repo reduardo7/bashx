@@ -6,7 +6,7 @@ _doc() {
 
   @title "Development Documentation"
 
-  for f in ${BASHX_UTILS_PATH}/*.sh ; do
+  for f in "${BASHX_UTILS_PATH}"/*.sh ; do
     if [ -f "${f}" ]; then
       @usage "${f}" '@'
     fi

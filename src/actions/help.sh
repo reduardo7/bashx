@@ -16,7 +16,7 @@ local line
 
 # Actions
 if [ -d "${BX_ACTIONS_PATH}" ]; then
-  for f in ${BX_ACTIONS_PATH}/*.sh ; do
+  for f in "${BX_ACTIONS_PATH}"/*.sh ; do
     if [ -f "${f}" ]; then
       if ${print_all} || [[ "$(@file-name "${f}" true)" != _* ]]; then
         @usage "${f}" "${prefix}"
@@ -26,7 +26,7 @@ if [ -d "${BX_ACTIONS_PATH}" ]; then
 fi
 
 # Base Actions
-for f in ${BASHX_ACTIONS_PATH}/*.sh ; do
+for f in "${BASHX_ACTIONS_PATH}"/*.sh ; do
   if [ -f "${f}" ]; then
     if ${print_all} || [[ "$(@file-name "${f}" true)" != _* ]]; then
       @usage "${f}" "${prefix}"

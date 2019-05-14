@@ -19,7 +19,7 @@ local test_success_flag="$(@mktemp false)"
 # Tests
 
 if [ -d "${BX_TESTS_PATH}" ]; then
-  for f in ${BX_TESTS_PATH}/* ; do
+  for f in "${BX_TESTS_PATH}"/* ; do
     if [ -f "${f}" ]; then
       local src_test_name="$(@file-name "${f}" true)"
       if [ -z "${tests_names_to_execute}" ] \

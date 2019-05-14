@@ -17,7 +17,7 @@ local file_path
 [ ! -z "${functions_path}" ] || @throw-invalid-param functions_path
 [ -d "${functions_path}" ] || @throw-invalid-param functions_path 'Is not a valid path'
 
-for file_path in ${functions_path}/*.sh ; do
+for file_path in "${functions_path}"/*.sh ; do
   if [ -f "${file_path}" ]; then
     # Create base util function
     local n="$(@file-name "${file_path}" true)"
