@@ -223,3 +223,13 @@ Valid events options constant: `BASHX_EVENTS_OPTS`.
 ## Optimizations
 
 See: [http://tldp.org/LDP/abs/html/optimizations.html](http://tldp.org/LDP/abs/html/optimizations.html)
+
+## Testing with Docker
+
+```bash
+docker run  --rm -v $(pwd):/root/.bashx/master:ro -v $(pwd):/app:ro -w /app -ti ubuntu /app/bashx
+```
+
+```bash
+docker run  --rm -v $(pwd):/root/.bashx/master:ro -v $(pwd):/app:ro -w /app -ti debian:8 /app/bashx
+```
