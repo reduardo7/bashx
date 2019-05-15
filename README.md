@@ -227,9 +227,9 @@ See: [http://tldp.org/LDP/abs/html/optimizations.html](http://tldp.org/LDP/abs/h
 ## Testing with Docker
 
 ```bash
-docker run  --rm -v $(pwd):/root/.bashx/master:ro -v $(pwd):/app:ro -w /app -ti ubuntu /app/bashx
+docker run  --rm -v $(pwd):/root/.bashx/master:ro -v $(pwd):'/app path':ro -w '/app path' -ti ubuntu '/app path/bashx'
 ```
 
 ```bash
-docker run  --rm -v $(pwd):/root/.bashx/master:ro -v $(pwd):/app:ro -w /app -ti debian:8 /app/bashx
+docker run  --rm -v $(pwd):/root/.bashx/master:ro -v $(pwd):'/app path':ro -w '/app path' -ti debian:8 '/app path/bashx'
 ```
