@@ -31,7 +31,7 @@ if ! ${debug}; then
   command="( ${command} ) >/dev/null 2>&1"
 fi
 
-while ! bash -c "${command}" ; do
+while ! eval "${command}" ; do
     if [ -n "${message}" ]; then
       if [[ ${timeout} -gt 1 ]]; then
         if [[ ${timeout} -lt ${count} ]]; then
