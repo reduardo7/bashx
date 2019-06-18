@@ -20,11 +20,14 @@ BASHX_ACTION="$1"
 
 @title "$(@app-info)"
 
+# On end Script from Error
+trap '@error "Unexpected error" true $?' ERR
+
 # On end Script
-trap @end EXIT
+trap '@end $?' EXIT
 
 # On CTRL + C
-trap @end INT
+trap '@end $?' INT
 
 if [ -z "${BASHX_ACTION}" ]; then
   # Empty Action

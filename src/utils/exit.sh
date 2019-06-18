@@ -1,4 +1,4 @@
 ##
 ## Alias of "@end".
 
-@end "$@"
+@end "$1"

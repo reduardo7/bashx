@@ -66,8 +66,8 @@ for variable in ${variables[@]} ; do
 done
 
 cat <<EOF
-local _d_options_debug="\$-"
-set +x
+local _d_options_debug="\$-" 2>/dev/null
+set +x 2>/dev/null
 
 ${script_vars}
 local OPTARG
@@ -81,7 +81,7 @@ while true; do
 done
 unset OPTARG
 
-[[ "\${_d_options_debug}" == *x* ]] && set -x || true
+[[ "\${_d_options_debug}" == *x* ]] && set -x || true 2>/dev/null
 EOF
 
 
