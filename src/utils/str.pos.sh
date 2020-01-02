@@ -21,8 +21,8 @@ fi
 
 if ! ${case_sensitive}; then
   # Case insensitive
-  src="$(@str-to-lower "${src}")"
-  search="$(@str-to-lower "${search}")"
+  src="$(@str.toLower "${src}")"
+  search="$(@str.toLower "${search}")"
 fi
 
 local tmp="${src%${search}*}"

@@ -242,7 +242,7 @@ PS4='> $ '
 ### Preload required
 
 @str.trim() { . "${BASHX_UTILS_PATH}/str.trim.sh"; }
-@str-to-lower() { . "${BASHX_UTILS_PATH}/str-to-lower.sh"; }
+@str.toLower() { . "${BASHX_UTILS_PATH}/str.toLower.sh"; }
 @style() { . "${BASHX_UTILS_PATH}/style.sh"; }
 @file.name() { . "${BASHX_UTILS_PATH}/file.name.sh"; }
 @function.load() { . "${BASHX_UTILS_PATH}/function.load.sh"; }
