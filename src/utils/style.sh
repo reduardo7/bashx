@@ -82,12 +82,12 @@
 ##                          and disable output colors.
 ##
 ## Examples:
-##   @print "normal color $(@style color:red)text in red $(@style color:black background:yellow)black color$(@style default) normal color"
+##   @log "normal color $(@style color:red)text in red $(@style color:black background:yellow)black color$(@style default) normal color"
 ##   # Restore default APP colors
 ##   @style default
 ##   # Set gray color as background color for next output
 ##   @style background gray
-##   @print "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
+##   @log "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
 
 if ${BX_APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
   local OIFS="$IFS"

@@ -11,7 +11,7 @@
 
 eval "$(@options 'force:-f|--force')"
 
-[ -z "${HOME}" ] || [ ! -d "${HOME}" ] && @throw-invalid-param HOME
+[ -z "${HOME}" ] || [ ! -d "${HOME}" ] && @throw.invalidParam HOME
 
 local action="$1"
 
@@ -27,7 +27,7 @@ case "$action" in
   install)
     if $force || [ ! -f "${bcfile}" ]; then
       # Create file
-      @print "Creating '$(@style bold)${bcfile}$(@style default)' file..."
+      @log "Creating '$(@style bold)${bcfile}$(@style default)' file..."
 
       cat > "${bcfile}" <<EOF
 # bash completion for $scrpt (${BX_SCRIPT_FULL_PATH})
@@ -71,23 +71,23 @@ EOF
 
       if [ -f "${p}" ]; then
         if grep -q "${l}" "${p}" ; then
-            @print "Already installed at '$(@style bold)${r}$(@style default)'"
+            @log "Already installed at '$(@style bold)${r}$(@style default)'"
           else
-            @print "Installing in '$(@style bold)${r}$(@style default)'..."
+            @log "Installing in '$(@style bold)${r}$(@style default)'..."
             echo >> "${p}"
             echo "${l}" >> "${p}"
           fi
       fi
     done
 
-    @print "Done!"
+    @log "Done!"
   ;;
   uninstall)
-    @print "Uninstalling..."
+    @log "Uninstalling..."
 
     if [ -f "${bcfile}" ]; then
       # Delete file
-      @print "Deleting '$(@style bold)${bcfile}$(@style default)' file..."
+      @log "Deleting '$(@style bold)${bcfile}$(@style default)' file..."
 
       if ${force}; then
         # Force
@@ -103,7 +103,7 @@ EOF
       if [ -f "${p}" ]; then
         if grep "${l}" "${p}" >/dev/null 2>&1
           then
-            @print "Removing from '$(@style bold)${r}$(@style default)'..."
+            @log "Removing from '$(@style bold)${r}$(@style default)'..."
             if ${force}; then
               # Force
               cat "${p}" | grep -v "${l}" > "${p}.2" && mv -f "${p}.2" "${p}"
@@ -115,10 +115,10 @@ EOF
       fi
     done
 
-    @print "Done!"
+    @log "Done!"
   ;;
   *)
     # Invalid action
-    @throw-invalid-param action
+    @throw.invalidParam action
   ;;
 esac

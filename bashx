@@ -11,7 +11,7 @@ set +ex;export BASHX_VERSION="master"
 
 @Actions.action1() { # \\n Action without arguments
   set -x
-  @print "
+  @log "
   Action 1
   Multi-Line
 "
@@ -22,18 +22,18 @@ set +ex;export BASHX_VERSION="master"
   eval "$(@options 'new:-n|-N' 'path:-p|--path:true')"
   set -x
 
-  @print "'n' or 'N' parameter: ${new}"
-  @print "'p' or 'path' parameter: ${path[@]} (${#path[@]})"
+  @log "'n' or 'N' parameter: ${new}"
+  @log "'p' or 'path' parameter: ${path[@]} (${#path[@]})"
 
   local param1="$1"
   local param2="$2"
-  [[ "$param1" != 'asd' ]] && @throw-invalid-param param1
+  [[ "$param1" != 'asd' ]] && @throw.invalidParam param1
 
-  @print Action 2
-  @print Param1: $1
-  @print Param2: $2
+  @log Action 2
+  @log Param1: $1
+  @log Param2: $2
 }
 
 ### End Example ###
 
-@run-app "$@"
+@app.run "$@"

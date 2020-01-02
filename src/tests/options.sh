@@ -38,8 +38,8 @@ testFuncResult() {
 @@assert.equal 'aaa bbb ccc' "$(testFuncResult -p aaa -p bbb --path ccc -n 'path[@]')"
 @@assert.equal '3' "$(testFuncResult -p aaa -p bbb -N --path ccc '#path[@]')"
 
-@error() {
+@app.error() {
   echo 'ERROR-OK'
   exit 1
 }
-@@assert.equal "$(@error)" "$(testFunc -invalid)"
+@@assert.equal "$(@app.error)" "$(testFunc -invalid)"

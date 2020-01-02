@@ -22,8 +22,8 @@
 ##
 ## Usage example:
 ##   eval "$(@options 'new:-n|-N' 'path:-p|--path:true')"
-##   @print "'-n|-N' parameter: ${new}"
-##   @print "'-p|--path' parameter: ${path[@]} (${#path[@]})"
+##   @log "'-n|-N' parameter: ${new}"
+##   @log "'-p|--path' parameter: ${path[@]} (${#path[@]})"
 
 local options="$@"
 local variable
@@ -46,10 +46,10 @@ for variable in ${variables[@]} ; do
   config_key="${config[1]}"
   config_input=${config[2]:-false}
 
-  [[ ${#config_key} -ge 2 ]] || @throw-invalid-param config_key 'Invalid KEY. Showld contains 2 or more characters'
-  [[ "${config_key}" == -* ]] || @throw-invalid-param config_key 'Invalid KEY. Should start with "-"'
-  [ ! -z "${config_var}" ] || @throw-invalid-param config_var 'Empty VARIABLE'
-  @is-boolean "${config_input}" || @throw-invalid-param config_input 'Invalid INPUT value'
+  [[ ${#config_key} -ge 2 ]] || @throw.invalidParam config_key 'Invalid KEY. Showld contains 2 or more characters'
+  [[ "${config_key}" == -* ]] || @throw.invalidParam config_key 'Invalid KEY. Should start with "-"'
+  [ ! -z "${config_var}" ] || @throw.invalidParam config_var 'Empty VARIABLE'
+  @isBoolean "${config_input}" || @throw.invalidParam config_input 'Invalid INPUT value'
 
   if ${config_input}; then
     config_var_val_def='=()'
@@ -75,7 +75,7 @@ while true; do
   OPTARG="\$1"
   case "\$OPTARG" in
     ${script_case}
-    -*) @error "Unrecognized option \$OPTARG" ;;
+    -*) @app.error "Unrecognized option \$OPTARG" ;;
     *) break ;;
   esac
 done
@@ -110,9 +110,9 @@ EOF
 #       [ ! -z "$OPTARG_PORTS" ] && OPTARG_PORTS="$OPTARG_PORTS,"
 #       OPTARG_PORTS="$OPTARG_PORTS$OPTARG"
 #       ;;
-#     \?) @error "ERROR: Invalid option -$OPTARG" ;;
-#     :) @error "Missing option argument for -$OPTARG" ;;
-#     *) @error "Unimplemented option: -$OPTARG" ;;
+#     \?) @app.error "ERROR: Invalid option -$OPTARG" ;;
+#     :) @app.error "Missing option argument for -$OPTARG" ;;
+#     *) @app.error "Unimplemented option: -$OPTARG" ;;
 #   esac
 # done
 # shift $((OPTIND - 1))

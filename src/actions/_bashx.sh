@@ -47,7 +47,7 @@
 ##   * Initialize project:
 ##       _bashx init project v2.0.0 ~/project/my-script 'My Super-Script'
 
-@title "$(@style bold color:red)BashX$(@style default) Framework Utils"
+@log.title "$(@style bold color:red)BashX$(@style default) Framework Utils"
 
 local task="$1"
 local action="$2"
@@ -55,7 +55,7 @@ local value1="$3"
 local value2="$4"
 local value3="$5"
 
-@load-functions "${BASHX_SRC_PATH}/fwUtils" 'fwUtils.'
+@function.load "${BASHX_SRC_PATH}/fwUtils" 'fwUtils.'
 
 if [ ! -z "${task}" ]; then
   case "${task}" in
@@ -67,13 +67,13 @@ if [ ! -z "${task}" ]; then
     init) case "${action}" in
         config) fwUtils.taskInitConfig ;;
         project) fwUtils.taskInitProject "${value1}" "${value2}" "${value3}" ;;
-        *) @warn 'Invalid init action!' ;;
+        *) @log.warn 'Invalid init action!' ;;
       esac ;;
-    *) @warn 'Invalid task!' ;;
+    *) @log.warn 'Invalid task!' ;;
   esac
 fi
 
 # Usage
-@print
+@log
 @usage "${BASHX_ACTIONS_PATH}/_bashx.sh"
-@end 1
+@app.exit 1

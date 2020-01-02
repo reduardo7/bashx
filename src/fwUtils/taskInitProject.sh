@@ -14,26 +14,26 @@ local init_script
 
 if [ ! -z "${bashx_version}" ] && [ ! -z "${project_path}" ]; then
   if [ -f "${project_path}" ] || [ -d "${project_path}" ]; then
-    @error "File or directory ${project_path} already exists"
+    @app.error "File or directory ${project_path} already exists"
   fi
 
   if [ -z "${project_title}" ]; then
-    project_title="$(@file-name "${project_path}" true)"
+    project_title="$(@file.name "${project_path}" true)"
   fi
 
   local project_env=".${project_title}.env"
 
   ###############################################################################
 
-  @print "Preparing source..."
+  @log "Preparing source..."
 
-  init_script="$(@script-minify < "${BASHX_SRC_PATH}/init-app.sh")" || @error "Error preparing source"
+  init_script="$(@file.scriptMinify < "${BASHX_SRC_PATH}/init-app.sh")" || @app.error "Error preparing source"
 
   ###############################################################################
 
-  @print "Writting file ${project_path}..."
+  @log "Writting file ${project_path}..."
 
-  touch "${project_path}" || @error "Can not write '${project_path}'"
+  touch "${project_path}" || @app.error "Can not write '${project_path}'"
 
   cat > "${project_path}" <<EOF
 #!/usr/bin/env bash
@@ -54,26 +54,26 @@ export BX_APP_VERSION="1.0"
 
 ${BASHX_ACTION_PREFIX}.action1() { # \\\\n Action without arguments
   # ... Your code here ...
-  @print Action 1
+  @log Action 1
 }
 
 ${BASHX_ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
   # ... Your code here ...
-  @print Action 2
-  @print Param1: \$1
-  @print Param2: \$2
+  @log Action 2
+  @log Param1: \$1
+  @log Param2: \$2
 }
 
 ### End Example ###
 
 # Run APP
-@run-app "\$@"
+@app.run "\$@"
 EOF
 
   chmod a+x "${project_path}"
 
   ###############################################################################
 
-  @print "Project created at ${project_path}"
-  @end
+  @log "Project created at ${project_path}"
+  @app.exit
 fi

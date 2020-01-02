@@ -17,7 +17,9 @@
 
 local create="${1:-true}"
 local type="${2:-f}"
-local cmd="mktemp -p '${BX_APP_TMP_PATH}'"
+
+local p="${BX_APP_TMP_PATH}$(env LC_ALL=C tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 10)XXXXXX"
+local cmd="-q"
 
 case "${type}" in
   f|file)
@@ -35,4 +37,4 @@ if ${create}; then
   cmd="${cmd} -u"
 fi
 
-eval "${cmd}"
+eval "mktemp ${cmd} ${p} 2>/dev/null || mktemp ${cmd} -t ${p} 2>/dev/null"

@@ -137,7 +137,7 @@ export BASHX_TAB='  '
 readonly BASHX_TAB="${BASHX_TAB}"
 
 export BASHX_ACTION_PREFIX='@Actions'
-## Action prefix. Used at @run-app.
+## Action prefix. Used at @app.run.
 readonly BASHX_ACTION_PREFIX="${BASHX_ACTION_PREFIX}"
 
 # #############################################################################
@@ -170,7 +170,7 @@ export BX_APP_COLORS_ENABLED=${BX_APP_COLORS_ENABLED:-true}
 ## APP colsumns width.
 export BX_APP_WIDTH=${BX_APP_WIDTH:-80}
 
-## Start character for formated print screen. See "@print" for more information.
+## Start character for formated print screen. See "@log" for more information.
 export BX_APP_PRINT_PREFIX="${BX_APP_PRINT_PREFIX:-#}"
 
 ## Default action to call. Action to use if script called without arguments.
@@ -241,20 +241,20 @@ PS4='> $ '
 
 ### Preload required
 
-@trim() { . "${BASHX_UTILS_PATH}/trim.sh"; }
+@str.trim() { . "${BASHX_UTILS_PATH}/str.trim.sh"; }
 @str-to-lower() { . "${BASHX_UTILS_PATH}/str-to-lower.sh"; }
 @style() { . "${BASHX_UTILS_PATH}/style.sh"; }
-@file-name() { . "${BASHX_UTILS_PATH}/file-name.sh"; }
-@load-functions() { . "${BASHX_UTILS_PATH}/load-functions.sh"; }
+@file.name() { . "${BASHX_UTILS_PATH}/file.name.sh"; }
+@function.load() { . "${BASHX_UTILS_PATH}/function.load.sh"; }
 
 # #############################################################################
 
 ### Bootstrap
 
 # Load base
-@load-functions "${BASHX_UTILS_PATH}" '@'
-@load-functions "${BASHX_ACTIONS_PATH}" "${BASHX_ACTION_PREFIX}."
+@function.load "${BASHX_UTILS_PATH}" '@'
+@function.load "${BASHX_ACTIONS_PATH}" "${BASHX_ACTION_PREFIX}."
 
 # Load custom
-[ ! -d "${BX_UTILS_PATH}" ] || @load-functions "${BX_UTILS_PATH}"
-[ ! -d "${BX_ACTIONS_PATH}" ] || @load-functions "${BX_ACTIONS_PATH}" "${BASHX_ACTION_PREFIX}."
+[ ! -d "${BX_UTILS_PATH}" ] || @function.load "${BX_UTILS_PATH}" '@'
+[ ! -d "${BX_ACTIONS_PATH}" ] || @function.load "${BX_ACTIONS_PATH}" "${BASHX_ACTION_PREFIX}."

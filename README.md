@@ -58,7 +58,7 @@ set +ex;export BASHX_VERSION="v2.0.0"
 **3)** Optionally, add next at end of the script file, to work as _cli_:
 
 ```bash
-@run-app "$@"
+@app.run "$@"
 ```
 
 ### Project Example
@@ -74,7 +74,7 @@ set +ex;export BASHX_VERSION="v2.0.0"
 ###############################################################################
 
 @Actions.action1() { # \\n Action without arguments
-  @print "
+  @log "
   Action 1
   Multi-Line
 "
@@ -83,14 +83,14 @@ set +ex;export BASHX_VERSION="v2.0.0"
 @Actions.action2() { # param1 [param2] \\n Action with arguments\\n\\tdescription second line\\nother line
   local param1="$1"
   local param2="$2"
-  [ "$param1" != 'asd' ] && @throw-invalid-param param1
+  [ "$param1" != 'asd' ] && @throw.invalidParam param1
 
-  @print Action 2
-  @print Param1: $1
-  @print Param2: $2
+  @log Action 2
+  @log Param1: $1
+  @log Param2: $2
 }
 
-@run-app "$@"
+@app.run "$@"
 ```
 
 #### Project Structure
@@ -176,8 +176,8 @@ BASHX_COLORS_DISABLED=1 ./bashx
 ### Print/Log (echo ...)
 
 - `echo` is used for function output.
-- Use `@print` to print log messages.
-- Use `@warn` to print warning messages.
+- Use `@log` to print log messages.
+- Use `@log.warn` to print warning messages.
 
 ### Command log (set -x)
 
@@ -207,8 +207,8 @@ set +x
 
 ### APP Exit && Error
 
-- Use `@exit`, `@die` or `@end` to exit.
-- Use `@error` to print an error and exit.
+- Use `@app.exit` to exit.
+- Use `@app.error` to print an error and exit.
 
 ### Events Workflow
 

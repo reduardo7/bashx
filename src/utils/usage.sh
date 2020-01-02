@@ -11,7 +11,7 @@
 
 local src="$1"
 local prefix="${2:-${BX_SCRIPT_FILE_NAME}}"
-local cmd="${3:-$(@file-name "${src}" true)}"
+local cmd="${3:-$(@file.name "${src}" true)}"
 
 local lp='    '
 local lpl=${#lp}
@@ -20,7 +20,7 @@ local sd="$(@style default)"
 local info
 
 if [ -z "${src}" ] || [ ! -f "${src}" ]; then
-  @throw-invalid-state "Invalid file '${src}'"
+  @throw "Invalid file '${src}'"
 fi
 
 if [ ! -z "${prefix}" ]; then
@@ -32,10 +32,10 @@ egrep "^${BASHX_DOC_MARK}" "${src}" | egrep -v "^${BASHX_DOC_MARK}#" | while rea
   do
     if ${first_line}; then
       first_line=false
-      @print "  ${prefix} $(@style color:green)${cmd}${sd} $(@str-replace "${line}" "^${BASHX_DOC_MARK}\\s*" '')"
+      @log "  ${prefix} $(@style color:green)${cmd}${sd} $(@str.replace "${line}" "^${BASHX_DOC_MARK}\\s*" '')"
     else
-      @print "$(@str-replace "${line}" "^${BASHX_DOC_MARK}\\s" "${sd}${lp}")"
+      @log "$(@str.replace "${line}" "^${BASHX_DOC_MARK}\\s" "${sd}${lp}")"
     fi
   done
 
-@print
+@log
