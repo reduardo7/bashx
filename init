@@ -235,7 +235,12 @@ _BASHX_APP_EXIT=false
 exec 3>&2
 
 # Debug (set +x) prompt
-PS4='> $ '
+if ${BX_APP_COLORS_ENABLED}; then
+  export BASHX_PS_DEBUG='>\e[2m % '
+else
+  export BASHX_PS_DEBUG='> % '
+fi
+PS4=${BASHX_PS_DEBUG}
 
 # #############################################################################
 

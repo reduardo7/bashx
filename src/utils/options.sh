@@ -1,5 +1,6 @@
 ## options*
 ## Read options.
+## Note: Verbose output if you use `set -x`
 ##
 ## Params:
 ##   options*: {Map} Valid options specifications.
@@ -24,6 +25,11 @@
 ##   eval "$(@options 'new:-n|-N' 'path:-p|--path:true')"
 ##   @log "'-n|-N' parameter: ${new}"
 ##   @log "'-p|--path' parameter: ${path[@]} (${#path[@]})"
+
+{
+  local _d_options_debug="\$-"
+  set +x
+} 2>/dev/null
 
 local options="$@"
 local variable
@@ -66,9 +72,6 @@ for variable in ${variables[@]} ; do
 done
 
 cat <<EOF
-local _d_options_debug="\$-" 2>/dev/null
-set +x 2>/dev/null
-
 ${script_vars}
 local OPTARG
 while true; do
@@ -80,10 +83,11 @@ while true; do
   esac
 done
 unset OPTARG
-
-[[ "\${_d_options_debug}" == *x* ]] && set -x || true 2>/dev/null
 EOF
 
+{
+  [[ "\${_d_options_debug}" == *x* ]] && set -x || true
+} >/dev/null 2>&1
 
 # while true; do
 #     case $1 in
