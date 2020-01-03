@@ -4,14 +4,14 @@
 ## Params:
 ##   functions_path: {String} Path to scripts.
 ##   prefix:         {String} Prefix.
-##                   Optional. Default: "@".
+##                   Optional. Default: `functions_path` directory name.
 
 {
   local _d_load_function_debug="$-"
 } 2>/dev/null
 
 local functions_path="$1"
-local prefix="${2:-@}"
+local prefix="${2:-$(@file.name "${functions_path}" true).}"
 local file_path
 
 [ ! -z "${functions_path}" ] || @throw.invalidParam functions_path

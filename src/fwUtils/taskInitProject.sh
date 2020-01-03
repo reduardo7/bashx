@@ -27,7 +27,7 @@ if [ ! -z "${bashx_version}" ] && [ ! -z "${project_path}" ]; then
 
   @log "Preparing source..."
 
-  init_script="$(@file.scriptMinify < "${BASHX_SRC_PATH}/init-app.sh")" || @app.error "Error preparing source"
+  init_script="$(@file.scriptMinify < "${BX_SRC_PATH}/init-app.sh")" || @app.error "Error preparing source"
 
   ###############################################################################
 

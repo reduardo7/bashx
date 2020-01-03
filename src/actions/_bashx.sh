@@ -55,7 +55,7 @@ local value1="$3"
 local value2="$4"
 local value3="$5"
 
-@function.load "${BASHX_SRC_PATH}/fwUtils" 'fwUtils.'
+@function.load "${BX_SRC_PATH}/fwUtils"
 
 if [ ! -z "${task}" ]; then
   case "${task}" in
