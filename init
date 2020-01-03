@@ -237,10 +237,10 @@ fi
 
 ### Preload required
 
-@str.trim() { . "${BX_UTILS_PATH}/str.trim.sh"; }
-@str.toLower() { . "${BX_UTILS_PATH}/str.toLower.sh"; }
+@str.trim() { . "${BX_UTILS_PATH}/str/trim.sh"; }
+@str.toLower() { . "${BX_UTILS_PATH}/str/toLower.sh"; }
 @style() { . "${BX_UTILS_PATH}/style.sh"; }
-@file.name() { . "${BX_UTILS_PATH}/file.name.sh"; }
+@file.name() { . "${BX_UTILS_PATH}/file/name.sh"; }
 @function.load() { . "${BX_UTILS_PATH}/function/load.sh"; }
 
 # #############################################################################
