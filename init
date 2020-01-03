@@ -31,7 +31,7 @@ while [ -h "${BX_SCRIPT_CALLED}" ]; do
 done
 
 # Test and force run with "bash" interpreter
-if [ -z "$BASH" ]; then
+if [ -z "${BASH}" ]; then
   bash "$(basename "${BX_SCRIPT_CALLED}")" "$@"
   exit $?
 fi
@@ -44,10 +44,6 @@ fi
 [[ ! -z "${GID}" ]] || export GID=$(id -g)
 
 ### Constants
-
-export BX_CURRENT_DIR="$(pwd)"
-## Current user directory.
-readonly BX_CURRENT_DIR="${BX_CURRENT_DIR}"
 
 export BX_SCRIPT_CALLED="${BX_SCRIPT_CALLED}"
 ## Called script.
@@ -121,7 +117,7 @@ export BASHX_BASE_DIR="${BASHX_BASE_DIR}"
 readonly BASHX_BASE_DIR="${BASHX_BASE_DIR}"
 
 # \e | \033 | \x1B
-$BASHX_OS_IS_MAC && export BASHX_KEY_ESC=$'\x1B' || export BASHX_KEY_ESC=$'\e'
+${BASHX_OS_IS_MAC} && export BASHX_KEY_ESC=$'\x1B' || export BASHX_KEY_ESC=$'\e'
 ## Key: ESC
 readonly BASHX_KEY_ESC="${BASHX_KEY_ESC}"
 
@@ -153,7 +149,7 @@ export BX_SRC_DIR="${BX_SRC_DIR:-${BX_SCRIPT_FILE_NAME}.src}"
 export BX_SRC_PATH="${BX_SCRIPT_DIR}/${BX_SRC_DIR}"
 
 ## Configuration file (can be overridden before load). Customizable with: BX_APP_CONFIG_FILE.
-export BX_APP_CONFIG_FILE="${BX_APP_CONFIG_FILE:-${BX_SCRIPT_DIR}/.${BX_SCRIPT_FILE_NAME}.env}"
+export BX_APP_CONFIG_FILE="${BX_APP_CONFIG_FILE:-${BX_SCRIPT_DIR}/.env}"
 
 ## APP Title. Customizable with: BX_APP_CONFIG_FILE.
 export BX_APP_TITLE="${BX_APP_TITLE:-BashX}"
