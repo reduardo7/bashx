@@ -27,7 +27,7 @@ case "$action" in
   install)
     if $force || [ ! -f "${bcfile}" ]; then
       # Create file
-      @log "Creating '$(@style bold)${bcfile}$(@style default)' file..."
+      @log "Creating '$(@style bold)${bcfile}$(@style)' file..."
 
       cat > "${bcfile}" <<EOF
 # bash completion for $scrpt (${BX_SCRIPT_FULL_PATH})
@@ -71,9 +71,9 @@ EOF
 
       if [ -f "${p}" ]; then
         if grep -q "${l}" "${p}" ; then
-            @log "Already installed at '$(@style bold)${r}$(@style default)'"
+            @log "Already installed at '$(@style bold)${r}$(@style)'"
           else
-            @log "Installing in '$(@style bold)${r}$(@style default)'..."
+            @log "Installing in '$(@style bold)${r}$(@style)'..."
             echo >> "${p}"
             echo "${l}" >> "${p}"
           fi
@@ -87,7 +87,7 @@ EOF
 
     if [ -f "${bcfile}" ]; then
       # Delete file
-      @log "Deleting '$(@style bold)${bcfile}$(@style default)' file..."
+      @log "Deleting '$(@style bold)${bcfile}$(@style)' file..."
 
       if ${force}; then
         # Force
@@ -103,7 +103,7 @@ EOF
       if [ -f "${p}" ]; then
         if grep "${l}" "${p}" >/dev/null 2>&1
           then
-            @log "Removing from '$(@style bold)${r}$(@style default)'..."
+            @log "Removing from '$(@style bold)${r}$(@style)'..."
             if ${force}; then
               # Force
               cat "${p}" | grep -v "${l}" > "${p}.2" && mv -f "${p}.2" "${p}"

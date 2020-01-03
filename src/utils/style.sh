@@ -82,9 +82,9 @@
 ##                          and disable output colors.
 ##
 ## Examples:
-##   @log "normal color $(@style color:red)text in red $(@style color:black background:yellow)black color$(@style default) normal color"
+##   @log "normal color $(@style color:red)text in red $(@style color:black background:yellow)black color$(@style) normal color"
 ##   # Restore default APP colors
-##   @style default
+##   @style | @style default
 ##   # Set gray color as background color for next output
 ##   @style background gray
 ##   @log "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."

@@ -44,7 +44,7 @@ fi
 
 # Execute
 local i
-${cmd} -p "$(@style default)${BASHX_APP_PRINT_PREFIX} ${msg}$(@style system)" i >&3
+${cmd} -p "$(@style)${BASHX_APP_PRINT_PREFIX} ${msg}$(@style system)" i >&3
 local r=$?
 local rta=0
 

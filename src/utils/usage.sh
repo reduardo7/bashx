@@ -16,7 +16,7 @@ local cmd="${3:-$(@file.name "${src}" true)}"
 local lp='    '
 local lpl=${#lp}
 local first_line=true
-local sd="$(@style default)"
+local sd="$(@style)"
 local info
 
 if [ -z "${src}" ] || [ ! -f "${src}" ]; then

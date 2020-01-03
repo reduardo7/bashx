@@ -47,7 +47,7 @@
 ##   * Initialize project:
 ##       _bashx init project v2.0.0 ~/project/my-script 'My Super-Script'
 
-@log.title "$(@style bold color:red)BashX$(@style default) Framework Utils"
+@log.title "$(@style bold color:red)BashX$(@style) Framework Utils"
 
 local task="$1"
 local action="$2"
@@ -59,14 +59,14 @@ local value3="$5"
 
 if [ ! -z "${task}" ]; then
   case "${task}" in
-    action|actions) fwUtils.taskAction "${action}" "${value1}" ;;
-    test|tests) fwUtils.taskTest "${action}" "${value1}" ;;
-    util|utils) fwUtils.taskUtil "${action}" "${value1}" ;;
-    event|events) fwUtils.taskEvent "${action}" "${value1}" ;;
-    resource|resources) fwUtils.taskResource "${action}" "${value1}" "${value2}" ;;
+    action|actions) fwUtils.task.action "${action}" "${value1}" ;;
+    test|tests) fwUtils.task.test "${action}" "${value1}" ;;
+    util|utils) fwUtils.task.util "${action}" "${value1}" ;;
+    event|events) fwUtils.task.event "${action}" "${value1}" ;;
+    resource|resources) fwUtils.task.resource "${action}" "${value1}" "${value2}" ;;
     init) case "${action}" in
-        config) fwUtils.taskInitConfig ;;
-        project) fwUtils.taskInitProject "${value1}" "${value2}" "${value3}" ;;
+        config) fwUtils.task.init.config ;;
+        project) fwUtils.task.init.project "${value1}" "${value2}" "${value3}" ;;
         *) @log.warn 'Invalid init action!' ;;
       esac ;;
     *) @log.warn 'Invalid task!' ;;

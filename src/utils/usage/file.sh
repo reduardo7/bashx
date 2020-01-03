@@ -24,7 +24,7 @@ egrep "^\\s*${BX_ACTION_PREFIX}\.[^()]+\\(\\)\\s*\\{" "${src}" \
     # Script name & action
     line="  $(@style color:red)${prefix}$(@style color:green)$(@str.replace "${line}" "^\\s*${BX_ACTION_PREFIX/\@/\\@}\\." '')"
     # Parameters
-    line="$(@str.replace "${line}" '\(\)\s*\{\s*#*\s*' "$(@style default) ")"
+    line="$(@str.replace "${line}" '\(\)\s*\{\s*#*\s*' "$(@style) ")"
     # Doc Lines
     line="$(@str.replace "${line}" '\s*\\n\\t\s*' "\n      ")"
     line="$(@str.replace "${line}" '\s*\\n\s*' "\n    ")"

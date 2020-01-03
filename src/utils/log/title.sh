@@ -9,6 +9,6 @@ local t=" $@ "
 local l=$(@str.len "${t}")
 
 @log.line $l '-' '+-' '-+'
-@log "| ${t} $(@style default)|"
+@log "| ${t} $(@style)|"
 @log.line $l '-' '+-' '-+'
 @log
