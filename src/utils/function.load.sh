@@ -4,15 +4,14 @@
 ## Params:
 ##   functions_path: {String} Path to scripts.
 ##   prefix:         {String} Prefix.
-##                   Optional. Default: empty.
+##                   Optional. Default: "@".
 
 {
   local _d_load_function_debug="$-"
 } 2>/dev/null
 
 local functions_path="$1"
-local prefix="$2"
-local p='()'
+local prefix="${2:-@}"
 local file_path
 
 [ ! -z "${functions_path}" ] || @throw.invalidParam functions_path
@@ -25,7 +24,7 @@ for file_path in "${functions_path}"/*.sh ; do
     local v="${n//-/_}" ; v="${v//\./_}"
 
     eval "
-      ${prefix}${n}${p} {
+      ${prefix}${n}() {
         {
           local _d_${v}_debug=\"\$-\"
           set +x

@@ -24,7 +24,7 @@
 ##     {action}:
 ##       `config`:  Initialize configuration file.
 ##                  Create configuration file if not exists from
-##                  ${BX_APP_CONFIG_FILE} constant.
+##                  ${BASHX_APP_CONFIG_FILE} constant.
 ##       `project`: Initialize project.
 ##         {value1}: BashX version for new project.
 ##                   See https://github.com/reduardo7/bashx/releases for available versions.

@@ -7,5 +7,5 @@
 local cmd="$@"
 
 if [ ! -z "${cmd}" ]; then
-  _BASHX_ON_EXIT="${_BASHX_ON_EXIT} ; ( ${cmd} )"
+  BX_ON_EXIT="${BX_ON_EXIT} ; ( ${cmd} )"
 fi

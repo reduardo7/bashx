@@ -14,31 +14,31 @@ if ! @isNumber ${code}; then
   code=1
 fi
 
-if ! ${_BASHX_APP_EXIT} ; then
+if ! ${BX_APP_EXIT} ; then
 
   # Mark as exit
-  _BASHX_APP_EXIT=true
+  BX_APP_EXIT=true
 
   # On Error
-  if [[ ${code} -ne 0 ]] && [ -f "${BX_EVENTS_PATH}/error.sh" ]; then
-    . "${BX_EVENTS_PATH}/error.sh"
+  if [[ ${code} -ne 0 ]] && [ -f "${BASHX_EVENTS_PATH}/error.sh" ]; then
+    . "${BASHX_EVENTS_PATH}/error.sh"
   fi
 
-  if [ ! -z "${_BASHX_ON_EXIT}" ]; then
+  if [ ! -z "${BX_ON_EXIT}" ]; then
     # Execute exit actions
     (
-      eval "${_BASHX_ON_EXIT}"
+      eval "${BX_ON_EXIT}"
     )
   fi
 
   # On Finish
-  if [ -f "${BX_EVENTS_PATH}/finish.sh" ]; then
-    . "${BX_EVENTS_PATH}/finish.sh"
+  if [ -f "${BASHX_EVENTS_PATH}/finish.sh" ]; then
+    . "${BASHX_EVENTS_PATH}/finish.sh"
   fi
 
   # Cleanup
-  if [ ! -z "${BX_APP_TMP_PATH}" ] && [ -d "${BX_APP_TMP_PATH}" ]; then
-    rm -rf "${BX_APP_TMP_PATH}" || true
+  if [ ! -z "${BASHX_APP_TMP_PATH}" ] && [ -d "${BASHX_APP_TMP_PATH}" ]; then
+    rm -rf "${BASHX_APP_TMP_PATH}" || true
   fi
 
   # Reset System color

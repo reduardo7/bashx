@@ -18,8 +18,8 @@ local test_success_flag="$(@mktemp false)"
 ###############################################################################
 # Tests
 
-if [ -d "${BX_TESTS_PATH}" ]; then
-  for f in "${BX_TESTS_PATH}"/* ; do
+if [ -d "${BASHX_TESTS_PATH}" ]; then
+  for f in "${BASHX_TESTS_PATH}"/* ; do
     if [ -f "${f}" ]; then
       local src_test_name="$(@file.name "${f}" true)"
       if [ -z "${tests_names_to_execute}" ] \
@@ -30,7 +30,7 @@ if [ -d "${BX_TESTS_PATH}" ]; then
 
         [ -f "${test_success_flag}" ] && rm -f "${test_success_flag}"
         (
-          _BASHX_APP_EXIT=true
+          BX_APP_EXIT=true
           . "${f}"
           exit_code=$?
           touch "${test_success_flag}" || @app.error

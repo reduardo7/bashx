@@ -44,13 +44,13 @@ fi
 
 # Execute
 local i
-${cmd} -p "$(@style default)${BX_APP_PRINT_PREFIX} ${msg}$(@style system)" i >&3
+${cmd} -p "$(@style default)${BASHX_APP_PRINT_PREFIX} ${msg}$(@style system)" i >&3
 local r=$?
 local rta=0
 
 echo >&3
 
-if [ "${i}" == "${BASHX_KEY_ESC}" ]; then
+if [ "${i}" == "${BX_KEY_ESC}" ]; then
   rta=1
   i="${default}"
 else

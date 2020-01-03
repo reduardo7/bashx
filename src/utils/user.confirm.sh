@@ -11,7 +11,7 @@ local msg="${1:-Confirm?}"
 local choice
 local result=3
 
-echo -n "$(@style default)${BX_APP_PRINT_PREFIX} ${msg} (y/n) " >&3
+echo -n "$(@style default)${BASHX_APP_PRINT_PREFIX} ${msg} (y/n) " >&3
 
 while [[ ${result} -gt 1 ]] ; do
   read -s -n 1 choice >&3 || true

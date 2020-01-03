@@ -15,8 +15,8 @@ local line
 @usage.file "${BX_SCRIPT_FULL_PATH}" "${prefix}"
 
 # Actions
-if [ -d "${BX_ACTIONS_PATH}" ]; then
-  for f in "${BX_ACTIONS_PATH}"/*.sh ; do
+if [ -d "${BASHX_ACTIONS_PATH}" ]; then
+  for f in "${BASHX_ACTIONS_PATH}"/*.sh ; do
     if [ -f "${f}" ]; then
       if ${print_all} || [[ "$(@file.name "${f}" true)" != _* ]]; then
         @usage "${f}" "${prefix}"

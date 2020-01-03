@@ -65,8 +65,8 @@ for variable in ${variables[@]} ; do
     config_var_val='=true'
   fi
 
-  [ -z "${script_vars}" ] || script_vars="${script_vars}${BASHX_NL}"
-  [ -z "${script_case}" ] || script_case="${script_case}${BASHX_NL}${BASHX_TAB}${BASHX_TAB}"
+  [ -z "${script_vars}" ] || script_vars="${script_vars}${BX_CHAR_NL}"
+  [ -z "${script_case}" ] || script_case="${script_case}${BX_CHAR_NL}${BX_CHAR_TAB}${BX_CHAR_TAB}"
   script_vars="${script_vars}local ${config_var}${config_var_val_def}"
   script_case="${script_case}${config_key}) shift ; ${config_var}${config_var_val} ;;"
 done

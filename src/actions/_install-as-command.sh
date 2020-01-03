@@ -32,20 +32,20 @@ case "$action" in
       cat > "${bcfile}" <<EOF
 # bash completion for $scrpt (${BX_SCRIPT_FULL_PATH})
 _${scrpt}_methods() {
-  grep \"^\\s*\\(function\\s\\+\\)\\?${BASHX_ACTION_PREFIX}\\..\\+()\\s*{.*\$\" \"\${1}\" | while read line ; do
-    echo \"\$line\" | sed \"s/()\\s*{.*//g\" | sed \"s/\\s*\\(function\\s\\+\\)\\?${BASHX_ACTION_PREFIX}\\.//g\"
+  grep \"^\\s*\\(function\\s\\+\\)\\?${BX_ACTION_PREFIX}\\..\\+()\\s*{.*\$\" \"\${1}\" | while read line ; do
+    echo \"\$line\" | sed \"s/()\\s*{.*//g\" | sed \"s/\\s*\\(function\\s\\+\\)\\?${BX_ACTION_PREFIX}\\.//g\"
   done
 }
 _${scrpt}_lst() {
-  if [ -d \"${BX_ACTIONS_PATH}\" ]; then
-    for f in "${BX_ACTIONS_PATH}"/* ; do
+  if [ -d \"${BASHX_ACTIONS_PATH}\" ]; then
+    for f in "${BASHX_ACTIONS_PATH}"/* ; do
       if [ -f \"\${f}\" ]; then
         basename \"\${f}\" | sed 's/\..*\$//g'
       fi
     done
   fi
   _${scrpt}_methods \"${BX_SCRIPT_FULL_PATH}\"
-  _${scrpt}_methods \"${BASHX_BASE_SOURCE}\"
+  _${scrpt}_methods \"${BX_BASE_SOURCE}\"
 }
 _${scrpt}() {
   local cur

@@ -1,4 +1,4 @@
-$BASHX_OS_IS_MAC && return 0
+$BX_OS_IS_MAC && return 0
 
 tmp_file="$(@mktemp false)"
 
@@ -18,7 +18,7 @@ rm -f ${tmp_file} || @@assert.fail "Error deleting ${tmp_file}!"
 [ -f "${tmp_file}" ] && @@assert.fail "${cmd_touch} should not have been created!"
 
 # User input ESC
-@log.cmd "echo -e \"\${BASHX_KEY_ESC}\" | @user.timeout 2 '${cmd_touch} ; echo NO PRINT THIS'" 3>/dev/null
+@log.cmd "echo -e \"\${BX_KEY_ESC}\" | @user.timeout 2 '${cmd_touch} ; echo NO PRINT THIS'" 3>/dev/null
 [ -f "${tmp_file}" ] && @@assert.fail "${cmd_touch} should not have been created!"
 
 # All ok

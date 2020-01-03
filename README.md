@@ -141,7 +141,7 @@ set +ex;export BASHX_VERSION="v2.0.0"
             +-> *                  #     Resource file...
 ```
 
-Valid events options constant: `BASHX_EVENTS_OPTS`.
+Valid events options constant: `BX_EVENTS_OPTS`.
 
 ## Doc
 
@@ -218,7 +218,7 @@ set +x
 4. `src/events/error.sh` is triggered when an error has occurred.
 5. `src/events/finish.sh` is triggered on execution finished.
 
-Valid events options constant: `BASHX_EVENTS_OPTS`.
+Valid events options constant: `BX_EVENTS_OPTS`.
 
 ## Optimizations
 

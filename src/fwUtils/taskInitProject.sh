@@ -49,15 +49,15 @@ set +ex;export BASHX_VERSION="${bashx_version}"
 
 # Configuration Example.
 # This section can be moved to "${project_env}" file.
-export BX_APP_TITLE="${project_title}"
-export BX_APP_VERSION="1.0"
+export BASHX_APP_TITLE="${project_title}"
+export BASHX_APP_VERSION="1.0"
 
-${BASHX_ACTION_PREFIX}.action1() { # \\\\n Action without arguments
+${BX_ACTION_PREFIX}.action1() { # \\\\n Action without arguments
   # ... Your code here ...
   @log Action 1
 }
 
-${BASHX_ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
+${BX_ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
   # ... Your code here ...
   @log Action 2
   @log Param1: \$1

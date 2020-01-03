@@ -26,7 +26,7 @@ local result="$default"
 local user_input
 
 # Read
-read -n 1 -p "$(@style default)${BX_APP_PRINT_PREFIX} ${message} [${options}]: " user_input >&3
+read -n 1 -p "$(@style default)${BASHX_APP_PRINT_PREFIX} ${message} [${options}]: " user_input >&3
 echo >&3
 
 # Validate input

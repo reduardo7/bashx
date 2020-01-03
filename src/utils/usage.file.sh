@@ -17,12 +17,12 @@ if [[ "${cmd}" == _* ]]; then
   return 0
 fi
 
-egrep "^\\s*${BASHX_ACTION_PREFIX}\.[^()]+\\(\\)\\s*\\{" "${src}" \
-  | egrep -v "^\\s*${BASHX_ACTION_PREFIX}\._" \
+egrep "^\\s*${BX_ACTION_PREFIX}\.[^()]+\\(\\)\\s*\\{" "${src}" \
+  | egrep -v "^\\s*${BX_ACTION_PREFIX}\._" \
   | while read line
   do
     # Script name & action
-    line="  $(@style color:red)${prefix}$(@style color:green)$(@str.replace "${line}" "^\\s*${BASHX_ACTION_PREFIX/\@/\\@}\\." '')"
+    line="  $(@style color:red)${prefix}$(@style color:green)$(@str.replace "${line}" "^\\s*${BX_ACTION_PREFIX/\@/\\@}\\." '')"
     # Parameters
     line="$(@str.replace "${line}" '\(\)\s*\{\s*#*\s*' "$(@style default) ")"
     # Doc Lines
