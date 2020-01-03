@@ -16,6 +16,9 @@ while read line; do
        ! [[ "${line}" == ")" ]]
     then
       if [[ "${minify}" == *"{" ]] || \
+         [[ "${minify}" == *"[" ]] || \
+         [[ "${minify}" == *";do" ]] || \
+         [[ "${minify}" == *" do" ]] || \
          [[ "${minify}" == *";then" ]] || \
          [[ "${minify}" == *" then" ]] || \
          [[ "${minify}" == *";else" ]] || \

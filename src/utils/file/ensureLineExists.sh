@@ -15,7 +15,7 @@ local file="${1}"
 local line="${2}"
 local sudo=${3:-false}
 
-if grep -q -x -F "${line}" "${file}"
+if grep -qxF "${line}" "${file}"
   then
     # Already exists
     return 1

@@ -16,7 +16,7 @@ if [ ! -z "${file}" ]; then
   local _fname="$(basename "${file}")"
 
   # Remove extension
-  ${remove_extension} && _fname="${_fname%.*}"
+  ${remove_extension} && _fname="${_fname%.*}" || true
 
   # Result
   echo "${_fname}"
