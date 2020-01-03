@@ -25,7 +25,7 @@ x() {
 }
 
 d=/dev/null
-[ -z "$BASHX_VERSION" ] && x BASHX_VERSION is required
+[ ! -z "$BASHX_VERSION" ] || x BASHX_VERSION is required
 
 export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}"
 
