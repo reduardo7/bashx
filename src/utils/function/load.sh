@@ -17,7 +17,7 @@ local file_path
 [ ! -z "${functions_path}" ] || @throw.invalidParam functions_path
 [ -d "${functions_path}" ] || @throw.invalidParam functions_path 'Is not a valid path'
 
-for file_path in "${functions_path}"/*.sh ; do
+for file_path in "${functions_path}"/* ; do
   if [ -f "${file_path}" ]; then
     # Create base util function
     local n="$(@file.name "${file_path}" true)"
@@ -39,6 +39,8 @@ for file_path in "${functions_path}"/*.sh ; do
         return \${_r_${v}}
       }
     "
+  elif [ -d "${file_path}" ]; then
+    @function.load "${file_path}" "${prefix}$(@file.name "${file_path}" true)."
   fi
 done
 

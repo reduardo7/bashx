@@ -241,7 +241,7 @@ fi
 @str.toLower() { . "${BX_UTILS_PATH}/str.toLower.sh"; }
 @style() { . "${BX_UTILS_PATH}/style.sh"; }
 @file.name() { . "${BX_UTILS_PATH}/file.name.sh"; }
-@function.load() { . "${BX_UTILS_PATH}/function.load.sh"; }
+@function.load() { . "${BX_UTILS_PATH}/function/load.sh"; }
 
 # #############################################################################
 
