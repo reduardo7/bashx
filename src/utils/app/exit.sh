@@ -24,12 +24,8 @@ if ! ${BX_APP_EXIT} ; then
     . "${BASHX_EVENTS_PATH}/error.sh"
   fi
 
-  if [ ! -z "${BX_ON_EXIT}" ]; then
-    # Execute exit actions
-    (
-      eval "${BX_ON_EXIT}"
-    )
-  fi
+  # Execute exit actions
+  [ -z "${BX_ON_EXIT}" ] || ( EXIT_CODE=${code} eval "${BX_ON_EXIT}" )
 
   # On Finish
   if [ -f "${BASHX_EVENTS_PATH}/finish.sh" ]; then

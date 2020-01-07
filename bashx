@@ -9,6 +9,13 @@ set +ex;export BASHX_VERSION="master"
 
 ### Begin Example ###
 
+_onStdOut() {
+  local line="$1"
+  echo "++ ${line}"
+}
+
+@on.stdout '_onStdOut "${OUT_LINE}"'
+
 @Actions.action1() { # \\n Action without arguments
   set -x
   pwd
