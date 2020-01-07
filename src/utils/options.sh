@@ -78,7 +78,8 @@ while true; do
   OPTARG="\$1"
   case "\$OPTARG" in
     ${script_case}
-    -*) @app.error "Unrecognized option \$OPTARG" ;;
+    --) shift; break ;;
+    -*) @app.error "Unrecognized argument \$OPTARG" ;;
     *) break ;;
   esac
 done
@@ -88,35 +89,3 @@ EOF
 {
   [[ "\${_d_options_debug}" == *x* ]] && set -x || true
 } >/dev/null 2>&1
-
-# while true; do
-#     case $1 in
-#       -R) level=1
-#             shift
-#             case $1 in
-#               *[!0-9]* | "") ;;
-#               *) level=$1; shift ;;
-#             esac ;;
-#         # ... Other options ...
-#         -*) echo "$0: Unrecognized option $1" >&2
-#             exit 2;;
-#         *) break ;;
-#     esac
-# done
-
-# OPTARG_NET=false
-# OPTARG_PORTS='' #@TODO
-# while getopts ni::p: opt
-# do
-#   case "$opt" in
-#     n) OPTARG_NET=true ;;
-#     p) #@TODO
-#       [ ! -z "$OPTARG_PORTS" ] && OPTARG_PORTS="$OPTARG_PORTS,"
-#       OPTARG_PORTS="$OPTARG_PORTS$OPTARG"
-#       ;;
-#     \?) @app.error "ERROR: Invalid option -$OPTARG" ;;
-#     :) @app.error "Missing option argument for -$OPTARG" ;;
-#     *) @app.error "Unimplemented option: -$OPTARG" ;;
-#   esac
-# done
-# shift $((OPTIND - 1))
