@@ -11,7 +11,7 @@
 local path="$1"
 local command="$2"
 
-if ${BASHX_OS_IS_MINGW} || [ -w "${path}" ]; then
+if ${BX_OS_IS_MINGW} || [ -w "${path}" ]; then
   ( set -ex
     bash -c "${command}"
   )

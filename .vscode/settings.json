@@ -1,0 +1,11 @@
+{
+  "search.exclude": {
+    "bashx.src/tests": true
+  },
+  "files.watcherExclude": {
+    "bashx.src/tests": true
+  },
+  "files.exclude": {
+    "bashx.src/tests": true
+  }
+}

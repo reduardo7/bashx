@@ -13,6 +13,6 @@ local cmd
 for cmd in ${cmds[@]}; do
   if ! command -v ${cmd} >/dev/null 2>&1
     then
-      @error "I require [${cmd}] but it's not installed. Aborting."
+      @app.error "I require [${cmd}] but it's not installed. Aborting."
     fi
 done

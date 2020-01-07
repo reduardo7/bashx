@@ -1,5 +1,6 @@
 ## options*
 ## Read options.
+## Note: Verbose output if you use `set -x`
 ##
 ## Params:
 ##   options*: {Map} Valid options specifications.
@@ -22,8 +23,13 @@
 ##
 ## Usage example:
 ##   eval "$(@options 'new:-n|-N' 'path:-p|--path:true')"
-##   @print "'-n|-N' parameter: ${new}"
-##   @print "'-p|--path' parameter: ${path[@]} (${#path[@]})"
+##   @log "'-n|-N' parameter: ${new}"
+##   @log "'-p|--path' parameter: ${path[@]} (${#path[@]})"
+
+{
+  local _d_options_debug="\$-"
+  set +x
+} 2>/dev/null
 
 local options="$@"
 local variable
@@ -46,10 +52,10 @@ for variable in ${variables[@]} ; do
   config_key="${config[1]}"
   config_input=${config[2]:-false}
 
-  [[ ${#config_key} -ge 2 ]] || @throw-invalid-param config_key 'Invalid KEY. Showld contains 2 or more characters'
-  [[ "${config_key}" == -* ]] || @throw-invalid-param config_key 'Invalid KEY. Should start with "-"'
-  [ ! -z "${config_var}" ] || @throw-invalid-param config_var 'Empty VARIABLE'
-  @is-boolean "${config_input}" || @throw-invalid-param config_input 'Invalid INPUT value'
+  [[ ${#config_key} -ge 2 ]] || @throw.invalidParam config_key 'Invalid KEY. Showld contains 2 or more characters'
+  [[ "${config_key}" == -* ]] || @throw.invalidParam config_key 'Invalid KEY. Should start with "-"'
+  [ ! -z "${config_var}" ] || @throw.invalidParam config_var 'Empty VARIABLE'
+  @isBoolean "${config_input}" || @throw.invalidParam config_input 'Invalid INPUT value'
 
   if ${config_input}; then
     config_var_val_def='=()'
@@ -59,60 +65,27 @@ for variable in ${variables[@]} ; do
     config_var_val='=true'
   fi
 
-  [ -z "${script_vars}" ] || script_vars="${script_vars}${BASHX_NL}"
-  [ -z "${script_case}" ] || script_case="${script_case}${BASHX_NL}${BASHX_TAB}${BASHX_TAB}"
+  [ -z "${script_vars}" ] || script_vars="${script_vars}${BX_CHAR_NL}"
+  [ -z "${script_case}" ] || script_case="${script_case}${BX_CHAR_NL}${BX_CHAR_TAB}${BX_CHAR_TAB}"
   script_vars="${script_vars}local ${config_var}${config_var_val_def}"
   script_case="${script_case}${config_key}) shift ; ${config_var}${config_var_val} ;;"
 done
 
 cat <<EOF
-local _d_options_debug="\$-" 2>/dev/null
-set +x 2>/dev/null
-
 ${script_vars}
 local OPTARG
 while true; do
   OPTARG="\$1"
   case "\$OPTARG" in
     ${script_case}
-    -*) @error "Unrecognized option \$OPTARG" ;;
+    --) shift; break ;;
+    -*) @app.error "Unrecognized argument \$OPTARG" ;;
     *) break ;;
   esac
 done
 unset OPTARG
-
-[[ "\${_d_options_debug}" == *x* ]] && set -x || true 2>/dev/null
 EOF
 
-
-# while true; do
-#     case $1 in
-#       -R) level=1
-#             shift
-#             case $1 in
-#               *[!0-9]* | "") ;;
-#               *) level=$1; shift ;;
-#             esac ;;
-#         # ... Other options ...
-#         -*) echo "$0: Unrecognized option $1" >&2
-#             exit 2;;
-#         *) break ;;
-#     esac
-# done
-
-# OPTARG_NET=false
-# OPTARG_PORTS='' #@TODO
-# while getopts ni::p: opt
-# do
-#   case "$opt" in
-#     n) OPTARG_NET=true ;;
-#     p) #@TODO
-#       [ ! -z "$OPTARG_PORTS" ] && OPTARG_PORTS="$OPTARG_PORTS,"
-#       OPTARG_PORTS="$OPTARG_PORTS$OPTARG"
-#       ;;
-#     \?) @error "ERROR: Invalid option -$OPTARG" ;;
-#     :) @error "Missing option argument for -$OPTARG" ;;
-#     *) @error "Unimplemented option: -$OPTARG" ;;
-#   esac
-# done
-# shift $((OPTIND - 1))
+{
+  [[ "\${_d_options_debug}" == *x* ]] && set -x || true
+} >/dev/null 2>&1

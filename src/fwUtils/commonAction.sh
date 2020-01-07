@@ -7,6 +7,6 @@ if [ ! -z "${name}" ] && [ ! -z "${action}" ]; then
   case "${action}" in
     add) fwUtils.commonAction.add "${name}" "${path}" ;;
     remove) fwUtils.commonAction.remove "${name}" "${path}" ;;
-    *) @warn 'Invalid action!' ;;
+    *) @log.warn 'Invalid action!' ;;
   esac
 fi
