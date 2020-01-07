@@ -11,6 +11,7 @@ set +ex;export BASHX_VERSION="master"
 
 @Actions.action1() { # \\n Action without arguments
   set -x
+  pwd
   @log "
   Action 1
   Multi-Line

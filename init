@@ -223,15 +223,12 @@ BX_APP_EXIT=false
 
 # #############################################################################
 
-# info out > std out
+# info out > std err
 exec 3>&2
 
 # Debug (set +x) prompt
-if ${BASHX_APP_COLORS_ENABLED}; then
-  PS4='>\e[2m % '
-else
-  PS4='> % '
-fi
+PS4='>\e[2m % '
+${BASHX_APP_COLORS_ENABLED} || PS4='>% '
 
 # #############################################################################
 

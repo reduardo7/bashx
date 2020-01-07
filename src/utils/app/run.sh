@@ -8,72 +8,93 @@
 ## Use: At end of /app file, put next:
 ##   @app.run "$@"
 
-# Call @app.run once
-unset -f @app.run
+__BX_style_reset="$(@style reset)"
+${BASHX_APP_COLORS_ENABLED} || __BX_style_reset=''
 
-# Start
-local r=1
+__BX_on_stdout() {
+  while read line; do
+    echo -e "${__BX_style_reset}${line}"
+  done
+}
 
-echo >&3 # Space
+__BX_on_errout() {
+  while read line; do
+    echo -e "${line}" >&2
+  done
+}
 
-BX_ACTION="$1"
+__BX_on_infoout() {
+  while read line; do
+    echo -e "${__BX_style_reset}${line}" >&3
+  done
+}
 
-@log.title "$(@app.info)"
+{
+  # Call @app.run once
+  unset -f @app.run
 
-# On end Script from Error
-trap '@app.error "Unexpected error" true $?' ERR
+  # Start
+  local r=1
 
-# On end Script
-trap '@app.exit $?' EXIT
+  echo >&3 # Space
 
-# On CTRL + C
-trap '@app.exit $?' INT
+  BX_ACTION="$1"
 
-if [ -z "${BX_ACTION}" ]; then
-  # Empty Action
+  @log.title "$(@app.info)"
 
-  if [ -z "${BASHX_APP_DEFAULT_ACTION}" ]; then
-    # Show help
-    BX_ACTION='help'
-    r=1
-  else
-    # Call default action
-    BX_ACTION="${BASHX_APP_DEFAULT_ACTION}"
-  fi
+  # On end Script from Error
+  trap '@app.error "Unexpected error" true $?' ERR
 
-  export BX_ACTION="${BX_ACTION}"
-  ${BX_ACTION_PREFIX}.${BX_ACTION}
-elif [[ $# -gt 0 ]]; then
-  shift # Remove "Action" from parameters
-  export BX_ACTION="${BX_ACTION}"
+  # On end Script
+  trap '@app.exit $?' EXIT
 
-  # On Ready
-  if [ -f "${BASHX_EVENTS_PATH}/ready.sh" ]; then
-    . "${BASHX_EVENTS_PATH}/ready.sh"
-  fi
+  # On CTRL + C
+  trap '@app.exit $?' INT
 
-  # If function (Action) exists
-  if @function.exists "${BX_ACTION_PREFIX}.${BX_ACTION}" ; then
-    # On Start
-    if [ -f "${BASHX_EVENTS_PATH}/start.sh" ]; then
-      . "${BASHX_EVENTS_PATH}/start.sh"
-    fi
+  if [ -z "${BX_ACTION}" ]; then
+    # Empty Action
 
-    # Exec
-    ${BX_ACTION_PREFIX}.${BX_ACTION} "$@"
-    # ${BX_ACTION_PREFIX}.${BX_ACTION} "$@" 4>&1 1>&2 2>&4 4>&- | grep -v '++ local _r_'
-    # ${BX_ACTION_PREFIX}.${BX_ACTION} "$@" 2> >( grep '++ local _r_' >&2 )
-    r=$?
-  else
-    # Invalid Action
-    if [ -f "${BASHX_EVENTS_PATH}/invalid-action.sh" ]; then
-      . "${BASHX_EVENTS_PATH}/invalid-action.sh"
+    if [ -z "${BASHX_APP_DEFAULT_ACTION}" ]; then
+      # Show help
+      BX_ACTION='help'
+      r=1
     else
-      local _sr="$(@style default color:red)"
-      @app.error "Action '$(@style color:green)${BX_ACTION}${_sr}' not found. See '$(@style bold)help${_sr}' for help."
+      # Call default action
+      BX_ACTION="${BASHX_APP_DEFAULT_ACTION}"
+    fi
+
+    export BX_ACTION="${BX_ACTION}"
+    ${BX_ACTION_PREFIX}.${BX_ACTION}
+  elif [[ $# -gt 0 ]]; then
+    shift # Remove "Action" from parameters
+    export BX_ACTION="${BX_ACTION}"
+
+    # On Ready
+    if [ -f "${BASHX_EVENTS_PATH}/ready.sh" ]; then
+      . "${BASHX_EVENTS_PATH}/ready.sh"
+    fi
+
+    # If function (Action) exists
+    if @function.exists "${BX_ACTION_PREFIX}.${BX_ACTION}" ; then
+      # On Start
+      if [ -f "${BASHX_EVENTS_PATH}/start.sh" ]; then
+        . "${BASHX_EVENTS_PATH}/start.sh"
+      fi
+
+      # Exec
+      ${BX_ACTION_PREFIX}.${BX_ACTION} "$@"
+      r=$?
+    else
+      # Invalid Action
+      if [ -f "${BASHX_EVENTS_PATH}/invalid-action.sh" ]; then
+        . "${BASHX_EVENTS_PATH}/invalid-action.sh"
+      else
+        local _sr="$(@style default color:red)"
+        @app.error "Action '$(@style color:green)${BX_ACTION}${_sr}' not found. See '$(@style bold)help${_sr}' for help."
+      fi
     fi
   fi
-fi
 
-# Return result code
-@app.exit $r
+  # Return result code
+  @app.exit $r
+} > >(__BX_on_stdout) 2> >(__BX_on_errout) 3> >(__BX_on_infoout)
