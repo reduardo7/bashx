@@ -8,32 +8,31 @@
 ## Use: At end of /app file, put next:
 ##   @app.run "$@"
 
-__BX_style_reset="$(@style reset)"
-${BASHX_APP_COLORS_ENABLED} || __BX_style_reset=''
+# __BX_style_reset="$(${BASHX_APP_COLORS_ENABLED} && @style reset || true)"
 
-__BX_on_stdout() {
-  local line
-  while read line; do
-    [ -z "${BX_ON_STDOUT}" ] || line="$(OUT_LINE="${line}" eval "${BX_ON_STDOUT}")"
-    echo -e "${__BX_style_reset}${line}"
-  done
-}
+# __BX_on_stdout() {
+#   local line
+#   while read line; do
+#     [ -z "${BX_ON_STDOUT}" ] || line="$(OUT_LINE="${line}" eval "${BX_ON_STDOUT}")"
+#     echo -e "${__BX_style_reset}${line}"
+#   done
+# }
 
-__BX_on_stderr() {
-  local line
-  while read line; do
-    [ -z "${BX_ON_STDERR}" ] || line="$(OUT_LINE="${line}" eval "${BX_ON_STDERR}")"
-    echo -e "${line}" >&2
-  done
-}
+# __BX_on_stderr() {
+#   local line
+#   while read line; do
+#     [ -z "${BX_ON_STDERR}" ] || line="$(OUT_LINE="${line}" eval "${BX_ON_STDERR}")"
+#     echo -e "${line}" >&2
+#   done
+# }
 
-__BX_on_stdinfo() {
-  local line
-  while read line; do
-    [ -z "${BX_ON_STDINFO}" ] || line="$(OUT_LINE="${line}" eval "${BX_ON_STDINFO}")"
-    echo -e "${__BX_style_reset}${line}" >&3
-  done
-}
+# __BX_on_stdinfo() {
+#   local line
+#   while read line; do
+#     [ -z "${BX_ON_STDINFO}" ] || line="$(OUT_LINE="${line}" eval "${BX_ON_STDINFO}")"
+#     echo -e "${__BX_style_reset}${line}" >&3
+#   done
+# }
 
 {
   # Call @app.run once
@@ -103,4 +102,4 @@ __BX_on_stdinfo() {
 
   # Return result code
   @app.exit $r
-} > >(__BX_on_stdout) 2> >(__BX_on_stderr) 3> >(__BX_on_stdinfo)
+} #> >(__BX_on_stdout) 2> >(__BX_on_stderr) 3> >(__BX_on_stdinfo)

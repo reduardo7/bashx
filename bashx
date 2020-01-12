@@ -24,6 +24,7 @@ _onStdOut() {
   Multi-Line
 "
   ls -la
+  bash
 }
 
 @Actions.action2() { # param1 [param2] \\n Action with arguments\\n\\tdescription second line\\nother line
