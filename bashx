@@ -31,8 +31,8 @@ _onStdOut() {
   eval "$(@options 'new:-n|-N' 'path:-p|--path:true')"
   set -x
 
-  @log "'n' or 'N' parameter: ${new}"
-  @log "'p' or 'path' parameter: ${path[@]} (${#path[@]})"
+  @log "'n' or 'N' parameter: ${@options.new}"
+  @log "'p' or 'path' parameter: ${@options.path[@]} (${#@options.path[@]})"
 
   local param1="$1"
   local param2="$2"

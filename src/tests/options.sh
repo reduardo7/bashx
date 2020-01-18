@@ -22,21 +22,21 @@ testFuncResult() {
   eval "echo \${$1}"
 }
 
-@@assert.equal 'true' "$(testFuncResult -n new)"
-@@assert.equal 'true' "$(testFuncResult -N new)"
-@@assert.equal 'false' "$(testFuncResult new)"
-@@assert.equal 'false' "$(testFuncResult -f new)"
-@@assert.equal 'false' "$(testFuncResult -p asd new)"
+@@assert.equal 'true' "$(testFuncResult -n @options.new)"
+@@assert.equal 'true' "$(testFuncResult -N @options.new)"
+@@assert.equal 'false' "$(testFuncResult @options.new)"
+@@assert.equal 'false' "$(testFuncResult -f @options.new)"
+@@assert.equal 'false' "$(testFuncResult -p asd @options.new)"
 
 @@assert.equal 'false' "$(testFuncResult foo)"
 @@assert.equal 'true' "$(testFuncResult -f foo)"
 @@assert.equal 'false' "$(testFuncResult -p asd foo)"
 
-@@assert.equal '' "$(testFuncResult 'path[@]')"
-@@assert.equal 'aaa' "$(testFuncResult -p aaa 'path[@]')"
-@@assert.equal '1' "$(testFuncResult -p aaa '#path[@]')"
-@@assert.equal 'aaa bbb ccc' "$(testFuncResult -p aaa -p bbb --path ccc -n 'path[@]')"
-@@assert.equal '3' "$(testFuncResult -p aaa -p bbb -N --path ccc '#path[@]')"
+@@assert.equal '' "$(testFuncResult '@options.path[@]')"
+@@assert.equal 'aaa' "$(testFuncResult -p aaa '@options.path[@]')"
+@@assert.equal '1' "$(testFuncResult -p aaa '#@options.path[@]')"
+@@assert.equal 'aaa bbb ccc' "$(testFuncResult -p aaa -p bbb --path ccc -n '@options.path[@]')"
+@@assert.equal '3' "$(testFuncResult -p aaa -p bbb -N --path ccc '#@options.path[@]')"
 
 @app.error() {
   echo 'ERROR-OK'

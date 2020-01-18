@@ -25,7 +25,7 @@ local r
 
 case "$action" in
   install)
-    if $force || [ ! -f "${bcfile}" ]; then
+    if ${@options.force} || [ ! -f "${bcfile}" ]; then
       # Create file
       @log "Creating '$(@style bold)${bcfile}$(@style)' file..."
 
@@ -89,7 +89,7 @@ EOF
       # Delete file
       @log "Deleting '$(@style bold)${bcfile}$(@style)' file..."
 
-      if ${force}; then
+      if ${@options.force}; then
         # Force
         rm -f "${bcfile}"
       else
@@ -104,7 +104,7 @@ EOF
         if grep "${l}" "${p}" >/dev/null 2>&1
           then
             @log "Removing from '$(@style bold)${r}$(@style)'..."
-            if ${force}; then
+            if ${@options.force}; then
               # Force
               cat "${p}" | grep -v "${l}" > "${p}.2" && mv -f "${p}.2" "${p}"
             else

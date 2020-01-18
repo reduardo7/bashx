@@ -23,8 +23,8 @@
 ##
 ## Usage example:
 ##   eval "$(@options 'new:-n|-N' 'path:-p|--path:true')"
-##   @log "'-n|-N' parameter: ${new}"
-##   @log "'-p|--path' parameter: ${path[@]} (${#path[@]})"
+##   @log "'-n|-N' parameter: ${@options.new}"
+##   @log "'-p|--path' parameter: ${@options.path[@]} (${#@options.path[@]})"
 
 {
   local _d_options_debug="\$-"
@@ -67,7 +67,7 @@ for variable in ${variables[@]} ; do
 
   [ -z "${script_vars}" ] || script_vars="${script_vars}${BX_CHAR_NL}"
   [ -z "${script_case}" ] || script_case="${script_case}${BX_CHAR_NL}${BX_CHAR_TAB}${BX_CHAR_TAB}"
-  script_vars="${script_vars}local ${config_var}${config_var_val_def}"
+  script_vars="${script_vars}local @options.${config_var}${config_var_val_def}"
   script_case="${script_case}${config_key}) shift ; ${config_var}${config_var_val} ;;"
 done
 

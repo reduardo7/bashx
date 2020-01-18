@@ -18,7 +18,7 @@ local line
 if [ -d "${BASHX_ACTIONS_PATH}" ]; then
   for f in "${BASHX_ACTIONS_PATH}"/*.sh ; do
     if [ -f "${f}" ]; then
-      if ${print_all} || [[ "$(@file.name "${f}" true)" != _* ]]; then
+      if ${@options.print_all} || [[ "$(@file.name "${f}" true)" != _* ]]; then
         @usage "${f}" "${prefix}"
       fi
     fi
@@ -28,7 +28,7 @@ fi
 # Base Actions
 for f in "${BASHX_ACTIONS_PATH}"/*.sh ; do
   if [ -f "${f}" ]; then
-    if ${print_all} || [[ "$(@file.name "${f}" true)" != _* ]]; then
+    if ${@options.print_all} || [[ "$(@file.name "${f}" true)" != _* ]]; then
       @usage "${f}" "${prefix}"
     fi
   fi
