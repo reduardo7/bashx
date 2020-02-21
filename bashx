@@ -28,11 +28,11 @@ _onStdOut() {
 }
 
 @Actions.action2() { # param1 [param2] \\n Action with arguments\\n\\tdescription second line\\nother line
-  eval "$(@options 'new:-n|-N' 'path:-p|--path:true')"
+  eval "$(@user.options 'new:-n|-N' 'path:-p|--path:true')"
   set -x
 
-  @log "'n' or 'N' parameter: ${@options.new}"
-  @log "'p' or 'path' parameter: ${@options.path[@]} (${#@options.path[@]})"
+  @log "'n' or 'N' parameter: ${user_options_new}"
+  @log "'p' or 'path' parameter: ${user_options_path[@]} (${#user_options_path[@]})"
 
   local param1="$1"
   local param2="$2"

@@ -17,19 +17,28 @@ local file_path
 [ ! -z "${functions_path}" ] || @throw.invalidParam functions_path
 [ -d "${functions_path}" ] || @throw.invalidParam functions_path 'Is not a valid path'
 
+_function_load_v() {
+  local n="$(@file.name "${1}" true)"
+  echo "${prefix}${n}"
+}
+
 for file_path in "${functions_path}"/* ; do
   if [ -f "${file_path}" ]; then
     # Create base util function
-    local n="$(@file.name "${file_path}" true)"
-    local v="${n//-/_}" ; v="${v//\./_}"
+    local n="$(_function_load_v "${file_path}")"
+
+    # See @code.variableClean
+    local v="${n//[^a-zA-Z0-9]/_}"
 
     eval "
-      ${prefix}${n}() {
+      ${n}() {
         {
           local _d_${v}_debug=\"\$-\"
           set +x
         } 2>/dev/null
 
+        local this='${n}'
+        local this_path='${file_path}'
         . \"${file_path}\"
         local _r_${v}=\$?
 
@@ -40,7 +49,8 @@ for file_path in "${functions_path}"/* ; do
       }
     "
   elif [ -d "${file_path}" ]; then
-    @function.load "${file_path}" "${prefix}$(@file.name "${file_path}" true)."
+    # Load functions from sub-path
+    @function.load "${file_path}" "$(_function_load_v "${file_path}")."
   fi
 done
 

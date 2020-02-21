@@ -55,25 +55,16 @@ local value1="$3"
 local value2="$4"
 local value3="$5"
 
-@function.load "${BX_SRC_PATH}/fwUtils"
-
 if [ ! -z "${task}" ]; then
   case "${task}" in
-    action|actions) fwUtils.task.action "${action}" "${value1}" ;;
-    test|tests) fwUtils.task.test "${action}" "${value1}" ;;
-    util|utils) fwUtils.task.util "${action}" "${value1}" ;;
-    event|events) fwUtils.task.event "${action}" "${value1}" ;;
-    resource|resources) fwUtils.task.resource "${action}" "${value1}" "${value2}" ;;
-    init) case "${action}" in
-        config) fwUtils.task.init.config ;;
-        project) fwUtils.task.init.project "${value1}" "${value2}" "${value3}" ;;
-        *) @log.warn 'Invalid init action!' ;;
-      esac ;;
-    *) @log.warn 'Invalid task!' ;;
+    init)
+      ${this}.task.${task}.${action} "${value1}" "${value2}" "${value3}" ;;
+    *)
+      ${this}.task.${task} "${action}" "${value1}" "${value2}" "${value3}" ;;
   esac
 fi
 
 # Usage
 @log
-@usage "${BASHX_ACTIONS_PATH}/_bashx.sh"
+@usage "${this_path}"
 @app.exit 1

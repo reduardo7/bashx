@@ -1,8 +1,8 @@
-result="$(eval "$(@options 'new:-n|-N' 'path:-p|--path:true' 'foo:-f')")"
+result="$(eval "$(@user.options 'new:-n|-N' 'path:-p|--path:true' 'foo:-f')")"
 @@assert.noOut "${result}"
 
 testFunc() {
-  eval "$(@options 'new:-n|-N' 'path:-p|--path:true' 'foo:-f')"
+  eval "$(@user.options 'new:-n|-N' 'path:-p|--path:true' 'foo:-f')"
   echo $1
 }
 
@@ -18,25 +18,25 @@ testFunc() {
 @@assert.equal 'asd' "$(testFunc --path asd -N asd)"
 
 testFuncResult() {
-  eval "$(@options 'new:-n|-N' 'path:-p|--path:true' 'foo:-f')"
+  eval "$(@user.options 'new:-n|-N' 'path:-p|--path:true' 'foo:-f')"
   eval "echo \${$1}"
 }
 
-@@assert.equal 'true' "$(testFuncResult -n @options.new)"
-@@assert.equal 'true' "$(testFuncResult -N @options.new)"
-@@assert.equal 'false' "$(testFuncResult @options.new)"
-@@assert.equal 'false' "$(testFuncResult -f @options.new)"
-@@assert.equal 'false' "$(testFuncResult -p asd @options.new)"
+@@assert.equal 'true' "$(testFuncResult -n user_options_new)"
+@@assert.equal 'true' "$(testFuncResult -N user_options_new)"
+@@assert.equal 'false' "$(testFuncResult user_options_new)"
+@@assert.equal 'false' "$(testFuncResult -f user_options_new)"
+@@assert.equal 'false' "$(testFuncResult -p asd user_options_new)"
 
 @@assert.equal 'false' "$(testFuncResult foo)"
 @@assert.equal 'true' "$(testFuncResult -f foo)"
 @@assert.equal 'false' "$(testFuncResult -p asd foo)"
 
-@@assert.equal '' "$(testFuncResult '@options.path[@]')"
-@@assert.equal 'aaa' "$(testFuncResult -p aaa '@options.path[@]')"
-@@assert.equal '1' "$(testFuncResult -p aaa '#@options.path[@]')"
-@@assert.equal 'aaa bbb ccc' "$(testFuncResult -p aaa -p bbb --path ccc -n '@options.path[@]')"
-@@assert.equal '3' "$(testFuncResult -p aaa -p bbb -N --path ccc '#@options.path[@]')"
+@@assert.equal '' "$(testFuncResult 'user_options_path[@]')"
+@@assert.equal 'aaa' "$(testFuncResult -p aaa 'user_options_path[@]')"
+@@assert.equal '1' "$(testFuncResult -p aaa '#user_options_path[@]')"
+@@assert.equal 'aaa bbb ccc' "$(testFuncResult -p aaa -p bbb --path ccc -n 'user_options_path[@]')"
+@@assert.equal '3' "$(testFuncResult -p aaa -p bbb -N --path ccc '#user_options_path[@]')"
 
 @app.error() {
   echo 'ERROR-OK'

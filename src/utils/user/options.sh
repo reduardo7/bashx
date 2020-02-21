@@ -22,15 +22,16 @@
 ##     - "foo" with TRUE when "-x" is present or FALSE when "-x" is not present.
 ##
 ## Usage example:
-##   eval "$(@options 'new:-n|-N' 'path:-p|--path:true')"
-##   @log "'-n|-N' parameter: ${@options.new}"
-##   @log "'-p|--path' parameter: ${@options.path[@]} (${#@options.path[@]})"
+##   eval "$(@user.options 'new:-n|-N' 'path:-p|--path:true')"
+##   @log "'-n|-N' parameter: ${user_options_new}"
+##   @log "'-p|--path' parameter: ${user_options_path[@]} (${#user_options_path[@]})"
 
 {
   local _d_options_debug="\$-"
   set +x
 } 2>/dev/null
 
+local v
 local options="$@"
 local variable
 local config
@@ -65,9 +66,13 @@ for variable in ${variables[@]} ; do
     config_var_val='=true'
   fi
 
+  v="user_options_${config_var}"
+  # See @code.variableClean
+  v="${v//[^a-zA-Z0-9]/_}"
+
   [ -z "${script_vars}" ] || script_vars="${script_vars}${BX_CHAR_NL}"
   [ -z "${script_case}" ] || script_case="${script_case}${BX_CHAR_NL}${BX_CHAR_TAB}${BX_CHAR_TAB}"
-  script_vars="${script_vars}local @options.${config_var}${config_var_val_def}"
+  script_vars="${script_vars}local ${v}${config_var_val_def}"
   script_case="${script_case}${config_key}) shift ; ${config_var}${config_var_val} ;;"
 done
 
