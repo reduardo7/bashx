@@ -73,7 +73,7 @@ for variable in ${variables[@]} ; do
   [ -z "${script_vars}" ] || script_vars="${script_vars}${BX_CHAR_NL}"
   [ -z "${script_case}" ] || script_case="${script_case}${BX_CHAR_NL}${BX_CHAR_TAB}${BX_CHAR_TAB}"
   script_vars="${script_vars}local ${v}${config_var_val_def}"
-  script_case="${script_case}${config_key}) shift ; ${config_var}${config_var_val} ;;"
+  script_case="${script_case}${config_key}) shift ; ${v}${config_var_val} ;;"
 done
 
 cat <<EOF
