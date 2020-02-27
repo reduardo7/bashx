@@ -28,9 +28,9 @@ testFuncResult() {
 @@assert.equal 'false' "$(testFuncResult -f user_options_new)"
 @@assert.equal 'false' "$(testFuncResult -p asd user_options_new)"
 
-@@assert.equal 'false' "$(testFuncResult foo)"
-@@assert.equal 'true' "$(testFuncResult -f foo)"
-@@assert.equal 'false' "$(testFuncResult -p asd foo)"
+@@assert.equal 'false' "$(testFuncResult user_options_foo)"
+@@assert.equal 'true' "$(testFuncResult -f user_options_foo)"
+@@assert.equal 'false' "$(testFuncResult -p asd user_options_foo)"
 
 @@assert.equal '' "$(testFuncResult 'user_options_path[@]')"
 @@assert.equal 'aaa' "$(testFuncResult -p aaa 'user_options_path[@]')"
