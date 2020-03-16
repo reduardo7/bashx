@@ -3,17 +3,19 @@
 ##
 ## Params:
 ##   text:  {String} Text to print.
-##   lines: {Integer} Lines to meve back. If is not a number, used as text.
+##   lines: {Integer} Lines to meve back.
 ##          Optional. Default: 1.
 ##   width: {Integer} Line width.
-##          Optional. Default: ${APP_WIDBASHX_APP_WIDTHTH}.
+##          Optional. Default: ${BASHX_APP_WIDTH}.
 
 
 local text="$1"
-local lines=${2:-1}
+local lines=${2}
 local width=${3:-${BASHX_APP_WIDTH}}
 
-if ! @isNumber "${lines}" ; then
+if [ -z "${lines}" ]; then
+  lines=1
+elif ! @isNumber "${lines}" ; then
   lines=1
 fi
 

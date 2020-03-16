@@ -217,9 +217,9 @@ BX_APP_EXIT_ILLEGAL_ERROR=false
 
 # Events commands
 BX_ON_EXIT=''
-BX_ON_STDOUT=''
-BX_ON_STDERR=''
-BX_ON_STDINFO=''
+# BX_ON_STDOUT=''
+# BX_ON_STDERR=''
+# BX_ON_STDINFO=''
 
 # True if APP is terminated
 BX_APP_EXIT=false

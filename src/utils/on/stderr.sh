@@ -13,6 +13,9 @@
 ##
 ##   @on.stderr '_onStdErr "${OUT_LINE}"'
 
+# Not implemented
+exit 1
+
 local cmd="$@"
 
 if [ ! -z "${cmd}" ]; then
