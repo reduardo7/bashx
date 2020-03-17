@@ -204,6 +204,9 @@ fi
 
 ## APP Temporary path.
 export BASHX_APP_TMP_PATH="${BASHX_APP_TMP_PATH:-$(mktemp -d)}"
+export BX_PROC_INDEX_MAIN=${BASH_SUBSHELL}
+
+echo ${BX_PROC_INDEX_MAIN} > "${BASHX_APP_TMP_PATH}/__bx_shell_main"
 
 # #############################################################################
 
@@ -236,6 +239,20 @@ PS4='> DEBUG: '
 # #############################################################################
 
 ### Preload required
+
+export __BX_each_line_=true
+
+__BX_each_line() {
+  if \
+    ${__BX_each_line_} \
+    && ! ${BX_APP_EXIT} \
+    && [[ ${BX_PROC_INDEX_MAIN} == ${BASH_SUBSHELL} ]] \
+    && [ -f "${BASHX_APP_TMP_PATH}/__bx_subshell_exit" ]
+  then
+    __BX_each_line_=false
+    exit $(cat "${BASHX_APP_TMP_PATH}/__bx_subshell_exit")
+  fi
+}
 
 @str.trim() { . "${BX_UTILS_PATH}/str/trim.sh"; }
 @str.toLower() { . "${BX_UTILS_PATH}/str/toLower.sh"; }

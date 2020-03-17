@@ -14,8 +14,10 @@ if ! @isNumber ${code}; then
   code=1
 fi
 
-if ! ${BX_APP_EXIT} ; then
-
+if [[ ${BX_PROC_INDEX_MAIN} != ${BASH_SUBSHELL} ]]; then
+  # Save current process exit code
+  echo ${code} > "${BASHX_APP_TMP_PATH}/__bx_subshell_exit"
+elif ! ${BX_APP_EXIT} ; then
   # Mark as exit
   BX_APP_EXIT=true
 

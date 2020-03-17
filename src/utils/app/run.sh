@@ -48,13 +48,18 @@
   @log.title "$(@app.info)"
 
   # On end Script from Error
-  trap '@app.error "Unexpected error" true $?' ERR
+  trap '@app.error "Unexpected error [$?]" true $?' ERR
 
   # On end Script
-  trap '@app.exit $?' EXIT
+  # https://mywiki.wooledge.org/SignalTrap
+  # https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html
+  trap '@app.exit $?' HUP INT QUIT KILL TERM EXIT
 
-  # On CTRL + C
-  trap '@app.exit $?' INT
+  # Execution Watcher
+  # https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html
+  trap '{
+    __BX_each_line $?
+  } 2>/dev/null' DEBUG
 
   if [ -z "${BX_ACTION}" ]; then
     # Empty Action

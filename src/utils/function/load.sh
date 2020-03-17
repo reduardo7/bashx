@@ -35,6 +35,12 @@ for file_path in "${functions_path}"/* ; do
         {
           local _d_${v}_debug=\"\$-\"
           set +x
+
+          # Execution Watcher
+          # https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html
+          trap '{
+            __BX_each_line \$?
+          } 2>/dev/null' DEBUG
         } 2>/dev/null
 
         local this='${n}'
