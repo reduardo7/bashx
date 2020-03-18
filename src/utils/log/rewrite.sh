@@ -7,6 +7,8 @@
 ##          Optional. Default: 1.
 ##   width: {Integer} Line width.
 ##          Optional. Default: ${BASHX_APP_WIDTH}.
+##
+## @TODO: Line rewrite not working
 
 
 local text="$1"
@@ -19,8 +21,12 @@ elif ! @isNumber "${lines}" ; then
   lines=1
 fi
 
-if [[ ${lines} -gt 0 ]]; then
-  local bl="\033[${lines}A"
-  echo -e "${bl}$(@style)${BASHX_APP_PRINT_PREFIX} ${text}$(@style system)" >&3 # Clear line
-  @str.repeat ${width} ' ' >&3
-fi
+# if [[ ${lines} -gt 0 ]]; then
+#   local bl="\033[${lines}A"
+#   echo -e "${bl}$(@style)${BASHX_APP_PRINT_PREFIX} ${text}$(@style system)" >&3 # Clear line
+#   @str.repeat ${width} ' ' >&3
+# fi
+
+echo >&3
+@log "${text}"
+echo >&3
