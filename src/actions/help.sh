@@ -4,7 +4,7 @@
 ## Options:
 ##   -a|--all: Show hidden actions help.
 
-eval "$(@user.options 'print_all:-a|--all')"
+eval "$(@args 'print_all:-a|--all')"
 
 local prefix="${BX_SCRIPT_FILE_NAME}"
 local line
@@ -18,7 +18,7 @@ local line
 if [ -d "${BASHX_ACTIONS_PATH}" ]; then
   for f in "${BASHX_ACTIONS_PATH}"/*.sh ; do
     if [ -f "${f}" ]; then
-      if ${user_options_print_all} || [[ "$(@file.name "${f}" true)" != _* ]]; then
+      if ${args_print_all} || [[ "$(@file.name "${f}" true)" != _* ]]; then
         @usage "${f}" "${prefix}"
       fi
     fi
@@ -28,7 +28,7 @@ fi
 # Base Actions
 for f in "${BASHX_ACTIONS_PATH}"/*.sh ; do
   if [ -f "${f}" ]; then
-    if ${user_options_print_all} || [[ "$(@file.name "${f}" true)" != _* ]]; then
+    if ${args_print_all} || [[ "$(@file.name "${f}" true)" != _* ]]; then
       @usage "${f}" "${prefix}"
     fi
   fi

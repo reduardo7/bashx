@@ -28,11 +28,11 @@ set +ex;export BASHX_VERSION="master"
 }
 
 @Actions.action2() { # param1 [param2] \\n Action with arguments\\n\\tdescription second line\\nother line
-  eval "$(@user.options 'new:-n|-N' 'path:-p|--path:true')"
+  eval "$(@args 'new:-n|-N' 'path:-p|--path:true')"
   set -x
 
-  @log "'n' or 'N' parameter: ${user_options_new}"
-  @log "'p' or 'path' parameter: ${user_options_path[@]} (${#user_options_path[@]})"
+  @log "'n' or 'N' parameter: ${args_new}"
+  @log "'p' or 'path' parameter: ${args_path[@]} (${#args_path[@]})"
 
   local param1="$1"
   local param2="$2"

@@ -22,9 +22,9 @@
 ##     - "foo" with TRUE when "-x" is present or FALSE when "-x" is not present.
 ##
 ## Usage example:
-##   eval "$(@user.options 'new:-n|-N' 'path:-p|--path:true')"
-##   @log "'-n|-N' parameter: ${user_options_new}"
-##   @log "'-p|--path' parameter: ${user_options_path[@]} (${#user_options_path[@]})"
+##   eval "$(@args 'new:-n|-N' 'path:-p|--path:true')"
+##   @log "'-n|-N' parameter: ${args_new}"
+##   @log "'-p|--path' parameter: ${args_path[@]} (${#args_path[@]})"
 
 {
   local _d_options_debug="\$-"
@@ -66,7 +66,7 @@ for variable in ${variables[@]} ; do
     config_var_val='=true'
   fi
 
-  v="user_options_${config_var}"
+  v="args_${config_var}"
   # See @code.variableClean
   v="${v//[^a-zA-Z0-9]/_}"
 

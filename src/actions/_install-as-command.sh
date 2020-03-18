@@ -9,7 +9,7 @@
 ## Options:
 ##   -f|--force: Force action (no interactive).
 
-eval "$(@user.options 'force:-f|--force')"
+eval "$(@args 'force:-f|--force')"
 
 [ -z "${HOME}" ] || [ ! -d "${HOME}" ] && @throw.invalidParam HOME
 
@@ -25,7 +25,7 @@ local r
 
 case "$action" in
   install)
-    if ${user_options_force} || [ ! -f "${bcfile}" ]; then
+    if ${args_force} || [ ! -f "${bcfile}" ]; then
       # Create file
       @log "Creating '$(@style bold)${bcfile}$(@style)' file..."
 
@@ -89,7 +89,7 @@ EOF
       # Delete file
       @log "Deleting '$(@style bold)${bcfile}$(@style)' file..."
 
-      if ${user_options_force}; then
+      if ${args_force}; then
         # Force
         rm -f "${bcfile}"
       else
@@ -104,7 +104,7 @@ EOF
         if grep "${l}" "${p}" >/dev/null 2>&1
           then
             @log "Removing from '$(@style bold)${r}$(@style)'..."
-            if ${user_options_force}; then
+            if ${args_force}; then
               # Force
               cat "${p}" | grep -v "${l}" > "${p}.2" && mv -f "${p}.2" "${p}"
             else
