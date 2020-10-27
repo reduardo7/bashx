@@ -14,5 +14,5 @@ str="$(@str.replace "${str}" '\t' '  ')"
 
 # Print
 echo -e "${str}" | while IFS= read -r line ; do
-  echo -e "${__print_var_prefix__}${line}${BX_KEY_ESC}[0m" >&3
+  echo -e "${__print_var_prefix__}${line}${BX_KEY_ESC}[0m\r" >&3
 done

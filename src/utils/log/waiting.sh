@@ -20,7 +20,7 @@ for s in $(seq 0 $to); do
   for ms in $(seq 0 25 75); do
     (
       sleep $s.$ms
-      echo -e "\r\n" >&3
+      echo -e "\r" >&3
       @log "$message"
     ) &
   done
