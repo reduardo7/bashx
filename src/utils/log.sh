@@ -7,7 +7,7 @@
 local str="$@"
 local line
 
-[ ! -z "${__print_var_prefix__}" ] || __print_var_prefix__="$(@style)${BASHX_APP_PRINT_PREFIX} "
+[ ! -z "${__print_var_prefix__}" ] || __print_var_prefix__="\r$(@style)${BASHX_APP_PRINT_PREFIX} "
 
 # \t -> \s*2
 str="$(@str.replace "${str}" '\t' '  ')"

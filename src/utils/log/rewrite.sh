@@ -20,7 +20,7 @@ elif ! @isNumber "${lines}" ; then
 fi
 
 if [[ ${lines} -gt 0 ]]; then
-  local bl="\033[${lines}A"
+  local bl="\r\033[${lines}A"
   echo -e "${bl}$(@style)${BASHX_APP_PRINT_PREFIX} ${text}$(@style system)" >&3 # Clear line
   @str.repeat ${width} ' ' >&3
 fi
