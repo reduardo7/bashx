@@ -98,49 +98,49 @@ set +ex;export BASHX_VERSION="v2.0.1"
 #### Project Structure
 
 ```text
---> project-directory-name         # Optional. Container directory.
-    |                              #
-    +-> my-script-name             # Required. Main script.
-    |                              #
-    +-> .my-script-name.env        # Optional. Config file.
-    |                              #
-    +-> my-script-name.src/        # Optional. Sources.
-        |                          #
-        +-> actions/               # Optional. Actions scripts.
-        |   |                      #
-        |   +-> [action-name].sh   #    Test script example...
-        |   |                      #
-        |   +-> *                  #    Test script example...
-        |                          #
-        +-> tests/                 # Optional. Test scripts.
-        |   |                      #
-        |   +-> [test-name].sh     #     Test script example...
-        |   |                      #
-        |   +-> *                  #     Test script example...
-        |                          #
-        +-> utils/                 # Optional. Utils scripts.
-        |   |                      #
-        |   +-> [util-name].sh     #     Test script example...
-        |   |                      #
-        |   +-> *                  #     Test script example...
-        |                          #
-        +-> events/                # Optional. Events scripts. Executed in next order:
-        |   |                      #
-        |   +-> invalid-action.sh  #     Optional. Triggered on invalid action called.
-        |   |                      #
-        |   +-> ready.sh           #     Optional. Triggered on ready.
-        |   |                      #
-        |   +-> start.sh           #     Optional. Triggered on start the selected action.
-        |   |                      #
-        |   +-> error.sh           #     Optional. Triggered on error (exit code != 0).
-        |   |                      #
-        |   +-> finish.sh          #     Optional. Triggered on execution finished.
-        |                          #
-        +-> resources/             # Optional. Resources files.
-            |                      #
-            +-> [resource].[ext]   #     Resource file...
-            |                      #
-            +-> *                  #     Resource file...
+--> project-directory-name          # Optional. Container directory.
+    |                               #
+    +-> my-script-name              # Required. Main script.
+    |                               #
+    +-> .my-script-name.env         # Optional. Config file.
+    |                               #
+    +-> my-script-name.src/         # Optional. Sources.
+        |                           #
+        +-> actions/                # Optional. Actions scripts.
+        |   |                       #
+        |   +-> [action-name].xsh   #    Test script example...
+        |   |                       #
+        |   +-> *                   #    Test script example...
+        |                           #
+        +-> tests/                  # Optional. Test scripts.
+        |   |                       #
+        |   +-> [test-name].xsh     #     Test script example...
+        |   |                       #
+        |   +-> *                   #     Test script example...
+        |                           #
+        +-> utils/                  # Optional. Utils scripts.
+        |   |                       #
+        |   +-> [util-name].xsh     #     Test script example...
+        |   |                       #
+        |   +-> *                   #     Test script example...
+        |                           #
+        +-> events/                 # Optional. Events scripts. Executed in next order:
+        |   |                       #
+        |   +-> invalid-action.xsh  #     Optional. Triggered on invalid action called.
+        |   |                       #
+        |   +-> ready.xsh           #     Optional. Triggered on ready.
+        |   |                       #
+        |   +-> start.xsh           #     Optional. Triggered on start the selected action.
+        |   |                       #
+        |   +-> error.xsh           #     Optional. Triggered on error (exit code != 0).
+        |   |                       #
+        |   +-> finish.xsh          #     Optional. Triggered on execution finished.
+        |                           #
+        +-> resources/              # Optional. Resources files.
+            |                       #
+            +-> [resource].[ext]    #     Resource file...
+            |                       #
+            +-> *                   #     Resource file...
 ```
 
 Valid events options constant: `BX_EVENTS_OPTS`.
@@ -214,11 +214,11 @@ set +x
 
 ### Events Workflow
 
-1. `src/events/invalid-action.sh` is triggered if an invalid action was used.
-2. `src/events/ready.sh` is triggered on the initialization is complete.
-3. `src/events/start.sh` is triggered before a valid action is called.
-4. `src/events/error.sh` is triggered when an error has occurred.
-5. `src/events/finish.sh` is triggered on execution finished.
+1. `src/events/invalid-action.xsh` is triggered if an invalid action was used.
+2. `src/events/ready.xsh` is triggered on the initialization is complete.
+3. `src/events/start.xsh` is triggered before a valid action is called.
+4. `src/events/error.xsh` is triggered when an error has occurred.
+5. `src/events/finish.xsh` is triggered on execution finished.
 
 Valid events options constant: `BX_EVENTS_OPTS`.
 

@@ -254,11 +254,11 @@ __BX_each_line() {
   fi
 }
 
-@str.trim() { . "${BX_UTILS_PATH}/str/trim.sh"; }
-@str.toLower() { . "${BX_UTILS_PATH}/str/toLower.sh"; }
-@style() { . "${BX_UTILS_PATH}/style.sh"; }
-@file.name() { . "${BX_UTILS_PATH}/file/name.sh"; }
-@function.load() { . "${BX_UTILS_PATH}/function/load.sh"; }
+@str.trim() { . "${BX_UTILS_PATH}/str/trim.xsh"; }
+@str.toLower() { . "${BX_UTILS_PATH}/str/toLower.xsh"; }
+@style() { . "${BX_UTILS_PATH}/style.xsh"; }
+@file.name() { . "${BX_UTILS_PATH}/file/name.xsh"; }
+@function.load() { . "${BX_UTILS_PATH}/function/load.xsh"; }
 
 # #############################################################################
 

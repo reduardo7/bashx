@@ -10,5 +10,8 @@
   },
   "cSpell.words": [
     "Cuomo"
-  ]
+  ],
+  "files.associations": {
+    "*.xsh": "shellscript"
+  }
 }

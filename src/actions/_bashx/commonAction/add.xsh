@@ -1,6 +1,6 @@
 local name="$1"
 local path="$2"
-local script="${path}/${name}.sh"
+local script="${path}/${name}.xsh"
 
 if [ ! -d "${path}" ]; then
   mkdir -p "${path}" || @app.error "Can not create directory '$(@style bold color:blue)${path}$(@style)'"

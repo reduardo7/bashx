@@ -1,7 +1,7 @@
 local action="$1"
 local name="$2"
 local path="$3"
-local script="${path}/${name}.sh"
+local script="${path}/${name}.xsh"
 
 if [ ! -z "${name}" ] && [ ! -z "${action}" ]; then
   case "${action}" in

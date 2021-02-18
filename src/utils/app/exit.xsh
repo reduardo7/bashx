@@ -22,16 +22,16 @@ elif ! ${BX_APP_EXIT} ; then
   BX_APP_EXIT=true
 
   # On Error
-  if [[ ${code} -ne 0 ]] && [ -f "${BASHX_EVENTS_PATH}/error.sh" ]; then
-    . "${BASHX_EVENTS_PATH}/error.sh"
+  if [[ ${code} -ne 0 ]] && [ -f "${BASHX_EVENTS_PATH}/error.xsh" ]; then
+    . "${BASHX_EVENTS_PATH}/error.xsh"
   fi
 
   # Execute exit actions
   [ -z "${BX_ON_EXIT}" ] || ( EXIT_CODE=${code} eval "${BX_ON_EXIT}" )
 
   # On Finish
-  if [ -f "${BASHX_EVENTS_PATH}/finish.sh" ]; then
-    . "${BASHX_EVENTS_PATH}/finish.sh"
+  if [ -f "${BASHX_EVENTS_PATH}/finish.xsh" ]; then
+    . "${BASHX_EVENTS_PATH}/finish.xsh"
   fi
 
   # Cleanup

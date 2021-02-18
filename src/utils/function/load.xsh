@@ -1,5 +1,5 @@
 ## functions_path [prefix]
-## Generate *.sh functions from path.
+## Generate *.xsh functions from path.
 ##
 ## Params:
 ##   functions_path: {String} Path to scripts.

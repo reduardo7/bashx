@@ -80,15 +80,15 @@
     export BX_ACTION="${BX_ACTION}"
 
     # On Ready
-    if [ -f "${BASHX_EVENTS_PATH}/ready.sh" ]; then
-      . "${BASHX_EVENTS_PATH}/ready.sh"
+    if [ -f "${BASHX_EVENTS_PATH}/ready.xsh" ]; then
+      . "${BASHX_EVENTS_PATH}/ready.xsh"
     fi
 
     # If function (Action) exists
     if @function.exists "${BX_ACTION_PREFIX}.${BX_ACTION}" ; then
       # On Start
-      if [ -f "${BASHX_EVENTS_PATH}/start.sh" ]; then
-        . "${BASHX_EVENTS_PATH}/start.sh"
+      if [ -f "${BASHX_EVENTS_PATH}/start.xsh" ]; then
+        . "${BASHX_EVENTS_PATH}/start.xsh"
       fi
 
       # Exec
@@ -96,8 +96,8 @@
       r=$?
     else
       # Invalid Action
-      if [ -f "${BASHX_EVENTS_PATH}/invalid-action.sh" ]; then
-        . "${BASHX_EVENTS_PATH}/invalid-action.sh"
+      if [ -f "${BASHX_EVENTS_PATH}/invalid-action.xsh" ]; then
+        . "${BASHX_EVENTS_PATH}/invalid-action.xsh"
       else
         local _sr="$(@style default color:red)"
         @app.error "Action '$(@style color:green)${BX_ACTION}${_sr}' not found. See '$(@style bold)help${_sr}' for help."
