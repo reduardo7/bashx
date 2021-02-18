@@ -11,7 +11,7 @@
 ### Why use it
 
 - Very easy to implement.
-- No additionals components required.
+- No additional components required.
 - No need to learn a new language.
 - No need to learn a new syntax.
 - Common functions and utils already implemented.
@@ -165,7 +165,7 @@ Show _Development Documentation_ using:
 
 ### `BASHX_COLORS_DISABLED`
 
-Set vale to `1` to diable **BashX** output colors, disabling the `@style` function.
+Set vale to `1` to disable **BashX** output colors, disabling the `@style` function.
 
 **Example:**
 
