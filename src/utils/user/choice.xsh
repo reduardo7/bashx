@@ -26,7 +26,13 @@ local result="$default"
 local user_input
 
 # Read
-read -n 1 -p "$(@style)${BASHX_APP_PRINT_PREFIX} ${message} [${options}]: " user_input >&3
+if ${BX_TTY}; then
+  read -n 1 -p "$(@style)${BASHX_APP_PRINT_PREFIX} ${message} [${options}]: " user_input >&3
+else
+  @log.warn 'Not at TTY! choice cancelled...'
+  echo "${default}"
+  return 254
+fi
 echo >&3
 
 # Validate input

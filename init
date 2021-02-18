@@ -120,6 +120,11 @@ ${BX_OS_IS_MAC} && export BX_KEY_ESC=$'\x1B' || export BX_KEY_ESC=$'\e'
 ## Key: ESC
 readonly BX_KEY_ESC="${BX_KEY_ESC}"
 
+# https://stackoverflow.com/a/911213/717267
+## TTY available?
+[ -t 1 ] && export BX_TTY=true || BX_TTY=false
+readonly BX_TTY="${BX_TTY}"
+
 # \n - New Line
 export BX_CHAR_NL='
 '

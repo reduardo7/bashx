@@ -23,21 +23,26 @@ local rta=0
 local r
 local i
 
-while [[ ${count} -gt 0 ]] && [[ ${rta} -eq 0 ]] ; do
-  @log.rewrite "${message} [${count}]... Press [C] or [ESC] to cancel..."
-  read -n 1 -s -t 1 -p '' i
-  r=$?
-  if [ "${i}" == 'c' ] || [ "${i}" == 'C' ] || [ "${i}" == "${BX_KEY_ESC}" ]; then
-    rta=1
-  else
-    # 142 == No user input
-    if [ "${r}" == '142' ]; then
-      count=$((count - 1))
+if ${BX_TTY}; then
+  while [[ ${count} -gt 0 ]] && [[ ${rta} -eq 0 ]] ; do
+    @log.rewrite "${message} [${count}]... Press [C] or [ESC] to cancel..."
+    read -n 1 -s -t 1 -p '' i
+    r=$?
+    if [ "${i}" == 'c' ] || [ "${i}" == 'C' ] || [ "${i}" == "${BX_KEY_ESC}" ]; then
+      rta=1
+    else
+      # 142 == No user input
+      if [ "${r}" == '142' ]; then
+        count=$((count - 1))
+      fi
     fi
-  fi
-done
+  done
 
-@log.rewrite # Remove last line
+  @log.rewrite # Remove last line
+else
+  @log.warn 'Not at TTY! timeout cancelled...'
+  return 254
+fi
 
 if [[ ${count} -eq 0 ]]; then
   @log.rewrite
