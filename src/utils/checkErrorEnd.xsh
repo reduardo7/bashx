@@ -1,5 +1,5 @@
 ## code [cmd]
-## Check error.
+## Check error and finish if `code` is bigger than 0 (error).
 ##
 ## Params:
 ##   code: {Integer} Exit code. Example: $?
