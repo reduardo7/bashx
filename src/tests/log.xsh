@@ -7,4 +7,4 @@ output="$(@log "foo\tbar" 3>&1)"
 @@assert.contains "${output}" 'foo'
 @@assert.contains "${output}" 'bar'
 @@assert.contains "${output}" "${BASHX_APP_PRINT_PREFIX}"
-@@assert.endWith "${output}" "$(@style reset)"
+# @@assert.endWith "${output}" "$(@style reset)"
