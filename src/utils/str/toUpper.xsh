@@ -8,4 +8,4 @@
 
 local text="$@"
 
-[ ! -z "${text}" ] && tr '[a-z]' '[A-Z]' <<<"${text}"
+[ ! -z "${text}" ] && echo "${text}" | tr '[a-z]' '[A-Z]'
