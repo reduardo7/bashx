@@ -10,11 +10,7 @@
 local default_width=${1:-${BASHX_APP_WIDTH}}
 
 if command -v tput >/dev/null 2>&1; then
-  tput cols
+  tput cols 2>/dev/null || echo ${default_width}
 else
-  if ! @isNumber "${default_width}"; then
-    default_width=${BASHX_APP_WIDTH}
-  fi
-
   echo ${default_width}
 fi
