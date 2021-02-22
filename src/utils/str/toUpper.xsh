@@ -8,4 +8,5 @@
 
 local text="$@"
 
-[ ! -z "${text}" ] && echo "${text}" | tr '[a-z]' '[A-Z]'
+# https://superuser.com/a/642932/84212
+[ ! -z "${text}" ] && echo "${text}" | tail -n +1 | tr '[a-z]' '[A-Z]'
