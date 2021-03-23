@@ -19,8 +19,7 @@ _dkrTest() {
     -v "$(pwd):/root/.bashx/master:ro" \
     -v "$(pwd):/app path:ro" \
     --entrypoint "/app path/bashx" \
-    ${docker_params} ${docker_image} '_run-tests' \
-      | exit 1
+    ${docker_params} ${docker_image} '_run-tests'
 }
 
 for img in ${docker_images}; do

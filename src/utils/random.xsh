@@ -9,4 +9,6 @@ local p="$(env LC_ALL=C tr -dc "a-zA-Z0-9" < /dev/urandom 2>/dev/null | head -c 
 
 if [[ -z "${p}" ]]; then
   shuf -zer -n${len} {A..Z} {a..z} {0..9} 2>/dev/null
+else
+  echo "${p}"
 fi
