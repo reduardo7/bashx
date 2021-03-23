@@ -9,12 +9,9 @@ on:
       - master
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Tests
-        # @TODO: Following test is not working
-        # at GitHub context: `./bashx _run-tests`
-        # run: ./bashx _run-tests-all
-        run: ./bashx _run-tests-docker
+        run: ./bashx _run-tests-all
