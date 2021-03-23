@@ -3,6 +3,8 @@
 
 set -x
 
+local docker_images="${@:-ubuntu debian:8}"
+
 local docker_params=''
 
 if ${BX_TTY}; then
@@ -23,5 +25,6 @@ _dkrTest() {
       | exit 1
 }
 
-_dkrTest ubuntu
-_dkrTest debian:8
+for img in ${docker_images}; do
+  _dkrTest ${img}
+done

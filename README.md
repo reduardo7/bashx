@@ -243,3 +243,9 @@ docker run --rm \
   -w '/app' \
   -ti debian:8 '/app/bashx'
 ```
+
+## Notes
+
+### Constants & Config Variables
+
+All _BashX_ **constants** starts with `BX_`, and **configuration** starts with `BASHX_`.

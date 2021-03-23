@@ -9,9 +9,21 @@ on:
       - master
 
 jobs:
-  build:
+  test-local:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Tests
-        run: ./bashx _run-tests-all
+      - name: Local test
+        run: ./bashx _run-tests
+  test-docker-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Local test
+        run: ./bashx _run-tests-docker ubuntu
+  test-docker-debian8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Local test
+        run: ./bashx _run-tests-docker debian:8
