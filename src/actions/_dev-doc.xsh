@@ -6,7 +6,7 @@ _doc() {
 
   @log.title "Development Documentation"
 
-  for f in "${BASHX_UTILS_PATH}"/*.xsh ; do
+  for f in "${BASHX_UTILS_PATH}"/*.${BX_SCRIPT_EXTENSION} ; do
     if [ -f "${f}" ]; then
       @usage "${f}" '@'
     fi
