@@ -9,21 +9,19 @@ if ${BX_TTY}; then
   docker_params='-ti'
 fi
 
-@log.line
-@log.title 'Docker tests: ubuntu'
-docker run --rm \
-  -v "$(pwd):/root/.bashx/master" \
-  -v "$(pwd):/app path" \
-  --entrypoint "/app path/bashx" \
-  ${docker_params} ubuntu '_run-tests' \
-    | exit 1
+_dkrTest() {
+  local docker_image="$1"
 
-@log.line
-@log.title 'Docker tests: debian:8'
+  @log.line
+  @log.title "Docker tests: ${docker_image}"
 
-docker run --rm \
-  -v "$(pwd):/root/.bashx/master" \
-  -v "$(pwd):/app path" \
-  --entrypoint "/app path/bashx" \
-  ${docker_params} debian:8 '_run-tests' \
-    | exit 1
+  docker run --rm \
+    -v "$(pwd):/root/.bashx/master" \
+    -v "$(pwd):/app path" \
+    --entrypoint "/app path/bashx" \
+    ${docker_params} ${docker_image} '_run-tests' \
+      | exit 1
+}
+
+_dkrTest ubuntu
+_dkrTest debian:8
