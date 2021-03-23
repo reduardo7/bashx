@@ -45,6 +45,10 @@ fi
 
 ### Constants
 
+export BX_SCRIPT_EXTENSION='xsh'
+## BashX scripts extension.
+readonly BX_SCRIPT_EXTENSION="${BX_SCRIPT_EXTENSION}"
+
 export BX_SCRIPT_CALLED="${BX_SCRIPT_CALLED}"
 ## Called script.
 readonly BX_SCRIPT_CALLED="${BX_SCRIPT_CALLED}"
@@ -122,7 +126,7 @@ readonly BX_KEY_ESC="${BX_KEY_ESC}"
 
 # https://stackoverflow.com/a/911213/717267
 ## TTY available?
-[ -t 1 ] && export BX_TTY=true || BX_TTY=false
+[ -t 1 ] && export BX_TTY=true || export BX_TTY=false
 readonly BX_TTY="${BX_TTY}"
 
 # \n - New Line
@@ -209,7 +213,10 @@ fi
 
 ## APP Temporary path.
 export BASHX_APP_TMP_PATH="${BASHX_APP_TMP_PATH:-$(mktemp -d)}"
+
 export BX_PROC_INDEX_MAIN=${BASH_SUBSHELL}
+## APP main process index.
+readonly BX_PROC_INDEX_MAIN=${BX_PROC_INDEX_MAIN}
 
 echo ${BX_PROC_INDEX_MAIN} > "${BASHX_APP_TMP_PATH}/__bx_shell_main"
 
@@ -239,14 +246,15 @@ exec 3>&2
 
 # Debug (set +x) prompt
 # ${BASHX_APP_COLORS_ENABLED} && PS4='>\e[2m % ' || PS4='>% '
-PS4='> DEBUG: '
+PS4='> |'
 
 # #############################################################################
 
 ### Preload required
 
-export __BX_each_line_=true
+__BX_each_line_=true
 
+# Internal checks for sub-shells
 __BX_each_line() {
   if \
     ${__BX_each_line_} \
@@ -259,11 +267,11 @@ __BX_each_line() {
   fi
 }
 
-@str.trim() { . "${BX_UTILS_PATH}/str/trim.xsh"; }
-@str.toLower() { . "${BX_UTILS_PATH}/str/toLower.xsh"; }
-@style() { . "${BX_UTILS_PATH}/style.xsh"; }
-@file.name() { . "${BX_UTILS_PATH}/file/name.xsh"; }
-@function.load() { . "${BX_UTILS_PATH}/function/load.xsh"; }
+@str.trim() { . "${BX_UTILS_PATH}/str/trim.${BX_SCRIPT_EXTENSION}"; }
+@str.toLower() { . "${BX_UTILS_PATH}/str/toLower.${BX_SCRIPT_EXTENSION}"; }
+@style() { . "${BX_UTILS_PATH}/style.${BX_SCRIPT_EXTENSION}"; }
+@file.name() { . "${BX_UTILS_PATH}/file/name.${BX_SCRIPT_EXTENSION}"; }
+@function.load() { . "${BX_UTILS_PATH}/function/load.${BX_SCRIPT_EXTENSION}"; }
 
 # #############################################################################
 
