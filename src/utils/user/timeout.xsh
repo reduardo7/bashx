@@ -40,7 +40,7 @@ if ${BX_TTY}; then
 
   @log.rewrite # Remove last line
 else
-  @log.warn 'Not at TTY! timeout cancelled...'
+  @log.warn "Not at TTY! timeout cancelled: [${message}] {${cmd}}"
   return 254
 fi
 
