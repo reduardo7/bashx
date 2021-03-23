@@ -1,4 +1,3 @@
 .*.swp
 *.log
-/.history
-/.vscode
+**/.history

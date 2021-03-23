@@ -1,34 +1,50 @@
 #!/usr/bin/env bash
 
+###############################################################################
 # BashX | https://github.com/reduardo7/bashx
-export BASHX_VERSION="master"
-(export LC_CTYPE=C;export LC_ALL=C;set -e;_x() { echo "# Error: ${1:-Installation fail}" >&2;exit 1;};[ -z "${BASHX_VERSION}" ] && _x 'BASHX_VERSION is required';export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/${BASHX_VERSION}}";if [ ! -d "${BASHX_DIR}" ]; then export setup_url='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh';if type wget >/dev/null 2>&1 ; then sh -c "$(wget -q ${setup_url} -O -)" || _x;elif type curl >/dev/null 2>&1 ; then sh -c "$(curl -fsSL ${setup_url})" || _x;else _x 'wget or curl are required. Install wget or curl to continue';fi;fi) || exit $?
+set +ex;export BASHX_VERSION="master"
+(export LC_CTYPE=C;export LC_ALL=C;export LANG=C;set -e;x() { s="$*";echo "# Error: ${s:-Installation fail}" >&2;exit 1;};d=/dev/null;[ ! -z "$BASHX_VERSION" ] || x BASHX_VERSION is required;export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}";if [ ! -d "$BASHX_DIR" ]; then u='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh';if type wget >$d 2>&1 ; then sh -c "$(wget -q $u -O -)" || x;elif type curl >$d 2>&1 ; then sh -c "$(curl -fsSL $u)" || x;else x wget or curl are required. Install wget or curl to continue;fi;fi) || exit $?
 . "${HOME:-/tmp}/.bashx/${BASHX_VERSION}/init"
+###############################################################################
 
 ### Begin Example ###
 
+# _onStdOut() {
+#   local line="$1"
+#   echo "++ ${line}"
+# }
+
+# @on.stdout '_onStdOut "${OUT_LINE}"'
+
 @Actions.action1() { # \\n Action without arguments
-  @print "
+  set -x
+  pwd
+  @log "
   Action 1
   Multi-Line
 "
+  ls -la
+  bash
 }
 
 @Actions.action2() { # param1 [param2] \\n Action with arguments\\n\\tdescription second line\\nother line
-  eval "$(@options 'new:-n|-N' 'path:-p|--path:true')"
+  eval "$(@args 'new:-n|-N' 'path:-p|--path:true')"
+  set -x
 
-  @print "'n' or 'N' parameter: ${new}"
-  @print "'p' or 'path' parameter: ${path[@]} (${#path[@]})"
+  @log "'n' or 'N' parameter: ${args_new}"
+  @log "'p' or 'path' parameter: ${args_path[@]} (${#args_path[@]})"
 
   local param1="$1"
   local param2="$2"
-  [ "$param1" != 'asd' ] && @throw-invalid-param param1
+  [[ "$param1" != 'asd' ]] && @throw.invalidParam param1
 
-  @print Action 2
-  @print Param1: $1
-  @print Param2: $2
+  @log Action 2
+  @log Param1: $1
+  @log Param2: $2
 }
 
 ### End Example ###
 
-@run-app "$@"
+@app.run
+
+# BashX example file

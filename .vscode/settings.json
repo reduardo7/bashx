@@ -1,0 +1,23 @@
+{
+  "search.exclude": {
+    "**/.history": true,
+    "bashx.src/tests": true
+  },
+  "files.watcherExclude": {
+    "**/.history": true,
+    "bashx.src/tests": true
+  },
+  "files.exclude": {
+    "**/.history": true,
+    "bashx.src/tests": true
+  },
+  "cSpell.words": [
+    "BASHX",
+    "CTYPE",
+    "Cuomo",
+    "elif"
+  ],
+  "files.associations": {
+    "*.xsh": "shellscript"
+  }
+}
