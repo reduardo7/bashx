@@ -4,4 +4,5 @@
 ## Params:
 ##   param1: Action3 > param1
 
-@print hi
+@log hi $1
+@log "Params: ${@}"
