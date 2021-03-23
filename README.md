@@ -55,6 +55,8 @@ set +ex;export BASHX_VERSION="v3.0.0"
 ###############################################################################
 ```
 
+> See [/bashx](/bashx)
+
 **2)** Write your code.
 
 **3)** Optionally, add next at end of the script file, to work as _cli_:
@@ -147,9 +149,11 @@ Valid events options constant: `BX_EVENTS_OPTS`.
 
 ## Doc
 
+Go to [`src/README.md`](src/README.md) documentation for more details.
+
 ### Development Documentation
 
-Show _Development Documentation_ using:
+Show [_Development Documentation_](src/actions/_dev-doc.xsh) using:
 
 ```bash
 ./bashx _dev-doc
@@ -157,13 +161,15 @@ Show _Development Documentation_ using:
 
 ### Framework Utilities
 
+Show [_Framework Utilities Documentation_](src/actions/_bashx/README.md) using:
+
 ```bash
 ./bashx _bashx
 ```
 
 ## Global Variables
 
-### `BASHX_COLORS_DISABLED`
+### [`BASHX_COLORS_DISABLED`](src/utils/style.xsh)
 
 Set vale to `1` to disable **BashX** output colors, disabling the `@style` function.
 
@@ -207,7 +213,7 @@ set +x
 ...
 ```
 
-### APP Exit && Error
+### APP Exit & Error
 
 - Use `@app.exit` to exit.
 - Use `@app.error` to print an error and exit.

@@ -6,3 +6,5 @@
 
 @log hi $1
 @log "Params: ${@}"
+
+# BashX example file

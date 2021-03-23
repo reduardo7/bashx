@@ -1,0 +1,1 @@
+# BashX example directory

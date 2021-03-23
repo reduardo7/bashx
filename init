@@ -81,11 +81,11 @@ export BX_OS_IS_LINUX=false
 export BX_OS_IS_MAC=false
 export BX_OS_IS_MINGW=false
 
-if [ "$(uname)" == "Darwin" ]; then
+if [[ "$(uname)" == "Darwin" ]]; then
   defaults write org.R-project.R force.LANG en_US.UTF-8
   export TERM="xterm-color"
   export BX_OS_IS_MAC=true
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
   export BX_OS_IS_LINUX=true
 elif [[ "$(expr substr $(uname -s) 1 10)" == MINGW* ]]; then
   export BX_OS_IS_MINGW=true
@@ -190,7 +190,7 @@ export BASHX_RESOURCES_PATH="${BASHX_SRC_PATH}/resources"
 
 ### Load config
 
-if [ -f "${BASHX_APP_CONFIG_FILE}" ]; then
+if [[ -f "${BASHX_APP_CONFIG_FILE}" ]]; then
   . "${BASHX_APP_CONFIG_FILE}"
 fi
 

@@ -46,3 +46,5 @@ set +ex;export BASHX_VERSION="master"
 ### End Example ###
 
 @app.run
+
+# BashX example file

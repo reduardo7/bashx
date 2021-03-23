@@ -8,7 +8,8 @@
     "bashx.src/tests": true
   },
   "files.exclude": {
-    "**/.history": true
+    "**/.history": true,
+    "bashx.src/tests": true
   },
   "cSpell.words": [
     "BASHX",
