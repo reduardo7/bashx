@@ -11,7 +11,7 @@ local text="$1"
 local file="$2"
 
 if [ ! -z "${file}" ] && [ -f "${file}" ] && [ ! -z "${text}" ]; then
-  if grep -qis "$(@str-escape "${text}")" "$(@str-escape "${file}")" ; then
+  if grep -qis "$(@str.escape "${text}")" "$(@str.escape "${file}")" ; then
     # Contains
     return 0
   fi

@@ -1,20 +1,13 @@
 file="$(@mktemp)"
-foo='foo123*@#$^<>/?`'
-bar='-{/!ba~\%[")+='
 
-echo "${foo}" >${file}
-echo "${bar}" >>${file}
+echo foo >${file}
+echo bar >>${file}
+echo goo >>${file}
 
-result="$(@file-contains "${foo}" "${file}")"
+result="$(@file.contains 'bar' "${file}")"
 @@assert.noOut "${result}"
 
-result="$(@file-contains "${bar}" "${file}")"
-@@assert.noOut "${result}"
-
-@file-contains "${foo}" "${file}"
-@@assert.notErrorCode $?
-
-@file-contains "${bar}" "${file}"
+@file.contains 'bar' "${file}"
 @@assert.notErrorCode $?
 
 @file.contains 'xx' "${file}"
