@@ -45,41 +45,35 @@ fi
 
 ### Constants
 
-export BX_SCRIPT_EXTENSION='xsh'
-## BashX scripts extension.
-readonly BX_SCRIPT_EXTENSION="${BX_SCRIPT_EXTENSION}"
+## BashX called script arguments.
+export BX_SCRIPT_ARGS=($@)
 
-export BX_SCRIPT_CALLED="${BX_SCRIPT_CALLED}"
+## BashX scripts extension.
+readonly BX_SCRIPT_EXTENSION='xsh'
+
 ## Called script.
 readonly BX_SCRIPT_CALLED="${BX_SCRIPT_CALLED}"
 
-export BX_SCRIPT_FILE_NAME="${BX_SCRIPT_FILE_NAME}"
 ## Current script file name.
 readonly BX_SCRIPT_FILE_NAME="${BX_SCRIPT_FILE_NAME}"
 
-export BX_SCRIPT_FULL_PATH="${BX_SCRIPT_DIR}/${BX_SCRIPT_FILE_NAME}"
 ## Current script full path.
-readonly BX_SCRIPT_FULL_PATH="${BX_SCRIPT_FULL_PATH}"
+readonly BX_SCRIPT_FULL_PATH="${BX_SCRIPT_DIR}/${BX_SCRIPT_FILE_NAME}"
 
-export BX_SCRIPT_DIR="${BX_SCRIPT_DIR}"
 ## Current script directory.
 readonly BX_SCRIPT_DIR="${BX_SCRIPT_DIR}"
 
-export BX_DIR="${BX_DIR:-${HOME:-/tmp}/.bashx/${BASHX_VERSION}}"
 ## Core directory (can be overridden before load with BX_DIR).
-readonly BX_DIR="${BX_DIR}"
+readonly BX_DIR="${BX_DIR:-${HOME:-/tmp}/.bashx/${BASHX_VERSION}}"
 
-export BX_SRC_PATH="${BX_DIR}/src"
 ## Core SRC path.
-readonly BX_SRC_PATH="${BX_SRC_PATH}"
+readonly BX_SRC_PATH="${BX_DIR}/src"
 
-export BX_ACTIONS_PATH="${BX_SRC_PATH}/actions"
 ## Core actions path.
-readonly BX_ACTIONS_PATH="${BX_ACTIONS_PATH}"
+readonly BX_ACTIONS_PATH="${BX_SRC_PATH}/actions"
 
-export BX_UTILS_PATH="${BX_SRC_PATH}/utils"
 ## Core utils path.
-readonly BX_UTILS_PATH="${BX_UTILS_PATH}"
+readonly BX_UTILS_PATH="${BX_SRC_PATH}/utils"
 
 ### OS Constants
 
@@ -111,42 +105,35 @@ while [ -h "${BX_BASE_SOURCE}" ]; do
   [[ "${BX_BASE_SOURCE}" != /* ]] && BX_BASE_SOURCE="${BX_BASE_DIR}/${BX_BASE_SOURCE}"
 done
 [ -z "${BX_BASE_DIR}"] && BX_BASE_DIR="$(cd -P "$(dirname "${BX_BASE_SOURCE}")" && pwd)"
-export BX_BASE_SOURCE="${BX_BASE_SOURCE}"
+
 ## BashX base source path.
 readonly BX_BASE_SOURCE="${BX_BASE_SOURCE}"
 
-export BX_BASE_DIR="${BX_BASE_DIR}"
 # BashX base directory path.
 readonly BX_BASE_DIR="${BX_BASE_DIR}"
 
 # \e | \033 | \x1B
-${BX_OS_IS_MAC} && export BX_KEY_ESC=$'\x1B' || export BX_KEY_ESC=$'\e'
 ## Key: ESC
-readonly BX_KEY_ESC="${BX_KEY_ESC}"
+${BX_OS_IS_MAC} && readonly BX_KEY_ESC=$'\x1B' || readonly BX_KEY_ESC=$'\e'
 
 # https://stackoverflow.com/a/911213/717267
 ## TTY available?
-[ -t 1 ] && export BX_TTY=true || export BX_TTY=false
-readonly BX_TTY="${BX_TTY}"
+[ -t 1 ] && readonly BX_TTY=true || readonly BX_TTY=false
 
 # \n - New Line
-export BX_CHAR_NL='
-'
 ## New Line constant (\n)
-readonly BX_CHAR_NL="${BX_CHAR_NL}"
+readonly BX_CHAR_NL='
+'
 
 # \t - Tab
-export BX_CHAR_TAB='  '
 ## New Line constant (\t)
-readonly BX_CHAR_TAB="${BX_CHAR_TAB}"
+readonly BX_CHAR_TAB='  '
 
-export BX_ACTION_PREFIX='@Actions'
 ## Action prefix. Used at @app.run.
-readonly BX_ACTION_PREFIX="${BX_ACTION_PREFIX}"
+readonly BX_ACTION_PREFIX='@Actions'
 
 ## Events options.
-export BX_EVENTS_OPTS=(invalid-action ready start error finish)
-readonly BX_EVENTS_OPTS=${BX_EVENTS_OPTS}
+readonly BX_EVENTS_OPTS=(invalid-action ready start error finish)
 
 # #############################################################################
 
@@ -212,11 +199,10 @@ fi
 ### VARS
 
 ## APP Temporary path.
-export BASHX_APP_TMP_PATH="${BASHX_APP_TMP_PATH:-$(mktemp -d)}"
+readonly BASHX_APP_TMP_PATH="${BASHX_APP_TMP_PATH:-$(mktemp -d)}"
 
-export BX_PROC_INDEX_MAIN=${BASH_SUBSHELL}
 ## APP main process index.
-readonly BX_PROC_INDEX_MAIN=${BX_PROC_INDEX_MAIN}
+readonly BX_PROC_INDEX_MAIN=${BASH_SUBSHELL}
 
 echo ${BX_PROC_INDEX_MAIN} > "${BASHX_APP_TMP_PATH}/__bx_shell_main"
 

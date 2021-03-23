@@ -67,7 +67,7 @@ ${BX_ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
 ### End Example ###
 
 # Run APP
-@app.run "\$@"
+@app.run
 EOF
 
   chmod a+x "${project_path}"

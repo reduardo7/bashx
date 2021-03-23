@@ -1,12 +1,8 @@
-## [action [@]]
+##
 ## Run APP.
 ##
-## Params:
-##   action: {String} Action to do.
-##   @:      APP parameters.
-##
 ## Use: At end of /app file, put next:
-##   @app.run "$@"
+##   @app.run
 
 # __BX_style_reset="$(${BASHX_APP_COLORS_ENABLED} && @style reset || true)"
 
@@ -43,7 +39,8 @@
 
   echo >&3 # Space
 
-  BX_ACTION="$1"
+  # Get first argument as action
+  export BX_ACTION="${BX_SCRIPT_ARGS[0]}"
 
   @log.title "$(@app.info)"
 
@@ -75,9 +72,11 @@
 
     export BX_ACTION="${BX_ACTION}"
     ${BX_ACTION_PREFIX}.${BX_ACTION}
-  elif [[ $# -gt 0 ]]; then
-    shift # Remove "Action" from parameters
-    export BX_ACTION="${BX_ACTION}"
+  elif [[ ${#BX_SCRIPT_ARGS[@]} -gt 0 ]]; then
+    # Remove "Action" from parameters
+    readonly BX_SCRIPT_ARGS=(${BX_SCRIPT_ARGS[@]:1})
+    readonly BX_ACTION="${BX_ACTION}"
+    echo "${BX_ACTION} >>> ${BX_SCRIPT_ARGS}"
 
     # On Ready
     if [ -f "${BASHX_EVENTS_PATH}/ready.${BX_SCRIPT_EXTENSION}" ]; then
@@ -92,7 +91,7 @@
       fi
 
       # Exec
-      ${BX_ACTION_PREFIX}.${BX_ACTION} "$@"
+      ${BX_ACTION_PREFIX}.${BX_ACTION} "${BX_SCRIPT_ARGS[@]}"
       r=$?
     else
       # Invalid Action
