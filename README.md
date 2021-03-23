@@ -55,7 +55,7 @@ set +ex;export BASHX_VERSION="v3.0.0"
 ###############################################################################
 ```
 
-> See [/bashx](/bashx)
+> See [/bashx](/bashx#L3)
 
 **2)** Write your code.
 
@@ -169,7 +169,7 @@ Show [_Framework Utilities Documentation_](src/actions/_bashx/README.md) using:
 
 ## Global Variables
 
-### [`BASHX_COLORS_DISABLED`](src/utils/style.xsh)
+### [`BASHX_COLORS_DISABLED`](src/utils/style.xsh#L92)
 
 Set vale to `1` to disable **BashX** output colors, disabling the `@style` function.
 
