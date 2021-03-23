@@ -76,7 +76,6 @@
     # Remove "Action" from parameters
     readonly BX_SCRIPT_ARGS=(${BX_SCRIPT_ARGS[@]:1})
     readonly BX_ACTION="${BX_ACTION}"
-    echo "${BX_ACTION} >>> ${BX_SCRIPT_ARGS}"
 
     # On Ready
     if [ -f "${BASHX_EVENTS_PATH}/ready.${BX_SCRIPT_EXTENSION}" ]; then
