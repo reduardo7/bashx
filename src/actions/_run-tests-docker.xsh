@@ -1,8 +1,6 @@
 ##
 ## Run tests with Docker.
 
-set -x
-
 local docker_images="${@:-ubuntu debian:8}"
 
 local docker_params=''
@@ -18,8 +16,8 @@ _dkrTest() {
   @log.title "Docker tests: ${docker_image}"
 
   docker run --rm \
-    -v "$(pwd):/root/.bashx/master" \
-    -v "$(pwd):/app path" \
+    -v "$(pwd):/root/.bashx/master:ro" \
+    -v "$(pwd):/app path:ro" \
     --entrypoint "/app path/bashx" \
     ${docker_params} ${docker_image} '_run-tests' \
       | exit 1
