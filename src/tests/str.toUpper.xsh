@@ -6,3 +6,5 @@
 @@assert.equal 'ABC 123 X' "$(@str.toUpper "aBC 123 x")"
 
 @@assert.empty "$(@str.toUpper "")"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

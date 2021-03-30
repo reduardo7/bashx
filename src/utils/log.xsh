@@ -16,3 +16,5 @@ str="$(@str.replace "${str}" '\t' '  ')"
 echo -e "${str}" | while IFS= read -r line ; do
   echo -e "${__print_var_prefix__}${line}${BX_KEY_ESC}[0m\r" >&3
 done
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

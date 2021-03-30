@@ -106,3 +106,5 @@ done
 [ ! -f "${working_file}" ] || rm -f "${working_file}" 2>/dev/null
 sleep 1
 return 2
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

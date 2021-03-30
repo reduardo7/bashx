@@ -33,3 +33,5 @@ for f in "${BASHX_ACTIONS_PATH}"/*.${BX_SCRIPT_EXTENSION} ; do
     fi
   fi
 done
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

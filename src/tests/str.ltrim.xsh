@@ -9,3 +9,5 @@
 @@assert.equal ' ab ab' "$(@str.ltrim 'ab ab ab' 'ab')"
 @@assert.equal 'ab' "$(@str.ltrim 'ab ab ab' 'ab ')"
 @@assert.equal 'baab' "$(@str.ltrim 'abbaab' 'ab')"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

@@ -19,3 +19,5 @@ if [ ! -z "${src}" ] && [ ! -z "${search}" ]; then
 fi
 
 return 1
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

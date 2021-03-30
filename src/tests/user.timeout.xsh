@@ -23,3 +23,5 @@ rm -f ${tmp_file} || @@assert.fail "Error deleting ${tmp_file}!"
 
 # All ok
 return 0
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

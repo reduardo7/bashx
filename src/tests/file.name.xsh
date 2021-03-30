@@ -8,3 +8,5 @@
 @@assert.equal "$(@file.name '/tmp/.foo.bar.xx' true)" '.foo.bar'
 
 @@assert.noErrOut '@file.name "/tmp/foo.bar.xx"'
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

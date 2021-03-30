@@ -8,3 +8,5 @@ output="$(@log "foo\tbar" 3>&1)"
 @@assert.contains "${output}" 'bar'
 @@assert.contains "${output}" "${BASHX_APP_PRINT_PREFIX}"
 # @@assert.endWith "${output}" "$(@style reset)"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

@@ -38,3 +38,5 @@ fi
 
 read -s -t 1 choice || true
 return ${result}
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

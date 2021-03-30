@@ -8,3 +8,5 @@ result="$(@log.alert "${str}" 2>&1)"
 
 @@assert.noStdOut "@log.alert 'no output this'"
 @@assert.errOut "@log.alert 'output this'"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

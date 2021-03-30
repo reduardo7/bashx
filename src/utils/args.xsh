@@ -94,3 +94,5 @@ EOF
 {
   [[ "\${_d_options_debug}" == *x* ]] && set -x || true
 } >/dev/null 2>&1
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

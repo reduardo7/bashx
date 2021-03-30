@@ -23,3 +23,5 @@ else
   )
   return $?
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

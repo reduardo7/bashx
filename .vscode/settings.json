@@ -15,7 +15,11 @@
     "BASHX",
     "CTYPE",
     "Cuomo",
-    "elif"
+    "elif",
+    "expandtab",
+    "shiftwidth",
+    "smarttab",
+    "softtabstop"
   ],
   "files.associations": {
     "*.xsh": "shellscript"

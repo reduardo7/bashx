@@ -77,3 +77,5 @@ EOF
   @log "Project created at ${project_path}"
   @app.exit
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

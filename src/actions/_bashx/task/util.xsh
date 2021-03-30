@@ -9,3 +9,5 @@ ${BASHX_DOC_MARK}           Optional. Default: ...
 
 @throw.notImplemented '@TODO'
 EOF
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

@@ -14,3 +14,5 @@ _doc() {
 }
 
 _doc 3>&1 2>&1 | less
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

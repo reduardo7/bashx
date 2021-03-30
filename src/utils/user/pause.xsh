@@ -19,3 +19,5 @@ else
   @log.warn 'Not at TTY! pause cancelled...'
   return 254
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

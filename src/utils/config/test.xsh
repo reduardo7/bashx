@@ -28,3 +28,5 @@ local fail_on_error=${2:-true}
     return 1
   fi
 }
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

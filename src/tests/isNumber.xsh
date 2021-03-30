@@ -18,3 +18,5 @@
 @@assert.exec '@isNumber' false '" 0 "'
 @@assert.exec '@isNumber' false '"1 0"'
 @@assert.exec '@isNumber' false '""'
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

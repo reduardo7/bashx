@@ -106,3 +106,5 @@
   # Return result code
   @app.exit $r
 } #> >(__BX_on_stdout) 2> >(__BX_on_stderr) 3> >(__BX_on_stdinfo)
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

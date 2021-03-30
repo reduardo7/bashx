@@ -75,3 +75,5 @@
 @@assert.exec '@str.in' false '"abc" "x"'
 @@assert.exec '@str.in' false '"abc" "x" true'
 @@assert.exec '@str.in' false '"abc" "x" false'
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

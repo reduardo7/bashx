@@ -36,3 +36,5 @@ else
   echo ${index}
   return 0
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

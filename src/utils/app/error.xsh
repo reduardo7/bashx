@@ -21,3 +21,5 @@ fi
 $print_backtrace && @log.warn "Backtrace:\n$(@app.backtrace)"
 
 @app.exit ${code}
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

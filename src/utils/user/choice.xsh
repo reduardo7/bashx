@@ -48,3 +48,5 @@ fi
 
 # Result
 echo "${result}"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

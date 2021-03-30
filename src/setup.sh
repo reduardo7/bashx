@@ -62,3 +62,5 @@ if [ ! -d "${BASHX_DIR}" ]; then
   # Finish
   exit $e
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

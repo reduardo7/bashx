@@ -19,3 +19,5 @@ if [ ! -z "${cmd}" ]; then
   [ -z "${BX_ON_EXIT}" ] || BX_ON_EXIT="${BX_ON_EXIT};"
   BX_ON_EXIT="${BX_ON_EXIT}( ${cmd} )"
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

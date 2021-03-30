@@ -14,3 +14,5 @@ if command -v tput >/dev/null 2>&1; then
 else
   echo ${default_width}
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

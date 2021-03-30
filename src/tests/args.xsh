@@ -43,3 +43,5 @@ testFuncResult() {
   exit 1
 }
 @@assert.equal "$(@app.error)" "$(testFunc -invalid)"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

@@ -38,3 +38,5 @@ if ${create}; then
 fi
 
 eval "mktemp ${cmd} ${p} 2>/dev/null || mktemp ${cmd} -t ${p} 2>/dev/null"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

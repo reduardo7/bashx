@@ -31,3 +31,5 @@ fi
 
 @wait.until "${cmd}" 1 ${timeout} "${msg}"
 return $?
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

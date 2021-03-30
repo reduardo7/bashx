@@ -24,3 +24,5 @@ if [[ ${lines} -gt 0 ]]; then
   echo -e "${bl}$(@style)${BASHX_APP_PRINT_PREFIX} ${text}$(@style system)\r" >&3 # Clear line
   @str.repeat ${width} ' ' >&3
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

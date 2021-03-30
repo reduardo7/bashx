@@ -270,3 +270,5 @@ __BX_each_line() {
 # Load custom
 [ ! -d "${BASHX_UTILS_PATH}" ] || @function.load "${BASHX_UTILS_PATH}" '@'
 [ ! -d "${BASHX_ACTIONS_PATH}" ] || @function.load "${BASHX_ACTIONS_PATH}" "${BX_ACTION_PREFIX}."
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

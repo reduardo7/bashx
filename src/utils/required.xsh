@@ -16,3 +16,5 @@ for cmd in ${cmds[@]}; do
       @app.error "I require [${cmd}] but it's not installed. Aborting."
     fi
 done
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

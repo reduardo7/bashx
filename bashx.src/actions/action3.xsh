@@ -8,3 +8,5 @@
 @log "Params: ${@}"
 
 # BashX example file
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

@@ -255,3 +255,5 @@ if ${BASHX_APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
     echo -en "${BX_KEY_ESC}[${c}m"
   fi
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

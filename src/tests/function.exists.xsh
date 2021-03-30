@@ -8,3 +8,5 @@ testFunc() {
 @@assert.exec '@function.exists' false 'xx'
 @@assert.exec '@function.exists' false 'echo'
 @@assert.exec '@function.exists' true 'testFunc'
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

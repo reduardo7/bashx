@@ -28,3 +28,5 @@ done
 
 sleep $timeout
 echo -e "\r\n\n" >&3
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

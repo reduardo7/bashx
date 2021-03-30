@@ -32,3 +32,5 @@ if [ ! -z "${note}" ]; then
 fi
 
 @throw "Invalid call of [${script_name}].\n  > ${msg}"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

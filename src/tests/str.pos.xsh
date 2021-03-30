@@ -20,3 +20,5 @@
 @@assert.exec '@str.pos' false '"abc" "B" true'
 @@assert.exec '@str.pos' true '"abc" "b" false'
 @@assert.exec '@str.pos' true '"abc" "B" false'
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

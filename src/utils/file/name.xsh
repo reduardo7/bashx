@@ -21,3 +21,5 @@ if [ ! -z "${file}" ]; then
   # Result
   echo "${_fname}"
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

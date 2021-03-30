@@ -12,3 +12,5 @@
 @@assert.empty "$(@str.sub "abcdefg" 3 10)"
 @@assert.empty "$(@str.sub "abcdefg" 0 1)"
 @@assert.empty "$(@str.sub "abcdefg" 0 0)"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

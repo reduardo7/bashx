@@ -39,3 +39,5 @@ egrep "^${BASHX_DOC_MARK}" "${src}" | egrep -v "^${BASHX_DOC_MARK}#" | while rea
   done
 
 @log
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

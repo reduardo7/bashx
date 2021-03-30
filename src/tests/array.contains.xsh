@@ -20,3 +20,5 @@ array=("abc" "aaa bbb" "123" "aaa" "aaa 123 bbb" "a 5 b" "" true false 123 0)
 @@assert.exec '@array.contains' true '"aaa bbb" "${array[@]}"'
 @@assert.exec '@array.contains' true '"0" "${array[@]}"'
 @@assert.exec '@array.contains' false '"123 bbb" "${array[@]}"'
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

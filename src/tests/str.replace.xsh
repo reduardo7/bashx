@@ -24,3 +24,5 @@
 @@assert.empty "$(@str.replace "abc" "abc" "")"
 @@assert.empty "$(@str.replace "" "a" "b")"
 @@assert.empty "$(@str.replace "abc" ".*" "")"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

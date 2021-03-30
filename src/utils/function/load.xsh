@@ -63,3 +63,5 @@ done
 {
   [[ "${_d_load_function_debug}" == *x* ]] && set -x || true
 } 2>/dev/null
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

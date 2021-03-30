@@ -12,3 +12,5 @@ result="$(@file.contains 'bar' "${file}")"
 
 @file.contains 'xx' "${file}"
 @@assert.errorCode $?
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

@@ -10,3 +10,5 @@ if [ ! -z "${name}" ] && [ ! -z "${action}" ]; then
     *) @log.warn 'Invalid action!' ;;
   esac
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

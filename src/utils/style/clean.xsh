@@ -13,3 +13,5 @@ local pr
 $BX_OS_IS_MAC && pr='E' || pr='r'
 
 sed -${pr} "s/${BX_KEY_ESC}\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" <<<"$@"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

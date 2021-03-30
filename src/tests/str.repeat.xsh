@@ -9,3 +9,5 @@
 @@assert.empty "$(@str.repeat 0 "x")"
 @@assert.empty "$(@str.repeat 10)"
 @@assert.empty "$(@str.repeat 10 "")"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

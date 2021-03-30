@@ -6,3 +6,5 @@
 @@assert.equal 'abc 123 x' "$(@str.toLower "aBC 123 x")"
 
 @@assert.empty "$(@str.toLower "")"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

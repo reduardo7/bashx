@@ -33,3 +33,5 @@ egrep "^\\s*${BX_ACTION_PREFIX}\.[^()]+\\(\\)\\s*\\{" "${src}" \
     # Space
     @log
   done
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

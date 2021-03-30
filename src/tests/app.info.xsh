@@ -6,3 +6,5 @@ result="$(@app.info)"
 
 @@assert.stdOut "@app.info 'output this'"
 @@assert.noErrOut "@app.info 'no output this'"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

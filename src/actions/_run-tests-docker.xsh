@@ -25,3 +25,5 @@ _dkrTest() {
 for img in ${docker_images}; do
   _dkrTest ${img}
 done
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

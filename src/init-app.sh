@@ -39,3 +39,5 @@ if [ ! -d "$BASHX_DIR" ]; then
     x wget or curl are required. Install wget or curl to continue
   fi
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

@@ -22,3 +22,5 @@ else
   [ ! -z "${cmd}" ] && eval "${cmd}"
   @app.error '' true ${code}
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

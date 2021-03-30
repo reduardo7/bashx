@@ -17,3 +17,5 @@ if [ ! -z "${note}" ]; then
 fi
 
 @throw "@@@ [${script_name}] NOT IMPLEMENTED! @@@\n[${script_name}] is not implemented!${msg}"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

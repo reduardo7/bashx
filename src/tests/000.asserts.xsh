@@ -128,3 +128,5 @@
 @@assert.exec "@@assert.noOut" false '"echo \"${BX_KEY_ESC}\""'
 @@assert.exec "@@assert.noOut" false '"echo \"${BX_KEY_ESC}\" >&2"'
 @@assert.exec "@@assert.noOut" false '"echo \"${BX_KEY_ESC}\" >&3"'
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

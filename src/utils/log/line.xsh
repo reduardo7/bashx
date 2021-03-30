@@ -17,3 +17,5 @@ local prefix="${3}"
 local suffix="${4}"
 
 @log "${prefix}$(@str.repeat ${len} "${str}")${suffix}"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

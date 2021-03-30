@@ -68,3 +68,5 @@ fi
 @log
 @usage "${this_path}"
 @app.exit 1
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

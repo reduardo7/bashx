@@ -6,3 +6,5 @@ touch "${BASHX_APP_TMP_PATH}/test" || @app.error
 @@assert.equal $? 0
 
 @log "BASHX_APP_TMP_PATH: ${BASHX_APP_TMP_PATH}"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

@@ -20,3 +20,5 @@ if [ ! -z "${count}" ] && [[ ${count} -gt 0 ]] && [ ! -z "${str}" ]; then
 
   echo "${result}"
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

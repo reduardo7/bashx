@@ -72,3 +72,5 @@ if [[ ${error_count} -eq 0 ]]; then
 else
   @app.error "${error_count} tests fail!"
 fi
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

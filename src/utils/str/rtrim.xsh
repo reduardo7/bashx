@@ -21,3 +21,5 @@ if [ ! -z "${text}" ] && [ ! -z "${to_remove}" ]; then
 fi
 
 echo -n "${text}"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab
