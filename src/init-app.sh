@@ -30,7 +30,7 @@ d=/dev/null
 export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}"
 
 if [ ! -d "$BASHX_DIR" ]; then
-  u='https://raw.githubusercontent.com/reduardo7/bashx/master/src/setup.sh'
+  u="https://raw.githubusercontent.com/reduardo7/bashx/$BASHX_VERSION/src/setup.sh"
   if type wget >$d 2>&1 ; then
     sh -c "$(wget -q $u -O -)" || x
   elif type curl >$d 2>&1 ; then
