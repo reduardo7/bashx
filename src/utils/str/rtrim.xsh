@@ -11,7 +11,10 @@
 local text="$1"
 local to_remove="${2:- }"
 
-if [ ! -z "${text}" ] && [ ! -z "${to_remove}" ]; then
+if \
+  [[ ! -z "${text}" ]] && \
+  [[ ! -z "${to_remove}" ]]
+then
   local old=''
 
   while [[ ${#text} -ne ${#old} ]]; do

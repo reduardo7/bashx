@@ -15,17 +15,17 @@ local script_name="${FUNCNAME[2]}"
 local msg
 local line
 
-if [ "${script_name}" = 'source' ]; then
+if [[ "${script_name}" == 'source' ]]; then
   script_name="${FUNCNAME[3]}"
 fi
 
-if [ -z "${variable_value}" ]; then
+if [[ -z "${variable_value}" ]]; then
   msg="[${variable_name}] can not be emtpy"
 else
   msg="Invalid value for [${variable_name}]: '${variable_value}'"
 fi
 
-if [ ! -z "${note}" ]; then
+if [[ ! -z "${note}" ]]; then
   echo -e "${note}" | while read line ; do
     msg="${msg}\n  > ${line}"
   done

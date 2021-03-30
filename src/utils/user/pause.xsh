@@ -8,7 +8,7 @@
 local m="$@"
 
 if ${BX_TTY}; then
-  if [ -z "$m" ]; then
+  if [[ -z "$m" ]]; then
     read -s -n 1 >&3
   else
     @log

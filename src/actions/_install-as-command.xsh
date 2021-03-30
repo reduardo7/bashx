@@ -38,7 +38,7 @@ _${scrpt}_methods() {
 }
 _${scrpt}_lst() {
   if [ -d \"${BASHX_ACTIONS_PATH}\" ]; then
-    for f in "${BASHX_ACTIONS_PATH}"/* ; do
+    for f in "${BASHX_ACTIONS_PATH}"/*.${BX_SCRIPT_EXTENSION} ; do
       if [ -f \"\${f}\" ]; then
         basename \"\${f}\" | sed 's/\..*\$//g'
       fi

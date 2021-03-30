@@ -1,13 +1,20 @@
 local orig="$1"
 local dest="$2"
 
-if [ -n "${orig}" ]; then
+if [[ -n "${orig}" ]]; then
   orig="${orig}"
-  if [ -f "${orig}" ] || [ -d "${orig}" ]; then
+
+  if \
+    [[ -f "${orig}" ]] || \
+    [[ -d "${orig}" ]]
+  then
     [ -n "${dest}" ] || dest="$(@file.name "${orig}")"
     dest="${BASHX_RESOURCES_PATH}/${dest}"
 
-    if [ -f "${dest}" ] || [ -d "${dest}" ]; then
+    if \
+      [[ -f "${dest}" ]] || \
+      [[ -d "${dest}" ]]
+    then
       @app.error "${dest} already exist!"
     else
       [ -d "${BASHX_RESOURCES_PATH}" ] || mkdir -p "${BASHX_RESOURCES_PATH}"

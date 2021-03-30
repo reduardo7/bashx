@@ -10,14 +10,20 @@
 local bashx_version="$1"
 local project_path="$2"
 local project_title="$3"
-local init_script
+local bootstrap_script
 
-if [ ! -z "${bashx_version}" ] && [ ! -z "${project_path}" ]; then
-  if [ -f "${project_path}" ] || [ -d "${project_path}" ]; then
+if \
+  [[ ! -z "${bashx_version}" ]] && \
+  [[ ! -z "${project_path}" ]]
+then
+  if \
+    [[ -f "${project_path}" ]] || \
+    [[ -d "${project_path}" ]]
+  then
     @app.error "File or directory ${project_path} already exists"
   fi
 
-  if [ -z "${project_title}" ]; then
+  if [[ -z "${project_title}" ]]; then
     project_title="$(@file.name "${project_path}" true)"
   fi
 
@@ -27,7 +33,7 @@ if [ ! -z "${bashx_version}" ] && [ ! -z "${project_path}" ]; then
 
   @log "Preparing source..."
 
-  init_script="$(@file.scriptMinify < "${BX_SRC_PATH}/init-app.${BX_SCRIPT_EXTENSION}")" || @app.error "Error preparing source"
+  bootstrap_script="$(@code.scriptMinify < "${BX_SRC_PATH}/bootstrap.src")" || @app.error "Error preparing source"
 
   ###############################################################################
 
@@ -40,9 +46,9 @@ if [ ! -z "${bashx_version}" ] && [ ! -z "${project_path}" ]; then
 
 ###############################################################################
 # BashX | https://github.com/reduardo7/bashx
-set +ex;export BASHX_VERSION="${bashx_version}"
-(${init_script}) || exit \$?
-. "\${HOME:-/tmp}/.bashx/\${BASHX_VERSION}/init"
+set +ex;export BASHX_VERSION='${bashx_version}'
+(${bootstrap_script}) || exit \$?
+. "\${HOME:-/tmp}/.bashx/\${BASHX_VERSION}/src/init.sh"
 ###############################################################################
 
 ### Begin Example ###
@@ -68,6 +74,8 @@ ${BX_ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
 
 # Run APP
 @app.run
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab
 EOF
 
   chmod a+x "${project_path}"

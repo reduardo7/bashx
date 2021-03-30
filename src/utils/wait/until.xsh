@@ -51,7 +51,7 @@ fi
   p='...'
 
   while [ -f "${working_file}" ] ; do
-    if [ -n "${message}" ]; then
+    if [[ -n "${message}" ]]; then
       if [[ ${timeout} -gt 1 ]]; then
         if [[ ${timeout} -lt ${timeout_count} ]]; then
           # Time out!
@@ -66,7 +66,7 @@ fi
 
       @log.rewrite "${message}${p}"
 
-      if [ "${p}" == '...' ]; then
+      if [[ "${p}" == '...' ]]; then
         p='.'
       else
         p="${p}."

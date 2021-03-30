@@ -13,7 +13,11 @@ local src="$1"
 local limit=$2
 local offset=$3
 
-if [ -z "${offset}" ] || [[ ${offset} -eq 0 ]] || ! @isNumber "${offset}"; then
+if \
+  [[ -z "${offset}" ]] || \
+  [[ ${offset} -eq 0 ]] || \
+  ! @isNumber "${offset}"
+then
   echo "${src:0:${limit}}"
 else
   echo "${src:${offset}:${limit}}"

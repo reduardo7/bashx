@@ -14,7 +14,10 @@ local src="$1"
 local search="$2"
 local case_sensitive=${3:-true}
 
-if [ -z "${src}" ] || [ -z "${search}" ]; then
+if \
+  [[ -z "${src}" ]] || \
+  [[ -z "${search}" ]]
+then
   # Empty variable
   return 1
 fi

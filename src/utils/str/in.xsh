@@ -13,7 +13,10 @@ local src="$1"
 local search="$2"
 local case_sensitive=${3:-true}
 
-if [ ! -z "${src}" ] && [ ! -z "${search}" ]; then
+if \
+  [[ ! -z "${src}" ]] && \
+  [[ ! -z "${search}" ]]
+then
   @str.pos "${src}" "${search}" ${case_sensitive} >/dev/null 2>&1
   return $?
 fi

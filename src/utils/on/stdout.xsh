@@ -18,7 +18,7 @@ exit 1
 
 local cmd="$@"
 
-if [ ! -z "${cmd}" ]; then
+if [[ ! -z "${cmd}" ]]; then
   [ -z "${BX_ON_STDOUT}" ] || BX_ON_STDOUT="${BX_ON_STDOUT};"
   BX_ON_STDOUT="${BX_ON_STDOUT}( ${cmd} )"
 fi

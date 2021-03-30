@@ -38,7 +38,7 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##     Params:
 ##       var: Variable to test.
 @@assert.true() { # var
-  if ! [ "$1" = true ]; then
+  if [[ "$1" != true ]]; then
     @@assert._assertFail "${FUNCNAME[0]} [$1] ($(caller))"
   fi
   return 0
@@ -49,7 +49,7 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##     Params:
 ##       var: Variable to test.
 @@assert.false() { # var
-  if ! [ "$1" = false ]; then
+  if [[ "$1" != false ]]; then
     @@assert._assertFail "${FUNCNAME[0]} [$1] ($(caller))"
   fi
   return 0
@@ -60,7 +60,7 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##     Params:
 ##       var: Variable to test.
 @@assert.empty() { # var
-  if [ ! -z "$1" ]; then
+  if [[ ! -z "$1" ]]; then
     @@assert._assertFail "${FUNCNAME[0]} [$1] ($(caller))"
   fi
   return 0
@@ -71,7 +71,7 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##     Params:
 ##       var: Variable to test.
 @@assert.notEmpty() { # var
-  if [ -z "$1" ]; then
+  if [[ -z "$1" ]]; then
     @@assert._assertFail "${FUNCNAME[0]} [$1] ($(caller))"
   fi
   return 0
@@ -82,7 +82,10 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##     Params:
 ##       var: Variable to test.
 @@assert.number() { # var
-  if [ -z "$1" ] || ! [[ "$1" =~ ^[0-9][0-9]*$ ]]; then
+  if \
+    [[ -z "$1" ]] || \
+    ! [[ "$1" =~ ^[0-9][0-9]*$ ]]
+  then
     @@assert._assertFail "${FUNCNAME[0]} [$1] ($(caller))"
   fi
   return 0
@@ -94,7 +97,10 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       code: Variable to test.
 @@assert.errorCode() { # code
   @@assert.number "$1"
-  if [[ "$1" -eq 0 ]] || [[ "$1" -gt 255 ]] ; then
+  if \
+    [[ "$1" -eq 0 ]] || \
+    [[ "$1" -gt 255 ]]
+  then
     @@assert._assertFail "${FUNCNAME[0]} [$1] ($(caller))"
   fi
   return 0
@@ -118,7 +124,7 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       str_a: Expected value.
 ##       str_b: Variable to test.
 @@assert.equal() { # str_a str_b
-  if ! [ "$1" = "$2" ]; then
+  if [[ "$1" != "$2" ]]; then
     @@assert._assertFail "${FUNCNAME[0]} [$1] [$2] ($(caller))"
   fi
   return 0
@@ -130,7 +136,7 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       str_a: Unexpected value.
 ##       str_b: Variable to test.
 @@assert.notEqual() { # str_a str_b
-  if [ "$1" = "$2" ]; then
+  if [[ "$1" == "$2" ]]; then
     @@assert._assertFail "${FUNCNAME[0]} [$1] [$2] ($(caller))"
   fi
   return 0
@@ -142,7 +148,11 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       str_base:   String where search.
 ##       str_search: String to search.
 @@assert.contains() { # str_base str_search
-  if [ -z "$1" ] || [ -z "$2" ] || ! [[ "$1" == *"$2"* ]]; then
+  if \
+    [[ -z "$1" ]] || \
+    [[ -z "$2" ]] || \
+    [[ "$1" != *"$2"* ]]
+  then
     @@assert._assertFail "${FUNCNAME[0]} [$1] [$2] ($(caller))"
   fi
   return 0
@@ -154,7 +164,11 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       str_base:   String where search.
 ##       str_search: String to search.
 @@assert.notContains() { # str_base str_search
-  if [ -z "$1" ] || [ -z "$2" ] || [[ "$1" == *"$2"* ]]; then
+  if \
+    [[ -z "$1" ]] || \
+    [[ -z "$2" ]] || \
+    [[ "$1" == *"$2"* ]]
+  then
     @@assert._assertFail "${FUNCNAME[0]} [$1] [$2] ($(caller))"
   fi
   return 0
@@ -166,7 +180,11 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       str_base:         String where search.
 ##       str_search_start: String to search.
 @@assert.startWith() { # str_base str_search_start
-  if [ -z "$1" ] || [ -z "$2" ] || ! [[ "$1" == "$2"* ]]; then
+  if \
+    [[ -z "$1" ]] || \
+    [[ -z "$2" ]] || \
+    [[ "$1" != "$2"* ]]
+  then
     @@assert._assertFail "${FUNCNAME[0]} [$1] [$2] ($(caller))"
   fi
   return 0
@@ -178,7 +196,11 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       str_base:       String where search.
 ##       str_search_end: String to search.
 @@assert.endWith() { # str_base str_search_end
-  if [ -z "$1" ] || [ -z "$2" ] || ! [[ "$1" == *"$2" ]]; then
+  if \
+    [[ -z "$1" ]] || \
+    [[ -z "$2" ]] || \
+    [[ "$1" != *"$2" ]]
+  then
     @@assert._assertFail "${FUNCNAME[0]} [$1] [$2] ($(caller))"
   fi
   return 0
@@ -190,7 +212,7 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       cmd: Command to execute.
 @@assert.stdOut() { # cmd
   local result="$( eval "$1" 2>/dev/null 3>/dev/null )"
-  if [ -z "${result}" ]; then
+  if [[ -z "${result}" ]]; then
     @@assert._assertFail "${FUNCNAME[0]} [$1] Output: [${result}] ($(caller))"
   fi
   return 0
@@ -202,7 +224,7 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       cmd: Command to execute.
 @@assert.noStdOut() { # cmd
   local result="$( eval "$1" 2>/dev/null 3>/dev/null )"
-  if [ ! -z "${result}" ]; then
+  if [[ ! -z "${result}" ]]; then
     @@assert._assertFail "${FUNCNAME[0]} [$1] Output: [${result}] ($(caller))"
   fi
   return 0
@@ -214,7 +236,7 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       cmd: Command to execute.
 @@assert.errOut() { # cmd
   local result="$( ( eval "$1" >/dev/null 3>/dev/null ) 2>&1 )"
-  if [ -z "${result}" ]; then
+  if [[ -z "${result}" ]]; then
     @@assert._assertFail "${FUNCNAME[0]} [$1] Output: [${result}] ($(caller))"
   fi
   return 0
@@ -226,7 +248,7 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       cmd: Command to execute.
 @@assert.noErrOut() { # cmd
   local result="$( ( eval "$1" >/dev/null 3>/dev/null ) 2>&1 )"
-  if [ ! -z "${result}" ]; then
+  if [[ ! -z "${result}" ]]; then
     @@assert._assertFail "${FUNCNAME[0]} [$1] Output: [${result}] ($(caller))"
   fi
   return 0
@@ -238,7 +260,7 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       cmd: Command to execute.
 @@assert.noOut() { # cmd
   local result="$( eval "$1" 2>&1 3>&1 )"
-  if [ ! -z "${result}" ]; then
+  if [[ ! -z "${result}" ]]; then
     @@assert._assertFail "${FUNCNAME[0]} [$1] Output: [${result}] ($(caller))"
   fi
   return 0
@@ -290,7 +312,11 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
 ##       reg_exp: RegExp to match.
 ##       str:     String to check.
 @@assert.regExp() { # reg_exp str
-  if [ -z "$1" ] || [ -z "$2" ] || ! [[ "$2" =~ $1 ]]; then
+  if \
+    [[ -z "$1" ]] || \
+    [[ -z "$2" ]] || \
+    ! [[ "$2" =~ $1 ]]
+  then
     @@assert._assertFail "${FUNCNAME[0]} [$1] ($(caller))"
   fi
   return 0

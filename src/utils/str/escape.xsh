@@ -8,7 +8,7 @@
 
 local str="$@"
 
-if [ ! -z "${str}" ]; then
+if [[ ! -z "${str}" ]]; then
   printf '%q' "${str}"
 fi
 

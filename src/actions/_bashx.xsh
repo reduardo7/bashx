@@ -55,7 +55,7 @@ local value1="$3"
 local value2="$4"
 local value3="$5"
 
-if [ ! -z "${task}" ]; then
+if [[ ! -z "${task}" ]]; then
   case "${task}" in
     init)
       ${this}.task.${task}.${action} "${value1}" "${value2}" "${value3}" ;;

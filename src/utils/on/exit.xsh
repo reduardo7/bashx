@@ -15,7 +15,7 @@
 
 local cmd="$@"
 
-if [ ! -z "${cmd}" ]; then
+if [[ ! -z "${cmd}" ]]; then
   [ -z "${BX_ON_EXIT}" ] || BX_ON_EXIT="${BX_ON_EXIT};"
   BX_ON_EXIT="${BX_ON_EXIT}( ${cmd} )"
 fi

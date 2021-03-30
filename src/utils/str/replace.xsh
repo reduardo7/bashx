@@ -3,9 +3,9 @@
 ##
 ## Params:
 ##   src:         {String} String where replace.
-##   search:      {String} Search string (REG EXP).
+##   search:      {String} Search RegExp string.
 ##   replace:     {String} Replace.
-##   ignore_case: {Boolean}True to ignore case.
+##   ignore_case: {Boolean} True to ignore case.
 ##                Optional. Default: true.
 ##
 ## Out: {String} Result string.
@@ -15,9 +15,9 @@ local search="$2"
 local replace="$3"
 local ignore_case=${4:-true}
 
-if [ -z "${src}" ]; then
+if [[ -z "${src}" ]]; then
   echo ''
-elif [ -z "${search}" ]; then
+elif [[ -z "${search}" ]]; then
   echo "${src}"
 else
   local options='g'

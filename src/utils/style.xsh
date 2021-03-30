@@ -89,7 +89,10 @@
 ##   @style background gray
 ##   @log "$(@style color:red bold underline:on)Title$(@style underline:off):$(@style normal dim) Description..."
 
-if ${BASHX_APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
+if \
+  ${BASHX_APP_COLORS_ENABLED} && \
+  [[ "${BASHX_COLORS_DISABLED}" != '1' ]]
+then
   local OIFS="$IFS"
 
   # No parameters
@@ -113,9 +116,12 @@ if ${BASHX_APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
     local v="${p[1]}"
 
     # Default
-    if [ -z "$v" ] && [ "$p" == 'default' ]; then
+    if \
+      [[ -z "$v" ]] && \
+      [[ "$p" == 'default' ]]
+    then
       # Reset style
-      if [ -z "$c" ]; then
+      if [[ -z "$c" ]]; then
         c='0'
       else
         c="$c;0"
@@ -125,9 +131,21 @@ if ${BASHX_APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
       v="${BASHX_APP_COLOR_DEFAULT}"
     fi
 
-    if [ ! -z "$v" ]; then
-      if [ "$s" == 'color' ] && ( [ "$v" == 'default' ] || [ "$v" == 'normal' ] || [ "$v" == 'auto' ] ); then
-        if [ -z "${BASHX_APP_COLOR_DEFAULT}" ] || [ "${BASHX_APP_COLOR_DEFAULT}" == 'default' ] || [ "${BASHX_APP_COLOR_DEFAULT}" == 'normal' ] || [ "${BASHX_APP_COLOR_DEFAULT}" == 'auto' ]; then
+    if [[ ! -z "$v" ]]; then
+      if \
+        [[ "$s" == 'color' ]] && \
+        ( \
+          [[ "$v" == 'default' ]] || \
+          [[ "$v" == 'normal' ]] || \
+          [[ "$v" == 'auto' ]] \
+        )
+      then
+        if \
+          [[ -z "${BASHX_APP_COLOR_DEFAULT}" ]] || \
+          [[ "${BASHX_APP_COLOR_DEFAULT}" == 'default' ]] || \
+          [[ "${BASHX_APP_COLOR_DEFAULT}" == 'normal' ]] || \
+          [[ "${BASHX_APP_COLOR_DEFAULT}" == 'auto' ]]
+        then
           # Invalid default or default not defined
           y='0'
           # Invalidate case
@@ -138,6 +156,7 @@ if ${BASHX_APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
           v="${BASHX_APP_COLOR_DEFAULT}"
         fi
       fi
+
       case "$s" in
         'color')
           case "$v" in
@@ -241,9 +260,9 @@ if ${BASHX_APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
       esac
     fi
 
-    if [ ! -z "$y" ]; then
+    if [[ ! -z "$y" ]]; then
       # Append style
-      if [ -z "$c" ]; then
+      if [[ -z "$c" ]]; then
         c="$y"
       else
         c="$c;$y"
@@ -251,7 +270,7 @@ if ${BASHX_APP_COLORS_ENABLED} && [ "${BASHX_COLORS_DISABLED}" != '1' ]; then
     fi
   done
 
-  if [ ! -z "${c}" ]; then
+  if [[ ! -z "${c}" ]]; then
     echo -en "${BX_KEY_ESC}[${c}m"
   fi
 fi

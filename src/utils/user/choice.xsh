@@ -37,9 +37,9 @@ echo >&3
 
 # Validate input
 user_input=$(@str.trim "${user_input}")
-if [ ! -z "${user_input}" ]; then
+if [[ ! -z "${user_input}" ]]; then
   for option in ${options[@]}; do
-    if [ "${option}" == "${user_input}" ]; then
+    if [[ "${option}" == "${user_input}" ]]; then
       # Valid input
       result="${option}"
     fi

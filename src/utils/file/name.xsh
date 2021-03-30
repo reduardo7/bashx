@@ -11,7 +11,7 @@
 local file="$1"
 local remove_extension=${2:-false}
 
-if [ ! -z "${file}" ]; then
+if [[ ! -z "${file}" ]]; then
   # Remove path
   local _fname="$(basename "${file}")"
 

@@ -18,17 +18,19 @@ local test_success_flag="$(@mktemp false)"
 ###############################################################################
 # Tests
 
-if [ -d "${BASHX_TESTS_PATH}" ]; then
-  for f in "${BASHX_TESTS_PATH}"/* ; do
-    if [ -f "${f}" ]; then
+if [[ -d "${BASHX_TESTS_PATH}" ]]; then
+  for f in "${BASHX_TESTS_PATH}"/*.${BX_SCRIPT_EXTENSION} ; do
+    if [[ -f "${f}" ]]; then
       local src_test_name="$(@file.name "${f}" true)"
-      if [ -z "${tests_names_to_execute}" ] \
+
+      if [[ -z "${tests_names_to_execute}" ]] \
         || @array.contains "${src_test_name}" "${tests_names_to_execute[@]}"
-        then
+      then
         @log "$(@style color:yellow)Testing ${src_test_name}..."
         count=$((count+1))
 
         [ -f "${test_success_flag}" ] && rm -f "${test_success_flag}"
+
         (
           BX_APP_EXIT=true
           . "${f}"
@@ -36,6 +38,7 @@ if [ -d "${BASHX_TESTS_PATH}" ]; then
           touch "${test_success_flag}" || @app.error
           exit ${exit_code}
         )
+
         test_result=$?
 
         if [[ ${test_result} -eq 0 ]]; then
@@ -45,7 +48,7 @@ if [ -d "${BASHX_TESTS_PATH}" ]; then
             # Error
             error_count=$((error_count+1))
 
-            if [ ! -f "${test_success_flag}" ]; then
+            if [[ ! -f "${test_success_flag}" ]]; then
               @log.warn "Warning: No exit from assert"
             fi
 

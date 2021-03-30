@@ -1,8 +1,10 @@
 # BashX Sources
 
-## [`/init-app.sh`](init-app.sh)
+## [`/bootstrap.src`](bootstrap.src)
 
 Script to initialize the _main APP_.
+
+It's present at the beginning of _BashX_ entry-point script.
 
 ## [`/setup.sh`](setup.sh)
 
