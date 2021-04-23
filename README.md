@@ -16,6 +16,7 @@
 - No need to learn a new syntax.
 - Common functions and utils already implemented.
 - Auto-documentation/help from source code comments.
+- Solution to common _SO_ compatibility problems (`sed -i ...` on _Linux_ and `sed -i '' ...` on _Mac_).
 
 ## Quick start
 
@@ -261,6 +262,6 @@ All _BashX_ **constants** starts with `BX_`, and **configuration** starts with `
 In order to make [_VIM_](https://www.vim.org) syntax check and code format work,
 add the following line at the end of your `.xsh` file:
 
-```shell
+```bash
 # vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab
 ```
