@@ -262,4 +262,3 @@ All _BashX_ **constants** starts with `BX_`, and **configuration** starts with `
 In order to make [_VIM_](https://www.vim.org) syntax check and code format work,
 add the following line at the end of your `.xsh` file:
 
-> `# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab`
