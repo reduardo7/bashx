@@ -112,6 +112,10 @@ set +ex;export BASHX_VERSION="v3.0.0"
         |                           #
         +-> actions/                # Optional. Actions scripts.
         |   |                       #
+        |   +-> [group...]          #    Script group. Can be multi-level.
+        |   |   |                   #
+        |   |   +-> [name].xsh      #      Test script into group example... (Use with @group.name)
+        |   |                       #
         |   +-> [action-name].xsh   #    Test script example...
         |   |                       #
         |   +-> *                   #    Test script example...
