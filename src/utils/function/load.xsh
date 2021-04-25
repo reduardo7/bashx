@@ -22,8 +22,8 @@ _function_load_v() {
   echo "${prefix}${n}"
 }
 
-for file_path in "${functions_path}"/*.${BX_SCRIPT_EXTENSION} ; do
-  if [ -f "${file_path}" ]; then
+for file_path in "${functions_path}"/* ; do
+  if [[ -f "${file_path}" ]] && [[ "${file_path}" = *".${BX_SCRIPT_EXTENSION}" ]]; then
     # Create base util function
     local n="$(_function_load_v "${file_path}")"
 
