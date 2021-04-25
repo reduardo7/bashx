@@ -22,6 +22,7 @@
     "softtabstop"
   ],
   "files.associations": {
-    "*.xsh": "shellscript"
+    "*.xsh": "shellscript",
+    "*.src": "shellscript"
   }
 }
