@@ -1,0 +1,47 @@
+# ########################################
+# Initial BashX project configuration
+# ########################################
+
+## Core directory (can be overridden before load bootstrap).
+## (Assigned at entrypoint script)
+# BASHX_VERSION
+
+## Core directory (can be overridden before load bootstrap).
+## (Assigned at `init.sh`)
+# BX_DIR
+
+## Current script Sources directory.
+## Customizable with: BASHX_SRC_DIR.
+export BASHX_SRC_DIR="${BASHX_SRC_DIR:-${BX_SCRIPT_FILE_NAME}.src}"
+
+## Configuration file (can be overridden before load).
+## Customizable with: BASHX_APP_CONFIG_FILE.
+export BASHX_APP_CONFIG_FILE="${BASHX_APP_CONFIG_FILE:-${BX_SCRIPT_DIR}/.env}"
+
+## APP Title.
+## Customizable with: BASHX_APP_CONFIG_FILE.
+export BASHX_APP_TITLE="${BASHX_APP_TITLE:-BashX}"
+
+## APP Version.
+export BASHX_APP_VERSION="${BASHX_APP_VERSION:-1.0}"
+
+## Default APP color.
+## See "@style".
+export BASHX_APP_COLOR_DEFAULT="${BASHX_APP_COLOR_DEFAULT:-cyan-light}"
+
+## Output colors?
+## See "@style".
+export BASHX_APP_COLORS_ENABLED=${BASHX_APP_COLORS_ENABLED:-true}
+
+## APP columns width.
+export BASHX_APP_WIDTH=${BASHX_APP_WIDTH:-80}
+
+## Start character for formatted print screen.
+## See "@log".
+export BASHX_APP_PRINT_PREFIX="${BASHX_APP_PRINT_PREFIX:-#}"
+
+## Default action to call.
+## Action to use if script called without arguments.
+export BASHX_APP_DEFAULT_ACTION="${BASHX_APP_DEFAULT_ACTION:-help}"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

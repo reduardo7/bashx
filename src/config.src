@@ -1,0 +1,26 @@
+# ########################################
+# BashX project configuration
+# ########################################
+
+## Prefix for automatic documentation (like this comment).
+export BASHX_DOC_MARK='##'
+
+## Current script Sources path. Constant.
+export BASHX_SRC_PATH="${BX_SCRIPT_DIR}/${BASHX_SRC_DIR}"
+
+## Tests path.
+export BASHX_TESTS_PATH="${BASHX_SRC_PATH}/tests"
+
+## Actions path.
+export BASHX_ACTIONS_PATH="${BASHX_SRC_PATH}/actions"
+
+## Utils path.
+export BASHX_UTILS_PATH="${BASHX_SRC_PATH}/utils"
+
+## Events path.
+export BASHX_EVENTS_PATH="${BASHX_SRC_PATH}/events"
+
+## Resources path.
+export BASHX_RESOURCES_PATH="${BASHX_SRC_PATH}/resources"
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab

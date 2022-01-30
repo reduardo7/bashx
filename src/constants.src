@@ -1,0 +1,89 @@
+# ########################################
+# Readonly BashX internal constants
+# ########################################
+
+## BashX called script arguments.
+export BX_SCRIPT_ARGS=($@)
+
+## BashX scripts extension.
+readonly BX_SCRIPT_EXTENSION='xsh'
+
+## Called script.
+readonly BX_SCRIPT_CALLED="${BX_SCRIPT_CALLED}"
+
+## Current script file name.
+readonly BX_SCRIPT_FILE_NAME="${BX_SCRIPT_FILE_NAME}"
+
+## Current script full path.
+readonly BX_SCRIPT_FULL_PATH="${BX_SCRIPT_DIR}/${BX_SCRIPT_FILE_NAME}"
+
+## Current script directory.
+readonly BX_SCRIPT_DIR="${BX_SCRIPT_DIR}"
+
+## Core actions path.
+readonly BX_ACTIONS_PATH="${BX_SRC_PATH}/actions"
+
+## Core utils path.
+readonly BX_UTILS_PATH="${BX_SRC_PATH}/utils"
+
+### OS Constants
+
+export BX_OS_IS_LINUX=false
+export BX_OS_IS_MAC=false
+export BX_OS_IS_MINGW=false
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  defaults write org.R-project.R force.LANG en_US.UTF-8
+  export TERM="xterm-color"
+  export BX_OS_IS_MAC=true
+elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+  export BX_OS_IS_LINUX=true
+elif [[ "$(expr substr $(uname -s) 1 10)" == MINGW* ]]; then
+  export BX_OS_IS_MINGW=true
+fi
+
+## Is Linux OS?
+readonly BX_OS_IS_LINUX=${BX_OS_IS_LINUX}
+## Is Mac OS?
+readonly BX_OS_IS_MAC=${BX_OS_IS_MAC}
+## Is Win OS?
+readonly BX_OS_IS_MINGW=${BX_OS_IS_MINGW}
+
+BX_BASE_SOURCE="${BASH_SOURCE[0]}"
+while [ -h "${BX_BASE_SOURCE}" ]; do
+  BX_BASE_DIR="$(cd -P "$(dirname "${BX_BASE_SOURCE}")" && pwd)"
+  BX_BASE_SOURCE=`readlink "${BX_BASE_SOURCE}"`
+  [[ "${BX_BASE_SOURCE}" != /* ]] && BX_BASE_SOURCE="${BX_BASE_DIR}/${BX_BASE_SOURCE}"
+done
+[ -z "${BX_BASE_DIR}"] && BX_BASE_DIR="$(cd -P "$(dirname "${BX_BASE_SOURCE}")" && pwd)"
+
+## BashX base source path.
+readonly BX_BASE_SOURCE="${BX_BASE_SOURCE}"
+
+# BashX base directory path.
+readonly BX_BASE_DIR="${BX_BASE_DIR}"
+
+# \e | \033 | \x1B
+## Key: ESC
+${BX_OS_IS_MAC} && readonly BX_KEY_ESC=$'\x1B' || readonly BX_KEY_ESC=$'\e'
+
+# https://stackoverflow.com/a/911213/717267
+## TTY available?
+[ -t 1 ] && readonly BX_TTY=true || readonly BX_TTY=false
+
+# \n - New Line
+## New Line constant (\n)
+readonly BX_CHAR_NL='
+'
+
+# \t - Tab
+## New Line constant (\t)
+readonly BX_CHAR_TAB='  '
+
+## Action prefix. Used at @app.run.
+readonly BX_ACTION_PREFIX='@Actions'
+
+## Events options.
+readonly BX_EVENTS_OPTS=(invalid-action ready start error finish)
+
+# vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab
