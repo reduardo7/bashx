@@ -38,7 +38,9 @@ export BASHX_APP_WIDTH=${BASHX_APP_WIDTH:-80}
 
 ## Start character for formatted print screen.
 ## See "@log".
-export BASHX_APP_PRINT_PREFIX="${BASHX_APP_PRINT_PREFIX:-#}"
+${BASHX_APP_COLORS_ENABLED} && _BASHX_APP_PRINT_PREFIX='ℹ️ ' || _BASHX_APP_PRINT_PREFIX='# '
+export BASHX_APP_PRINT_PREFIX="${BASHX_APP_PRINT_PREFIX:-${_BASHX_APP_PRINT_PREFIX}}"
+unset _BASHX_APP_PRINT_PREFIX
 
 ## Default action to call.
 ## Action to use if script called without arguments.

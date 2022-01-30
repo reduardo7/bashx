@@ -30,6 +30,8 @@
 #   done
 # }
 
+${BASHX_APP_COLORS_ENABLED} && local err_char='❌❌❌' || local err_char='!!!'
+
 {
   # Call @app.run once
   unset -f @app.run
@@ -45,7 +47,7 @@
   @log.title "$(@app.info)"
 
   # On end Script from Error
-  trap '@app.error "Unexpected error [$?]" true $?' ERR
+  trap '@app.error "${err_char} Unexpected error [$?]" true $?' ERR
 
   # On end Script
   # https://mywiki.wooledge.org/SignalTrap
