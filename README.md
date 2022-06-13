@@ -17,7 +17,7 @@
 - Common functions and utils already implemented.
 - Auto-documentation/help from source code comments.
 - Solution to common _SO_ compatibility problems (`sed -i ...` on _Linux_ and `sed -i '' ...`
-on [_Mac_](https://stackoverflow.com/a/16746032/717267)).
+on [_Mac_](https://stackoverflow.com/a/16746032/717267)). See [`@sed`](src/utils/sed.xsh)
 
 ## Quick start
 
