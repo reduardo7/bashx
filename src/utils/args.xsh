@@ -5,6 +5,10 @@
 ## Params:
 ##   options*: {Map} Valid options specifications.
 ##
+## Variables:
+##   BASHX_args_fail_on_unexpected: {Boolean} Fail on unexpected argument?
+##                                  Default: true
+##
 ##
 ## Options Format: [VARIABLE:KEY:INPUT]*
 ##   where:
@@ -84,7 +88,15 @@ while true; do
   case "\$OPTARG" in
     ${script_case}
     --) shift; break ;;
-    -*) @app.error "Unrecognized argument \$OPTARG" ;;
+    -*)
+      if \${BASHX_args_fail_on_unexpected:-true}; then
+        # Fail
+        @app.error "Unrecognized argument \$OPTARG"
+      else
+        # Next
+        shift
+      fi
+      ;;
     *) break ;;
   esac
 done
