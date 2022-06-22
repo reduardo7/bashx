@@ -45,7 +45,7 @@
 ##   * Remove "bar" from Utils:
 ##       _bashx util remove bar
 ##   * Initialize project:
-##       _bashx init project v3.1.0 ~/project/my-script 'My Super-Script'
+##       _bashx init project v3.1.1 ~/project/my-script 'My Super-Script'
 
 @log.title "$(@style bold color:red)BashX$(@style) Framework Utils"
 
