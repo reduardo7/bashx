@@ -20,8 +20,8 @@ export LC_CTYPE=C
 export LC_ALL=C
 export LANG=C
 
-BX_SCRIPT_CALLED="${BASH_SOURCE[0]:-$0}"
-BX_SCRIPT_DIR="$(dirname "${BX_SCRIPT_CALLED}")"
+BX_SCRIPT_CALLED="$0"
+BX_SCRIPT_DIR="$(cd "$(dirname "${BX_SCRIPT_CALLED}")" ; pwd)"
 BX_SCRIPT_FILE_NAME="$(basename "${BX_SCRIPT_CALLED}")"
 while [ -h "${BX_SCRIPT_CALLED}" ]; do
   BX_SCRIPT_CALLED="$(readlink "${BX_SCRIPT_CALLED}")"
