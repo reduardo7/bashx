@@ -1,4 +1,7 @@
-$BX_OS_IS_MAC && return 0
+if $BX_OS_IS_MAC; then
+  @@assert.warn "This test is not working on Mac OS"
+  return 0
+fi
 
 tmp_file="$(@mktemp false)"
 
