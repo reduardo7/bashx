@@ -33,6 +33,14 @@ ASSERTION_EXEC_OUT_INF="$(@mktemp false)"
   @@assert._assertFail "${FUNCNAME[0]} [$@] ($(caller))"
 }
 
+##   @@assert.warn message
+##     Test warning.
+##     Params:
+##       message: Message about the warning.
+@@assert.warn() { # message
+  @log.warn "${FUNCNAME[0]} [$@] ($(caller))"
+}
+
 ##   @@assert.true var
 ##     Test if {var} is boolean true.
 ##     Params:
