@@ -1,54 +1,43 @@
 # BashX | Bash eXtended
 
-## Documentation
-
-Full reference for all utilities, actions, and the testing framework: **[docs/](docs/README.md)**
+A convention-based Bash framework that turns `.xsh` files into `@`-prefixed functions with auto-generated CLI help. No compile step — everything is sourced at runtime.
 
 ## Description
 
-- **_Bash Framework_**.
-- Helps to bash scripting.
-- Add common functions to help the developer.
-- Compatible with _Android Shell_.
-- Auto-documentation/help generation.
+- **_Bash Framework_** — 120+ ready-to-use utility functions.
+- Compatible with _Linux_, _macOS_, and _Android Shell_.
+- Lazy-loads functions on first call — no startup cost for unused utilities.
+- Auto-generates CLI help and usage from source comments.
+- Solves cross-platform shell quirks (e.g. `sed -i` on Linux vs. macOS). See [`@sed`](src/utils/sed.xsh)
 
 ### Why use it
 
-- Very easy to implement.
-- No additional components required.
-- No need to learn a new language.
-- No need to learn a new syntax.
-- Common functions and utils already implemented.
-- Auto-documentation/help from source code comments.
-- Solution to common _SO_ compatibility problems (`sed -i ...` on _Linux_ and `sed -i '' ...`
-on [_Mac_](https://stackoverflow.com/a/16746032/717267)). See [`@sed`](src/utils/sed.xsh)
+- No new language or syntax to learn — it's just Bash.
+- No additional runtime dependencies.
+- Rich stdlib: strings, logging, user input, file I/O, date/time, testing, and more.
+- Drop-in help generation from `##` doc comments in source.
 
-## Quick start
+## Quick Start
 
-You can start your project with:
+Scaffold a new project with a single command:
 
 ```bash
 ./bashx _bashx init project {BASHX_VERSION} {PROJECT_PATH}
 ```
 
-Where:
+- `BASHX_VERSION` — a [tag from this repository](https://github.com/reduardo7/bashx/tags)
+- `PROJECT_PATH` — script name or full path
 
-- `BASHX_VERSION` is a [_tag_ from this repository](https://github.com/reduardo7/bashx/tags)
-- `PROJECT_PATH` is the _script name_ with _full path_.
-
-### Examples
+**Examples:**
 
 ```bash
 ./bashx _bashx init project v3.1.2 my-app
-```
-
-```bash
 ./bashx _bashx init project v3.1.2 ~/projects/my-script.sh
 ```
 
-## Manual start
+## Manual Start
 
-**1)** Add next at beginning of the script file:
+**1)** Add the following bootstrap block at the top of your script:
 
 ```bash
 #!/usr/bin/env bash
@@ -65,7 +54,7 @@ set +ex;export BASHX_VERSION="v3.1.2"
 
 **2)** Write your code.
 
-**3)** Optionally, add next at end of the script file, to work as _cli_:
+**3)** Optionally, add the following at the end to expose actions as a CLI:
 
 ```bash
 @app.run
@@ -157,13 +146,18 @@ set +ex;export BASHX_VERSION="v3.1.2"
 
 Valid events options constant: `BX_EVENTS_OPTS`.
 
-## Doc
+## Documentation
 
-Go to [`src/README.md`](src/README.md) documentation for more details.
+| Reference | Description |
+|---|---|
+| **[docs/](docs/README.md)** | Full utility, action, and testing reference |
+| **[docs/testing.md](docs/testing.md)** | `@@assert.*` testing framework |
+| **[docs/actions.md](docs/actions.md)** | Public and framework actions |
+| **[src/README.md](src/README.md)** | Source directory structure |
 
 ### Development Documentation
 
-Show [_Development Documentation_](src/actions/_dev-doc.xsh) using:
+Print inline development docs:
 
 ```bash
 ./bashx _dev-doc
@@ -171,7 +165,7 @@ Show [_Development Documentation_](src/actions/_dev-doc.xsh) using:
 
 ### Framework Utilities
 
-Show [_Framework Utilities Documentation_](src/actions/_bashx/README.md) using:
+List BashX scaffolding commands:
 
 ```bash
 ./bashx _bashx
@@ -181,9 +175,7 @@ Show [_Framework Utilities Documentation_](src/actions/_bashx/README.md) using:
 
 ### [`BASHX_COLORS_DISABLED`](src/utils/style.xsh#L92)
 
-Set vale to `1` to disable **BashX** output colors, disabling the `@style` function.
-
-**Example:**
+Set to `1` to disable all **BashX** output colors (`@style` becomes a no-op).
 
 ```bash
 BASHX_COLORS_DISABLED=1 ./bashx
@@ -191,58 +183,54 @@ BASHX_COLORS_DISABLED=1 ./bashx
 
 ## Tips
 
-### Print/Log (echo ...)
+### Output
 
-- `echo` is used for function output.
-- Use `@log` to print log messages.
-- Use `@log.warn` to print warning messages.
+- `echo` is reserved for function return values (stdout is treated as data).
+- Use `@log` for informational messages, `@log.warn` for warnings, `@log.alert` for alerts.
 
-### Command log (set -x)
+### Exit & Error
 
-- Avoid usage of **BashX** _Functions_ inside of `set -x` section.
+- Use `@app.exit` to exit cleanly.
+- Use `@app.error` to print an error message and exit with a non-zero code.
 
-#### Command log examples
+### `set -x` (command tracing)
+
+Avoid calling `@`-functions inside `set -x` blocks — the DEBUG trap interacts badly with nested functions.
 
 ```bash
-...
 ( set -x
-  ...
-  echo my test
-  ...
+  echo my test   # plain commands only
 )
-...
 ```
 
 ```bash
-...
 set -x
-  ...
   echo my test
-  ...
 set +x
-...
 ```
-
-### APP Exit & Error
-
-- Use `@app.exit` to exit.
-- Use `@app.error` to print an error and exit.
 
 ### Events Workflow
 
-1. `src/events/invalid-action.xsh` is triggered if an invalid action was used.
-2. `src/events/ready.xsh` is triggered on the initialization is complete.
-3. `src/events/start.xsh` is triggered before a valid action is called.
-4. `src/events/error.xsh` is triggered when an error has occurred.
-5. `src/events/finish.xsh` is triggered on execution finished.
+Events fire in this order:
 
-Valid events options constant: `BX_EVENTS_OPTS`.
+1. `invalid-action.xsh` — triggered if an unrecognised action was called.
+2. `ready.xsh` — triggered when initialisation is complete.
+3. `start.xsh` — triggered before a valid action runs.
+4. `error.xsh` — triggered when an error occurs (exit code ≠ 0).
+5. `finish.xsh` — triggered after execution finishes.
 
-## Optimizations
-
-See: [http://tldp.org/LDP/abs/html/optimizations.html](http://tldp.org/LDP/abs/html/optimizations.html)
+Constant for valid event names: `BX_EVENTS_OPTS`.
 
 ## Testing with Docker
+
+Run the test suite inside a container (mirrors CI):
+
+```bash
+./bashx _run-tests-docker          # ubuntu + debian:8
+./bashx _run-tests-all             # Docker + local
+```
+
+Or run a container manually:
 
 ```bash
 docker run --rm \
@@ -252,20 +240,11 @@ docker run --rm \
   -ti ubuntu '/app/bashx'
 ```
 
-```bash
-docker run --rm \
-  -v $(pwd):/root/.bashx/master:ro \
-  -v $(pwd):/app:ro \
-  -w '/app' \
-  -ti debian:8 '/app/bashx'
-```
-
 ## Notes
 
-## VIM
+### VIM
 
-In order to make [_VIM_](https://www.vim.org) syntax check and code format work,
-add the following line at the end of your `.xsh` file:
+Add this modeline at the end of every `.xsh` file for correct syntax highlighting and formatting:
 
 ```plain
 # vim: filetype=sh tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab
@@ -273,4 +252,7 @@ add the following line at the end of your `.xsh` file:
 
 ### Constants & Config Variables
 
-All _BashX_ **constants** starts with `BX_`, and **configuration** starts with `BASHX_`.
+| Prefix | Purpose |
+|---|---|
+| `BX_*` | Readonly internal framework constants (do not assign) |
+| `BASHX_*` | User-configurable settings (set in `.env` or before sourcing) |
