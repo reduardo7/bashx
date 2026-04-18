@@ -2,7 +2,16 @@
 
 Polling and waiting utilities.
 
+
 ---
+
+**Contents:**
+
+- [`@wait.until`](#waituntil)
+- [`@wait.untilExists`](#waituntilexists)
+
+---
+
 
 ## `@wait.until`
 

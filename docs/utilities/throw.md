@@ -2,7 +2,17 @@
 
 Structured error utilities that print a formatted message and exit.
 
+
 ---
+
+**Contents:**
+
+- [`@throw`](#throw)
+- [`@throw.invalidParam`](#throwinvalidparam)
+- [`@throw.notImplemented`](#thrownotimplemented)
+
+---
+
 
 ## `@throw`
 

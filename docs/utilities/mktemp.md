@@ -4,7 +4,15 @@
 
 Safe temporary file and directory creation. All temps are placed inside `$BASHX_APP_TMP_PATH`, which is automatically removed when the script exits (via `@app.exit`).
 
+
 ---
+
+**Contents:**
+
+- [`@mktemp`](#mktemp)
+
+---
+
 
 ## `@mktemp`
 

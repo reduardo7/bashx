@@ -2,7 +2,18 @@
 
 Register callbacks for application lifecycle events.
 
+
 ---
+
+**Contents:**
+
+- [`@on.exit`](#onexit)
+- [`@on.stderr`](#onstderr)
+- [`@on.stdinfo`](#onstdinfo)
+- [`@on.stdout`](#onstdout)
+
+---
+
 
 ## `@on.exit`
 

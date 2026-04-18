@@ -4,7 +4,20 @@
 
 Parse CLI flags and options within an action function.
 
+
 ---
+
+**Contents:**
+
+- [`@args`](#args)
+  - [`Variables`](#variables)
+  - [`Boolean flag`](#boolean-flag)
+  - [`Flag with value`](#flag-with-value)
+  - [`Combined flags`](#combined-flags)
+  - [`Allow unknown flags`](#allow-unknown-flags)
+
+---
+
 
 ## `@args`
 

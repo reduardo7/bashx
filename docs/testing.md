@@ -2,7 +2,33 @@
 
 BashX includes a built-in assertion framework for writing unit tests. Tests are plain `.xsh` files placed under `src/tests/` (or your project's `tests/` directory).
 
+
 ---
+
+**Contents:**
+
+- [`Setup`](#setup)
+- [`Running Tests`](#running-tests)
+- [`Assertions`](#assertions)
+  - [`@@assert.fail`](#assertfail)
+  - [`@@assert.warn`](#assertwarn)
+  - [`@@assert.true` / `@@assert.false`](#asserttrue-assertfalse)
+  - [`@@assert.empty` / `@@assert.notEmpty`](#assertempty-assertnotempty)
+  - [`@@assert.number`](#assertnumber)
+  - [`@@assert.errorCode` / `@@assert.notErrorCode`](#asserterrorcode-assertnoterrorcode)
+  - [`@@assert.equal` / `@@assert.notEqual`](#assertequal-assertnotequal)
+  - [`@@assert.contains` / `@@assert.notContains`](#assertcontains-assertnotcontains)
+  - [`@@assert.startWith` / `@@assert.endWith`](#assertstartwith-assertendwith)
+  - [`@@assert.regExp`](#assertregexp)
+  - [`@@assert.stdOut` / `@@assert.noStdOut`](#assertstdout-assertnostdout)
+  - [`@@assert.errOut` / `@@assert.noErrOut`](#asserterrout-assertnoerrout)
+  - [`@@assert.noOut`](#assertnoout)
+  - [`@@assert.exec`](#assertexec)
+- [`Example Test File`](#example-test-file)
+- [`Example: Testing a Custom Function`](#example-testing-a-custom-function)
+
+---
+
 
 ## Setup
 

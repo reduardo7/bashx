@@ -2,7 +2,17 @@
 
 Function introspection and dynamic loading utilities.
 
+
 ---
+
+**Contents:**
+
+- [`@function.exists`](#functionexists)
+- [`@function.load`](#functionload)
+- [`@function.void`](#functionvoid)
+
+---
+
 
 ## `@function.exists`
 

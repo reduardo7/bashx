@@ -2,7 +2,15 @@
 
 Array utility functions.
 
+
 ---
+
+**Contents:**
+
+- [`@array.contains`](#arraycontains)
+
+---
+
 
 ## `@array.contains`
 

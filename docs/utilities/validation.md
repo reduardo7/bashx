@@ -2,7 +2,18 @@
 
 Simple guard functions for type and permission checks.
 
+
 ---
+
+**Contents:**
+
+- [`@isBoolean`](#isboolean)
+- [`@isNumber`](#isnumber)
+- [`@isRoot`](#isroot)
+- [`@rootValidate`](#rootvalidate)
+
+---
+
 
 ## `@isBoolean`
 

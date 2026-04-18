@@ -2,7 +2,16 @@
 
 Script processing and variable name utilities.
 
+
 ---
+
+**Contents:**
+
+- [`@code.variableClean`](#codevariableclean)
+- [`@code.scriptMinify`](#codescriptminify)
+
+---
+
 
 ## `@code.variableClean`
 

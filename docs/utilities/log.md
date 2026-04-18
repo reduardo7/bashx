@@ -2,7 +2,23 @@
 
 Output utilities. All logging goes to **stdinfo** (file descriptor 3) unless noted otherwise, keeping stdout clean for data return values.
 
+
 ---
+
+**Contents:**
+
+- [`@log`](#log)
+- [`@log.warn`](#logwarn)
+- [`@log.alert`](#logalert)
+- [`@log.title`](#logtitle)
+- [`@log.line`](#logline)
+- [`@log.cmd`](#logcmd)
+- [`@log.time`](#logtime)
+- [`@log.rewrite`](#logrewrite)
+- [`@log.waiting`](#logwaiting)
+
+---
+
 
 ## `@log`
 

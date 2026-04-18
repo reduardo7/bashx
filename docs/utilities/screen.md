@@ -2,7 +2,15 @@
 
 Terminal dimension utilities.
 
+
 ---
+
+**Contents:**
+
+- [`@screen.width`](#screenwidth)
+
+---
+
 
 ## `@screen.width`
 

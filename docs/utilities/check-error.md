@@ -2,7 +2,16 @@
 
 Lightweight exit-code guards.
 
+
 ---
+
+**Contents:**
+
+- [`@checkError`](#checkerror)
+- [`@checkErrorEnd`](#checkerrorend)
+
+---
+
 
 ## `@checkError`
 

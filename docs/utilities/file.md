@@ -2,7 +2,17 @@
 
 File and path utilities.
 
+
 ---
+
+**Contents:**
+
+- [`@file.name`](#filename)
+- [`@file.contains`](#filecontains)
+- [`@file.ensureLineExists`](#fileensurelineexists)
+
+---
+
 
 ## `@file.name`
 

@@ -2,7 +2,19 @@
 
 Core application lifecycle utilities.
 
+
 ---
+
+**Contents:**
+
+- [`@app.run`](#apprun)
+- [`@app.exit`](#appexit)
+- [`@app.error`](#apperror)
+- [`@app.backtrace`](#appbacktrace)
+- [`@app.info`](#appinfo)
+
+---
+
 
 ## `@app.run`
 

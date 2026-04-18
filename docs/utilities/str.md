@@ -2,7 +2,26 @@
 
 String manipulation utilities.
 
+
 ---
+
+**Contents:**
+
+- [`@str.trim`](#strtrim)
+- [`@str.ltrim`](#strltrim)
+- [`@str.rtrim`](#strrtrim)
+- [`@str.len`](#strlen)
+- [`@str.sub`](#strsub)
+- [`@str.replace`](#strreplace)
+- [`@str.toLower`](#strtolower)
+- [`@str.toUpper`](#strtoupper)
+- [`@str.repeat`](#strrepeat)
+- [`@str.in`](#strin)
+- [`@str.pos`](#strpos)
+- [`@str.escape`](#strescape)
+
+---
+
 
 ## `@str.trim`
 

@@ -2,7 +2,17 @@
 
 Current date and time utilities.
 
+
 ---
+
+**Contents:**
+
+- [`@now.date`](#nowdate)
+- [`@now.time`](#nowtime)
+- [`@now.dateTime`](#nowdatetime)
+
+---
+
 
 ## `@now.date`
 

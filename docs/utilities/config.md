@@ -2,7 +2,15 @@
 
 Configuration file utilities.
 
+
 ---
+
+**Contents:**
+
+- [`@config.test`](#configtest)
+
+---
+
 
 ## `@config.test`
 

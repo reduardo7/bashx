@@ -4,7 +4,22 @@ ANSI terminal styling utilities.
 
 Set `BASHX_COLORS_DISABLED=1` to disable all color output globally.
 
+
 ---
+
+**Contents:**
+
+- [`@style`](#style)
+  - [`Colors`](#colors)
+  - [`Background colors`](#background-colors)
+  - [`Text styles`](#text-styles)
+  - [`Combining styles`](#combining-styles)
+  - [`Supported color names`](#supported-color-names)
+  - [`Reset`](#reset)
+- [`@style.clean`](#styleclean)
+
+---
+
 
 ## `@style`
 

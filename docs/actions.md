@@ -2,7 +2,29 @@
 
 Actions are functions named `@Actions.<name>` and invoked from the CLI as `./my-app <name>`. Actions whose names start with `_` are hidden from `help` (visible with `help -a`).
 
+
 ---
+
+**Contents:**
+
+- [`Public Actions`](#public-actions)
+  - [`help`](#help)
+- [`Framework Actions`](#framework-actions)
+  - [`_run-tests`](#_run-tests)
+  - [`_run-tests-docker`](#_run-tests-docker)
+  - [`_run-tests-all`](#_run-tests-all)
+  - [`_dev-doc`](#_dev-doc)
+  - [`_install-as-command`](#_install-as-command)
+  - [`_bashx`](#_bashx)
+- [`Writing Custom Actions`](#writing-custom-actions)
+- [`[--dry-run] <environment>`](#dry-run-environment)
+- [`Deploy the application.`](#deploy-the-application)
+- [`Options:`](#options)
+- [`--dry-run: Simulate without applying changes.`](#dry-run-simulate-without-applying-changes)
+  - [`Lifecycle Events`](#lifecycle-events)
+
+---
+
 
 ## Public Actions
 

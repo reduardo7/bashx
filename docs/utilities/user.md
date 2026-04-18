@@ -2,7 +2,19 @@
 
 TTY-aware interactive input utilities. All functions detect whether stdin is a terminal (`$BX_TTY`) and handle the non-TTY case gracefully.
 
+
 ---
+
+**Contents:**
+
+- [`@user.input`](#userinput)
+- [`@user.confirm`](#userconfirm)
+- [`@user.choice`](#userchoice)
+- [`@user.pause`](#userpause)
+- [`@user.timeout`](#usertimeout)
+
+---
+
 
 ## `@user.input`
 

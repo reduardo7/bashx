@@ -1,5 +1,15 @@
 # BashX Documentation
 
+
+---
+
+**Contents:**
+
+- [`Utilities`](#utilities)
+- [`Actions`](#actions)
+- [`Testing`](#testing)
+
+---
 Complete reference for all BashX utilities and actions.
 
 ## Utilities
