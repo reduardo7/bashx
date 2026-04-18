@@ -1,4 +1,4 @@
-## [*]
+## <args?>*
 ## Check if running as ROOT, or exit from script.
 ##
 ## Params:

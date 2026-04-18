@@ -1,8 +1,9 @@
-## {file} {regexp}
+## <file> <regexp>
 ## `sed` command alias compatible between Mac & Linux.
 ##
-## Params: Parameters for following syntax:
-##   sed -i -e "{regexp}" "{file}"
+## Params:
+##   file:   {String} File to edit.
+##   regexp: {String} sed expression (e.g. "s/foo/bar/g").
 
 local file="$1"
 local regexp="$2"

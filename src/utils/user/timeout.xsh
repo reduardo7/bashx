@@ -1,4 +1,4 @@
-## timeout cmd [message]
+## <timeout> <cmd> <message?>
 ## Execute command after specific time.
 ##
 ## Params:

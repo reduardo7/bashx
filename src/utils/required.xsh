@@ -1,4 +1,4 @@
-## cmd*
+## <cmd>*
 ## Check for required software.
 ##
 ## Params:

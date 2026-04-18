@@ -1,4 +1,4 @@
-## code
+## <code>
 ## Exit from APP and execute the function setted in "@on.exit".
 ##
 ## Params:

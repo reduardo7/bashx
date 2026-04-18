@@ -1,4 +1,4 @@
-## options*
+## <options>*
 ## Read options.
 ## Note: Verbose output if you use `set -x`
 ##

@@ -1,4 +1,4 @@
-## [len]
+## <len?>
 ## Generate random string.
 ##
 ## Out: {String} Random string.

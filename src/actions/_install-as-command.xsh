@@ -1,4 +1,4 @@
-## [-f] action
+## [-f] <action>
 ## Install auto-complete and bin files in current user shell.
 ##
 ## Params:

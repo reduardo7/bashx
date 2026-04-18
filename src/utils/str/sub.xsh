@@ -1,4 +1,4 @@
-## src limit [offset]
+## <src> <limit> <offset?>
 ## Sub string.
 ##
 ## Params:

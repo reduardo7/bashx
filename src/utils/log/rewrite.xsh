@@ -1,4 +1,4 @@
-## text [lines]
+## <text> <lines?>
 ## Go back {lines} lines and print the text.
 ##
 ## Params:

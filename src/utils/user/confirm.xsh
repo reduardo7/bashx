@@ -1,4 +1,4 @@
-## [msg]
+## <msg?>
 ## User confirm.
 ##
 ## Params:

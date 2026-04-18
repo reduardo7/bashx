@@ -1,4 +1,4 @@
-## text [to_remove]
+## <text> <to_remove?>
 ## Remove starting and ending spaces from text.
 ##
 ## Params:

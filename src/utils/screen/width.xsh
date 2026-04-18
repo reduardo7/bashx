@@ -1,4 +1,4 @@
-## [default_width]
+## <default_width?>
 ## Screen width.
 ##
 ## Params:

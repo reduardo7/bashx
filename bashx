@@ -27,7 +27,7 @@ set +ex;export BASHX_VERSION="master"
   bash
 }
 
-@Actions.action2() { # param1 [param2] \\n Action with arguments\\n\\tdescription second line\\nother line
+@Actions.action2() { # <param1> <param2?> \\n Action with arguments\\n\\tdescription second line\\nother line
   eval "$(@args 'new:-n|-N' 'path:-p|--path:true')"
   set -x
 

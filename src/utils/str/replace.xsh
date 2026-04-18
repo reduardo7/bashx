@@ -1,4 +1,4 @@
-## src search replace [ignore_case]
+## <src> <search> <replace> <ignore_case?>
 ## Replace string.
 ##
 ## Params:

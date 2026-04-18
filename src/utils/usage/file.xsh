@@ -1,4 +1,4 @@
-## src [prefix]
+## <src> <prefix?>
 ## Print basic main script usage.
 ##
 ## Params:

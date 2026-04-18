@@ -50,6 +50,20 @@ The convention is strict and load-bearing; don't invent new prefixes.
 
 `help` and `_dev-doc` parse source files for lines starting with `BASHX_DOC_MARK` (default `##`). The first `##` line is the usage signature; subsequent `##` lines are the description. See `src/utils/usage.xsh` for the parser and any existing action/util for the expected comment layout. New `.xsh` files should include this header or they won't appear in `help`.
 
+**Argument format in the signature line:**
+
+- Required positional arg: `<arg-name>`
+- Optional positional arg: `<arg-name?>`
+- Variadic required: `<arg-name>*`
+- Variadic optional: `<arg-name?>*`
+- Boolean flag: `[-f]` or `[-f|--flag]` (no angle brackets)
+- Flag with argument: `-f <arg-name>` or `-f <arg-name?>`
+- Special (stdin, callback, variadic pass-through): `<<`, `@`, `*` — unchanged
+
+Examples: `## <src> <prefix?> <cmd?> <sep?>`, `## [-f] <action>`, `## <command> <interval?> <timeout?>`
+
+This same `<arg>` / `<arg?>` convention applies to inline action signatures defined directly in the entrypoint script using the `# <args> \\n description` comment syntax on `@Actions.*()` function declarations. Example: `@Actions.action2() { # <param1> <param2?> \\n Description`
+
 ### Project layout for user scripts
 
 A user script `my-app` expects a sibling `my-app.src/` directory with optional `actions/`, `utils/`, `tests/`, `events/`, `resources/` subdirs. Events under `src/events/` are fired by `@app.run` in this order: `invalid-action` → `ready` → `start` → `error` → `finish` (constant `BX_EVENTS_OPTS`). The in-repo example of this layout is `bashx.src/` (the `bashx` script's own sources).

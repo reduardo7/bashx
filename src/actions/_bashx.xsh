@@ -1,4 +1,4 @@
-## task action value1? value2? value3?
+## <task> <action> <value1?> <value2?> <value3?>
 ## BashX Framework Utils.
 ##
 ## Usage:

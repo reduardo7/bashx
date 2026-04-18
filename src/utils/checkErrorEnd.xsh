@@ -1,4 +1,4 @@
-## code [cmd]
+## <code> <cmd?>
 ## Check error and finish if `code` is bigger than 0 (error).
 ##
 ## Params:

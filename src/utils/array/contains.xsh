@@ -1,4 +1,4 @@
-## source search_array
+## <source> <search_array>
 ## Array contains an element?
 ##
 ## Params:

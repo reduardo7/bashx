@@ -1,4 +1,4 @@
-## param1
+## <param1>
 ## Action 3 description
 ##
 ## Params:

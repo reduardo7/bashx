@@ -1,4 +1,4 @@
-## msg [print_backtrace [code]]
+## <msg> <print_backtrace?> <code?>
 ## Show error message at stderr and exit.
 ##
 ## Params:

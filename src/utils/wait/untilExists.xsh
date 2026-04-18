@@ -1,4 +1,4 @@
-## type path [timeout [show_message]]
+## <type> <path> <timeout?> <show_message?>
 ## Wait for directory/file until exists.
 ##
 ## Params:

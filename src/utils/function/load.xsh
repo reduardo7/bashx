@@ -1,4 +1,4 @@
-## functions_path [prefix]
+## <functions_path> <prefix?>
 ## Generate *.xsh functions from path.
 ##
 ## Params:

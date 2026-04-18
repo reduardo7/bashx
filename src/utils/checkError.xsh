@@ -1,4 +1,4 @@
-## code [cmd]
+## <code> <cmd?>
 ## Check error.
 ##
 ## Params:

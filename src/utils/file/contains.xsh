@@ -1,4 +1,4 @@
-## text file
+## <text> <file>
 ## Check if file contains text.
 ##
 ## Params:

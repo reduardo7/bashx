@@ -1,4 +1,4 @@
-## func_name
+## <func_name>
 ## Check if function exists.
 ##
 ## Params:

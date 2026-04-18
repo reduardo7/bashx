@@ -1,4 +1,4 @@
-## bashx_version project_path [project_title]
+## <bashx_version> <project_path> <project_title?>
 ## Initialize project.
 ##
 ## Params:
@@ -63,11 +63,11 @@ ${BX_ACTION_PREFIX}.action1() { # \\\\n Action without arguments
   @log Action 1
 }
 
-${BX_ACTION_PREFIX}.action2() { # param1 param2 \\\\n Action with arguments
+${BX_ACTION_PREFIX}.action2() { # <param1> <param2?> \\\\n Action with arguments
   # ... Your code here ...
   @log Action 2
   @log Param1: \$1
-  @log Param2: \$2
+  @log Param2 (optional): \$2
 }
 
 ### End Example ###

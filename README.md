@@ -94,7 +94,7 @@ set +ex;export BASHX_VERSION="v3.2.0"
    "
    }
 
-   @Actions.action2() { # <param1> [<param2>] \\n Action with arguments\\n\\tdescription second line\\nother line
+   @Actions.action2() { # <param1> <param2?> \\n Action with arguments\\n\\tdescription second line\\nother line
      local param1="$1"
      local param2="$2"
      [ "$param1" != 'asd' ] && @throw.invalidParam param1

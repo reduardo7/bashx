@@ -1,4 +1,4 @@
-## timeout [message]
+## <timeout> <message?>
 ## Print the {message} every 0.25 seconds until the {timeout} is reached.
 ## This script blocks the execution (`sleep`) until the {timeout} is reached.
 ## Note: Overlay {message} can not be cancelled.

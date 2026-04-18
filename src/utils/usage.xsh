@@ -1,4 +1,4 @@
-## src [prefix [cmd [sep]]]
+## <src> <prefix?> <cmd?> <sep?>
 ## Print basic script usage.
 ##
 ## Params:

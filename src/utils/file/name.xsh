@@ -1,4 +1,4 @@
-## file [remove_extension]
+## <file> <remove_extension?>
 ## Get file name.
 ##
 ## Params:

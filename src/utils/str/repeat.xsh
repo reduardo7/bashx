@@ -1,4 +1,4 @@
-## count str
+## <count> <str>
 ## Repeat string.
 ##
 ## Params:

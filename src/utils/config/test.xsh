@@ -1,4 +1,4 @@
-## config_file [fail_on_error]
+## <config_file> <fail_on_error?>
 ## Validate configuration file.
 ##
 ## Params:

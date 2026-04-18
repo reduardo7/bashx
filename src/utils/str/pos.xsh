@@ -1,4 +1,4 @@
-## src search [case_sensitive]
+## <src> <search> <case_sensitive?>
 ## String position.
 ##
 ## Params:

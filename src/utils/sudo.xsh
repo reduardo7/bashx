@@ -1,4 +1,4 @@
-## path command
+## <path> <command>
 ## Run with `sudo` if necessary.
 ## If {path} is not writable then run with `sudo`.
 ##

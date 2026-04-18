@@ -1,4 +1,4 @@
-## [msg [default [max_len [timeout [silent]]]]]
+## <msg?> <default?> <max_len?> <timeout?> <silent?>
 ## Request user info.
 ##
 ## Params:

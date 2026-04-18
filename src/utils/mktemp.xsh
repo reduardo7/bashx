@@ -1,4 +1,4 @@
-## [create [type]]
+## <create?> <type?>
 ## Create a temporary file or directory, safely, and print its name.
 ## It works like "mktemp", but the result is saved in ${BASHX_APP_TMP_PATH}.
 ## When the script finishes running, the ${BASHX_APP_TMP_PATH} directory is

@@ -1,4 +1,4 @@
-## command [interval [timeout [message [debug]]]]
+## <command> <interval?> <timeout?> <message?> <debug?>
 ## Wait for command until returns 0.
 ##
 ## Params:

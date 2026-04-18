@@ -1,4 +1,4 @@
-## var
+## <var>
 ## Check if is a number.
 ##
 ## Params:

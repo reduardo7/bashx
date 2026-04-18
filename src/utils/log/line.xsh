@@ -1,4 +1,4 @@
-## [len [str [prefix [suffix]]]]
+## <len?> <str?> <prefix?> <suffix?>
 ## Print line with {str}.
 ##
 ## Params:

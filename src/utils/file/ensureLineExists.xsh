@@ -1,4 +1,4 @@
-## file line [sudo]
+## <file> <line> <sudo?>
 ## Ensulre line exists in file.
 ##
 ## Params:

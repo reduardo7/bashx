@@ -1,4 +1,4 @@
-## [note]
+## <note?>
 ## Throw not implemented error and exit.
 ##
 ## Params:

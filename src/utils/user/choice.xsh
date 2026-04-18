@@ -1,4 +1,4 @@
-## message options [default]
+## <message> <options> <default?>
 ## User choice.
 ##
 ## Params:
