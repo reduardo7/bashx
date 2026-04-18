@@ -2,15 +2,15 @@
 ## Development Doc.
 
 _doc() {
-  local prefix="$(@style color:red)${BX_SCRIPT_FILE_NAME}"
+  export BASHX_APP_COLORS_ENABLED=false
+  export BASHX_APP_PRINT_PREFIX='# '
+  unset __print_var_prefix__
 
   @log.title "Development Documentation"
 
-  for f in "${BASHX_UTILS_PATH}"/*.${BX_SCRIPT_EXTENSION} ; do
-    if [[ -f "${f}" ]]; then
-      @usage "${f}" '@'
-    fi
-  done
+  while IFS= read -r -d '' f; do
+    @usage "${f}" '@' '' ''
+  done < <(find "${BX_UTILS_PATH}" -name "*.${BX_SCRIPT_EXTENSION}" -print0 | sort -z)
 }
 
 _doc 3>&1 2>&1 | less
