@@ -31,8 +31,8 @@ Scaffold a new project with a single command:
 **Examples:**
 
 ```bash
-./bashx _bashx init project v3.1.2 my-app
-./bashx _bashx init project v3.1.2 ~/projects/my-script.sh
+./bashx _bashx init project v3.2.0 my-app
+./bashx _bashx init project v3.2.0 ~/projects/my-script.sh
 ```
 
 ## Manual Start
@@ -44,7 +44,7 @@ Scaffold a new project with a single command:
 
 ###############################################################################
 # BashX | https://github.com/reduardo7/bashx
-set +ex;export BASHX_VERSION="v3.1.2"
+set +ex;export BASHX_VERSION="v3.2.0"
 (export LC_CTYPE=C;export LC_ALL=C;export LANG=C;set -e;x() { s="$*";echo "# Error: ${s:-Installation fail}" >&2;exit 1;};d=/dev/null;[ ! -z "$BASHX_VERSION" ] || x BASHX_VERSION is required;export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}";if [ ! -d "$BASHX_DIR" ];then u="https://raw.githubusercontent.com/reduardo7/bashx/$BASHX_VERSION/src/setup.sh";if type wget >$d 2>&1;then sh -c "$(wget -q $u -O -)" || x;elif type curl >$d 2>&1;then sh -c "$(curl -fsSL $u)" || x;else x wget or curl are required. Install wget or curl to continue;fi;fi) || exit $?
 . "${HOME:-/tmp}/.bashx/${BASHX_VERSION}/src/init.sh"
 ###############################################################################
@@ -67,7 +67,7 @@ set +ex;export BASHX_VERSION="v3.1.2"
 
 ###############################################################################
 # BashX | https://github.com/reduardo7/bashx
-set +ex;export BASHX_VERSION="v3.1.2"
+set +ex;export BASHX_VERSION="v3.2.0"
 (export LC_CTYPE=C;export LC_ALL=C;export LANG=C;set -e;x() { s="$*";echo "# Error: ${s:-Installation fail}" >&2;exit 1;};d=/dev/null;[ ! -z "$BASHX_VERSION" ] || x BASHX_VERSION is required;export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}";if [ ! -d "$BASHX_DIR" ];then u="https://raw.githubusercontent.com/reduardo7/bashx/$BASHX_VERSION/src/setup.sh";if type wget >$d 2>&1;then sh -c "$(wget -q $u -O -)" || x;elif type curl >$d 2>&1;then sh -c "$(curl -fsSL $u)" || x;else x wget or curl are required. Install wget or curl to continue;fi;fi) || exit $?
 . "${HOME:-/tmp}/.bashx/${BASHX_VERSION}/src/init.sh"
 ###############################################################################
@@ -148,12 +148,12 @@ Valid events options constant: `BX_EVENTS_OPTS`.
 
 ## Documentation
 
-| Reference | Description |
-|---|---|
-| **[docs/](docs/README.md)** | Full utility, action, and testing reference |
-| **[docs/testing.md](docs/testing.md)** | `@@assert.*` testing framework |
-| **[docs/actions.md](docs/actions.md)** | Public and framework actions |
-| **[src/README.md](src/README.md)** | Source directory structure |
+| Reference                              | Description                                 |
+| -------------------------------------- | ------------------------------------------- |
+| **[docs/](docs/README.md)**            | Full utility, action, and testing reference |
+| **[docs/testing.md](docs/testing.md)** | `@@assert.*` testing framework              |
+| **[docs/actions.md](docs/actions.md)** | Public and framework actions                |
+| **[src/README.md](src/README.md)**     | Source directory structure                  |
 
 ### Development Documentation
 
@@ -252,7 +252,7 @@ Add this modeline at the end of every `.xsh` file for correct syntax highlightin
 
 ### Constants & Config Variables
 
-| Prefix | Purpose |
-|---|---|
-| `BX_*` | Readonly internal framework constants (do not assign) |
+| Prefix    | Purpose                                                       |
+| --------- | ------------------------------------------------------------- |
+| `BX_*`    | Readonly internal framework constants (do not assign)         |
 | `BASHX_*` | User-configurable settings (set in `.env` or before sourcing) |

@@ -130,7 +130,7 @@ result="$(@str.toLower "HELLO")"
 
 ```bash
 @@assert.regExp "^[0-9]+$" "12345"
-@@assert.regExp "^v[0-9]+\.[0-9]+" "v3.1.2"
+@@assert.regExp "^v[0-9]+\.[0-9]+" "v3.2.0"
 ```
 
 ---
@@ -174,15 +174,16 @@ Assert that a command produces no output at all (neither stdout nor stderr).
 ```
 
 Execute a function and assert its exit code. `expected_exit` can be:
+
 - An integer (exact match)
 - `true` — assert exit code is `0`
 - `false` — assert exit code is non-zero
 
-| Param | Type | Description |
-|---|---|---|
-| `fn_name` | String | Function name to call |
-| `expected_exit` | Integer or Boolean | Expected exit code |
-| `params` | String | Arguments passed to the function (optional) |
+| Param           | Type               | Description                                 |
+| --------------- | ------------------ | ------------------------------------------- |
+| `fn_name`       | String             | Function name to call                       |
+| `expected_exit` | Integer or Boolean | Expected exit code                          |
+| `params`        | String             | Arguments passed to the function (optional) |
 
 ```bash
 @@assert.exec "@isNumber" true "42"

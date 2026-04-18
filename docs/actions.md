@@ -16,8 +16,8 @@ Actions are functions named `@Actions.<name>` and invoked from the CLI as `./my-
 
 Print usage for the script and all available actions.
 
-| Option | Description |
-|---|---|
+| Option        | Description                                |
+| ------------- | ------------------------------------------ |
 | `-a`, `--all` | Include hidden actions (prefixed with `_`) |
 
 ```bash
@@ -106,13 +106,13 @@ Print development documentation for all utilities (piped through `less`).
 
 Install or uninstall shell auto-completion for the script.
 
-| Param | Value | Description |
-|---|---|---|
-| `action` | `install` | Add completion to `~/.bashrc`, `~/.zshrc`, `~/.shrc` |
-| `action` | `uninstall` | Remove completion |
+| Param    | Value       | Description                                          |
+| -------- | ----------- | ---------------------------------------------------- |
+| `action` | `install`   | Add completion to `~/.bashrc`, `~/.zshrc`, `~/.shrc` |
+| `action` | `uninstall` | Remove completion                                    |
 
-| Option | Description |
-|---|---|
+| Option          | Description               |
+| --------------- | ------------------------- |
 | `-f`, `--force` | Skip confirmation prompts |
 
 ```bash
@@ -136,8 +136,8 @@ BashX framework scaffolding utility.
 #### Initialize a new project
 
 ```bash
-./bashx _bashx init project v3.1.2 my-app
-./bashx _bashx init project v3.1.2 ~/projects/my-script.sh "My App Title"
+./bashx _bashx init project v3.2.0 my-app
+./bashx _bashx init project v3.2.0 ~/projects/my-script.sh "My App Title"
 ```
 
 #### Create a configuration file
@@ -220,10 +220,10 @@ The first `##` line is the usage signature shown in `help`. Subsequent `##` line
 
 Place `.xsh` files in your `events/` directory to hook into the app lifecycle:
 
-| File | Fired when |
-|---|---|
-| `ready.xsh` | Before action dispatch |
-| `start.xsh` | Action dispatch begins |
-| `error.xsh` | Script exits with non-zero code |
-| `finish.xsh` | Script exits (any code) |
-| `invalid-action.xsh` | Unknown action is invoked |
+| File                 | Fired when                      |
+| -------------------- | ------------------------------- |
+| `ready.xsh`          | Before action dispatch          |
+| `start.xsh`          | Action dispatch begins          |
+| `error.xsh`          | Script exits with non-zero code |
+| `finish.xsh`         | Script exits (any code)         |
+| `invalid-action.xsh` | Unknown action is invoked       |
