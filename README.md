@@ -1,5 +1,9 @@
 # BashX | Bash eXtended
 
+## Documentation
+
+Full reference for all utilities, actions, and the testing framework: **[docs/](docs/README.md)**
+
 ## Description
 
 - **_Bash Framework_**.
