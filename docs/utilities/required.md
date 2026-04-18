@@ -3,7 +3,7 @@
 **File:** `src/utils/required.xsh`
 
 ```
-@required cmd...
+@required <cmd>*
 ```
 
 Verify that one or more commands are available in `$PATH`. Exits with an error message listing any missing commands.

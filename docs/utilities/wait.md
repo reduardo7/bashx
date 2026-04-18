@@ -9,7 +9,7 @@ Polling and waiting utilities.
 **File:** `src/utils/wait/until.xsh`
 
 ```
-@wait.until command [interval [timeout [message [retries [debug]]]]]
+@wait.until <command> <interval?> <timeout?> <message?> <retries?> <debug?>
 ```
 
 Repeatedly run `command` until it exits `0`, or until a timeout or retry limit is reached.
@@ -50,7 +50,7 @@ fi
 **File:** `src/utils/wait/untilExists.xsh`
 
 ```
-@wait.untilExists type path [timeout [show_message]]
+@wait.untilExists <type> <path> <timeout?> <show_message?>
 ```
 
 Wait until a file or directory exists.

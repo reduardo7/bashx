@@ -3,7 +3,7 @@
 **File:** `src/utils/sed.xsh`
 
 ```
-@sed file regexp
+@sed <file> <regexp>
 ```
 
 Cross-platform `sed -i` wrapper that handles the macOS (`sed -i ''`) vs Linux (`sed -i`) difference automatically.

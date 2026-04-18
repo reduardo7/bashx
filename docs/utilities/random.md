@@ -3,7 +3,7 @@
 **File:** `src/utils/random.xsh`
 
 ```
-@random [len]
+@random <len?>
 ```
 
 Generate a random alphanumeric string from `/dev/urandom`.

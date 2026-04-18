@@ -9,7 +9,7 @@ Structured error utilities that print a formatted message and exit.
 **File:** `src/utils/throw.xsh`
 
 ```
-@throw message...
+@throw <message>*
 ```
 
 Print a prominent error block and exit with code `1`. Sets `BX_APP_EXIT_ILLEGAL_ERROR=true`.
@@ -33,7 +33,7 @@ Unexpected state: database is not initialized
 **File:** `src/utils/throw/invalidParam.xsh`
 
 ```
-@throw.invalidParam variable_name [note]
+@throw.invalidParam <variable_name> <note?>
 ```
 
 Throw an error for an invalid or missing parameter. Includes the caller's location in the error output.
@@ -60,7 +60,7 @@ setup_db() {
 **File:** `src/utils/throw/notImplemented.xsh`
 
 ```
-@throw.notImplemented [note]
+@throw.notImplemented <note?>
 ```
 
 Mark a function or code path as not yet implemented. Exits with code `1`.

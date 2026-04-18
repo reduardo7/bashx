@@ -9,7 +9,7 @@ Configuration file utilities.
 **File:** `src/utils/config/test.xsh`
 
 ```
-@config.test config_file [fail_on_error]
+@config.test <config_file> <fail_on_error?>
 ```
 
 Validate a configuration file by sourcing it in a subshell and checking for syntax errors.

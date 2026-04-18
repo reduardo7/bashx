@@ -9,7 +9,7 @@ File and path utilities.
 **File:** `src/utils/file/name.xsh`
 
 ```
-@file.name file [remove_extension]
+@file.name <file> <remove_extension?>
 ```
 
 Return the base name of a file path.
@@ -37,7 +37,7 @@ name="$(@file.name "/etc/nginx/nginx.conf" true)"
 **File:** `src/utils/file/contains.xsh`
 
 ```
-@file.contains text file
+@file.contains <text> <file>
 ```
 
 Check if a file contains a given string.
@@ -61,7 +61,7 @@ fi
 **File:** `src/utils/file/ensureLineExists.xsh`
 
 ```
-@file.ensureLineExists file line [sudo]
+@file.ensureLineExists <file> <line> <sudo?>
 ```
 
 Add a line to a file if it does not already exist.

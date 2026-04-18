@@ -9,7 +9,7 @@ Script processing and variable name utilities.
 **File:** `src/utils/code/variableClean.xsh`
 
 ```
-@code.variableClean text...
+@code.variableClean <text>*
 ```
 
 Replace all characters that are invalid in a Bash variable name with `_`.

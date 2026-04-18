@@ -3,7 +3,7 @@
 **File:** `src/utils/sudo.xsh`
 
 ```
-@sudo path command
+@sudo <path> <command>
 ```
 
 Run `command` with `sudo` only if `path` is not writable by the current user. Avoids unnecessary privilege escalation.

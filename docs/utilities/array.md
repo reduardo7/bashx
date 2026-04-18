@@ -9,7 +9,7 @@ Array utility functions.
 **File:** `src/utils/array/contains.xsh`
 
 ```
-@array.contains source search_array...
+@array.contains <source> <search_array>*
 ```
 
 Check whether a value exists in an array.

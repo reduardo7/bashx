@@ -9,7 +9,7 @@ Terminal dimension utilities.
 **File:** `src/utils/screen/width.xsh`
 
 ```
-@screen.width [default_width]
+@screen.width <default_width?>
 ```
 
 Return the terminal width in columns. Falls back to `default_width` if `tput` is not available.

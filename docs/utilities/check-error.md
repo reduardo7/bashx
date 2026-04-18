@@ -9,7 +9,7 @@ Lightweight exit-code guards.
 **File:** `src/utils/checkError.xsh`
 
 ```
-@checkError code [cmd]
+@checkError <code> <cmd?>
 ```
 
 If `code` is non-zero, optionally run `cmd` before continuing.
@@ -34,7 +34,7 @@ rsync -av ./src/ user@host:/app/
 **File:** `src/utils/checkErrorEnd.xsh`
 
 ```
-@checkErrorEnd code [message]
+@checkErrorEnd <code> <message?>
 ```
 
 If `code` is non-zero, call `@app.error` with `message` and exit.

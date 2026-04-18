@@ -9,7 +9,7 @@ TTY-aware interactive input utilities. All functions detect whether stdin is a t
 **File:** `src/utils/user/input.xsh`
 
 ```
-@user.input [msg [default [max_len [timeout [silent]]]]]
+@user.input <msg?> <default?> <max_len?> <timeout?> <silent?>
 ```
 
 Prompt the user for text input and print the result to stdout.
@@ -45,7 +45,7 @@ choice="$(@user.input "Continue? [yes]" "yes" 0 10)"
 **File:** `src/utils/user/confirm.xsh`
 
 ```
-@user.confirm [msg]
+@user.confirm <msg?>
 ```
 
 Ask a yes/no question.
@@ -75,7 +75,7 @@ fi
 **File:** `src/utils/user/choice.xsh`
 
 ```
-@user.choice message options [default]
+@user.choice <message> <options> <default?>
 ```
 
 Present a set of single-character options and return the user's selection.
@@ -113,7 +113,7 @@ esac
 **File:** `src/utils/user/pause.xsh`
 
 ```
-@user.pause [message...]
+@user.pause <message?>*
 ```
 
 Wait for any key press before continuing. Skips gracefully when not at a TTY.
@@ -133,7 +133,7 @@ Wait for any key press before continuing. Skips gracefully when not at a TTY.
 **File:** `src/utils/user/timeout.xsh`
 
 ```
-@user.timeout timeout cmd [message]
+@user.timeout <timeout> <cmd> <message?>
 ```
 
 Show a countdown and execute `cmd` when it reaches zero. The user can cancel with `C` or `ESC`.

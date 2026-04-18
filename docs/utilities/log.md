@@ -9,7 +9,7 @@ Output utilities. All logging goes to **stdinfo** (file descriptor 3) unless not
 **File:** `src/utils/log.xsh`
 
 ```
-@log [text...]
+@log <text?>*
 ```
 
 Print a message to stdinfo (FD 3). Supports ANSI style codes via `@style`.
@@ -26,7 +26,7 @@ Print a message to stdinfo (FD 3). Supports ANSI style codes via `@style`.
 **File:** `src/utils/log/warn.xsh`
 
 ```
-@log.warn [text...]
+@log.warn <text?>*
 ```
 
 Print to stderr. Use for warnings that should not be lost in pipelines.
@@ -42,7 +42,7 @@ Print to stderr. Use for warnings that should not be lost in pipelines.
 **File:** `src/utils/log/alert.xsh`
 
 ```
-@log.alert [text...]
+@log.alert <text?>*
 ```
 
 Print a red-colored message to stderr.
@@ -58,7 +58,7 @@ Print a red-colored message to stderr.
 **File:** `src/utils/log/title.xsh`
 
 ```
-@log.title [text...]
+@log.title <text?>*
 ```
 
 Print a decorated title block with borders.
@@ -78,7 +78,7 @@ Print a decorated title block with borders.
 **File:** `src/utils/log/line.xsh`
 
 ```
-@log.line [len [str [prefix [suffix]]]]
+@log.line <len?> <str?> <prefix?> <suffix?>
 ```
 
 Print a horizontal rule.
@@ -104,7 +104,7 @@ Print a horizontal rule.
 **File:** `src/utils/log/cmd.xsh`
 
 ```
-@log.cmd command...
+@log.cmd <command>*
 ```
 
 Print a command, execute it, then print its exit code. Useful for scripted CI output.
@@ -121,7 +121,7 @@ Print a command, execute it, then print its exit code. Useful for scripted CI ou
 **File:** `src/utils/log/time.xsh`
 
 ```
-@log.time [text...]
+@log.time <text?>*
 ```
 
 Print a timestamped log entry with caller location.
@@ -138,7 +138,7 @@ Print a timestamped log entry with caller location.
 **File:** `src/utils/log/rewrite.xsh`
 
 ```
-@log.rewrite text [lines]
+@log.rewrite <text> <lines?>
 ```
 
 Move the cursor back `lines` rows and overwrite with `text`. Useful for progress indicators.
@@ -161,7 +161,7 @@ sleep 1
 **File:** `src/utils/log/waiting.xsh`
 
 ```
-@log.waiting timeout [message]
+@log.waiting <timeout> <message?>
 ```
 
 Print a message every 0.25 seconds until `timeout` seconds pass.

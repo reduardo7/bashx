@@ -9,7 +9,7 @@ Function introspection and dynamic loading utilities.
 **File:** `src/utils/function/exists.xsh`
 
 ```
-@function.exists func_name
+@function.exists <func_name>
 ```
 
 Check whether a function is defined in the current shell.
@@ -36,7 +36,7 @@ fi
 **File:** `src/utils/function/load.xsh`
 
 ```
-@function.load functions_path [prefix]
+@function.load <functions_path> <prefix?>
 ```
 
 Scan a directory for `.xsh` files and create lazy-loading stub functions. Each stub sources its `.xsh` file on first call.

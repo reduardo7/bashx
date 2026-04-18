@@ -9,7 +9,7 @@ String manipulation utilities.
 **File:** `src/utils/str/trim.xsh`
 
 ```
-@str.trim text [to_remove]
+@str.trim <text> <to_remove?>
 ```
 
 Remove leading and trailing characters from a string.
@@ -34,7 +34,7 @@ result="$(@str.trim "###title###" "#")"
 **File:** `src/utils/str/ltrim.xsh`
 
 ```
-@str.ltrim text [to_remove]
+@str.ltrim <text> <to_remove?>
 ```
 
 Remove leading characters only.
@@ -51,7 +51,7 @@ result="$(@str.ltrim "  hello" " ")"
 **File:** `src/utils/str/rtrim.xsh`
 
 ```
-@str.rtrim text [to_remove]
+@str.rtrim <text> <to_remove?>
 ```
 
 Remove trailing characters only.
@@ -68,7 +68,7 @@ result="$(@str.rtrim "hello  " " ")"
 **File:** `src/utils/str/len.xsh`
 
 ```
-@str.len text...
+@str.len <text>*
 ```
 
 Return the character length of a string, ignoring ANSI color codes.
@@ -89,7 +89,7 @@ len="$(@str.len "${colored}")"
 **File:** `src/utils/str/sub.xsh`
 
 ```
-@str.sub src limit [offset]
+@str.sub <src> <limit> <offset?>
 ```
 
 Extract a substring.
@@ -115,7 +115,7 @@ result="$(@str.sub "hello world" 5 6)"
 **File:** `src/utils/str/replace.xsh`
 
 ```
-@str.replace src search replace [ignore_case]
+@str.replace <src> <search> <replace> <ignore_case?>
 ```
 
 Replace a pattern (regex) in a string using Perl.
@@ -145,7 +145,7 @@ result="$(@str.replace "Hello" "hello" "Hi" false)"
 **File:** `src/utils/str/toLower.xsh`
 
 ```
-@str.toLower text...
+@str.toLower <text>*
 ```
 
 Convert string to lowercase.
@@ -162,7 +162,7 @@ result="$(@str.toLower "Hello World")"
 **File:** `src/utils/str/toUpper.xsh`
 
 ```
-@str.toUpper text...
+@str.toUpper <text>*
 ```
 
 Convert string to uppercase.
@@ -179,7 +179,7 @@ result="$(@str.toUpper "hello world")"
 **File:** `src/utils/str/repeat.xsh`
 
 ```
-@str.repeat count str
+@str.repeat <count> <str>
 ```
 
 Repeat a string `count` times.
@@ -204,7 +204,7 @@ result="$(@str.repeat 3 "ab")"
 **File:** `src/utils/str/in.xsh`
 
 ```
-@str.in src search [case_sensitive]
+@str.in <src> <search> <case_sensitive?>
 ```
 
 Check whether a string contains a substring.
@@ -234,7 +234,7 @@ fi
 **File:** `src/utils/str/pos.xsh`
 
 ```
-@str.pos src search [case_sensitive]
+@str.pos <src> <search> <case_sensitive?>
 ```
 
 Return the zero-based position of a substring, or print nothing if not found.
@@ -259,7 +259,7 @@ fi
 **File:** `src/utils/str/escape.xsh`
 
 ```
-@str.escape text...
+@str.escape <text>*
 ```
 
 Escape a string for safe use as a Bash argument (`printf '%q'`).

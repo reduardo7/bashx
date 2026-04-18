@@ -36,7 +36,7 @@ These actions are prefixed with `_` and are hidden from the default help output.
 **File:** `src/actions/_run-tests.xsh`
 
 ```
-./bashx _run-tests [test_name...]
+./bashx _run-tests <name?>*
 ```
 
 Run the test suite. Pass one or more test names (filenames without `.xsh`) to run a subset.
@@ -59,7 +59,7 @@ Run the test suite. Pass one or more test names (filenames without `.xsh`) to ru
 **File:** `src/actions/_run-tests-docker.xsh`
 
 ```
-./bashx _run-tests-docker [image...]
+./bashx _run-tests-docker <image?>*
 ```
 
 Run the test suite inside Docker containers. Defaults to `ubuntu` and `debian:8` (matching CI).
@@ -101,7 +101,7 @@ Print development documentation for all utilities (piped through `less`).
 **File:** `src/actions/_install-as-command.xsh`
 
 ```
-./my-app _install-as-command [-f] action
+./my-app _install-as-command [-f] <action>
 ```
 
 Install or uninstall shell auto-completion for the script.
@@ -128,7 +128,7 @@ Install or uninstall shell auto-completion for the script.
 **File:** `src/actions/_bashx.xsh`
 
 ```
-./bashx _bashx task action [value1] [value2] [value3]
+./bashx _bashx <task> <action> <value1?> <value2?> <value3?>
 ```
 
 BashX framework scaffolding utility.
@@ -196,7 +196,7 @@ BashX framework scaffolding utility.
 Define a function `@Actions.<name>` in your script or in `src/actions/<name>.xsh`:
 
 ```bash
-## [--dry-run] environment
+## [--dry-run] <environment>
 ## Deploy the application.
 ## Options:
 ##   --dry-run: Simulate without applying changes.

@@ -9,7 +9,7 @@ Simple guard functions for type and permission checks.
 **File:** `src/utils/isBoolean.xsh`
 
 ```
-@isBoolean var
+@isBoolean <var>
 ```
 
 Check whether a value is exactly `true` or `false`.
@@ -36,7 +36,7 @@ setup() {
 **File:** `src/utils/isNumber.xsh`
 
 ```
-@isNumber var
+@isNumber <var>
 ```
 
 Check whether a value is a non-negative integer.
@@ -85,7 +85,7 @@ fi
 **File:** `src/utils/rootValidate.xsh`
 
 ```
-@rootValidate [message...]
+@rootValidate <message?>*
 ```
 
 Ensure the script is running as root, or exit with an error message.

@@ -9,7 +9,7 @@ Parse CLI flags and options within an action function.
 ## `@args`
 
 ```
-eval "$(@args options*)"
+eval "$(@args <options>*)"
 ```
 
 Generates and evaluates shell code that parses `$@` into named local variables. Each option spec has the format `VARIABLE:KEY[:INPUT]`.

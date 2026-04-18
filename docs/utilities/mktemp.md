@@ -9,7 +9,7 @@ Safe temporary file and directory creation. All temps are placed inside `$BASHX_
 ## `@mktemp`
 
 ```
-@mktemp [create [type]]
+@mktemp <create?> <type?>
 ```
 
 Create a temporary file or directory and print its path.

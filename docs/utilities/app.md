@@ -27,7 +27,7 @@ Call this at the end of your main script after defining all actions:
 **File:** `src/utils/app/exit.xsh`
 
 ```
-@app.exit [code]
+@app.exit <code?>
 ```
 
 Exit the application cleanly. Fires the `finish` event, runs any `@on.exit` callbacks, and removes the temp directory. Use this instead of bare `exit`.
@@ -53,7 +53,7 @@ Exit the application cleanly. Fires the `finish` event, runs any `@on.exit` call
 **File:** `src/utils/app/error.xsh`
 
 ```
-@app.error msg [print_backtrace [code]]
+@app.error <msg> <print_backtrace?> <code?>
 ```
 
 Print an error message to stderr and exit.

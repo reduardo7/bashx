@@ -11,7 +11,7 @@ Set `BASHX_COLORS_DISABLED=1` to disable all color output globally.
 **File:** `src/utils/style.xsh`
 
 ```
-@style [options...]
+@style <options?>*
 ```
 
 Output ANSI escape codes for colors and formatting. Call without arguments (or with `reset`/`default`) to restore defaults.
@@ -72,7 +72,7 @@ Output ANSI escape codes for colors and formatting. Call without arguments (or w
 **File:** `src/utils/style/clean.xsh`
 
 ```
-@style.clean text...
+@style.clean <text>*
 ```
 
 Strip all ANSI escape codes from a string. Useful when you need the plain-text length or want to write to a log file.

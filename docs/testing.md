@@ -170,7 +170,7 @@ Assert that a command produces no output at all (neither stdout nor stderr).
 ### `@@assert.exec`
 
 ```
-@@assert.exec fn_name expected_exit [params]
+@@assert.exec <fn_name> <expected_exit> <params?>
 ```
 
 Execute a function and assert its exit code. `expected_exit` can be:
