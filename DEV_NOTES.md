@@ -18,25 +18,19 @@ To release a new version, find all occurrences of the current version string (e.
 ### Steps
 
 1. Determine the new version tag (e.g. `v3.3.0`).
-2. Search for all occurrences of the current version:
+2. Run the `set-version` script:
+   ```bash
+   ./bashx set-version v3.3.0
+   ```
+3. Verify no stale references remain:
    ```bash
    grep -r "v3.2.0" .
    ```
-3. Replace every occurrence with the new version. Quick one-liner (macOS/Linux):
-   ```bash
-   NEW="v3.3.0"
-   OLD="v3.2.0"
-   grep -rl "$OLD" . | xargs sed -i.bak "s/${OLD}/${NEW}/g" && find . -name "*.bak" -delete
-   ```
-4. Verify no stale references remain:
-   ```bash
-   grep -r "$OLD" .
-   ```
-5. Commit, tag with the version name, and push:
+4. Commit, tag with the version name, and push:
    ```bash
    git add -p
-   git commit -m "$NEW updated"
-   git tag "$NEW"          # tag name == version string, e.g. "v3.3.0"
+   git commit -m "v3.3.0 updated"
+   git tag "v3.3.0"
    git push && git push --tags
    ```
 
