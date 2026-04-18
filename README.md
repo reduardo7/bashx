@@ -62,35 +62,78 @@ set +ex;export BASHX_VERSION="v3.2.0"
 
 ### Project Example
 
-```bash
-#!/usr/bin/env bash
+1. Create a project folder:
 
-###############################################################################
-# BashX | https://github.com/reduardo7/bashx
-set +ex;export BASHX_VERSION="v3.2.0"
-(export LC_CTYPE=C;export LC_ALL=C;export LANG=C;set -e;x() { s="$*";echo "# Error: ${s:-Installation fail}" >&2;exit 1;};d=/dev/null;[ ! -z "$BASHX_VERSION" ] || x BASHX_VERSION is required;export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}";if [ ! -d "$BASHX_DIR" ];then u="https://raw.githubusercontent.com/reduardo7/bashx/$BASHX_VERSION/src/setup.sh";if type wget >$d 2>&1;then sh -c "$(wget -q $u -O -)" || x;elif type curl >$d 2>&1;then sh -c "$(curl -fsSL $u)" || x;else x wget or curl are required. Install wget or curl to continue;fi;fi) || exit $?
-. "${HOME:-/tmp}/.bashx/${BASHX_VERSION}/src/init.sh"
-###############################################################################
+   ```bash
+   touch bashx-example
+   cd bashx-example
+   ```
 
-@Actions.action1() { # \\n Action without arguments
-  @log "
-  Action 1
-  Multi-Line
-"
-}
+2. Create the main script:
 
-@Actions.action2() { # param1 [param2] \\n Action with arguments\\n\\tdescription second line\\nother line
-  local param1="$1"
-  local param2="$2"
-  [ "$param1" != 'asd' ] && @throw.invalidParam param1
+   ```bash
+   vim my-app
+   ```
 
-  @log Action 2
-  @log Param1: $1
-  @log Param2: $2
-}
+3. Writhe the content:
 
-@app.run
-```
+   ```bash
+   #!/usr/bin/env bash
+
+   ###############################################################################
+   # BashX | https://github.com/reduardo7/bashx
+   set +ex;export BASHX_VERSION="v3.2.0"
+   (export LC_CTYPE=C;export LC_ALL=C;export LANG=C;set -e;x() { s="$*";echo "# Error: ${s:-Installation fail}" >&2;exit 1;};d=/dev/null;[ ! -z "$BASHX_VERSION" ] || x BASHX_VERSION is required;export BASHX_DIR="${BASHX_DIR:-${HOME:-/tmp}/.bashx/$BASHX_VERSION}";if [ ! -d "$BASHX_DIR" ];then u="https://raw.githubusercontent.com/reduardo7/bashx/$BASHX_VERSION/src/setup.sh";if type wget >$d 2>&1;then sh -c "$(wget -q $u -O -)" || x;elif type curl >$d 2>&1;then sh -c "$(curl -fsSL $u)" || x;else x wget or curl are required. Install wget or curl to continue;fi;fi) || exit $?
+   . "${HOME:-/tmp}/.bashx/${BASHX_VERSION}/src/init.sh"
+   ###############################################################################
+
+   @Actions.action1() { # \\n Action without arguments
+     @log "
+     Action 1
+     Multi-Line
+   "
+   }
+
+   @Actions.action2() { # <param1> [<param2>] \\n Action with arguments\\n\\tdescription second line\\nother line
+     local param1="$1"
+     local param2="$2"
+     [ "$param1" != 'asd' ] && @throw.invalidParam param1
+
+     @log Action 2
+     @log Param1: $1
+     @log Param2: $2
+   }
+
+   @app.run
+   ```
+
+4. Execute:
+
+   ```bash
+   chmod a+x my-app
+   ./my-app
+   ```
+
+   Output:
+
+   ```plain
+   ℹ️  +--------------+
+   ℹ️  |  BashX v1.0  |
+   ℹ️  +--------------+
+   ℹ️
+   ℹ️  +----------------+
+   ℹ️  |  Help & Usage  |
+   ℹ️  +----------------+
+   ℹ️
+   ℹ️    my-app action1
+   ℹ️      Action without arguments
+   ℹ️
+   ℹ️    my-app action2 param1 [param2]
+   ℹ️      Action with arguments
+   ℹ️        description second line
+   ℹ️      other line
+   ℹ️
+   ```
 
 #### Project Structure
 
